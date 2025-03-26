@@ -1,3 +1,4 @@
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public static class NoiseGenerator
@@ -60,6 +61,24 @@ public static class NoiseGenerator
             {
                 noise[x, y] = Mathf.InverseLerp(minNoiseWidth, maxNoiseHeight, noise[x, y]);
             }
+        }
+
+        return noise;
+    }
+
+    public static float[] GenerateNoise1D(int width, float amplitude, float scale, float offset, int seed)
+    {
+        System.Random prng = new System.Random(seed);
+
+        float offsetX = prng.Next(-100000, 10000) + offset;
+
+        float[] noise = new float[width];
+
+        for (int x = 0; x < width; x++)
+        {
+            float point = (x + offsetX) * amplitude;
+
+            noise[x] = Mathf.PerlinNoise(point, 0) * scale;
         }
 
         return noise;
