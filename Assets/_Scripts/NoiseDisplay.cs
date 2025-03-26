@@ -12,11 +12,11 @@ public class NoiseDisplay : MonoBehaviour
     [SerializeField] private float _lacunarity = 4f;
     [SerializeField] private int _seed = 42;
     [SerializeField] private Vector2 _offset = Vector2.zero;
+
+    [Header("Filters Settings")]
     [SerializeField, Range(0f, 2f)] private float _gamma = 1f;
     [SerializeField] private int _contrast = 0;
     [SerializeField] private bool _invert;
-
-    [Header("Noise Pixelization")]
     [SerializeField] private int _pixelSize = 2;
 
     [Header("Instances")]
