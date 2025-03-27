@@ -177,4 +177,5 @@ public class MazeGenerator
     public Node GetRoot() => _root;
 
     public Node GetByCoords(Vector2Int coords) => _coordedMaze[(coords.x, coords.y)];
+    public List<Node> GetNodes() => _maze;
 }
