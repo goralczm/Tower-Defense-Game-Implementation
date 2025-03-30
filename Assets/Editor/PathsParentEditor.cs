@@ -1,15 +1,14 @@
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(PathDisplay))]
-public class PathDisplayEditor : Editor
+[CustomEditor(typeof(PathsParent))]
+public class PathsParentEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
         if (GUILayout.Button("Randomize"))
-            ((PathDisplay)target).Randomize();
+            ((PathsParent)target).Randomize();
     }
 }

@@ -14,7 +14,6 @@ public class PathDisplay : MonoBehaviour
     [SerializeField] private bool _moveRootToEnd;
 
     [Header("Tilemap Settings")]
-    [SerializeField] private RuleTile _grassTile;
     [SerializeField] private RuleTile _pathTile;
     [SerializeField] private Tilemap _tilemap;
 
@@ -24,6 +23,62 @@ public class PathDisplay : MonoBehaviour
     [SerializeField] private float _cellSize = .1f;
     [SerializeField] private float _rootCellSize = .3f;
     [SerializeField] private bool _showPath;
+
+    public void SetSeed(int seed)
+    {
+        _seed = seed;
+        OnValidate();
+    }
+
+    public int GetWidth() => _width;
+    public int GetHeight() => _height;
+
+    public void SetStartPoint(Vector2Int startPoint)
+    {
+        _startPos = startPoint;
+        OnValidate();
+    }
+
+    public void SetEndPoint(Vector2Int endPoint)
+    {
+        _endPos = endPoint;
+        OnValidate();
+    }
+
+    public List<Vector2> GetWaypoints()
+    {
+        List<Vector2> waypoints = new();
+
+        MazeGenerator generator = new MazeGenerator(_width, _height, _seed);
+
+        generator.GenerateMaze(_steps);
+
+        if (_moveRootToEnd)
+            generator.MoveRootToPosition(_endPos);
+
+        waypoints.Add(_startPos + (Vector2)transform.position + _offset);
+        Node curr = generator.GetByCoords(_startPos);
+
+        while (curr.next != null)
+        {
+            Vector2 currPos = new Vector2(curr.x, curr.y) + (Vector2)transform.position + _offset;
+            Vector2 nextPos = new Vector2(curr.next.x, curr.next.y) + (Vector2)transform.position + _offset;
+
+            Vector2 dir = curr.next.GetPosition() - curr.GetPosition();
+            if (curr.next.next != null)
+            {
+                Vector2 nextDir = curr.next.next.GetPosition() - curr.next.GetPosition();
+
+                if (dir != nextDir)
+                    waypoints.Add(nextPos);
+            }
+
+            curr = curr.next;
+        }
+        waypoints.Add(_endPos + (Vector2)transform.position + _offset);
+
+        return waypoints;
+    }
 
     private void OnValidate()
     {
@@ -52,13 +107,6 @@ public class PathDisplay : MonoBehaviour
         List<Node> maze = generator.GetNodes();
 
         _tilemap.ClearAllTiles();
-
-        foreach (var node in maze)
-        {
-            Vector2Int nodePosition = node.GetPosition();
-            Vector3Int nodeWorldPosition = new Vector3Int(nodePosition.x, nodePosition.y, 0);
-            _tilemap.SetTile(nodeWorldPosition, _grassTile);
-        }
 
         Node curr = generator.GetByCoords(_startPos);
         while (curr.next != null)
@@ -120,6 +168,7 @@ public class PathDisplay : MonoBehaviour
                 Vector2 currPos = new Vector2(curr.x, curr.y) + (Vector2)transform.position + _offset;
                 Vector2 nextPos = new Vector2(curr.next.x, curr.next.y) + (Vector2)transform.position + _offset;
 
+                Vector2 dir = curr.next.GetPosition() - curr.GetPosition();
                 DrawGizmosArrow(currPos, nextPos, Color.magenta);
                 curr = curr.next;
             }
@@ -142,15 +191,5 @@ public class PathDisplay : MonoBehaviour
 
         Gizmos.DrawLine(end, rightArrowHead);
         Gizmos.DrawLine(end, leftArrowHead);
-    }
-
-    public void Randomize()
-    {
-        _seed = Random.Range(-100000, 100000);
-
-        _startPos = new Vector2Int(0, Random.Range(0, _height));
-        _endPos = new Vector2Int(_width, Random.Range(0, _height));
-
-        OnValidate();
     }
 }
