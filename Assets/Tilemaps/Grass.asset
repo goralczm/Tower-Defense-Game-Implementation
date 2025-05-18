@@ -12,51 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
   m_Name: Grass
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 70345852487738077, guid: 6be9821ac23336442955a60e122e5123, type: 3}
+  m_DefaultSprite: {fileID: -4528210895421738538, guid: b7b25369103cce744a6192ba2865f4ff, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: 70345852487738077, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 1570671119, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -47381943, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -636868184, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 371952040, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 1705594947, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 1196607893, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 518104835, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 2017034063, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -1725985793, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 808520082, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 1911231193, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -1496791972, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 808395620, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 835130052, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 1575389670, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 783083126, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 615478859, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -1992959008, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -57341704, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -1239012138, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -1886665719, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 1880750522, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -200132475, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -1108317189, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -1860884340, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -892332097, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -709559198, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 1359780544, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 1522067401, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: -2019789277, guid: 6be9821ac23336442955a60e122e5123, type: 3}
-    - {fileID: 238920433, guid: 6be9821ac23336442955a60e122e5123, type: 3}
+    - {fileID: -4528210895421738538, guid: b7b25369103cce744a6192ba2865f4ff, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.4
     m_Output: 1
     m_ColliderType: 1
-    m_RandomTransform: 0
+    m_RandomTransform: 5
     m_Neighbors: 
     m_NeighborPositions:
     - {x: -1, y: 1, z: 0}

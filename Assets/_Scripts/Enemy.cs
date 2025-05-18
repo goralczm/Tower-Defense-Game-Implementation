@@ -3,17 +3,27 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed = 1f;
-    [SerializeField] private float _stoppingDistance = 0.1f;
-    [SerializeField] private float _rotationSpeed = 5f;
     
     private int _currentWaypointIndex;
     private Vector2 _currentWaypoint;
-    private Vector2 _direction;
-    
-    private void Start()
+
+    public void ResetCache()
     {
+        _currentWaypointIndex = 0;
         _currentWaypoint = WaypointsParent.Instance.Waypoints[_currentWaypointIndex];
-        _direction = (_currentWaypoint - (Vector2)transform.position).normalized;
+
+        PathDisplay.OnPathGenerated += FindNearestPoint;
+    }
+
+    private void OnDisable()
+    {
+        PathDisplay.OnPathGenerated -= FindNearestPoint;
+    }
+
+    private void FindNearestPoint()
+    {
+        _currentWaypointIndex = WaypointsParent.Instance.GetIndexOfNearestWaypoint(transform.position);
+        _currentWaypoint = WaypointsParent.Instance.Waypoints[_currentWaypointIndex];
     }
 
     private void Update()
@@ -23,27 +33,16 @@ public class Enemy : MonoBehaviour
 
     private void Move()
     {
-        if (Vector2.Distance(transform.position, _currentWaypoint) <= _stoppingDistance)
+        transform.position = Vector2.MoveTowards(transform.position, WaypointsParent.Instance.Waypoints[_currentWaypointIndex], _speed * Time.deltaTime);
+        if ((Vector2)transform.position == WaypointsParent.Instance.Waypoints[_currentWaypointIndex])
         {
-            _currentWaypointIndex++;
-            if (_currentWaypointIndex >= WaypointsParent.Instance.Waypoints.Count)
+            if (_currentWaypointIndex >= WaypointsParent.Instance.Waypoints.Count - 1)
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
                 return;
             }
-            _currentWaypoint = WaypointsParent.Instance.Waypoints[_currentWaypointIndex];
-            _direction = (_currentWaypoint - (Vector2)transform.position).normalized;
-        }
-        
-        transform.position = Vector2.MoveTowards(transform.position, _currentWaypoint, _speed * Time.deltaTime);
-        Rotate();
-    }
 
-    private void Rotate()
-    {
-        Vector2 direction = _currentWaypoint - (Vector2)transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, _rotationSpeed * Time.deltaTime);
+            _currentWaypointIndex++;
+        }
     }
 }

@@ -1,27 +1,42 @@
+using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class WaypointsParent : MonoBehaviour
+public class WaypointsParent : Singleton<WaypointsParent>
 {
-    public static WaypointsParent Instance;
-
     [Header("Debug")]
     [SerializeField] private bool _debug;
     [SerializeField] private float _waypointsSize = .1f;
 
-    private void Awake()
+    [SerializeField] private PathDisplay _pathDisplay;
+
+    public List<Vector2> Waypoints = new();
+
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
+
+        PathDisplay.OnPathGenerated += CacheWaypoints;
     }
 
-    [SerializeField] private PathsParent _pathsParent;
-
-    public List<Vector2> Waypoints => GetWaypoints();
-    private List<Vector2> _waypoints = new();
-
-    private List<Vector2> GetWaypoints()
+    private void OnDisable()
     {
-       return _pathsParent.GetWaypoints();
+        PathDisplay.OnPathGenerated -= CacheWaypoints;
+    }
+
+    private void CacheWaypoints()
+    {
+        Waypoints.Clear();
+        Waypoints = _pathDisplay.GetWaypoints();
+    }
+
+    public int GetIndexOfNearestWaypoint(Vector2 position)
+    {
+        List<Vector2> cp = new List<Vector2>(Waypoints);
+        cp.Sort((w1, w2) => Vector2.Distance(position, w1).CompareTo(Vector2.Distance(position, w2)));
+
+        return Waypoints.IndexOf(cp[0]);
     }
 
     private void OnDrawGizmos()
@@ -31,8 +46,6 @@ public class WaypointsParent : MonoBehaviour
         Gizmos.color = Color.red;
 
         foreach (var waypoint in Waypoints)
-        {
             Gizmos.DrawWireSphere(waypoint, _waypointsSize);
-        }
     }
 }

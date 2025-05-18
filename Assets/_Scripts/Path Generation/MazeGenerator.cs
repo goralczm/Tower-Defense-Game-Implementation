@@ -39,6 +39,12 @@ public class MazeGenerator
         _rnpg = new System.Random(_seed);
     }
 
+    public void SetSeed(int seed)
+    {
+        _seed = seed;
+        _rnpg = new System.Random(_seed);
+    }
+
     public List<Node> GenerateMaze(int steps)
     {
         _maze.Clear();
@@ -177,5 +183,6 @@ public class MazeGenerator
     public Node GetRoot() => _root;
 
     public Node GetByCoords(Vector2Int coords) => _coordedMaze[(coords.x, coords.y)];
+
     public List<Node> GetNodes() => _maze;
 }
