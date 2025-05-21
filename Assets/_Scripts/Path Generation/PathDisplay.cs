@@ -20,6 +20,8 @@ public class PathDisplay : MonoBehaviour
     [SerializeField] private bool _rerollWhenTooManyStraights;
     [SerializeField] private int _maxStraightTiles;
     [SerializeField] private bool _placeRoundabouts;
+    [SerializeField] private int _roundaboutChance = 5;
+    [SerializeField] private int _minTilesDistanceBetweenRoundabouts = 5;
 
     [Header("Tilemap Settings")]
     [SerializeField] private RuleTile _pathTile;
@@ -285,6 +287,8 @@ public class PathDisplay : MonoBehaviour
         UnityEngine.Random.InitState(seed);
         var curr = generator.GetByCoords(_startPos);
 
+        int tilesAfterLastRoundabout = 200;
+
         while (curr?.next?.next != null)
         {
             Vector2Int pos = curr.GetPosition();
@@ -296,20 +300,16 @@ public class PathDisplay : MonoBehaviour
                 Vector3Int cornerPos = new(curr.next.x, curr.next.y, 0);
                 Tile corner = GetCornerTile(dir, nextDir);
 
-                if (corner == _roundabout) continue;
-
-                if (GenerateRoundaboutForCorner(cornerPos, corner))
-                {
-                    DrawRoundabouts(generator, seed);
-                    return;
-                }
+                if (GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout))
+                    tilesAfterLastRoundabout = 0;
             }
 
             curr = curr.next;
+            tilesAfterLastRoundabout++;
         }
     }
 
-    private bool GenerateRoundaboutForCorner(Vector3Int cornerPos, Tile corner)
+    private bool GenerateRoundaboutForCorner(Vector3Int cornerPos, Tile corner, int tilesAfterLastRoundabout)
     {
         Vector3Int[] roundaboutOffsets = null;
 
@@ -324,15 +324,20 @@ public class PathDisplay : MonoBehaviour
         else if (corner == _rbCorner)
             roundaboutOffsets = new Vector3Int[] { Vector3Int.left, Vector3Int.left + Vector3Int.up, Vector3Int.up, Vector3Int.zero };
         
-        for (int i = 1; i < roundabout.Length; i++)
+        for (int i = 0; i < roundaboutOffsets.Length; i++)
         {
             if (roundaboutOffsets[i] == Vector3Int.zero) continue;
             
+            if (!IsTileInBounds(cornerPos + roundaboutOffsets[i]))
+                return false;
+
             if (!IsTileFree(cornerPos + roundaboutOffsets[i]))
                 return false;
         }
-        
-        //if (UnityEngine.Random.Range(0, 4) != 0) return;
+
+        if (tilesAfterLastRoundabout < _minTilesDistanceBetweenRoundabouts) return false;
+
+        if (UnityEngine.Random.Range(0, _roundaboutChance) != 0) return false;
 
         for (int i = 0; i < roundabout.Length; i++)
         {
@@ -342,6 +347,12 @@ public class PathDisplay : MonoBehaviour
 
         _tilemap.SetTile(cornerPos, _roundabout);
         return true;
+    }
+
+    private bool IsTileInBounds(Vector3Int tilePos)
+    {
+        return tilePos.x >= 0 && tilePos.x < _width &&
+               tilePos.y >= 0 && tilePos.y < _height;
     }
 
     private bool IsTileFree(Vector3Int tilePos)
