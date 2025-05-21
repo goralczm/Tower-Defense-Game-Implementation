@@ -10,6 +10,7 @@ public class WaypointsParent : Singleton<WaypointsParent>
     [SerializeField] private float _waypointsSize = .1f;
 
     [SerializeField] private PathDisplay _pathDisplay;
+    [SerializeField] private WaypointsExtractor _waypointExtractor;
 
     public List<Vector2> Waypoints = new();
 
@@ -27,8 +28,10 @@ public class WaypointsParent : Singleton<WaypointsParent>
 
     private void CacheWaypoints()
     {
-        Waypoints.Clear();
-        Waypoints = _pathDisplay.GetWaypoints();
+        print(_pathDisplay.GetStartPoint());
+        _waypointExtractor.SetStartPoint(_pathDisplay.GetStartPoint());
+        _waypointExtractor.ExtractWaypoints();
+        Waypoints = _waypointExtractor.GetWaypoints();
     }
 
     public int GetIndexOfNearestWaypoint(Vector2 position)

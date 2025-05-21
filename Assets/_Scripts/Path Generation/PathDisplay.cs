@@ -47,6 +47,7 @@ public class PathDisplay : MonoBehaviour
 
     public void SetSeed(int seed) { _seed = seed; OnValidate(); }
     public void SetStartPoint(Vector2Int point) { _startPos = point; OnValidate(); }
+    public Vector2 GetStartPoint() => _startPos - _entranceDir;
     public void SetEndPoint(Vector2Int point) { _endPos = point; OnValidate(); }
     public int GetWidth() => _width;
     public int GetHeight() => _height;
@@ -58,10 +59,10 @@ public class PathDisplay : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.R))
             Randomize();
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Space))
             GenerateTilemap();
     }
 
