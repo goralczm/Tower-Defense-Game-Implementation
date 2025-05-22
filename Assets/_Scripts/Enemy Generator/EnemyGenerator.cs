@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,13 +10,18 @@ public class EnemyGenerator : MonoBehaviour
 
     private void Start()
     {
-        PathDisplay.OnPathGenerated += StartSpawner;
+        PathGenerationDirector.OnPathGenerated += StartSpawner;
     }
 
-    private void StartSpawner()
+    private void OnDisable()
+    {
+        PathGenerationDirector.OnPathGenerated -= StartSpawner;
+    }
+
+    private void StartSpawner(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
     {
         InvokeRepeating("SpawnEnemy", 0, _intervals);
-        PathDisplay.OnPathGenerated -= StartSpawner;
+        PathGenerationDirector.OnPathGenerated -= StartSpawner;
     }
 
     public void SpawnEnemy()

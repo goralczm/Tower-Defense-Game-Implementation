@@ -9,7 +9,6 @@ public class WaypointsParent : Singleton<WaypointsParent>
     [SerializeField] private bool _debug;
     [SerializeField] private float _waypointsSize = .1f;
 
-    [SerializeField] private PathDisplay _pathDisplay;
     [SerializeField] private WaypointsExtractor _waypointExtractor;
 
     public List<Vector2> Waypoints = new();
@@ -18,18 +17,17 @@ public class WaypointsParent : Singleton<WaypointsParent>
     {
         base.Awake();
 
-        PathDisplay.OnPathGenerated += CacheWaypoints;
+        PathGenerationDirector.OnPathGenerated += CacheWaypoints;
     }
 
     private void OnDisable()
     {
-        PathDisplay.OnPathGenerated -= CacheWaypoints;
+        PathGenerationDirector.OnPathGenerated -= CacheWaypoints;
     }
 
-    private void CacheWaypoints()
+    private void CacheWaypoints(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
     {
-        print(_pathDisplay.GetStartPoint());
-        _waypointExtractor.SetStartPoint(_pathDisplay.GetStartPoint());
+        _waypointExtractor.SetStartPoint(args.StartPoint);
         _waypointExtractor.ExtractWaypoints();
         Waypoints = _waypointExtractor.GetWaypoints();
     }

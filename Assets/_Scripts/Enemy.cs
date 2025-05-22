@@ -12,15 +12,15 @@ public class Enemy : MonoBehaviour
         _currentWaypointIndex = 0;
         _currentWaypoint = WaypointsParent.Instance.Waypoints[_currentWaypointIndex];
 
-        PathDisplay.OnPathGenerated += FindNearestPoint;
+        PathGenerationDirector.OnPathGenerated += FindNearestPoint;
     }
 
     private void OnDisable()
     {
-        PathDisplay.OnPathGenerated -= FindNearestPoint;
+        PathGenerationDirector.OnPathGenerated -= FindNearestPoint;
     }
 
-    private void FindNearestPoint()
+    private void FindNearestPoint(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
     {
         _currentWaypointIndex = WaypointsParent.Instance.GetIndexOfNearestWaypoint(transform.position);
         _currentWaypoint = WaypointsParent.Instance.Waypoints[_currentWaypointIndex];

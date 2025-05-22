@@ -26,8 +26,8 @@ public class MazeGenerator
     private int _height;
     private int _seed;
 
-    private List<Node> _maze = new();
-    private Dictionary<(int, int), Node> _coordedMaze = new();
+    private readonly List<Node> _maze = new();
+    private readonly Dictionary<(int, int), Node> _mazeByCoords = new();
     private Node _root;
     private System.Random _rnpg;
 
@@ -48,7 +48,7 @@ public class MazeGenerator
     public List<Node> GenerateMaze(int steps)
     {
         _maze.Clear();
-        _coordedMaze.Clear();
+        _mazeByCoords.Clear();
 
         for (int y = 0; y < _height; y++)
         {
@@ -57,19 +57,19 @@ public class MazeGenerator
                 Node node = new Node(x, y);
 
                 if (x > 0 && _maze.Count > 0)
-                    _maze[_maze.Count - 1].next = node;
+                    _maze[^1].next = node;
 
                 _maze.Add(node);
 
                 if (y > 0 && x == _width - 1)
                     _maze[_width - 1 + (_width * (y - 1))].next = node;
 
-                _coordedMaze.Add((x, y), node);
+                _mazeByCoords.Add((x, y), node);
             }
         }
 
         
-        _root = _maze[_maze.Count - 1];
+        _root = _maze[^1];
 
         for (int i = 0; i < steps; i++)
         {
@@ -96,7 +96,7 @@ public class MazeGenerator
         return _maze;
     }
 
-    public void MoveRoot(Vector2Int dir, bool flipOutOfBounds = false)
+    private void MoveRoot(Vector2Int dir, bool flipOutOfBounds = false)
     {
         Vector2Int rootPosition = _root.GetPosition();
         Vector2Int newRootPosition = rootPosition + dir;
@@ -135,8 +135,8 @@ public class MazeGenerator
 
         newRootPosition = rootPosition + dir;
 
-        _root = _coordedMaze[(newRootPosition.x, newRootPosition.y)];
-        _coordedMaze[(rootPosition.x, rootPosition.y)].next = _root;
+        _root = _mazeByCoords[(newRootPosition.x, newRootPosition.y)];
+        _mazeByCoords[(rootPosition.x, rootPosition.y)].next = _root;
 
         _root.next = null;
     }
@@ -180,9 +180,7 @@ public class MazeGenerator
         }
     }
 
-    public Node GetRoot() => _root;
-
-    public Node GetByCoords(Vector2Int coords) => _coordedMaze[(coords.x, coords.y)];
+    public Node GetByCoords(Vector2Int coords) => _mazeByCoords[(coords.x, coords.y)];
 
     public List<Node> GetNodes() => _maze;
 }
