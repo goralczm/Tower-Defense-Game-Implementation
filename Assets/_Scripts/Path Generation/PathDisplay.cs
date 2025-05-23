@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 
 public class PathDisplay : MonoBehaviour
 {
@@ -22,7 +23,20 @@ public class PathDisplay : MonoBehaviour
     public void SetPathSettings(PathSettings pathSettings) => _pathSettings = pathSettings;
     public void SetEntranceDirection(Vector2Int dir) { _entranceDir = dir; }
     public void SetExitDirection(Vector2Int dir) { _exitDir = dir; }
-    public Vector2 GetStartPoint() => _generationData.StartPoint - _entranceDir;
+    public Vector2 GetStartPointWorld()
+    {
+        if (_generationData.IsTileOnEdge(_generationData.StartPoint))
+            return _tilemap.GetCellCenterWorld(new(_generationData.StartPoint.x - _entranceDir.x, _generationData.StartPoint.y - _entranceDir.y));
+
+        return _tilemap.GetCellCenterWorld(new(_generationData.StartPoint.x, _generationData.StartPoint.y));
+    }
+    public Vector2 GetEndPointWorld()
+    {
+        if (_generationData.IsTileOnEdge(_generationData.EndPoint))
+            return _tilemap.GetCellCenterWorld(new(_generationData.EndPoint.x - _exitDir.x, _generationData.EndPoint.y - _exitDir.y));
+
+        return _tilemap.GetCellCenterWorld(new(_generationData.EndPoint.x, _generationData.EndPoint.y));
+    }
     public void SetGenerationData(GenerationData generationData) => _generationData = generationData;
 
     public void GenerateTilemap(MazeGenerator generator)
@@ -47,11 +61,14 @@ public class PathDisplay : MonoBehaviour
 
             if (!prevPos.HasValue)
             {
-                Vector3Int overflowTile = new(pos.x - _entranceDir.x, pos.y - _entranceDir.y, 0);
-                if (_entranceDir.x != 0)
-                    _tilemap.SetTile(overflowTile, _horizontal);
-                else if (_entranceDir.y != 0)
-                    _tilemap.SetTile(overflowTile, _vertical);
+                if (_generationData.IsTileOnEdge(pos))
+                {
+                    Vector3Int overflowTile = new(pos.x - _entranceDir.x, pos.y - _entranceDir.y, 0);
+                    if (_entranceDir.x != 0)
+                        _tilemap.SetTile(overflowTile, _horizontal);
+                    else if (_entranceDir.y != 0)
+                        _tilemap.SetTile(overflowTile, _vertical);
+                }
             }
 
             if (dir.x != 0)
@@ -73,11 +90,14 @@ public class PathDisplay : MonoBehaviour
             else if (lastDir.y != 0)
                 _tilemap.SetTile(lastTile, _vertical);
 
-            Vector3Int overflowTile = new(curr.x + _exitDir.x, curr.y + _exitDir.y, 0);
-            if (_exitDir.x != 0)
-                _tilemap.SetTile(overflowTile, _horizontal);
-            else if (_exitDir.y != 0)
-                _tilemap.SetTile(overflowTile, _vertical);
+            if (_generationData.IsTileOnEdge(curr.GetPosition()))
+            {
+                Vector3Int overflowTile = new(curr.x + _exitDir.x, curr.y + _exitDir.y, 0);
+                if (_exitDir.x != 0)
+                    _tilemap.SetTile(overflowTile, _horizontal);
+                else if (_exitDir.y != 0)
+                    _tilemap.SetTile(overflowTile, _vertical);
+            }
         }
     }
 
@@ -89,7 +109,7 @@ public class PathDisplay : MonoBehaviour
             Vector2Int pos = generator.GetByCoords(_generationData.StartPoint).GetPosition();
             Vector2 dir = curr.next.GetPosition() - pos;
 
-            if (_entranceDir != dir)
+            if (_entranceDir != dir && _generationData.IsTileOnEdge(pos))
             {
                 Vector3Int cornerPos = new(_generationData.StartPoint.x, _generationData.StartPoint.y, 0);
                 _tilemap.SetTile(cornerPos, GetCornerTile(_entranceDir, dir));
@@ -117,7 +137,7 @@ public class PathDisplay : MonoBehaviour
             Vector2 dir = _generationData.EndPoint - pos;
             Vector2 nextDir = (_generationData.EndPoint + _exitDir) - _generationData.EndPoint;
 
-            if (nextDir != dir)
+            if (nextDir != dir && _generationData.IsTileOnEdge(pos))
             {
                 Vector3Int cornerPos = new(_generationData.EndPoint.x, _generationData.EndPoint.y, 0);
                 _tilemap.SetTile(cornerPos, GetCornerTile(dir, nextDir));
@@ -194,8 +214,8 @@ public class PathDisplay : MonoBehaviour
 
     private bool IsTileInBounds(Vector3Int tilePos)
     {
-        return tilePos.x >= 0 && tilePos.x < _generationData.Width &&
-               tilePos.y >= 0 && tilePos.y < _generationData.Height;
+        return tilePos.x >= 0 && tilePos.x < _generationData.GenerationDataBase.Width &&
+               tilePos.y >= 0 && tilePos.y < _generationData.GenerationDataBase.Height;
     }
 
     private bool IsTileFree(Vector3Int tilePos)

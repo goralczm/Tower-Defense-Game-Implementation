@@ -16,7 +16,7 @@ public class PathSettings : ScriptableObject
     public int RoundaboutPercentageChance = 20;
     public int MinimalTilesDistanceBetweenRoundabouts = 2;
     public int MaximumGenerationDepth = 30;
-    public bool RandomizeSeedWhenGenerationDepthExceeded;
+    public bool ExperimentalRandomizeSeedWhenGenerationDepthExceeded;
     
     public void SetRandomSteps()
     {
@@ -26,6 +26,6 @@ public class PathSettings : ScriptableObject
     private void OnValidate()
     {
         MinimalPathLength = Mathf.Min(MinimalPathLength, 60);
-        MaximumGenerationDepth = Mathf.Min(MaximumGenerationDepth, 200);
+        MaximumGenerationDepth = Mathf.Min(MaximumGenerationDepth, 2000);
     }
 }

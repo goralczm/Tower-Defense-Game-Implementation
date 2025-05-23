@@ -12,14 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eca005144104e01beb4375adab2bb8a, type: 3}
   m_Name: Simple
   m_EditorClassIdentifier: 
-  Width: 17
-  Height: 10
-  Seed: -46276
   Steps: 11869
-  StartPoint: {x: 0, y: 6}
-  MiddlePoints:
-  - {x: 8, y: 7}
-  EndPoint: {x: 16, y: 0}
   MoveRootToEnd: 1
   EnforceMinimalPathLength: 0
   MinimalPathLength: 30
@@ -28,5 +21,5 @@ MonoBehaviour:
   EnforceRoundabouts: 0
   RoundaboutPercentageChance: 20
   MinimalTilesDistanceBetweenRoundabouts: 4
-  MaximumGenerationDepth: 100
-  RandomizeSeedWhenGenerationDepthExceeded: 1
+  MaximumGenerationDepth: 500
+  ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 0

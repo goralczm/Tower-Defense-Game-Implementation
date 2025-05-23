@@ -20,6 +20,7 @@ public class EnemyGenerator : MonoBehaviour
 
     private void StartSpawner(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
     {
+        transform.position = args.StartPointWorld;
         InvokeRepeating("SpawnEnemy", 0, _intervals);
         PathGenerationDirector.OnPathGenerated -= StartSpawner;
     }

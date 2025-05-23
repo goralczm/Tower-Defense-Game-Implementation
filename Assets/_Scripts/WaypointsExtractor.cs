@@ -27,7 +27,7 @@ public class WaypointsExtractor : MonoBehaviour
     private Dictionary<(TileBase, Vector2), List<TileBase>> _cachedRules = new();
 
     public List<Vector2> GetWaypoints() => _waypoints;
-    public Vector2 SetStartPoint(Vector2 startPoint) => _startingPoint = _pathTilemap.GetCellCenterWorld(new((int)startPoint.x, (int)startPoint.y, 0));
+    public Vector2 SetStartPoint(Vector2 startPoint) => _startingPoint = startPoint;
 
     private void Start()
     {

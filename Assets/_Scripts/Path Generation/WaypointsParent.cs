@@ -27,7 +27,7 @@ public class WaypointsParent : Singleton<WaypointsParent>
 
     private void CacheWaypoints(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
     {
-        _waypointExtractor.SetStartPoint(args.StartPoint);
+        _waypointExtractor.SetStartPoint(args.StartPointWorld);
         _waypointExtractor.ExtractWaypoints();
         Waypoints = _waypointExtractor.GetWaypoints();
     }

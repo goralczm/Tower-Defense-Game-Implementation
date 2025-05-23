@@ -20,10 +20,10 @@ public class PathGenerator : MonoBehaviour
 
     public MazeGenerator GeneratePath(int depth = 0)
     {
-        MazeGenerator generator = new(_generationData.Width, _generationData.Height, _generationData.Seed);
+        MazeGenerator generator = new(_generationData.GenerationDataBase.Width, _generationData.GenerationDataBase.Height, _generationData.Seed);
         generator.GenerateMaze(_pathSettings.Steps);
 
-        foreach (var middle in _generationData.MiddlePoints)
+        foreach (var middle in _generationData.GenerationDataBase.MiddlePoints)
             generator.MoveRootToPosition(middle);
 
         if (_pathSettings.MoveRootToEnd)
@@ -57,11 +57,13 @@ public class PathGenerator : MonoBehaviour
         }
         else
         {
-            if (_pathSettings.RandomizeSeedWhenGenerationDepthExceeded)
+            if (_pathSettings.ExperimentalRandomizeSeedWhenGenerationDepthExceeded)
             {
                 _generationData.Seed = Random.Range(-100000, 100000);
                 return GeneratePath(0);
             }
+            else
+                print("Exceeded generation depth");
         }
 
 
@@ -119,11 +121,11 @@ public class PathGenerator : MonoBehaviour
     {
         if (!_debug) return;
 
-        MazeGenerator generator = new(_generationData.Width, _generationData.Height, _generationData.Seed);
+        MazeGenerator generator = new(_generationData.GenerationDataBase.Width, _generationData.GenerationDataBase.Height, _generationData.Seed);
         
         generator.GenerateMaze(_pathSettings.Steps);
 
-        foreach (var middle in _generationData.MiddlePoints)
+        foreach (var middle in _generationData.GenerationDataBase.MiddlePoints)
             generator.MoveRootToPosition(middle);
 
         if (_pathSettings.MoveRootToEnd)
@@ -147,7 +149,7 @@ public class PathGenerator : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(ToWorld(_generationData.EndPoint), _rootCellSize);
 
-        foreach (var middle in _generationData.MiddlePoints)
+        foreach (var middle in _generationData.GenerationDataBase.MiddlePoints)
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(ToWorld(middle), _rootCellSize);
