@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Path Settings/New Path Settings", fileName = "New Path Settings")]
+[CreateAssetMenu(menuName = "Path Generation/Path Settings", fileName = "New Path Settings")]
 public class PathSettings : ScriptableObject
 {
     [Header("Path Settings")]

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,14 +21,7 @@ public class PathGenerator : MonoBehaviour
 
     public MazeGenerator GeneratePath(int depth = 0)
     {
-        MazeGenerator generator = new(_generationData.GenerationDataBase.Width, _generationData.GenerationDataBase.Height, _generationData.Seed);
-        generator.GenerateMaze(_pathSettings.Steps);
-
-        foreach (var middle in _generationData.GenerationDataBase.MiddlePoints)
-            generator.MoveRootToPosition(middle);
-
-        if (_pathSettings.MoveRootToEnd)
-            generator.MoveRootToPosition(_generationData.EndPoint);
+        MazeGenerator generator = GenerateBaseMaze();
 
         if (depth < _pathSettings.MaximumGenerationDepth)
         {
@@ -59,7 +53,7 @@ public class PathGenerator : MonoBehaviour
         {
             if (_pathSettings.ExperimentalRandomizeSeedWhenGenerationDepthExceeded)
             {
-                _generationData.Seed = Random.Range(-100000, 100000);
+                _generationData.Seed = UnityEngine.Random.Range(-100000, 100000);
                 return GeneratePath(0);
             }
             else
@@ -70,6 +64,51 @@ public class PathGenerator : MonoBehaviour
         return generator;
     }
     
+    private MazeGenerator GenerateBaseMaze()
+    {
+        MazeGenerator generator = new(_generationData.GenerationDataBase.Width, _generationData.GenerationDataBase.Height, _generationData.Seed);
+        generator.GenerateMaze(_pathSettings.Steps);
+
+        List<Vector2Int> middlePointsToOmit = GetMiddlePointsToOmit();
+
+        foreach (var middle in _generationData.GenerationDataBase.MiddlePoints)
+        {
+            if (middlePointsToOmit.Contains(middle))
+                continue;
+
+            generator.MoveRootToPosition(middle);
+        }
+
+        if (_pathSettings.MoveRootToEnd)
+            generator.MoveRootToPosition(_generationData.EndPoint);
+
+        return generator;
+    }
+    
+    private List<Vector2Int> GetMiddlePointsToOmit()
+    {
+        if (!_generationData.GenerationDataBase.RandomlyOmitSomeMiddlePoints)
+            return new();
+
+        UnityEngine.Random.InitState(_generationData.Seed);
+
+        int middlePointsCount = _generationData.GenerationDataBase.MiddlePoints.Count;
+        List<Vector2Int> middlePoints = new List<Vector2Int>(_generationData.GenerationDataBase.MiddlePoints);
+        middlePoints.Shuffle(_generationData.Seed);
+        for (int i = middlePoints.Count - 1; i >= 0; i--)
+        {
+            if (middlePointsCount > _generationData.GenerationDataBase.MinimalMiddlePointsCount && Randomizer.GetRandomBool(_generationData.GenerationDataBase.MiddlePointsOmissionProbability))
+            {
+                middlePointsCount--;
+                continue;
+            }
+
+            middlePoints.RemoveAt(i);
+        }
+
+        return middlePoints;
+    }
+
     private List<Vector2> ExtractWaypoints(MazeGenerator generator)
     {
         var waypoints = new List<Vector2> { ToWorld(_generationData.StartPoint) };
@@ -121,15 +160,7 @@ public class PathGenerator : MonoBehaviour
     {
         if (!_debug) return;
 
-        MazeGenerator generator = new(_generationData.GenerationDataBase.Width, _generationData.GenerationDataBase.Height, _generationData.Seed);
-        
-        generator.GenerateMaze(_pathSettings.Steps);
-
-        foreach (var middle in _generationData.GenerationDataBase.MiddlePoints)
-            generator.MoveRootToPosition(middle);
-
-        if (_pathSettings.MoveRootToEnd)
-            generator.MoveRootToPosition(_generationData.EndPoint);
+        MazeGenerator generator = GenerateBaseMaze();
         
         var nodes = generator.GetNodes();
 
@@ -149,9 +180,14 @@ public class PathGenerator : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(ToWorld(_generationData.EndPoint), _rootCellSize);
 
+        List<Vector2Int> middlePointsToOmit = GetMiddlePointsToOmit();
+
+        Gizmos.color = Color.yellow;
         foreach (var middle in _generationData.GenerationDataBase.MiddlePoints)
         {
-            Gizmos.color = Color.yellow;
+            if (middlePointsToOmit.Contains(middle))
+                continue;
+
             Gizmos.DrawWireSphere(ToWorld(middle), _rootCellSize);
         }
 

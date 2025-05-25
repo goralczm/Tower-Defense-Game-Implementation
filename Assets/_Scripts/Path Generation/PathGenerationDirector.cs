@@ -8,10 +8,14 @@ public class PathGenerationDirector : MonoBehaviour
         public Vector2 StartPointWorld;
         public Vector2 EndPointWorld;
     }
-    
+
+    [Header("Path Settings")]
+    [SerializeField] private PathPreset _pathPreset;
+
     [Header("Path Settings")]
     [SerializeField] private PathSettings _pathSettings;
 
+    [Header("Generation Data")]
     [SerializeField] private GenerationData _generationData;
     
     [Header("Instances")]
@@ -47,8 +51,8 @@ public class PathGenerationDirector : MonoBehaviour
         
         MazeGenerator generator = _pathGenerator.GeneratePath();
 
-        SetEntranceDirection();
-        SetExitDirection();
+        _pathDisplay.SetEntranceDirection(GetAccessPointDir(_generationData.StartPoint));
+        _pathDisplay.SetExitDirection(-GetAccessPointDir(_generationData.EndPoint));
         
         _pathDisplay.GenerateTilemap(generator);
         
@@ -63,30 +67,26 @@ public class PathGenerationDirector : MonoBehaviour
         });
     }
 
-    private void SetEntranceDirection()
+    private Vector2Int GetAccessPointDir(Vector2Int accessPoint)
     {
-        Vector2Int entranceDir = Vector2Int.right;
-        if (_generationData.StartPoint.y == 0)
-            entranceDir = Vector2Int.up;
-        else if (_generationData.StartPoint.y == _generationData.GenerationDataBase.Height - 1)
-            entranceDir = Vector2Int.down;
-        
-        _pathDisplay.SetEntranceDirection(entranceDir);
-    }
-    
-    private void SetExitDirection()
-    {
-        Vector2Int exitDir = Vector2Int.right;
-        if (_generationData.EndPoint.y == 0)
-            exitDir = Vector2Int.down;
-        else if (_generationData.EndPoint.y == _generationData.GenerationDataBase.Height - 1)
-            exitDir = Vector2Int.up;
-        
-        _pathDisplay.SetExitDirection(exitDir);
+        Vector2Int accessDir = accessPoint.x == 0 ? Vector2Int.right : Vector2Int.left;
+
+        if (accessPoint.y == 0)
+            accessDir = Vector2Int.up;
+        else if (accessPoint.y == _generationData.GenerationDataBase.Height - 1)
+            accessDir = Vector2Int.down;
+
+        return accessDir;
     }
 
     private void OnValidate()
     {
+        if (_pathPreset != null)
+        {
+            _pathSettings = _pathPreset.PathSettings;
+            _generationData.GenerationDataBase = _pathPreset.GenerationDataBase;
+        }
+
         _pathGenerator.SetPathSettings(_pathSettings);
         _pathDisplay.SetPathSettings(_pathSettings);
         _pathGenerator.SetGenerationData(_generationData);

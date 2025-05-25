@@ -12,6 +12,9 @@ public class GenerationData
     {
         StartPoint = GenerationDataBase.GetRandomStartPoint();
         EndPoint = GenerationDataBase.GetRandomEndPoint();
+
+        if (StartPoint == EndPoint)
+            RandomizeStartAndEndPoints();
     }
 
     public bool IsTileOnEdge(Vector2 pos)

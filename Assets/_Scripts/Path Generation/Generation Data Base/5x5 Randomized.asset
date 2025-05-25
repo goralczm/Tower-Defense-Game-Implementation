@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd74fe0932a10c24baaf4bc726b75087, type: 3}
-  m_Name: Whole Screen Top to Bottom Center
+  m_Name: 5x5 Randomized
   m_EditorClassIdentifier: 
-  Width: 17
-  Height: 10
-  PointsStrategy: 2
-  MinStartPoint: {x: 0, y: 9}
-  MaxStartPoint: {x: 16, y: 9}
-  MinEndPoint: {x: 0, y: 0}
-  MaxEndPoint: {x: 16, y: 0}
+  Width: 5
+  Height: 5
   MiddlePoints:
   - {x: 8, y: 4}
   RandomlyOmitSomeMiddlePoints: 0
   MiddlePointsOmissionProbability: 0.2
   MinimalMiddlePointsCount: 1
+  PointsStrategy: 4
+  MinStartPoint: {x: 3, y: 1}
+  MaxStartPoint: {x: 4, y: 4}
+  MinEndPoint: {x: 4, y: 4}
+  MaxEndPoint: {x: 4, y: 4}

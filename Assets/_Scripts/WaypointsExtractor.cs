@@ -58,12 +58,20 @@ public class WaypointsExtractor : MonoBehaviour
     {
         _waypoints.Clear();
 
-        Vector2 dir = FindNextDir(_startingPoint, Vector2.right);
+        Vector2 dir = FindNextDir(_startingPoint, null);
         Vector2 end = ExtractPointsInDir(_startingPoint, dir);
 
         while (true)
         {
-            dir = FindNextDir(end, dir);
+            try
+            {
+                dir = FindNextDir(end, dir);
+            }
+            catch
+            {
+                break;
+            }
+
             Vector2 newEnd = ExtractPointsInDir(end, dir);
 
             if (newEnd == end)
@@ -73,7 +81,7 @@ public class WaypointsExtractor : MonoBehaviour
         }
     }
 
-    private Vector2 FindNextDir(Vector2 start, Vector2 lastDir)
+    private Vector2 FindNextDir(Vector2 start, Vector2? lastDir = null)
     {
         if (IsDirectionValid(start, lastDir, Vector2.right))
             return Vector2.right;
@@ -84,10 +92,10 @@ public class WaypointsExtractor : MonoBehaviour
         else if (IsDirectionValid(start, lastDir, Vector2.down))
             return Vector2.down;
 
-        return lastDir;
+        throw new System.Exception("No valid direction found from the starting point.");
     }
 
-    private bool IsDirectionValid(Vector2 start, Vector2 lastDir, Vector2 newDir)
+    private bool IsDirectionValid(Vector2 start, Vector2? lastDir, Vector2 newDir)
     {
         TileBase startTile = _pathTilemap.GetTile(_pathTilemap.WorldToCell(start));
         TileBase nextTile = _pathTilemap.GetTile(_pathTilemap.WorldToCell(start + newDir));
@@ -109,6 +117,9 @@ public class WaypointsExtractor : MonoBehaviour
                 AddWaypoint(current);
 
                 if (tile.name.Contains("Corner"))
+                    return current;
+
+                if (!IsDirectionValid(current, -dir, dir))
                     return current;
 
                 current += dir;
