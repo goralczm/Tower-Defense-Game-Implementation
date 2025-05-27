@@ -1,6 +1,8 @@
+using System;
+using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 
 public class PathDisplay : MonoBehaviour
 {
@@ -19,6 +21,12 @@ public class PathDisplay : MonoBehaviour
     [SerializeField] private Tile _rbCorner;
     [SerializeField] private Vector2Int _entranceDir;
     [SerializeField] private Vector2Int _exitDir;
+
+    [Header("Async")]
+    [SerializeField] private int _milisecondDelay = 100;
+    [SerializeField] private int _speedUpFactor = 1;
+
+    public Action<TileBase> OnTileChanged;
 
     public void SetPathSettings(PathSettings pathSettings) => _pathSettings = pathSettings;
     public void SetEntranceDirection(Vector2Int dir) { _entranceDir = dir; }
@@ -39,17 +47,59 @@ public class PathDisplay : MonoBehaviour
     }
     public void SetGenerationData(GenerationData generationData) => _generationData = generationData;
 
-    public void GenerateTilemap(MazeGenerator generator)
+    public async Task GenerateTilemap(MazeGenerator generator)
     {
-        _tilemap.ClearAllTiles();
-        DrawPath(generator);
-        DrawCorners(generator);
+        await ClearAllTiles();
+        await Task.Delay(_milisecondDelay);
+
+        await DrawPath(generator);
+        await Task.Delay(_milisecondDelay);
+
+        await DrawCorners(generator);
+        await Task.Delay(_milisecondDelay);
+
         if (_pathSettings.EnforceRoundabouts)
-            DrawRoundabouts(generator, _generationData.Seed);
+            await DrawRoundabouts(generator, _generationData.Seed);
     }
 
-    private void DrawPath(MazeGenerator generator)
+    public void FillEntireMap()
     {
+        for (int x = -1; x <= _generationData.GenerationDataBase.Width; x++)
+        {
+            for (int y = -1; y <= _generationData.GenerationDataBase.Height; y++)
+            {
+                SetTile(new(x, y), _roundabout);
+            }
+        }
+    }
+
+    public async Task ClearAllTiles()
+    {
+        int speedUp = 0;
+        BoundsInt bounds = _tilemap.cellBounds;
+
+        for (int y = bounds.yMax; y >= bounds.yMin; y--)
+        {
+            for (int x = bounds.xMin; x <= bounds.xMax; x++)
+            {
+                Vector3Int cellPos = new(x, y);
+                if (y % 2 == 0)
+                    cellPos = new(bounds.xMax - x - 1, y);
+
+                if (_tilemap.GetTile(cellPos) != null)
+                {
+                    await Task.Delay(Mathf.Max(10, (_milisecondDelay / 2) - speedUp));
+                    SetTile(cellPos, null);
+                    speedUp += _speedUpFactor;
+                }
+            }
+        }
+    }
+
+    private async Task DrawPath(MazeGenerator generator)
+    {
+        int speedUp = 0;
+
         var curr = generator.GetByCoords(_generationData.StartPoint);
         Vector2Int? prevPos = null;
 
@@ -65,16 +115,22 @@ public class PathDisplay : MonoBehaviour
                 {
                     Vector3Int overflowTile = new(pos.x - _entranceDir.x, pos.y - _entranceDir.y, 0);
                     if (_entranceDir.x != 0)
-                        _tilemap.SetTile(overflowTile, _horizontal);
+                        SetTile(overflowTile, _horizontal);
                     else if (_entranceDir.y != 0)
-                        _tilemap.SetTile(overflowTile, _vertical);
+                        SetTile(overflowTile, _vertical);
+
+                    await Task.Delay(_milisecondDelay);
                 }
             }
 
             if (dir.x != 0)
-                _tilemap.SetTile(tilePos, _horizontal);
+                SetTile(tilePos, _horizontal);
             else if (dir.y != 0)
-                _tilemap.SetTile(tilePos, _vertical);
+                SetTile(tilePos, _vertical);
+
+            await Task.Delay(Mathf.Max(10, _milisecondDelay - speedUp));
+
+            speedUp += _speedUpFactor;
 
             prevPos = pos;
             curr = curr.next;
@@ -86,23 +142,29 @@ public class PathDisplay : MonoBehaviour
             Vector2 lastDir = prevPos.Value - curr.GetPosition();
 
             if (lastDir.x != 0)
-                _tilemap.SetTile(lastTile, _horizontal);
+                SetTile(lastTile, _horizontal);
             else if (lastDir.y != 0)
-                _tilemap.SetTile(lastTile, _vertical);
+                SetTile(lastTile, _vertical);
+
+            await Task.Delay(_milisecondDelay);
 
             if (_generationData.IsTileOnEdge(curr.GetPosition()))
             {
                 Vector3Int overflowTile = new(curr.x + _exitDir.x, curr.y + _exitDir.y, 0);
                 if (_exitDir.x != 0)
-                    _tilemap.SetTile(overflowTile, _horizontal);
+                    SetTile(overflowTile, _horizontal);
                 else if (_exitDir.y != 0)
-                    _tilemap.SetTile(overflowTile, _vertical);
+                    SetTile(overflowTile, _vertical);
+
+                await Task.Delay(_milisecondDelay);
             }
         }
     }
 
-    private void DrawCorners(MazeGenerator generator)
+    private async Task DrawCorners(MazeGenerator generator)
     {
+        int speedUp = 0;
+
         var curr = generator.GetByCoords(_generationData.StartPoint);
 
         {
@@ -112,7 +174,9 @@ public class PathDisplay : MonoBehaviour
             if (_entranceDir != dir && _generationData.IsTileOnEdge(pos))
             {
                 Vector3Int cornerPos = new(_generationData.StartPoint.x, _generationData.StartPoint.y, 0);
-                _tilemap.SetTile(cornerPos, GetCornerTile(_entranceDir, dir));
+                SetTile(cornerPos, GetCornerTile(_entranceDir, dir));
+
+                await Task.Delay(_milisecondDelay);
             }
         }
 
@@ -125,7 +189,10 @@ public class PathDisplay : MonoBehaviour
             if (dir != nextDir)
             {
                 Vector3Int cornerPos = new(curr.next.x, curr.next.y, 0);
-                _tilemap.SetTile(cornerPos, GetCornerTile(dir, nextDir));
+                SetTile(cornerPos, GetCornerTile(dir, nextDir));
+
+                await Task.Delay(Mathf.Max(10, _milisecondDelay - speedUp));
+                speedUp += _speedUpFactor;
             }
 
             curr = curr.next;
@@ -140,12 +207,14 @@ public class PathDisplay : MonoBehaviour
             if (nextDir != dir && _generationData.IsTileOnEdge(pos))
             {
                 Vector3Int cornerPos = new(_generationData.EndPoint.x, _generationData.EndPoint.y, 0);
-                _tilemap.SetTile(cornerPos, GetCornerTile(dir, nextDir));
+                SetTile(cornerPos, GetCornerTile(dir, nextDir));
+
+                await Task.Delay(_milisecondDelay);
             }
         }
     }
 
-    private void DrawRoundabouts(MazeGenerator generator, int seed)
+    private async Task DrawRoundabouts(MazeGenerator generator, int seed)
     {
         UnityEngine.Random.InitState(seed);
         var curr = generator.GetByCoords(_generationData.StartPoint);
@@ -163,7 +232,7 @@ public class PathDisplay : MonoBehaviour
                 Vector3Int cornerPos = new(curr.next.x, curr.next.y, 0);
                 Tile corner = GetCornerTile(dir, nextDir);
 
-                if (GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout))
+                if (await GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout))
                     tilesAfterLastRoundabout = 0;
             }
 
@@ -172,7 +241,7 @@ public class PathDisplay : MonoBehaviour
         }
     }
 
-    private bool GenerateRoundaboutForCorner(Vector3Int cornerPos, Tile corner, int tilesAfterLastRoundabout)
+    private async Task<bool> GenerateRoundaboutForCorner(Vector3Int cornerPos, Tile corner, int tilesAfterLastRoundabout)
     {
         Vector3Int[] roundaboutOffsets = null;
 
@@ -186,11 +255,11 @@ public class PathDisplay : MonoBehaviour
             roundaboutOffsets = new Vector3Int[] { Vector3Int.left + Vector3Int.down, Vector3Int.left, Vector3Int.zero, Vector3Int.down };
         else if (corner == _rbCorner)
             roundaboutOffsets = new Vector3Int[] { Vector3Int.left, Vector3Int.left + Vector3Int.up, Vector3Int.up, Vector3Int.zero };
-        
+
         for (int i = 0; i < roundaboutOffsets.Length; i++)
         {
             if (roundaboutOffsets[i] == Vector3Int.zero) continue;
-            
+
             if (!IsTileInBounds(cornerPos + roundaboutOffsets[i]))
                 return false;
 
@@ -205,11 +274,22 @@ public class PathDisplay : MonoBehaviour
         for (int i = 0; i < roundabout.Length; i++)
         {
             Vector3Int offsetedCorner = cornerPos + roundaboutOffsets[i];
-            _tilemap.SetTile(offsetedCorner, roundabout[i]);
+            SetTile(offsetedCorner, roundabout[i]);
+
+            await Task.Delay(_milisecondDelay / 2);
         }
 
-        _tilemap.SetTile(cornerPos, _roundabout);
+        SetTile(cornerPos, _roundabout);
+        await Task.Delay(_milisecondDelay);
+
         return true;
+    }
+
+    private void SetTile(Vector3Int tilePos, TileBase tileBase)
+    {
+        _tilemap.SetTile(tilePos, tileBase);
+
+        OnTileChanged?.Invoke(tileBase);
     }
 
     private bool IsTileInBounds(Vector3Int tilePos)

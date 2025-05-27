@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PathGenerationDirector : MonoBehaviour
@@ -25,24 +26,24 @@ public class PathGenerationDirector : MonoBehaviour
 
     public static EventHandler<OnPathGeneratedEventArgs> OnPathGenerated;
 
-    private void Update()
+    private async void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
-            GenerateWithNewSeed();
+            await GenerateWithNewSeed();
         
         if (Input.GetKeyDown(KeyCode.Space))
-            RegeneratePath();
+            await RegeneratePath();
     }
 
-    public void GenerateWithNewSeed()
+    public async Task GenerateWithNewSeed()
     {
         _generationData.Seed = UnityEngine.Random.Range(-100000, 100000);
         _generationData.RandomizeStartAndEndPoints();
         
-        RegeneratePath();
+        await RegeneratePath();
     }
     
-    public void RegeneratePath()
+    public async Task RegeneratePath()
     {
         _pathGenerator.SetGenerationData(_generationData);
         _pathDisplay.SetGenerationData(_generationData);
@@ -54,7 +55,7 @@ public class PathGenerationDirector : MonoBehaviour
         _pathDisplay.SetEntranceDirection(GetAccessPointDir(_generationData.StartPoint));
         _pathDisplay.SetExitDirection(-GetAccessPointDir(_generationData.EndPoint));
         
-        _pathDisplay.GenerateTilemap(generator);
+        await _pathDisplay.GenerateTilemap(generator);
         
         _waypointsExtractor.CacheRules();
         _waypointsExtractor.SetStartPoint(_pathDisplay.GetStartPointWorld());

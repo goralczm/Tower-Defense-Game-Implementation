@@ -100,7 +100,19 @@ public class WaypointsExtractor : MonoBehaviour
         TileBase startTile = _pathTilemap.GetTile(_pathTilemap.WorldToCell(start));
         TileBase nextTile = _pathTilemap.GetTile(_pathTilemap.WorldToCell(start + newDir));
 
-        return lastDir != -newDir && nextTile != null && _cachedRules.ContainsKey((startTile, newDir)) && _cachedRules[(startTile, newDir)].Contains(nextTile);
+        if (lastDir == -newDir)
+            return false;
+
+        if (nextTile == null)
+            return false;
+
+        if (!_cachedRules.ContainsKey((startTile, newDir)))
+            return false;
+
+        if (!_cachedRules[(startTile, newDir)].Contains(nextTile))
+            return false;
+
+        return true;
     }
 
     private Vector2 ExtractPointsInDir(Vector2 current, Vector2 dir)
@@ -119,7 +131,7 @@ public class WaypointsExtractor : MonoBehaviour
                 if (tile.name.Contains("Corner"))
                     return current;
 
-                if (!IsDirectionValid(current, -dir, dir))
+                if (!tile.name.ToLower().Contains("roundabout") && !IsDirectionValid(current, -dir, dir))
                     return current;
 
                 current += dir;
@@ -131,7 +143,7 @@ public class WaypointsExtractor : MonoBehaviour
 
     private void AddWaypoint(Vector2 waypoint)
     {
-        if (_waypoints.Contains(waypoint) && !_pathTilemap.GetTile(_pathTilemap.WorldToCell(waypoint)).name.Contains("Roundabout"))
+        if (_waypoints.Contains(waypoint) && !_pathTilemap.GetTile(_pathTilemap.WorldToCell(waypoint)).name.ToLower().Contains("roundabout"))
             return;
 
         _waypoints.Add(waypoint);
