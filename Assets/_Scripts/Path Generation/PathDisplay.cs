@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -88,7 +89,7 @@ public class PathDisplay : MonoBehaviour
 
                 if (_tilemap.GetTile(cellPos) != null)
                 {
-                    await Task.Delay(Mathf.Max(10, (_milisecondDelay / 2) - speedUp));
+                    await Task.Delay(Mathf.Max(0, (_milisecondDelay / 2) - speedUp));
                     SetTile(cellPos, null);
                     speedUp += _speedUpFactor;
                 }
@@ -128,7 +129,7 @@ public class PathDisplay : MonoBehaviour
             else if (dir.y != 0)
                 SetTile(tilePos, _vertical);
 
-            await Task.Delay(Mathf.Max(10, _milisecondDelay - speedUp));
+            await Task.Delay(Mathf.Max(0, _milisecondDelay - speedUp));
 
             speedUp += _speedUpFactor;
 
@@ -191,7 +192,7 @@ public class PathDisplay : MonoBehaviour
                 Vector3Int cornerPos = new(curr.next.x, curr.next.y, 0);
                 SetTile(cornerPos, GetCornerTile(dir, nextDir));
 
-                await Task.Delay(Mathf.Max(10, _milisecondDelay - speedUp));
+                await Task.Delay(Mathf.Max(0, _milisecondDelay - speedUp));
                 speedUp += _speedUpFactor;
             }
 
@@ -232,12 +233,121 @@ public class PathDisplay : MonoBehaviour
                 Vector3Int cornerPos = new(curr.next.x, curr.next.y, 0);
                 Tile corner = GetCornerTile(dir, nextDir);
 
-                if (await GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout))
-                    tilesAfterLastRoundabout = 0;
+                if (_pathSettings.RandomizeRoundaboutSize)
+                {
+                    int randomSize = UnityEngine.Random.Range(2, _pathSettings.BiggestRoundaboutSize + 1);
+                    for (int i = randomSize; i >= 2; i--)
+                    {
+                        if (await GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout, i))
+                        {
+                            tilesAfterLastRoundabout = 0;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = _pathSettings.BiggestRoundaboutSize; i >= 2; i--)
+                    {
+                        if (await GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout, i))
+                        {
+                            tilesAfterLastRoundabout = 0;
+                            break;
+                        }
+                    }
+                }
             }
 
             curr = curr.next;
             tilesAfterLastRoundabout++;
+        }
+    }
+
+    private async Task<bool> GenerateRoundaboutForCorner(Vector3Int cornerPos, Tile corner, int tilesAfterLastRoundabout, int size)
+    {
+        Tile[] corners = new[] { _rtCorner, _rbCorner, _lbCorner, _ltCorner };
+        int orient = Array.IndexOf(corners, corner);
+        if (orient < 0)
+            throw new ArgumentException("Invalid corner tile", nameof(corner));
+
+        List<Vector3Int> offsets = new List<Vector3Int>();
+        for (int x = 0; x < size; x++)
+            for (int y = 0; y < size; y++)
+                if (x != 0 || y != 0)
+                    offsets.Add(new Vector3Int(x, -y, 0));
+
+        foreach (var off in offsets)
+        {
+            var pos = cornerPos + RotateOffset(off, orient, size);
+            if (!IsTileInBounds(pos) || !IsTileFree(pos))
+                return false;
+        }
+
+        if (tilesAfterLastRoundabout < _pathSettings.MinimalTilesDistanceBetweenRoundabouts)
+            return false;
+
+        if (UnityEngine.Random.Range(0, 100) > _pathSettings.RoundaboutPercentageChance)
+            return false;
+
+        Vector3Int offsetInt = RotateOffset(offsets[^1], orient, size);
+        Vector2 offset = new(Mathf.Sign(offsetInt.x), Mathf.Sign(offsetInt.y));
+        Vector2 centerOffset = offset * .5f * (size - 1);
+        Vector2 center = new Vector2(cornerPos.x + centerOffset.x, cornerPos.y + centerOffset.y);
+        Vector2 diagonalCorner = center + centerOffset;
+
+        for (int x = 0; x < size; x++)
+        {
+            for (int y = 0; y < size; y++)
+            {
+                var local = new Vector3Int(x, -y, 0);
+                var world = cornerPos + RotateOffset(local, orient, size);
+                Tile toPlace = null;
+
+                if (world.x == cornerPos.x || world.y == cornerPos.y || world.x == diagonalCorner.x || world.y == diagonalCorner.y)
+                {
+                    if (world.x == cornerPos.x && (world.y == diagonalCorner.y || world.y == cornerPos.y) ||
+                        world.y == cornerPos.y && (world.x == diagonalCorner.x || world.x == cornerPos.x) ||
+                        (world.x == diagonalCorner.x && world.y == diagonalCorner.y))
+                    {
+                        bool isLT = world.x > center.x && world.y < center.y;
+                        bool isRT = world.x < center.x && world.y < center.y;
+                        bool isRB = world.x < center.x && world.y > center.y;
+                        bool isLB = world.x > center.x && world.y > center.y;
+
+                        if (isLT) toPlace = corners[3];
+                        if (isRT) toPlace = corners[0];
+                        if (isRB) toPlace = corners[1];
+                        if (isLB) toPlace = corners[2];
+                    }
+                    else
+                    {
+                        bool isHorizontal = world.y == cornerPos.y || world.y == diagonalCorner.y;
+                        bool isVertical = world.x == cornerPos.x || world.x == diagonalCorner.x;
+
+                        if (isHorizontal) toPlace = _horizontal;
+                        if (isVertical) toPlace = _vertical;
+                    }
+
+                    SetTile(world, toPlace);
+                    await Task.Delay(_milisecondDelay / 2);
+                }
+            }
+        }
+
+        SetTile(cornerPos, _roundabout);
+
+        return true;
+    }
+
+    private Vector3Int RotateOffset(Vector3Int local, int orient, int size)
+    {
+        switch (orient)
+        {
+            case 3: return local;
+            case 2: return new Vector3Int(local.x, -local.y, 0);
+            case 1: return new Vector3Int(-local.x, -local.y, 0);
+            case 0: return new Vector3Int(-local.x, local.y, 0);
+            default: return local;
         }
     }
 

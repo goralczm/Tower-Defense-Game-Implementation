@@ -17,9 +17,11 @@ MonoBehaviour:
   EnforceMinimalPathLength: 1
   MinimalPathLength: 30
   EnforceMaximumStraightTilesInRow: 1
-  MaximumStraightTilesInRow: 3
+  MaximumStraightTilesInRow: 4
   EnforceRoundabouts: 1
-  RoundaboutPercentageChance: 20
+  BiggestRoundaboutSize: 4
+  RandomizeRoundaboutSize: 0
+  RoundaboutPercentageChance: 35
   MinimalTilesDistanceBetweenRoundabouts: 4
   MaximumGenerationDepth: 500
   ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 0

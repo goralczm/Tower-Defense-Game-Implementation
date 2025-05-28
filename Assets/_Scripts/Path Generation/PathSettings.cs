@@ -12,6 +12,8 @@ public class PathSettings : ScriptableObject
     public bool EnforceMaximumStraightTilesInRow = false;
     public int MaximumStraightTilesInRow = 5;
     public bool EnforceRoundabouts = true;
+    public int BiggestRoundaboutSize = 4;
+    public bool RandomizeRoundaboutSize = true;
     public int RoundaboutPercentageChance = 20;
     public int MinimalTilesDistanceBetweenRoundabouts = 2;
     public int MaximumGenerationDepth = 30;

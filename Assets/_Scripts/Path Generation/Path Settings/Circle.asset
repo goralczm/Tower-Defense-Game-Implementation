@@ -19,7 +19,9 @@ MonoBehaviour:
   EnforceMaximumStraightTilesInRow: 0
   MaximumStraightTilesInRow: 3
   EnforceRoundabouts: 1
-  RoundaboutPercentageChance: 10
+  BiggestRoundaboutSize: 6
+  RandomizeRoundaboutSize: 1
+  RoundaboutPercentageChance: 25
   MinimalTilesDistanceBetweenRoundabouts: 0
   MaximumGenerationDepth: 500
   ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 0

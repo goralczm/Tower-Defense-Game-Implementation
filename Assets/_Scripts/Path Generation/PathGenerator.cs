@@ -42,7 +42,7 @@ public class PathGenerator : MonoBehaviour
             {
                 float longest = CalculateLongestStraightSection(waypoints);
 
-                if (longest > _pathSettings.MaximumStraightTilesInRow)
+                if (longest > _pathSettings.MaximumStraightTilesInRow - 1)
                 {
                     _generationData.Seed++;
                     return GeneratePath(depth + 1);

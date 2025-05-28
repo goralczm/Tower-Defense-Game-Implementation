@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Default Roundabouts
   m_EditorClassIdentifier: 
   PathSettings: {fileID: 11400000, guid: 65dc4c234f5fb22418f1d13c3e34ce17, type: 2}
-  GenerationDataBase: {fileID: 11400000, guid: 1d8d2d1ff43269142946433b16664d74, type: 2}
+  GenerationDataBase: {fileID: 11400000, guid: 7cb2e4b9a2a2abd4d8e64c5b9a103879, type: 2}
