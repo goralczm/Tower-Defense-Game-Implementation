@@ -237,35 +237,9 @@ public class PathDisplay : MonoBehaviour
                 if (UnityEngine.Random.Range(0, 101) <= _pathSettings.RoundaboutPercentageChance)
                 {
                     if (_pathSettings.RandomizeRoundaboutSize)
-                    {
-                        List<int> randomSizes = new();
-                        
-                        for (int i = 2; i <= _pathSettings.BiggestRoundaboutSize; i++) {
-                            randomSizes.Add(i);
-                        }
-                        
-                        randomSizes.Shuffle();
-
-                        for (int i = 0; i < randomSizes.Count; i++)
-                        {
-                            if (await GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout, randomSizes[i]))
-                            {
-                                tilesAfterLastRoundabout = 0;
-                                break;
-                            }
-                        }
-                    }
+                        tilesAfterLastRoundabout = await GenerateRandomRoundabout(cornerPos, corner, tilesAfterLastRoundabout);
                     else
-                    {
-                        for (int i = _pathSettings.BiggestRoundaboutSize; i >= 2; i--)
-                        {
-                            if (await GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout, i))
-                            {
-                                tilesAfterLastRoundabout = 0;
-                                break;
-                            }
-                        }
-                    }
+                        tilesAfterLastRoundabout = await GenerateBiggestRoundabout(cornerPos, corner, tilesAfterLastRoundabout);
                 }
             }
 
@@ -274,6 +248,40 @@ public class PathDisplay : MonoBehaviour
         }
     }
 
+    private async Task<int> GenerateRandomRoundabout(Vector3Int cornerPos, Tile corner, int tilesAfterLastRoundabout)
+    {
+        List<int> randomSizes = new();
+                        
+        for (int i = 2; i <= _pathSettings.BiggestRoundaboutSize; i++) {
+            randomSizes.Add(i);
+        }
+                        
+        randomSizes.Shuffle();
+
+        for (int i = 0; i < randomSizes.Count; i++)
+        {
+            if (await GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout, randomSizes[i]))
+            {
+                return 0;
+            }
+        }
+
+        return tilesAfterLastRoundabout;
+    }
+
+    private async Task<int> GenerateBiggestRoundabout(Vector3Int cornerPos, Tile corner, int tilesAfterLastRoundabout)
+    {
+        for (int i = _pathSettings.BiggestRoundaboutSize; i >= 2; i--)
+        {
+            if (await GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout, i))
+            {
+                return 0;
+            }
+        }
+
+        return tilesAfterLastRoundabout;
+    }
+    
     private async Task<bool> GenerateRoundaboutForCorner(Vector3Int cornerPos, Tile corner, int tilesAfterLastRoundabout, int size)
     {
         if (tilesAfterLastRoundabout < _pathSettings.MinimalTilesDistanceBetweenRoundabouts)
