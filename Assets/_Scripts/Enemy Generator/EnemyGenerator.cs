@@ -10,14 +10,21 @@ public class EnemyGenerator : MonoBehaviour
 
     private void Start()
     {
-        PathGenerationDirector.OnPathGenerated += MoveSpawner;
-        PathGenerationDirector.OnPathGenerated += StartSpawner;
+        PathGenerationDirector.OnPathGenerationStarted += StopSpawner;
+        PathGenerationDirector.OnPathGenerationEnded += MoveSpawner;
+        PathGenerationDirector.OnPathGenerationEnded += StartSpawner;
     }
 
     private void OnDisable()
     {
-        PathGenerationDirector.OnPathGenerated -= MoveSpawner;
-        PathGenerationDirector.OnPathGenerated -= StartSpawner;
+        PathGenerationDirector.OnPathGenerationStarted -= StopSpawner;
+        PathGenerationDirector.OnPathGenerationEnded -= MoveSpawner;
+        PathGenerationDirector.OnPathGenerationEnded -= StartSpawner;
+    }
+    
+    private void StopSpawner(object sender, EventArgs e)
+    {
+        CancelInvoke();
     }
 
     private void MoveSpawner(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
@@ -29,7 +36,6 @@ public class EnemyGenerator : MonoBehaviour
     private void StartSpawner(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
     {
         InvokeRepeating("SpawnEnemy", 0, _intervals);
-        PathGenerationDirector.OnPathGenerated -= StartSpawner;
     }
 
     public void SpawnEnemy()

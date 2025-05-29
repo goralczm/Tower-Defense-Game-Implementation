@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PathGenerationDirector : MonoBehaviour
@@ -24,7 +25,8 @@ public class PathGenerationDirector : MonoBehaviour
     [SerializeField] private PathDisplay _pathDisplay;
     [SerializeField] private WaypointsExtractor _waypointsExtractor;
 
-    public static EventHandler<OnPathGeneratedEventArgs> OnPathGenerated;
+    public static EventHandler OnPathGenerationStarted;
+    public static EventHandler<OnPathGeneratedEventArgs> OnPathGenerationEnded;
 
     private async void Update()
     {
@@ -45,11 +47,13 @@ public class PathGenerationDirector : MonoBehaviour
     
     public async Task RegeneratePath()
     {
+        OnPathGenerationStarted?.Invoke(this, EventArgs.Empty);
+        
         _pathGenerator.SetGenerationData(_generationData);
         _pathDisplay.SetGenerationData(_generationData);
         _pathGenerator.SetPathSettings(_pathSettings);
         _pathDisplay.SetPathSettings(_pathSettings);
-        
+
         MazeGenerator generator = _pathGenerator.GeneratePath();
 
         _pathDisplay.SetEntranceDirection(GetAccessPointDir(_generationData.StartPoint));
@@ -61,7 +65,7 @@ public class PathGenerationDirector : MonoBehaviour
         _waypointsExtractor.SetStartPoint(_pathDisplay.GetStartPointWorld());
         _waypointsExtractor.ExtractWaypoints();
         
-        OnPathGenerated?.Invoke(this, new OnPathGeneratedEventArgs
+        OnPathGenerationEnded?.Invoke(this, new OnPathGeneratedEventArgs
         {
             StartPointWorld = _pathDisplay.GetStartPointWorld(),
             EndPointWorld = _pathDisplay.GetEndPointWorld()

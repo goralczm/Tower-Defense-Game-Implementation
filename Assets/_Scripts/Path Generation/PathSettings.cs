@@ -4,18 +4,21 @@ using UnityEngine;
 public class PathSettings : ScriptableObject
 {
     [Header("Path Settings")]
-    public int Steps = 10000;
-    
     public bool MoveRootToEnd = true;
     public bool EnforceMinimalPathLength = false;
     public float MinimalPathLength = 0;
     public bool EnforceMaximumStraightTilesInRow = false;
     public int MaximumStraightTilesInRow = 5;
+    
+    [Header("Roundabouts")]
     public bool EnforceRoundabouts = true;
     public int BiggestRoundaboutSize = 4;
     public bool RandomizeRoundaboutSize = true;
     public int RoundaboutPercentageChance = 20;
     public int MinimalTilesDistanceBetweenRoundabouts = 2;
+    
+    [Header("Generation")]
+    public int Steps = 10000;
     public int MaximumGenerationDepth = 30;
     public bool ExperimentalRandomizeSeedWhenGenerationDepthExceeded;
     
