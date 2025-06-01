@@ -1,6 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 
 public class PathGenerationDirector : MonoBehaviour
@@ -10,6 +11,9 @@ public class PathGenerationDirector : MonoBehaviour
         public Vector2 StartPointWorld;
         public Vector2 EndPointWorld;
     }
+
+    [SerializeField] private PathPreset[] _presets;
+    [SerializeField] private TMP_Dropdown _presetsDropdown;
 
     [Header("Path Settings")]
     [SerializeField] private PathPreset _pathPreset;
@@ -27,6 +31,20 @@ public class PathGenerationDirector : MonoBehaviour
 
     public static EventHandler OnPathGenerationStarted;
     public static EventHandler<OnPathGeneratedEventArgs> OnPathGenerationEnded;
+
+    private void Awake()
+    {
+        _presetsDropdown.ClearOptions();
+
+        List<TMP_Dropdown.OptionData> options = new();
+        foreach (var preset in _presets)
+        {
+            options.Add(new(preset.name));
+        }
+
+        _presetsDropdown.AddOptions(options);
+        _presetsDropdown.RefreshShownValue();
+    }
 
     private async void Update()
     {
@@ -82,6 +100,12 @@ public class PathGenerationDirector : MonoBehaviour
             accessDir = Vector2Int.down;
 
         return accessDir;
+    }
+
+    public void SetPresetByIndex(int index)
+    {
+        _pathPreset = _presets[index];
+        OnValidate();
     }
 
     private void OnValidate()

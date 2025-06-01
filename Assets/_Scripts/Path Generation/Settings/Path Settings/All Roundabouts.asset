@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eca005144104e01beb4375adab2bb8a, type: 3}
   m_Name: All Roundabouts
   m_EditorClassIdentifier: 
-  Steps: 11869
   MoveRootToEnd: 1
   EnforceMinimalPathLength: 1
   MinimalPathLength: 30
-  EnforceMaximumStraightTilesInRow: 0
-  MaximumStraightTilesInRow: 3
+  EnforceMaximumStraightTilesInRow: 1
+  MaximumStraightTilesInRow: 5
   EnforceRoundabouts: 1
   BiggestRoundaboutSize: 5
-  RandomizeRoundaboutSize: 1
+  RandomizeRoundaboutSize: 0
   RoundaboutPercentageChance: 100
   MinimalTilesDistanceBetweenRoundabouts: 0
+  Steps: 11869
   MaximumGenerationDepth: 500
   ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 0
