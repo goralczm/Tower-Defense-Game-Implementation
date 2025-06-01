@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -46,6 +45,12 @@ public class PathDisplay : MonoBehaviour
             return _tilemap.GetCellCenterWorld(new(_generationData.EndPoint.x - _exitDir.x, _generationData.EndPoint.y - _exitDir.y));
 
         return _tilemap.GetCellCenterWorld(new(_generationData.EndPoint.x, _generationData.EndPoint.y));
+    }
+    public Bounds GetBounds()
+    {
+        return new Bounds(
+            new Vector3(_generationData.GenerationDataBase.Width / 2f, _generationData.GenerationDataBase.Height / 2f, 0) + transform.position,
+            new Vector3(_generationData.GenerationDataBase.Width + 1, _generationData.GenerationDataBase.Height + 1, 0));
     }
     public void SetGenerationData(GenerationData generationData) => _generationData = generationData;
 
@@ -251,19 +256,18 @@ public class PathDisplay : MonoBehaviour
     private async Task<int> GenerateRandomRoundabout(Vector3Int cornerPos, Tile corner, int tilesAfterLastRoundabout)
     {
         List<int> randomSizes = new();
-                        
-        for (int i = 2; i <= _pathSettings.BiggestRoundaboutSize; i++) {
+
+        for (int i = 2; i <= _pathSettings.BiggestRoundaboutSize; i++)
+        {
             randomSizes.Add(i);
         }
-                        
+
         randomSizes.Shuffle();
 
         for (int i = 0; i < randomSizes.Count; i++)
         {
             if (await GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout, randomSizes[i]))
-            {
                 return 0;
-            }
         }
 
         return tilesAfterLastRoundabout;
@@ -274,19 +278,17 @@ public class PathDisplay : MonoBehaviour
         for (int i = _pathSettings.BiggestRoundaboutSize; i >= 2; i--)
         {
             if (await GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout, i))
-            {
                 return 0;
-            }
         }
 
         return tilesAfterLastRoundabout;
     }
-    
+
     private async Task<bool> GenerateRoundaboutForCorner(Vector3Int cornerPos, Tile corner, int tilesAfterLastRoundabout, int size)
     {
         if (tilesAfterLastRoundabout < _pathSettings.MinimalTilesDistanceBetweenRoundabouts)
             return false;
-        
+
         Tile[] corners = new[] { _rtCorner, _rbCorner, _lbCorner, _ltCorner };
         int orient = Array.IndexOf(corners, corner);
         if (orient < 0)
@@ -309,7 +311,7 @@ public class PathDisplay : MonoBehaviour
         }
 
         // diagonal = corner + offsetInt) * .5f
-        
+
         Vector3Int offsetInt = RotateOffset(offsets[^1], orient, size);
         Vector2 offset = new(Mathf.Sign(offsetInt.x), Mathf.Sign(offsetInt.y));
         Vector2 centerOffset = offset * .5f * (size - 1);
