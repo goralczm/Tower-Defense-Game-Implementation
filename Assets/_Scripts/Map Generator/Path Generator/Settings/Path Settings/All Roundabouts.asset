@@ -20,8 +20,10 @@ MonoBehaviour:
   EnforceRoundabouts: 1
   BiggestRoundaboutSize: 5
   RandomizeRoundaboutSize: 0
-  RoundaboutPercentageChance: 100
+  RoundaboutProbability: 1
   MinimalTilesDistanceBetweenRoundabouts: 0
   Steps: 11869
   MaximumGenerationDepth: 500
   ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 0
+  OmitNeighborProbability: 0.55
+  NoiseThreshold: 0.13

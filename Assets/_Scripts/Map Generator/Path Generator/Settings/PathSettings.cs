@@ -12,16 +12,20 @@ public class PathSettings : ScriptableObject
     
     [Header("Roundabouts")]
     public bool EnforceRoundabouts = true;
-    public int BiggestRoundaboutSize = 4;
+    [Range(2, 10)] public int BiggestRoundaboutSize = 4;
     public bool RandomizeRoundaboutSize = true;
-    public int RoundaboutPercentageChance = 20;
+    [Range(0f, 1f)] public float RoundaboutProbability = .2f;
     public int MinimalTilesDistanceBetweenRoundabouts = 2;
     
     [Header("Generation")]
     public int Steps = 10000;
     public int MaximumGenerationDepth = 30;
     public bool ExperimentalRandomizeSeedWhenGenerationDepthExceeded;
-    
+
+    [Header("Environment")]
+    [Range(0f, 1f)] public float OmitNeighborProbability = .2f;
+    [Range(0f, 1f)] public float NoiseThreshold = .5f;
+
     public void SetRandomSteps()
     {
         Steps = Random.Range(10000, 20000);

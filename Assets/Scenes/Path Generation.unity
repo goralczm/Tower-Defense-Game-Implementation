@@ -994,9 +994,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b4d241e31671246b82626080cd8ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _randomChance: 0
+  _noiseSettings: {fileID: 11400000, guid: 96db48527d0f8264e9a598dfa7eff8e8, type: 2}
   _tilemap: {fileID: 1110981290}
   _debug: 1
+  _debugView: 2
 --- !u!1 &649244431
 GameObject:
   m_ObjectHideFlags: 0
@@ -4909,8 +4910,8 @@ MonoBehaviour:
   _rbCorner: {fileID: 11400000, guid: 12f0a9eea3e9d7445be36d0f42841a2f, type: 2}
   _entranceDir: {x: 1, y: 0}
   _exitDir: {x: 1, y: 0}
-  _milisecondDelay: 50
-  _minDelay: 5
+  _milisecondDelay: 0
+  _minDelay: 0
   _speedUpFactor: 1
 --- !u!114 &1110981294
 MonoBehaviour:

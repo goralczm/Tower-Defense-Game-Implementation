@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,18 +10,27 @@ public enum TileState
     Occupied
 }
 
+public enum DebugView
+{
+    Heatmap,
+    Noise,
+    NoiseAndHeatmap
+}
+
 public class EnvironmentGenerator : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField, Range(0f, 1f)] private float _randomChance = .2f;
+    [Header("Noise Settings")]
+    [SerializeField] private NoiseSettings _noiseSettings;
 
     [Header("References")]
     [SerializeField] private Tilemap _tilemap;
 
     [Header("Debug")]
     [SerializeField] private bool _debug;
+    [SerializeField] private DebugView _debugView;
 
     private Dictionary<Vector2, TileState> _tilesOccupancyMap = new();
+    private PathSettings _pathSettings;
 
     private void OnEnable()
     {
@@ -34,7 +44,9 @@ public class EnvironmentGenerator : MonoBehaviour
 
     private void GenerateEnvironment(object sender, PathGenerationDirector.OnPathGeneratedEventArgs e)
     {
-        UnityEngine.Random.InitState(e.Seed);
+        UnityEngine.Random.InitState(e.GenerationData.Seed);
+        _noiseSettings.Seed = e.GenerationData.Seed;
+        _pathSettings = e.PathPreset.PathSettings;
 
         _tilesOccupancyMap.Clear();
 
@@ -48,20 +60,20 @@ public class EnvironmentGenerator : MonoBehaviour
                 Vector2 tileCenterPos = _tilemap.GetCellCenterWorld(tileWorldPosition);
 
                 if (tile != null)
-                    SetOccupied(tileCenterPos);
+                    SetOccupied(tileCenterPos, e.PathPreset.PathSettings.OmitNeighborProbability);
                 else
                     SetFree(tileCenterPos);
             }
         }
     }
 
-    private void SetOccupied(Vector2 pos)
+    private void SetOccupied(Vector2 pos, float omitProbability)
     {
         _tilesOccupancyMap[pos] = TileState.Occupied;
 
         foreach (var neighbor in GetNeighbors(pos))
         {
-            if (Randomizer.GetRandomBool(1 - _randomChance)) continue;
+            if (Randomizer.GetRandomBool(omitProbability)) continue;
 
             if (!_tilesOccupancyMap.ContainsKey(neighbor))
                 _tilesOccupancyMap[neighbor] = TileState.Neighbor;
@@ -97,23 +109,84 @@ public class EnvironmentGenerator : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!_debug) return;
+        if (!_debug || _pathSettings == null) return;
 
-        foreach (var occupancy in _tilesOccupancyMap)
+        float maxX = 0;
+        float maxY = 0;
+        float[,] noise;
+
+        switch (_debugView)
         {
-            switch (occupancy.Value)
-            {
-                case TileState.Free:
-                    Gizmos.color = Color.green;
-                    break;
-                case TileState.Neighbor:
-                    Gizmos.color = Color.yellow;
-                    break;
-                case TileState.Occupied:
-                    Gizmos.color = Color.red;
-                    break;
-            }
-            Gizmos.DrawCube(occupancy.Key, _tilemap.cellSize);
+            case DebugView.Heatmap:
+                foreach (var occupancy in _tilesOccupancyMap)
+                {
+                    switch (occupancy.Value)
+                    {
+                        case TileState.Free:
+                            Gizmos.color = Color.green;
+                            break;
+                        case TileState.Neighbor:
+                            Gizmos.color = Color.yellow;
+                            break;
+                        case TileState.Occupied:
+                            Gizmos.color = Color.red;
+                            break;
+                    }
+                    Gizmos.DrawCube(occupancy.Key, _tilemap.cellSize);
+                }
+                break;
+            case DebugView.Noise:
+                if (_tilesOccupancyMap.Keys.Count > 0)
+                {
+                    maxX = _tilesOccupancyMap.Keys.Max(k => k.x);
+                    maxY = _tilesOccupancyMap.Keys.Max(k => k.y);
+                }
+
+                noise = NoiseGenerator.GenerateNoise(_noiseSettings);
+
+                for (int y = 0; y < _noiseSettings.Height; y++)
+                {
+                    for (int x = 0; x < _noiseSettings.Width; x++)
+                    {
+                        float noiseValue = noise[x, y];
+                        Vector2 cellPos = _tilemap.GetCellCenterWorld(_tilemap.WorldToCell(new Vector3(x - maxX, y - maxY, 0)));
+
+                        if (noiseValue >= _pathSettings.NoiseThreshold)
+                            Gizmos.color = Color.red;
+                        else
+                            Gizmos.color = Color.green;
+
+                        Gizmos.DrawCube(cellPos, _tilemap.cellSize);
+                    }
+                }
+                break;
+            case DebugView.NoiseAndHeatmap:
+                if (_tilesOccupancyMap.Keys.Count > 0)
+                {
+                    maxX = _tilesOccupancyMap.Keys.Max(k => k.x);
+                    maxY = _tilesOccupancyMap.Keys.Max(k => k.y);
+                }
+
+                noise = NoiseGenerator.GenerateNoise(_noiseSettings);
+
+                for (int y = 0; y < _noiseSettings.Height; y++)
+                {
+                    for (int x = 0; x < _noiseSettings.Width; x++)
+                    {
+                        float noiseValue = noise[x, y];
+                        Vector2 cellPos = _tilemap.GetCellCenterWorld(_tilemap.WorldToCell(new Vector3(x - maxX, y - maxY, 0)));
+
+                        if (_tilesOccupancyMap.ContainsKey(cellPos) && _tilesOccupancyMap[cellPos] == TileState.Free)
+                        {
+                            if (noiseValue >= _pathSettings.NoiseThreshold)
+                            {
+                                Gizmos.color = Color.red;
+                                Gizmos.DrawCube(cellPos, _tilemap.cellSize);
+                            }
+                        }
+                    }
+                }
+                break;
         }
     }
 }

@@ -239,7 +239,7 @@ public class PathDisplay : MonoBehaviour
                 Vector3Int cornerPos = new(curr.next.x, curr.next.y, 0);
                 Tile corner = GetCornerTile(dir, nextDir);
 
-                if (UnityEngine.Random.Range(0, 101) <= _pathSettings.RoundaboutPercentageChance)
+                if (Randomizer.GetRandomBool(_pathSettings.RoundaboutProbability))
                 {
                     if (_pathSettings.RandomizeRoundaboutSize)
                         tilesAfterLastRoundabout = await GenerateRandomRoundabout(cornerPos, corner, tilesAfterLastRoundabout);
@@ -402,7 +402,7 @@ public class PathDisplay : MonoBehaviour
 
         if (tilesAfterLastRoundabout < _pathSettings.MinimalTilesDistanceBetweenRoundabouts) return false;
 
-        if (UnityEngine.Random.Range(0, 101) > _pathSettings.RoundaboutPercentageChance) return false;
+        if (UnityEngine.Random.Range(0, 101) > _pathSettings.RoundaboutProbability) return false;
 
         for (int i = 0; i < roundabout.Length; i++)
         {

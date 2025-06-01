@@ -11,7 +11,8 @@ public class PathGenerationDirector : MonoBehaviour
         public Vector2 StartPointWorld;
         public Vector2 EndPointWorld;
         public Bounds Bounds;
-        public int Seed;
+        public PathPreset PathPreset;
+        public GenerationData GenerationData;
     }
 
     [SerializeField] private PathPreset[] _presets;
@@ -90,7 +91,8 @@ public class PathGenerationDirector : MonoBehaviour
             StartPointWorld = _pathDisplay.GetStartPointWorld(),
             EndPointWorld = _pathDisplay.GetEndPointWorld(),
             Bounds = _pathDisplay.GetBounds(),
-            Seed = _generationData.Seed
+            PathPreset = _pathPreset,
+            GenerationData = _generationData
         });
     }
 

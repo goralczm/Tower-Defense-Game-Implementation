@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eca005144104e01beb4375adab2bb8a, type: 3}
   m_Name: Circle
   m_EditorClassIdentifier: 
-  Steps: 11869
   MoveRootToEnd: 1
   EnforceMinimalPathLength: 1
   MinimalPathLength: 40
@@ -21,7 +20,10 @@ MonoBehaviour:
   EnforceRoundabouts: 1
   BiggestRoundaboutSize: 6
   RandomizeRoundaboutSize: 1
-  RoundaboutPercentageChance: 25
+  RoundaboutProbability: 0.25
   MinimalTilesDistanceBetweenRoundabouts: 0
+  Steps: 11869
   MaximumGenerationDepth: 500
   ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 0
+  OmitNeighborProbability: 0.2
+  NoiseThreshold: 0.65
