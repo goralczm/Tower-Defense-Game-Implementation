@@ -16,8 +16,15 @@ public class PathGenerator : MonoBehaviour
     [SerializeField] private float _rootCellSize = .3f;
     [SerializeField] private bool _showPath;
 
+    private Vector2 _startPos;
+    
     public void SetPathSettings(PathSettings pathSettings) => _pathSettings = pathSettings;
     public void SetGenerationData(GenerationData generationData) => _generationData = generationData;
+
+    private void Awake()
+    {
+        _startPos = transform.position;
+    }
 
     public MazeGenerator GeneratePath(int depth = 0)
     {
@@ -94,7 +101,7 @@ public class PathGenerator : MonoBehaviour
 
         int middlePointsCount = _generationData.GenerationDataBase.MiddlePoints.Count;
         List<Vector2Int> middlePoints = new List<Vector2Int>(_generationData.GenerationDataBase.MiddlePoints);
-        middlePoints.Shuffle(_generationData.Seed);
+        middlePoints.Shuffle();
         for (int i = middlePoints.Count - 1; i >= 0; i--)
         {
             if (middlePointsCount > _generationData.GenerationDataBase.MinimalMiddlePointsCount && Randomizer.GetRandomBool(_generationData.GenerationDataBase.MiddlePointsOmissionProbability))
@@ -153,13 +160,15 @@ public class PathGenerator : MonoBehaviour
 
     private Vector2 ToWorld(Vector2Int gridPos)
     {
-        return (Vector2)gridPos + (Vector2)transform.position + _offset;
+        return gridPos + _startPos + _offset;
     }
 
     private void OnDrawGizmos()
     {
         if (!_debug) return;
 
+        _startPos = transform.position;
+        
         MazeGenerator generator = GenerateBaseMaze();
         
         var nodes = generator.GetNodes();

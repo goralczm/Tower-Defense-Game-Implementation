@@ -17,12 +17,12 @@ public class WaypointsParent : Singleton<WaypointsParent>
     {
         base.Awake();
 
-        PathGenerationDirector.OnPathGenerated += CacheWaypoints;
+        PathGenerationDirector.OnPathGenerationEnded += CacheWaypoints;
     }
 
     private void OnDisable()
     {
-        PathGenerationDirector.OnPathGenerated -= CacheWaypoints;
+        PathGenerationDirector.OnPathGenerationEnded -= CacheWaypoints;
     }
 
     private void CacheWaypoints(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
