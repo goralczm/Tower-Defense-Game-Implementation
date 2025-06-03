@@ -18,8 +18,8 @@ MonoBehaviour:
   Octaves: 4
   Persistance: 1
   Lacunarity: 7
-  Seed: 77941
+  Seed: -61915
   Offset: {x: 0, y: 0}
   Gamma: 1
   Contrast: 64
-  Invert: 1
+  Invert: 0

@@ -26,4 +26,4 @@ MonoBehaviour:
   MaximumGenerationDepth: 500
   ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 0
   OmitNeighborProbability: 0.7
-  NoiseThreshold: 0.65
+  NoiseThreshold: 0.35
