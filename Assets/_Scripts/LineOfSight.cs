@@ -5,21 +5,22 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class LineOfSight : MonoBehaviour
 {
+    [Header("Vision Settings")]
+    [SerializeField, Range(1f, 10f)] private float _viewRadius = 3f;
+    [SerializeField] private int _rayCount = 360;
+    [SerializeField] private LayerMask _obstaclesMask;
+
+    [Header("Grid Settings")]
     [SerializeField] private Tilemap _tilemap;
 
-    [Header("Vision Settings")]
-    [Range(1f, 10f)] public float viewRadius = 10f;
-    public int rayCount = 360;
-    public LayerMask obstacleMask;
-
-    private Mesh mesh;
-    private Vector3[] vertices;
-    private int[] triangles;
+    private Mesh _mesh;
+    private Vector3[] _vertices;
+    private int[] _triangles;
 
     private void Start()
     {
-        mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = mesh;
+        _mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = _mesh;
     }
 
     private void Update()
@@ -36,48 +37,44 @@ public class LineOfSight : MonoBehaviour
 
     private void GenerateViewMesh()
     {
-        float angleIncrement = 360f / rayCount;
+        float angleIncrement = 360f / _rayCount;
         List<Vector3> viewPoints = new List<Vector3>();
 
         Vector3 origin = transform.position;
 
-        for (int i = 0; i <= rayCount; i++)
+        for (int i = 0; i <= _rayCount; i++)
         {
             float angle = i * angleIncrement;
             Vector3 dir = DirFromAngle(angle);
-            RaycastHit2D hit = Physics2D.Raycast(origin, dir, viewRadius, obstacleMask);
+            RaycastHit2D hit = Physics2D.Raycast(origin, dir, _viewRadius, _obstaclesMask);
 
             if (hit)
-            {
                 viewPoints.Add(hit.point);
-            }
             else
-            {
-                viewPoints.Add(origin + dir * viewRadius);
-            }
+                viewPoints.Add(origin + dir * _viewRadius);
         }
 
         int vertexCount = viewPoints.Count + 1;
-        vertices = new Vector3[vertexCount];
-        triangles = new int[(vertexCount - 2) * 3];
+        _vertices = new Vector3[vertexCount];
+        _triangles = new int[(vertexCount - 2) * 3];
 
-        vertices[0] = Vector3.zero;
+        _vertices[0] = Vector3.zero;
         for (int i = 0; i < viewPoints.Count; i++)
         {
-            vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+            _vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
 
             if (i < viewPoints.Count - 1)
             {
-                triangles[i * 3] = 0;
-                triangles[i * 3 + 1] = i + 1;
-                triangles[i * 3 + 2] = i + 2;
+                _triangles[i * 3] = 0;
+                _triangles[i * 3 + 1] = i + 1;
+                _triangles[i * 3 + 2] = i + 2;
             }
         }
 
-        mesh.Clear();
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.RecalculateNormals();
+        _mesh.Clear();
+        _mesh.vertices = _vertices;
+        _mesh.triangles = _triangles;
+        _mesh.RecalculateNormals();
     }
 
     private Vector3 DirFromAngle(float angleInDegrees)
