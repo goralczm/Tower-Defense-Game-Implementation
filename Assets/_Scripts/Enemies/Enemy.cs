@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using _Scripts.Utilities;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -7,12 +10,23 @@ public class Enemy : MonoBehaviour
     
     private int _currentWaypointIndex;
     private bool _isStopped;
-    private Vector2 _currentWaypoint;
 
+    public float PathTraveled => GetDistanceOnPath() / WaypointsParent.Instance.Length;
+    public int DifficultyLevel => 1;
+    public PathColor PathColor => PathColor.Red;
+
+    public float GetDistanceOnPath()
+    {
+        List<Vector2> waypointsBehind = WaypointsParent.Instance.Waypoints.Take(_currentWaypointIndex).ToList();
+        
+        waypointsBehind.Add(transform.position);
+
+        return Helpers.CalculatePathLength(waypointsBehind);
+    }
+    
     public void ResetCache()
     {
         _currentWaypointIndex = 0;
-        _currentWaypoint = WaypointsParent.Instance.Waypoints[_currentWaypointIndex];
 
         PathGenerationDirector.OnPathGenerationStarted += Stop;
         PathGenerationDirector.OnPathGenerationEnded += FindNearestPoint;
@@ -32,7 +46,6 @@ public class Enemy : MonoBehaviour
     private void FindNearestPoint(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
     {
         _currentWaypointIndex = WaypointsParent.Instance.GetIndexOfNearestWaypoint(transform.position);
-        _currentWaypoint = WaypointsParent.Instance.Waypoints[_currentWaypointIndex];
         _isStopped = false;
     }
 

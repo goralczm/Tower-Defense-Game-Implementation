@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyGenerator : MonoBehaviour
 {
     [SerializeField] private float _intervals;
+    [SerializeField] private int ENEMIES_COUNT;
 
     private Dictionary<GameObject, Enemy> _enemyCache = new();
 
@@ -47,6 +48,7 @@ public class EnemyGenerator : MonoBehaviour
             _enemyCache.Add(enemyObject, enemy);
         }
 
+        ENEMIES_COUNT++;
         enemy.ResetCache();
     }
 }

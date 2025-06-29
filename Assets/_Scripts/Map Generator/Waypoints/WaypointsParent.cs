@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using _Scripts.Utilities;
 using UnityEngine;
 
 public class WaypointsParent : Singleton<WaypointsParent>
@@ -12,6 +13,10 @@ public class WaypointsParent : Singleton<WaypointsParent>
     [SerializeField] private WaypointsExtractor _waypointExtractor;
 
     public List<Vector2> Waypoints = new();
+
+    private float _length;
+
+    public float Length => _length;
 
     protected override void Awake()
     {
@@ -30,6 +35,7 @@ public class WaypointsParent : Singleton<WaypointsParent>
         _waypointExtractor.SetStartPoint(args.StartPointWorld);
         _waypointExtractor.ExtractWaypoints();
         Waypoints = _waypointExtractor.GetWaypoints();
+        _length = Helpers.CalculatePathLength(Waypoints);
     }
 
     public int GetIndexOfNearestWaypoint(Vector2 position)
