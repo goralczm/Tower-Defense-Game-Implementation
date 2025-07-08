@@ -28,14 +28,14 @@ public class Enemy : MonoBehaviour
     {
         _currentWaypointIndex = 0;
 
-        PathGenerationDirector.OnPathGenerationStarted += Stop;
-        PathGenerationDirector.OnPathGenerationEnded += FindNearestPoint;
+        PathGenerationOrchestrator.OnPathGenerationStarted += Stop;
+        PathGenerationOrchestrator.OnPathGenerationEnded += FindNearestPoint;
     }
 
     private void OnDisable()
     {
-        PathGenerationDirector.OnPathGenerationStarted -= Stop;
-        PathGenerationDirector.OnPathGenerationEnded -= FindNearestPoint;
+        PathGenerationOrchestrator.OnPathGenerationStarted -= Stop;
+        PathGenerationOrchestrator.OnPathGenerationEnded -= FindNearestPoint;
     }
 
     private void Stop(object sender, EventArgs args)
@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
         _isStopped = true;
     }
     
-    private void FindNearestPoint(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
+    private void FindNearestPoint(object sender, PathGenerationOrchestrator.OnPathGeneratedEventArgs args)
     {
         _currentWaypointIndex = WaypointsParent.Instance.GetIndexOfNearestWaypoint(transform.position);
         _isStopped = false;

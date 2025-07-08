@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGenerator : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private float _intervals;
 
@@ -10,16 +10,16 @@ public class EnemyGenerator : MonoBehaviour
 
     private void Start()
     {
-        PathGenerationDirector.OnPathGenerationStarted += StopSpawner;
-        PathGenerationDirector.OnPathGenerationEnded += MoveSpawner;
-        PathGenerationDirector.OnPathGenerationEnded += StartSpawner;
+        PathGenerationOrchestrator.OnPathGenerationStarted += StopSpawner;
+        PathGenerationOrchestrator.OnPathGenerationEnded += MoveSpawner;
+        PathGenerationOrchestrator.OnPathGenerationEnded += StartSpawner;
     }
 
     private void OnDisable()
     {
-        PathGenerationDirector.OnPathGenerationStarted -= StopSpawner;
-        PathGenerationDirector.OnPathGenerationEnded -= MoveSpawner;
-        PathGenerationDirector.OnPathGenerationEnded -= StartSpawner;
+        PathGenerationOrchestrator.OnPathGenerationStarted -= StopSpawner;
+        PathGenerationOrchestrator.OnPathGenerationEnded -= MoveSpawner;
+        PathGenerationOrchestrator.OnPathGenerationEnded -= StartSpawner;
     }
     
     private void StopSpawner(object sender, EventArgs e)
@@ -27,13 +27,13 @@ public class EnemyGenerator : MonoBehaviour
         CancelInvoke();
     }
 
-    private void MoveSpawner(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
+    private void MoveSpawner(object sender, PathGenerationOrchestrator.OnPathGeneratedEventArgs args)
     {
         transform.position = args.StartPointWorld;
     }
 
 
-    private void StartSpawner(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
+    private void StartSpawner(object sender, PathGenerationOrchestrator.OnPathGeneratedEventArgs args)
     {
         InvokeRepeating("SpawnEnemy", 0, _intervals);
     }

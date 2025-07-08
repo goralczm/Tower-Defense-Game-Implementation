@@ -2,29 +2,29 @@ using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class PathDisplayVisuals : MonoBehaviour
+public class PathRendererAddons : MonoBehaviour
 {
     [SerializeField] private GameObject _generationText;
     
-    private PathDisplay _pathDisplay;
+    private PathRenderer _pathRenderer;
     private AudioSystem.AudioSystem _audio;
     private CameraShake _shake;
 
     private void OnEnable()
     {
-        _pathDisplay = GetComponent<PathDisplay>();
+        _pathRenderer = GetComponent<PathRenderer>();
         _audio = FindFirstObjectByType<AudioSystem.AudioSystem>();
         _shake = FindFirstObjectByType<CameraShake>();
-        _pathDisplay.OnTileChanged += HandleTileChanged;
-        PathGenerationDirector.OnPathGenerationStarted += ShowGenerationText;
-        PathGenerationDirector.OnPathGenerationEnded += HideGenerationText;
+        _pathRenderer.OnTileChanged += HandleTileChanged;
+        PathGenerationOrchestrator.OnPathGenerationStarted += ShowGenerationText;
+        PathGenerationOrchestrator.OnPathGenerationEnded += HideGenerationText;
     }
 
     private void OnDisable()
     {
-        _pathDisplay.OnTileChanged -= HandleTileChanged;
-        PathGenerationDirector.OnPathGenerationStarted -= ShowGenerationText;
-        PathGenerationDirector.OnPathGenerationEnded -= HideGenerationText;
+        _pathRenderer.OnTileChanged -= HandleTileChanged;
+        PathGenerationOrchestrator.OnPathGenerationStarted -= ShowGenerationText;
+        PathGenerationOrchestrator.OnPathGenerationEnded -= HideGenerationText;
     }
     
     private void ShowGenerationText(object sender, EventArgs args)
@@ -32,7 +32,7 @@ public class PathDisplayVisuals : MonoBehaviour
         _generationText.SetActive(true);
     }
     
-    private void HideGenerationText(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
+    private void HideGenerationText(object sender, PathGenerationOrchestrator.OnPathGeneratedEventArgs args)
     {
         _generationText.SetActive(false);
     }

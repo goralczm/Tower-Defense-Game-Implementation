@@ -26,13 +26,13 @@ public class PathGenerator : MonoBehaviour
         _startPos = transform.position;
     }
 
-    public MazeGenerator GeneratePath(int depth = 0)
+    public MazeLayoutGenerator GeneratePath(int depth = 0)
     {
-        MazeGenerator generator = GenerateBaseMaze();
+        MazeLayoutGenerator layoutGenerator = GenerateBaseMaze();
 
         if (depth < _pathSettings.MaximumGenerationDepth)
         {
-            List<Vector2> waypoints = ExtractWaypoints(generator);
+            List<Vector2> waypoints = ExtractWaypoints(layoutGenerator);
 
             if (_pathSettings.EnforceMinimalPathLength)
             {
@@ -68,13 +68,13 @@ public class PathGenerator : MonoBehaviour
         }
 
 
-        return generator;
+        return layoutGenerator;
     }
     
-    private MazeGenerator GenerateBaseMaze()
+    private MazeLayoutGenerator GenerateBaseMaze()
     {
-        MazeGenerator generator = new(_generationData.GenerationDataBase.Width, _generationData.GenerationDataBase.Height, _generationData.Seed);
-        generator.GenerateMaze(_pathSettings.Steps);
+        MazeLayoutGenerator layoutGenerator = new(_generationData.GenerationDataBase.Width, _generationData.GenerationDataBase.Height, _generationData.Seed);
+        layoutGenerator.GenerateMaze(_pathSettings.Steps);
 
         List<Vector2Int> middlePointsToOmit = GetMiddlePointsToOmit();
 
@@ -83,13 +83,13 @@ public class PathGenerator : MonoBehaviour
             if (middlePointsToOmit.Contains(middle))
                 continue;
 
-            generator.MoveRootToPosition(middle);
+            layoutGenerator.MoveRootToPosition(middle);
         }
 
         if (_pathSettings.MoveRootToEnd)
-            generator.MoveRootToPosition(_generationData.EndPoint);
+            layoutGenerator.MoveRootToPosition(_generationData.EndPoint);
 
-        return generator;
+        return layoutGenerator;
     }
     
     private List<Vector2Int> GetMiddlePointsToOmit()
@@ -116,10 +116,10 @@ public class PathGenerator : MonoBehaviour
         return middlePoints;
     }
 
-    private List<Vector2> ExtractWaypoints(MazeGenerator generator)
+    private List<Vector2> ExtractWaypoints(MazeLayoutGenerator layoutGenerator)
     {
         var waypoints = new List<Vector2> { ToWorld(_generationData.StartPoint) };
-        var curr = generator.GetByCoords(_generationData.StartPoint);
+        var curr = layoutGenerator.GetByCoords(_generationData.StartPoint);
 
         while (curr?.next != null)
         {
@@ -169,9 +169,9 @@ public class PathGenerator : MonoBehaviour
 
         _startPos = transform.position;
         
-        MazeGenerator generator = GenerateBaseMaze();
+        MazeLayoutGenerator layoutGenerator = GenerateBaseMaze();
         
-        var nodes = generator.GetNodes();
+        var nodes = layoutGenerator.GetNodes();
 
         foreach (var node in nodes)
         {
@@ -202,7 +202,7 @@ public class PathGenerator : MonoBehaviour
 
         if (_showPath)
         {
-            var curr = generator.GetByCoords(_generationData.StartPoint);
+            var curr = layoutGenerator.GetByCoords(_generationData.StartPoint);
             while (curr?.next != null)
             {
                 DrawGizmosArrow(ToWorld(curr.GetPosition()), ToWorld(curr.next.GetPosition()), Color.magenta);

@@ -38,15 +38,15 @@ public class EnvironmentGenerator : MonoBehaviour
 
     private void OnEnable()
     {
-        PathGenerationDirector.OnPathGenerationEnded += GenerateEnvironment;
+        PathGenerationOrchestrator.OnPathGenerationEnded += GenerateEnvironment;
     }
 
     private void OnDisable()
     {
-        PathGenerationDirector.OnPathGenerationEnded -= GenerateEnvironment;
+        PathGenerationOrchestrator.OnPathGenerationEnded -= GenerateEnvironment;
     }
 
-    private void GenerateEnvironment(object sender, PathGenerationDirector.OnPathGeneratedEventArgs e)
+    private void GenerateEnvironment(object sender, PathGenerationOrchestrator.OnPathGeneratedEventArgs e)
     {
         UnityEngine.Random.InitState(e.GenerationData.Seed);
         _noiseSettings.Seed = e.GenerationData.Seed;

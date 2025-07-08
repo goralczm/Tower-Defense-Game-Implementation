@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 
-public class PathGenerationDirector : MonoBehaviour
+public class PathGenerationOrchestrator : MonoBehaviour
 {
     public class OnPathGeneratedEventArgs : EventArgs
     {
@@ -14,9 +12,6 @@ public class PathGenerationDirector : MonoBehaviour
         public PathPreset PathPreset;
         public GenerationData GenerationData;
     }
-
-    [SerializeField] private PathPreset[] _presets;
-    [SerializeField] private TMP_Dropdown _presetsDropdown;
 
     [Header("Path Settings")]
     [SerializeField] private PathPreset _pathPreset;
@@ -29,25 +24,12 @@ public class PathGenerationDirector : MonoBehaviour
     
     [Header("Instances")]
     [SerializeField] private PathGenerator _pathGenerator;
-    [SerializeField] private PathDisplay _pathDisplay;
+    [SerializeField] private PathRenderer _pathRenderer;
     [SerializeField] private WaypointsExtractor _waypointsExtractor;
+    [SerializeField] private WaypointsParent _waypointsParent;
 
     public static EventHandler OnPathGenerationStarted;
     public static EventHandler<OnPathGeneratedEventArgs> OnPathGenerationEnded;
-
-    private void Awake()
-    {
-        _presetsDropdown.ClearOptions();
-
-        List<TMP_Dropdown.OptionData> options = new();
-        foreach (var preset in _presets)
-        {
-            options.Add(new(preset.name));
-        }
-
-        _presetsDropdown.AddOptions(options);
-        _presetsDropdown.RefreshShownValue();
-    }
 
     private async void Update()
     {
@@ -71,26 +53,28 @@ public class PathGenerationDirector : MonoBehaviour
         OnPathGenerationStarted?.Invoke(this, EventArgs.Empty);
         
         _pathGenerator.SetGenerationData(_generationData);
-        _pathDisplay.SetGenerationData(_generationData);
+        _pathRenderer.SetGenerationData(_generationData);
         _pathGenerator.SetPathSettings(_pathSettings);
-        _pathDisplay.SetPathSettings(_pathSettings);
+        _pathRenderer.SetPathSettings(_pathSettings);
 
-        MazeGenerator generator = _pathGenerator.GeneratePath();
+        MazeLayoutGenerator layoutGenerator = _pathGenerator.GeneratePath();
 
-        _pathDisplay.SetEntranceDirection(GetAccessPointDir(_generationData.StartPoint));
-        _pathDisplay.SetExitDirection(-GetAccessPointDir(_generationData.EndPoint));
+        _pathRenderer.SetEntranceDirection(GetAccessPointDir(_generationData.StartPoint));
+        _pathRenderer.SetExitDirection(-GetAccessPointDir(_generationData.EndPoint));
         
-        await _pathDisplay.GenerateTilemap(generator);
+        await _pathRenderer.GenerateTilemap(layoutGenerator);
         
         _waypointsExtractor.CacheRules();
-        _waypointsExtractor.SetStartPoint(_pathDisplay.GetStartPointWorld());
+        _waypointsExtractor.SetStartPoint(_pathRenderer.GetStartPointWorld());
         _waypointsExtractor.ExtractWaypoints();
+
+        _waypointsParent.CacheWaypoints(_pathRenderer.GetStartPointWorld());
         
         OnPathGenerationEnded?.Invoke(this, new OnPathGeneratedEventArgs
         {
-            StartPointWorld = _pathDisplay.GetStartPointWorld(),
-            EndPointWorld = _pathDisplay.GetEndPointWorld(),
-            Bounds = _pathDisplay.GetBounds(),
+            StartPointWorld = _pathRenderer.GetStartPointWorld(),
+            EndPointWorld = _pathRenderer.GetEndPointWorld(),
+            Bounds = _pathRenderer.GetBounds(),
             PathPreset = _pathPreset,
             GenerationData = _generationData
         });
@@ -108,9 +92,9 @@ public class PathGenerationDirector : MonoBehaviour
         return accessDir;
     }
 
-    public void SetPresetByIndex(int index)
+    public void SetPathPreset(PathPreset pathPreset)
     {
-        _pathPreset = _presets[index];
+        _pathPreset = pathPreset;
         OnValidate();
     }
 
@@ -123,8 +107,8 @@ public class PathGenerationDirector : MonoBehaviour
         }
 
         _pathGenerator.SetPathSettings(_pathSettings);
-        _pathDisplay.SetPathSettings(_pathSettings);
+        _pathRenderer.SetPathSettings(_pathSettings);
         _pathGenerator.SetGenerationData(_generationData);
-        _pathDisplay.SetGenerationData(_generationData);
+        _pathRenderer.SetGenerationData(_generationData);
     }
 }

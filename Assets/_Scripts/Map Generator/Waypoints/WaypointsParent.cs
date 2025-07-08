@@ -18,21 +18,9 @@ public class WaypointsParent : Singleton<WaypointsParent>
 
     public float Length => _length;
 
-    protected override void Awake()
+    public void CacheWaypoints(Vector2 startPoint)
     {
-        base.Awake();
-
-        PathGenerationDirector.OnPathGenerationEnded += CacheWaypoints;
-    }
-
-    private void OnDisable()
-    {
-        PathGenerationDirector.OnPathGenerationEnded -= CacheWaypoints;
-    }
-
-    private void CacheWaypoints(object sender, PathGenerationDirector.OnPathGeneratedEventArgs args)
-    {
-        _waypointExtractor.SetStartPoint(args.StartPointWorld);
+        _waypointExtractor.SetStartPoint(startPoint);
         _waypointExtractor.ExtractWaypoints();
         Waypoints = _waypointExtractor.GetWaypoints();
         _length = Helpers.CalculatePathLength(Waypoints);

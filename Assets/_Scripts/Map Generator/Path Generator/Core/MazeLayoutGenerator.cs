@@ -20,7 +20,7 @@ public class Node
     }
 }
 
-public class MazeGenerator
+public class MazeLayoutGenerator
 {
     private int _width;
     private int _height;
@@ -31,7 +31,7 @@ public class MazeGenerator
     private Node _root;
     private System.Random _rnpg;
 
-    public MazeGenerator(int width, int height, int seed)
+    public MazeLayoutGenerator(int width, int height, int seed)
     {
         _width = width;
         _height = height;

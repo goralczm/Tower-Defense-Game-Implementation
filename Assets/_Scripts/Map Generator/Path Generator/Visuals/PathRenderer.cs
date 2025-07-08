@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class PathDisplay : MonoBehaviour
+public class PathRenderer : MonoBehaviour
 {
     [Header("Path Settings")]
     [SerializeField] private PathSettings _pathSettings;
@@ -54,19 +54,19 @@ public class PathDisplay : MonoBehaviour
     }
     public void SetGenerationData(GenerationData generationData) => _generationData = generationData;
 
-    public async Task GenerateTilemap(MazeGenerator generator)
+    public async Task GenerateTilemap(MazeLayoutGenerator layoutGenerator)
     {
         await ClearAllTiles();
         await Task.Delay(_milisecondDelay);
 
-        await DrawPath(generator);
+        await DrawPath(layoutGenerator);
         await Task.Delay(_milisecondDelay);
 
-        await DrawCorners(generator);
+        await DrawCorners(layoutGenerator);
         await Task.Delay(_milisecondDelay);
 
         if (_pathSettings.EnforceRoundabouts)
-            await DrawRoundabouts(generator, _generationData.Seed);
+            await DrawRoundabouts(layoutGenerator, _generationData.Seed);
     }
 
     public void FillEntireMap()
@@ -103,11 +103,11 @@ public class PathDisplay : MonoBehaviour
         }
     }
 
-    private async Task DrawPath(MazeGenerator generator)
+    private async Task DrawPath(MazeLayoutGenerator layoutGenerator)
     {
         int speedUp = 0;
 
-        var curr = generator.GetByCoords(_generationData.StartPoint);
+        var curr = layoutGenerator.GetByCoords(_generationData.StartPoint);
         Vector2Int? prevPos = null;
 
         while (curr?.next != null)
@@ -168,14 +168,14 @@ public class PathDisplay : MonoBehaviour
         }
     }
 
-    private async Task DrawCorners(MazeGenerator generator)
+    private async Task DrawCorners(MazeLayoutGenerator layoutGenerator)
     {
         int speedUp = 0;
 
-        var curr = generator.GetByCoords(_generationData.StartPoint);
+        var curr = layoutGenerator.GetByCoords(_generationData.StartPoint);
 
         {
-            Vector2Int pos = generator.GetByCoords(_generationData.StartPoint).GetPosition();
+            Vector2Int pos = layoutGenerator.GetByCoords(_generationData.StartPoint).GetPosition();
             Vector2 dir = curr.next.GetPosition() - pos;
 
             if (_entranceDir != dir && _generationData.IsTileOnEdge(pos))
@@ -221,10 +221,10 @@ public class PathDisplay : MonoBehaviour
         }
     }
 
-    private async Task DrawRoundabouts(MazeGenerator generator, int seed)
+    private async Task DrawRoundabouts(MazeLayoutGenerator layoutGenerator, int seed)
     {
         UnityEngine.Random.InitState(seed);
-        var curr = generator.GetByCoords(_generationData.StartPoint);
+        var curr = layoutGenerator.GetByCoords(_generationData.StartPoint);
 
         int tilesAfterLastRoundabout = 200;
 

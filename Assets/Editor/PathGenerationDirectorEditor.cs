@@ -1,27 +1,27 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(PathGenerationDirector))]
+[CustomEditor(typeof(PathGenerationOrchestrator))]
 public class PathGenerationDirectorEditor : Editor
 {
-    private PathGenerationDirector _pathGenerationDirector;
+    private PathGenerationOrchestrator _pathGenerationOrchestrator;
     
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        _pathGenerationDirector = (PathGenerationDirector)target;
+        _pathGenerationOrchestrator = (PathGenerationOrchestrator)target;
 
         if (GUILayout.Button("Fill Tilemap"))
-            FindFirstObjectByType<PathDisplay>().FillEntireMap();
+            FindFirstObjectByType<PathRenderer>().FillEntireMap();
 
         if (GUILayout.Button("Clear Tilemap"))
-            FindFirstObjectByType<PathDisplay>().ClearAllTiles();
+            FindFirstObjectByType<PathRenderer>().ClearAllTiles();
 
         if (GUILayout.Button("Regenerate Path"))
-            _pathGenerationDirector.RegeneratePath();
+            _pathGenerationOrchestrator.RegeneratePath();
         
         if (GUILayout.Button("Generate With New Seed"))
-            _pathGenerationDirector.GenerateWithNewSeed();
+            _pathGenerationOrchestrator.GenerateWithNewSeed();
     }
 }
