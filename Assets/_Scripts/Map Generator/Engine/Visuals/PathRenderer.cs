@@ -49,8 +49,8 @@ public class PathRenderer : MonoBehaviour
     public Bounds GetBounds()
     {
         return new Bounds(
-            new Vector3(_generationData.GenerationDataBase.Width / 2f, _generationData.GenerationDataBase.Height / 2f, 0) + transform.position,
-            new Vector3(_generationData.GenerationDataBase.Width + 1, _generationData.GenerationDataBase.Height + 1, 0));
+            new Vector3(_generationData._mazeGenerationSettings.Width / 2f, _generationData._mazeGenerationSettings.Height / 2f, 0) + transform.position,
+            new Vector3(_generationData._mazeGenerationSettings.Width + 1, _generationData._mazeGenerationSettings.Height + 1, 0));
     }
     public void SetGenerationData(GenerationData generationData) => _generationData = generationData;
 
@@ -71,9 +71,9 @@ public class PathRenderer : MonoBehaviour
 
     public void FillEntireMap()
     {
-        for (int x = -1; x <= _generationData.GenerationDataBase.Width; x++)
+        for (int x = -1; x <= _generationData._mazeGenerationSettings.Width; x++)
         {
-            for (int y = -1; y <= _generationData.GenerationDataBase.Height; y++)
+            for (int y = -1; y <= _generationData._mazeGenerationSettings.Height; y++)
             {
                 SetTile(new(x, y), _roundabout);
             }
@@ -427,8 +427,8 @@ public class PathRenderer : MonoBehaviour
 
     private bool IsTileInBounds(Vector3Int tilePos)
     {
-        return tilePos.x >= 0 && tilePos.x < _generationData.GenerationDataBase.Width &&
-               tilePos.y >= 0 && tilePos.y < _generationData.GenerationDataBase.Height;
+        return tilePos.x >= 0 && tilePos.x < _generationData._mazeGenerationSettings.Width &&
+               tilePos.y >= 0 && tilePos.y < _generationData._mazeGenerationSettings.Height;
     }
 
     private bool IsTileFree(Vector3Int tilePos)

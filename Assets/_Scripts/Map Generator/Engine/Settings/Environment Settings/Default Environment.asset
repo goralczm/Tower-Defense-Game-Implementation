@@ -9,17 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4bb51f3dae77c7449ee64d69c41f764, type: 3}
-  m_Name: New Noise Settings
+  m_Script: {fileID: 11500000, guid: bf02ba53130080b458251ff17810ac4b, type: 3}
+  m_Name: Default Environment
   m_EditorClassIdentifier: 
-  Width: 20
-  Height: 12
-  Scale: 10
-  Octaves: 4
-  Persistance: 1
-  Lacunarity: 7
-  Seed: -61915
-  Offset: {x: 0, y: 0}
-  Gamma: 1
-  Contrast: 64
-  Invert: 0
+  NoiseThreshold: 0.55
+  ObstacleNearPathProbability: 0.35
+  NoiseSettings: {fileID: 11400000, guid: 96db48527d0f8264e9a598dfa7eff8e8, type: 2}

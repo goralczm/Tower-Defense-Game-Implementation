@@ -66,12 +66,12 @@ public static class NoiseGenerator
         return noise;
     }
 
-    public static float[,] GenerateNoise(NoiseSettings settings)
+    public static float[,] GenerateNoise(NoiseSettings settings, int seed)
     {
         if (settings.Scale <= 0)
             settings.Scale = .0001f;
 
-        System.Random prng = new System.Random(settings.Seed);
+        System.Random prng = new System.Random(seed);
         Vector2[] octaveOffsets = new Vector2[settings.Octaves];
         for (int i = 0; i < settings.Octaves; i++)
         {

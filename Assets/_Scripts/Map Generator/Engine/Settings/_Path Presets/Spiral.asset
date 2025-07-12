@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b9b1eff17a8bd34c941162a79cd3641, type: 3}
-  m_Name: Default Roundabouts
+  m_Name: Spiral
   m_EditorClassIdentifier: 
-  PathSettings: {fileID: 11400000, guid: 65dc4c234f5fb22418f1d13c3e34ce17, type: 2}
-  GenerationDataBase: {fileID: 11400000, guid: 7cb2e4b9a2a2abd4d8e64c5b9a103879, type: 2}
+  PathSettings: {fileID: 11400000, guid: c108f61be67ff8741b85a2f922dcddaa, type: 2}
+  MazeGenerationSettings: {fileID: 11400000, guid: 23677f394bf27b94db9e3a74924dabc9, type: 2}
+  EnvironmentSettings: {fileID: 11400000, guid: 7dd6fa6f23d7004439f8da690a8fa1a0, type: 2}

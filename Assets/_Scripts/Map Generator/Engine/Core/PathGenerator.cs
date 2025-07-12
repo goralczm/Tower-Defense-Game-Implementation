@@ -73,12 +73,12 @@ public class PathGenerator : MonoBehaviour
     
     private MazeLayoutGenerator GenerateBaseMaze()
     {
-        MazeLayoutGenerator layoutGenerator = new(_generationData.GenerationDataBase.Width, _generationData.GenerationDataBase.Height, _generationData.Seed);
+        MazeLayoutGenerator layoutGenerator = new(_generationData._mazeGenerationSettings.Width, _generationData._mazeGenerationSettings.Height, _generationData.Seed);
         layoutGenerator.GenerateMaze(_pathSettings.Steps);
 
         List<Vector2Int> middlePointsToOmit = GetMiddlePointsToOmit();
 
-        foreach (var middle in _generationData.GenerationDataBase.MiddlePoints)
+        foreach (var middle in _generationData._mazeGenerationSettings.MiddlePoints)
         {
             if (middlePointsToOmit.Contains(middle))
                 continue;
@@ -94,17 +94,17 @@ public class PathGenerator : MonoBehaviour
     
     private List<Vector2Int> GetMiddlePointsToOmit()
     {
-        if (!_generationData.GenerationDataBase.RandomlyOmitSomeMiddlePoints)
+        if (!_generationData._mazeGenerationSettings.RandomlyOmitSomeMiddlePoints)
             return new();
 
         UnityEngine.Random.InitState(_generationData.Seed);
 
-        int middlePointsCount = _generationData.GenerationDataBase.MiddlePoints.Count;
-        List<Vector2Int> middlePoints = new List<Vector2Int>(_generationData.GenerationDataBase.MiddlePoints);
+        int middlePointsCount = _generationData._mazeGenerationSettings.MiddlePoints.Count;
+        List<Vector2Int> middlePoints = new List<Vector2Int>(_generationData._mazeGenerationSettings.MiddlePoints);
         middlePoints.Shuffle();
         for (int i = middlePoints.Count - 1; i >= 0; i--)
         {
-            if (middlePointsCount > _generationData.GenerationDataBase.MinimalMiddlePointsCount && Randomizer.GetRandomBool(_generationData.GenerationDataBase.MiddlePointsOmissionProbability))
+            if (middlePointsCount > _generationData._mazeGenerationSettings.MinimalMiddlePointsCount && Randomizer.GetRandomBool(_generationData._mazeGenerationSettings.MiddlePointsOmissionProbability))
             {
                 middlePointsCount--;
                 continue;
@@ -192,7 +192,7 @@ public class PathGenerator : MonoBehaviour
         List<Vector2Int> middlePointsToOmit = GetMiddlePointsToOmit();
 
         Gizmos.color = Color.yellow;
-        foreach (var middle in _generationData.GenerationDataBase.MiddlePoints)
+        foreach (var middle in _generationData._mazeGenerationSettings.MiddlePoints)
         {
             if (middlePointsToOmit.Contains(middle))
                 continue;

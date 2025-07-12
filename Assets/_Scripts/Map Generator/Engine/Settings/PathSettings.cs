@@ -22,10 +22,6 @@ public class PathSettings : ScriptableObject
     public int MaximumGenerationDepth = 30;
     public bool ExperimentalRandomizeSeedWhenGenerationDepthExceeded;
 
-    [Header("Environment")]
-    [Range(0f, 1f)] public float OmitNeighborProbability = .2f;
-    [Range(0f, 1f)] public float NoiseThreshold = .5f;
-
     public void SetRandomSteps()
     {
         Steps = Random.Range(10000, 20000);

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -20,89 +19,119 @@ public enum DebugView
 
 public class EnvironmentGenerator : MonoBehaviour
 {
-    [Header("Noise Settings")]
-    [SerializeField] private NoiseSettings _noiseSettings;
-    [SerializeField] private List<GameObject> _obstaclePrefabs;
+    [Header("Noise Settings")] [SerializeField]
+    private List<GameObject> _obstaclePrefabs;
 
-    [Header("References")]
-    [SerializeField] private Tilemap _tilemap;
+    [Header("References")] [SerializeField]
+    private Tilemap _tilemap;
 
-    [Header("Debug")]
-    [SerializeField] private bool _debug;
+    [Header("Debug")] [SerializeField] private bool _debug;
     [SerializeField] private DebugView _debugView;
 
+    private PathSettings _pathSettings;
+    private NoiseSettings _noiseSettings;
     private Dictionary<Vector2, TileState> _heatmap = new();
     private List<Vector2> _obstaclePositions = new();
-    private PathSettings _pathSettings;
     private List<GameObject> _createdObstacles = new();
+    private int _seed = 42;
 
     private void OnEnable()
     {
-        PathGenerationOrchestrator.OnPathGenerationEnded += GenerateEnvironment;
+        PathGenerationOrchestrator.OnPathGenerationEnded += CreateEnvironment;
+
+        if (_heatmap.TryGetValue(Vector2.zero, out TileState state))
+        {
+            
+        }
     }
 
     private void OnDisable()
     {
-        PathGenerationOrchestrator.OnPathGenerationEnded -= GenerateEnvironment;
+        PathGenerationOrchestrator.OnPathGenerationEnded -= CreateEnvironment;
     }
 
-    private void GenerateEnvironment(object sender, PathGenerationOrchestrator.OnPathGeneratedEventArgs e)
+    private void CreateEnvironment(object sender, PathGenerationOrchestrator.OnPathGeneratedEventArgs e)
     {
-        UnityEngine.Random.InitState(e.GenerationData.Seed);
-        _noiseSettings.Seed = e.GenerationData.Seed;
+        _seed = e.GenerationData.Seed;
+        _noiseSettings = e.PathPreset.EnvironmentSettings.NoiseSettings;
         _pathSettings = e.PathPreset.PathSettings;
 
-        _heatmap.Clear();
+        GenerateEnvironment(e.PathPreset.EnvironmentSettings, e.Bounds);
+    }
+
+    private void GenerateEnvironment(EnvironmentSettings environmentSettings, Bounds bounds)
+    {
+        Random.InitState(_seed);
+        DestroyAllObstacles();
+        CreateHeatmap(bounds, environmentSettings.ObstacleNearPathProbability);
+        CreateAllObstacles(environmentSettings.NoiseThreshold);
+    }
+
+    private void DestroyAllObstacles()
+    {
         _obstaclePositions.Clear();
-
+        
         for (int i = _createdObstacles.Count - 1; i >= 0; i--)
-        {
             Destroy(_createdObstacles[i]);
-        }
+    }
 
-        for (float x = e.Bounds.min.x; x <= e.Bounds.max.x; x += _tilemap.cellSize.x)
+    private void CreateHeatmap(Bounds bounds, float obstacleNearPathProbability)
+    {
+        _heatmap.Clear();
+        
+        for (float x = bounds.min.x; x <= bounds.max.x; x += _tilemap.cellSize.x)
         {
-            for (float y = e.Bounds.min.y; y <= e.Bounds.max.y; y += _tilemap.cellSize.y)
+            for (float y = bounds.min.y; y <= bounds.max.y; y += _tilemap.cellSize.y)
             {
-                Vector3Int tileWorldPosition = _tilemap.WorldToCell(new Vector3(x, y, 0));
-                TileBase tile = _tilemap.GetTile(tileWorldPosition);
+                Vector3Int cellPos = _tilemap.WorldToCell(new Vector3(x, y, 0));
+                Vector2 cellCenterPos = _tilemap.GetCellCenterWorld(cellPos);
 
-                Vector2 tileCenterPos = _tilemap.GetCellCenterWorld(tileWorldPosition);
-
-                if (tile != null)
-                    SetOccupied(tileCenterPos, e.PathPreset.PathSettings.OmitNeighborProbability);
+                bool isTileEmpty = _tilemap.GetTile(cellPos) == null;
+                if (isTileEmpty)
+                    SetHeatmapCellFree(cellCenterPos);
                 else
-                    SetFree(tileCenterPos);
+                    SetHeatmapCellOccupied(cellCenterPos, obstacleNearPathProbability);
             }
-        }
-
-        float maxX = _heatmap.Keys.Max(k => k.x);
-        float maxY = _heatmap.Keys.Max(k => k.y);
-
-        float[,] noise = NoiseGenerator.GenerateNoise(_noiseSettings);
-
-        for (int y = 0; y < _noiseSettings.Height; y++)
-        {
-            for (int x = 0; x < _noiseSettings.Width; x++)
-            {
-                float noiseValue = noise[x, y];
-                Vector2 cellPos = _tilemap.GetCellCenterWorld(_tilemap.WorldToCell(new Vector3(x - maxX, y - maxY, 0)));
-
-                if (_heatmap.ContainsKey(cellPos) && _heatmap[cellPos] == TileState.Free)
-                {
-                    if (noiseValue < _pathSettings.NoiseThreshold)
-                        _obstaclePositions.Add(cellPos);
-                }
-            }
-        }
-
-        foreach (var obstaclePos in _obstaclePositions)
-        {
-            _createdObstacles.Add(Instantiate(_obstaclePrefabs.GetRandom(1)[0], obstaclePos, Quaternion.identity));
         }
     }
 
-    private void SetOccupied(Vector2 pos, float omitProbability)
+    private void CreateAllObstacles(float noiseThreshold)
+    {
+        Vector2 heatmapMax = GetMaxHeatmapCell();
+        
+        float[,] noise = NoiseGenerator.GenerateNoise(_noiseSettings, _seed);
+
+        for (int y = 0; y < noise.GetLength(1); y++)
+        {
+            for (int x = 0; x < noise.GetLength(0); x++)
+            {
+                float noiseValue = noise[x, y];
+                if (noiseValue >= noiseThreshold)
+                    continue;
+
+                Vector2 cellCenterPos = _tilemap.GetCellCenterWorld( _tilemap.WorldToCell(new Vector3(x - heatmapMax.x, y - heatmapMax.y, 0)));
+
+                if (_heatmap.TryGetValue(cellCenterPos, out TileState state) && state == TileState.Free)
+                    CreateObstacle(cellCenterPos);
+            }
+        }
+    }
+
+    private void CreateObstacle(Vector2 position)
+    {
+        _obstaclePositions.Add(position);
+        _createdObstacles.Add(Instantiate(_obstaclePrefabs.GetRandom(1)[0], position, Quaternion.identity));
+    }
+
+    private Vector2 GetMaxHeatmapCell()
+    {
+        return new Vector2(
+            _heatmap.Keys.Max(k => k.x),
+            _heatmap.Keys.Max(k => k.y)
+        );
+    }
+
+    private void SetHeatmapCellOccupied(Vector2 pos, float omitProbability)
     {
         _heatmap[pos] = TileState.Occupied;
 
@@ -117,7 +146,7 @@ public class EnvironmentGenerator : MonoBehaviour
         }
     }
 
-    private void SetFree(Vector2 pos)
+    private void SetHeatmapCellFree(Vector2 pos)
     {
         if (!_heatmap.ContainsKey(pos))
             _heatmap[pos] = TileState.Free;
@@ -167,8 +196,10 @@ public class EnvironmentGenerator : MonoBehaviour
                             Gizmos.color = Color.red;
                             break;
                     }
+
                     Gizmos.DrawCube(occupancy.Key, _tilemap.cellSize);
                 }
+
                 break;
             case DebugView.Noise:
                 if (_heatmap.Keys.Count > 0)
@@ -177,19 +208,21 @@ public class EnvironmentGenerator : MonoBehaviour
                     maxY = _heatmap.Keys.Max(k => k.y);
                 }
 
-                noise = NoiseGenerator.GenerateNoise(_noiseSettings);
+                noise = NoiseGenerator.GenerateNoise(_noiseSettings, _seed);
 
                 for (int y = 0; y < _noiseSettings.Height; y++)
                 {
                     for (int x = 0; x < _noiseSettings.Width; x++)
                     {
                         float noiseValue = noise[x, y];
-                        Vector2 cellPos = _tilemap.GetCellCenterWorld(_tilemap.WorldToCell(new Vector3(x - maxX, y - maxY, 0)));
+                        Vector2 cellPos =
+                            _tilemap.GetCellCenterWorld(_tilemap.WorldToCell(new Vector3(x - maxX, y - maxY, 0)));
 
                         Gizmos.color = Color.Lerp(Color.black, Color.white, noiseValue);
                         Gizmos.DrawCube(cellPos, _tilemap.cellSize);
                     }
                 }
+
                 break;
             case DebugView.Obstacles:
                 Gizmos.color = Color.red;

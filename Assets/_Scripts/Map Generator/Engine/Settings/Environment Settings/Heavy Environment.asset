@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b9b1eff17a8bd34c941162a79cd3641, type: 3}
-  m_Name: Spiral
+  m_Script: {fileID: 11500000, guid: bf02ba53130080b458251ff17810ac4b, type: 3}
+  m_Name: Heavy Environment
   m_EditorClassIdentifier: 
-  PathSettings: {fileID: 11400000, guid: c108f61be67ff8741b85a2f922dcddaa, type: 2}
-  GenerationDataBase: {fileID: 11400000, guid: d40e86957dea64746acfec3ccd71e38e, type: 2}
+  NoiseThreshold: 0.7
+  ObstacleNearPathProbability: 0.35
+  NoiseSettings: {fileID: 11400000, guid: 96db48527d0f8264e9a598dfa7eff8e8, type: 2}

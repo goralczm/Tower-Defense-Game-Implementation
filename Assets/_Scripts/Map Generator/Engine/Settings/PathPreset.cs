@@ -4,5 +4,6 @@ using UnityEngine;
 public class PathPreset : ScriptableObject
 {
     public PathSettings PathSettings;
-    public GenerationDataBase GenerationDataBase;
+    public MazeGenerationSettings MazeGenerationSettings;
+    public EnvironmentSettings EnvironmentSettings;
 }

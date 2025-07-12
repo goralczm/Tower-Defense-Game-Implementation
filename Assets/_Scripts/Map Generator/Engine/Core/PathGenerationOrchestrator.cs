@@ -86,7 +86,7 @@ public class PathGenerationOrchestrator : MonoBehaviour
 
         if (accessPoint.y == 0)
             accessDir = Vector2Int.up;
-        else if (accessPoint.y == _generationData.GenerationDataBase.Height - 1)
+        else if (accessPoint.y == _generationData._mazeGenerationSettings.Height - 1)
             accessDir = Vector2Int.down;
 
         return accessDir;
@@ -103,7 +103,7 @@ public class PathGenerationOrchestrator : MonoBehaviour
         if (_pathPreset != null)
         {
             _pathSettings = _pathPreset.PathSettings;
-            _generationData.GenerationDataBase = _pathPreset.GenerationDataBase;
+            _generationData._mazeGenerationSettings = _pathPreset.MazeGenerationSettings;
         }
 
         _pathGenerator.SetPathSettings(_pathSettings);

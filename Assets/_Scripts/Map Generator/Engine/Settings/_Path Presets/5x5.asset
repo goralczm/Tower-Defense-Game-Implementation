@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: 5x5
   m_EditorClassIdentifier: 
   PathSettings: {fileID: 11400000, guid: e4c7a86d623a73b4c99a3d8eaab2de84, type: 2}
-  GenerationDataBase: {fileID: 11400000, guid: 7f1a44a84b85acd439a358ff7c0dae81, type: 2}
+  MazeGenerationSettings: {fileID: 11400000, guid: 7f1a44a84b85acd439a358ff7c0dae81, type: 2}
+  EnvironmentSettings: {fileID: 11400000, guid: 52b7c2201aacd984ba4ca8408f469c3a, type: 2}

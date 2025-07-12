@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b9b1eff17a8bd34c941162a79cd3641, type: 3}
-  m_Name: Default Left to Right
+  m_Script: {fileID: 11500000, guid: bf02ba53130080b458251ff17810ac4b, type: 3}
+  m_Name: Light Environemnt
   m_EditorClassIdentifier: 
-  PathSettings: {fileID: 11400000, guid: 1646d9d457cfe1147b2bf61257f762c6, type: 2}
-  GenerationDataBase: {fileID: 11400000, guid: 1d8d2d1ff43269142946433b16664d74, type: 2}
+  NoiseThreshold: 0.2
+  ObstacleNearPathProbability: 0.35
+  NoiseSettings: {fileID: 11400000, guid: 96db48527d0f8264e9a598dfa7eff8e8, type: 2}

@@ -12,7 +12,7 @@ public enum PointsStrategy
 }
 
 [CreateAssetMenu(menuName = "Path Generation/Generation Data Base", fileName = "New Generation Data Base")]
-public class GenerationDataBase : ScriptableObject
+public class MazeGenerationSettings : ScriptableObject
 {
     public int Width = 5;
     public int Height = 5;

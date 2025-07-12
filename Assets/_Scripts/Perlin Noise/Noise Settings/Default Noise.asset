@@ -9,8 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b9b1eff17a8bd34c941162a79cd3641, type: 3}
-  m_Name: Default Top to Bottom
+  m_Script: {fileID: 11500000, guid: a4bb51f3dae77c7449ee64d69c41f764, type: 3}
+  m_Name: Default Noise
   m_EditorClassIdentifier: 
-  PathSettings: {fileID: 11400000, guid: 1646d9d457cfe1147b2bf61257f762c6, type: 2}
-  GenerationDataBase: {fileID: 11400000, guid: b9f0781cb0e5e2b42b60662aa0002c17, type: 2}
+  Width: 20
+  Height: 12
+  Scale: 10
+  Octaves: 4
+  Persistance: 1
+  Lacunarity: 7
+  Seed: -61915
+  Offset: {x: 0, y: 0}
+  Gamma: 1
+  Contrast: 64
+  Invert: 0

@@ -10,14 +10,25 @@ public class NoiseSettings : ScriptableObject
     public int Octaves = 2;
     [Range(0f, 1f)] public float Persistance = 1f;
     public float Lacunarity = 4f;
-    public int Seed = 42;
     public Vector2 Offset = Vector2.zero;
+    
+    private int _seed = 42;
 
     [Header("Filters Settings")]
     [Range(0f, 2f)] public float Gamma = 1f;
     public int Contrast = 0;
     public bool Invert;
 
+    public int GetSeed()
+    {
+        return _seed;
+    }
+    
+    public void SetSeed(int seed)
+    {
+        _seed = seed;
+    }
+    
     private void OnValidate()
     {
         if (Width <= 0) Width = 1;

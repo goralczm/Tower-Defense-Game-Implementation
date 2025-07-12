@@ -4,15 +4,14 @@ using UnityEngine.Tilemaps;
 
 public class PathRendererAddons : MonoBehaviour
 {
+    [SerializeField] private PathRenderer _pathRenderer;
     [SerializeField] private GameObject _generationText;
     
-    private PathRenderer _pathRenderer;
     private AudioSystem.AudioSystem _audio;
     private CameraShake _shake;
 
     private void OnEnable()
     {
-        _pathRenderer = GetComponent<PathRenderer>();
         _audio = FindFirstObjectByType<AudioSystem.AudioSystem>();
         _shake = FindFirstObjectByType<CameraShake>();
         _pathRenderer.OnTileChanged += HandleTileChanged;
