@@ -19,10 +19,13 @@ public static class Randomizer
         list.Shuffle();
 
         for (int i = 0; i < count; i++)
-        {
             outputs.Add(list[i]);
-        }
 
         return outputs;
+    }
+
+    public static int GetRandomSeed()
+    {
+        return UnityEngine.Random.Range(-100000, 100000);
     }
 }

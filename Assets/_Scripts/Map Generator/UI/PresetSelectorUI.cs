@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using _Scripts.Map_Generator.Core.Map;
 using TMPro;
 using UnityEngine;
 
 public class PresetSelectorUI : MonoBehaviour
 {
-    [SerializeField] private PathGenerationOrchestrator _orchestrator;
+    [SerializeField] private MapGenerator _mapGenerator;
     
     [SerializeField] private PathPreset[] _presets;
     [SerializeField] private TMP_Dropdown _presetsDropdown;
@@ -25,6 +26,6 @@ public class PresetSelectorUI : MonoBehaviour
     
     public void SetPresetByIndex(int index)
     {
-        _orchestrator.SetPathPreset(_presets[index]);
+        _mapGenerator.SetPathPreset(_presets[index]);
     }
 }

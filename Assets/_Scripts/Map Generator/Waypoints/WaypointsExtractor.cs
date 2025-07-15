@@ -3,42 +3,24 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
-public struct TileAdjecency
+public class WaypointsExtractor
 {
-    public TileBase Tile;
-    public Vector2 Direction;
-    public List<TileBase> PossibleAdjecentTiles;
-}
-
-public class WaypointsExtractor : MonoBehaviour
-{
-    [Header("Settings")]
-    [SerializeField] private Vector2 _startingPoint;
-    [SerializeField] private Tilemap _pathTilemap;
-
-    [Header("Adjecency Settings")]
-    [SerializeField] private TileAdjecency[] _rules;
-
-    [Header("Debug")]
-    [SerializeField] private Color _waypointColor = Color.red;
-    [SerializeField] private float _waypointRadius = .23f;
-
+    private TilemapSettings _tilemapSettings;
+    private Tilemap _pathTilemap;
     private List<Vector2> _waypoints = new();
     private Dictionary<(TileBase, Vector2), List<TileBase>> _cachedRules = new();
 
-    public List<Vector2> GetWaypoints() => _waypoints;
-    public Vector2 SetStartPoint(Vector2 startPoint) => _startingPoint = startPoint;
-
-    private void Start()
+    public void SetTilemap(Tilemap tilemap)
     {
-        CacheRules();
+        _pathTilemap = tilemap;
     }
+    
+    public void SetTilemapSettings(TilemapSettings tilemapSettings) => _tilemapSettings = tilemapSettings;
 
-    [ContextMenu("Cache Rules")]
     public void CacheRules()
     {
         _cachedRules.Clear();
-        foreach (var rule in _rules)
+        foreach (var rule in _tilemapSettings.AdjacencyRules)
         {
             if (_cachedRules.ContainsKey((rule.Tile, rule.Direction)))
                 continue;
@@ -47,19 +29,17 @@ public class WaypointsExtractor : MonoBehaviour
         }
     }
 
-    [ContextMenu("Clear Waypoints")]
     public void ClearWaypoints()
     {
         _waypoints.Clear();
     }
 
-    [ContextMenu("Extract Waypoints")]
-    public void ExtractWaypoints()
+    public List<Vector2> ExtractWaypoints(Vector2 startPoint)
     {
-        _waypoints.Clear();
+        ClearWaypoints();
 
-        Vector2 dir = FindNextDir(_startingPoint, null);
-        Vector2 end = ExtractPointsInDir(_startingPoint, dir);
+        Vector2 dir = FindNextDir(startPoint, null);
+        Vector2 end = ExtractPointsInDir(startPoint, dir);
 
         while (true)
         {
@@ -79,6 +59,8 @@ public class WaypointsExtractor : MonoBehaviour
 
             end = newEnd;
         }
+
+        return _waypoints;
     }
 
     private Vector2 FindNextDir(Vector2 start, Vector2? lastDir = null)
@@ -147,16 +129,5 @@ public class WaypointsExtractor : MonoBehaviour
             return;
 
         _waypoints.Add(waypoint);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(_startingPoint, _waypointRadius);
-
-        Gizmos.color = _waypointColor;
-
-        foreach (var waypoint in _waypoints)
-            Gizmos.DrawWireSphere(waypoint, _waypointRadius);
     }
 }

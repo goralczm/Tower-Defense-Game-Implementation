@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b992fd6f8daa65c4181c505e2eae4159, type: 3}
+  m_Name: Default Tilemap
+  m_EditorClassIdentifier: 
+  Roundabout: {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+  Horizontal: {fileID: 11400000, guid: 14d8a5b2c9cdb564b9b9b0c6770cc0d1, type: 2}
+  Vertical: {fileID: 11400000, guid: a2ac30ecc78ce6440b636973e58de7c2, type: 2}
+  LeftTopCorner: {fileID: 11400000, guid: 90499cb58373d7f4aab57ffe6f45620d, type: 2}
+  RightTopCorner: {fileID: 11400000, guid: 22cdb123b65a2d047a8ea324a4a523ea, type: 2}
+  LeftBottomCorner: {fileID: 11400000, guid: 0ae0ebf5517bad24e895c7c7b143064f, type: 2}
+  RightBottomCorner: {fileID: 11400000, guid: 12f0a9eea3e9d7445be36d0f42841a2f, type: 2}
+  AdjacencyRules:
+  - Tile: {fileID: 11400000, guid: a2ac30ecc78ce6440b636973e58de7c2, type: 2}
+    Direction: {x: 0, y: 1}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: a2ac30ecc78ce6440b636973e58de7c2, type: 2}
+    - {fileID: 11400000, guid: 0ae0ebf5517bad24e895c7c7b143064f, type: 2}
+    - {fileID: 11400000, guid: 12f0a9eea3e9d7445be36d0f42841a2f, type: 2}
+  - Tile: {fileID: 11400000, guid: a2ac30ecc78ce6440b636973e58de7c2, type: 2}
+    Direction: {x: 0, y: -1}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: a2ac30ecc78ce6440b636973e58de7c2, type: 2}
+    - {fileID: 11400000, guid: 90499cb58373d7f4aab57ffe6f45620d, type: 2}
+    - {fileID: 11400000, guid: 22cdb123b65a2d047a8ea324a4a523ea, type: 2}
+  - Tile: {fileID: 11400000, guid: 14d8a5b2c9cdb564b9b9b0c6770cc0d1, type: 2}
+    Direction: {x: -1, y: 0}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: 14d8a5b2c9cdb564b9b9b0c6770cc0d1, type: 2}
+    - {fileID: 11400000, guid: 22cdb123b65a2d047a8ea324a4a523ea, type: 2}
+    - {fileID: 11400000, guid: 12f0a9eea3e9d7445be36d0f42841a2f, type: 2}
+  - Tile: {fileID: 11400000, guid: 14d8a5b2c9cdb564b9b9b0c6770cc0d1, type: 2}
+    Direction: {x: 1, y: 0}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: 14d8a5b2c9cdb564b9b9b0c6770cc0d1, type: 2}
+    - {fileID: 11400000, guid: 0ae0ebf5517bad24e895c7c7b143064f, type: 2}
+    - {fileID: 11400000, guid: 90499cb58373d7f4aab57ffe6f45620d, type: 2}
+  - Tile: {fileID: 11400000, guid: 0ae0ebf5517bad24e895c7c7b143064f, type: 2}
+    Direction: {x: 0, y: -1}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: a2ac30ecc78ce6440b636973e58de7c2, type: 2}
+    - {fileID: 11400000, guid: 90499cb58373d7f4aab57ffe6f45620d, type: 2}
+    - {fileID: 11400000, guid: 22cdb123b65a2d047a8ea324a4a523ea, type: 2}
+  - Tile: {fileID: 11400000, guid: 0ae0ebf5517bad24e895c7c7b143064f, type: 2}
+    Direction: {x: -1, y: 0}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: 14d8a5b2c9cdb564b9b9b0c6770cc0d1, type: 2}
+    - {fileID: 11400000, guid: 22cdb123b65a2d047a8ea324a4a523ea, type: 2}
+    - {fileID: 11400000, guid: 12f0a9eea3e9d7445be36d0f42841a2f, type: 2}
+  - Tile: {fileID: 11400000, guid: 12f0a9eea3e9d7445be36d0f42841a2f, type: 2}
+    Direction: {x: 0, y: -1}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: a2ac30ecc78ce6440b636973e58de7c2, type: 2}
+    - {fileID: 11400000, guid: 90499cb58373d7f4aab57ffe6f45620d, type: 2}
+    - {fileID: 11400000, guid: 22cdb123b65a2d047a8ea324a4a523ea, type: 2}
+  - Tile: {fileID: 11400000, guid: 12f0a9eea3e9d7445be36d0f42841a2f, type: 2}
+    Direction: {x: 1, y: 0}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: 14d8a5b2c9cdb564b9b9b0c6770cc0d1, type: 2}
+    - {fileID: 11400000, guid: 0ae0ebf5517bad24e895c7c7b143064f, type: 2}
+    - {fileID: 11400000, guid: 90499cb58373d7f4aab57ffe6f45620d, type: 2}
+  - Tile: {fileID: 11400000, guid: 90499cb58373d7f4aab57ffe6f45620d, type: 2}
+    Direction: {x: -1, y: 0}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: 14d8a5b2c9cdb564b9b9b0c6770cc0d1, type: 2}
+    - {fileID: 11400000, guid: 22cdb123b65a2d047a8ea324a4a523ea, type: 2}
+    - {fileID: 11400000, guid: 12f0a9eea3e9d7445be36d0f42841a2f, type: 2}
+  - Tile: {fileID: 11400000, guid: 90499cb58373d7f4aab57ffe6f45620d, type: 2}
+    Direction: {x: 0, y: 1}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: a2ac30ecc78ce6440b636973e58de7c2, type: 2}
+    - {fileID: 11400000, guid: 0ae0ebf5517bad24e895c7c7b143064f, type: 2}
+    - {fileID: 11400000, guid: 12f0a9eea3e9d7445be36d0f42841a2f, type: 2}
+  - Tile: {fileID: 11400000, guid: 22cdb123b65a2d047a8ea324a4a523ea, type: 2}
+    Direction: {x: 1, y: 0}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: 14d8a5b2c9cdb564b9b9b0c6770cc0d1, type: 2}
+    - {fileID: 11400000, guid: 0ae0ebf5517bad24e895c7c7b143064f, type: 2}
+    - {fileID: 11400000, guid: 90499cb58373d7f4aab57ffe6f45620d, type: 2}
+  - Tile: {fileID: 11400000, guid: 22cdb123b65a2d047a8ea324a4a523ea, type: 2}
+    Direction: {x: 0, y: 1}
+    PossibleAdjecentTiles:
+    - {fileID: 11400000, guid: bf437816b7e52bd45b6cf1eed97b165d, type: 2}
+    - {fileID: 11400000, guid: a2ac30ecc78ce6440b636973e58de7c2, type: 2}
+    - {fileID: 11400000, guid: 0ae0ebf5517bad24e895c7c7b143064f, type: 2}
+    - {fileID: 11400000, guid: 12f0a9eea3e9d7445be36d0f42841a2f, type: 2}
