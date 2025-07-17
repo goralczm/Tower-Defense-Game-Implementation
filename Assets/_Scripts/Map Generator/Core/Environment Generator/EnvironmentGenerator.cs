@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public enum TileState
 {
@@ -36,32 +40,41 @@ public class EnvironmentGenerator
     private int _seed = 42;
     private Bounds _bounds;
 
+    public static Func<GameObject, Task> OnObstaclePlacedAsync;
+    public static Func<Vector2, Task> OnObstacleDestroyedAsync;
+
     public void SetTilemap(Tilemap tilemap) => _tilemap = tilemap;
     
-    public void CreateEnvironment(object sender, PathGenerationOrchestrator.OnPathGeneratedEventArgs e)
+    public async Task GenerateEnvironment(PathPreset pathPreset, Bounds bounds, int seed)
     {
-        _seed = e.GenerationData.Seed;
-        _noiseSettings = e.PathPreset.EnvironmentSettings.NoiseSettings;
-        _pathSettings = e.PathPreset.PathSettings;
-        _bounds = e.Bounds;
-
-        GenerateEnvironment(e.PathPreset.EnvironmentSettings, e.Bounds);
+        InitializeConfiguration(pathPreset, bounds, seed);
+        await DestroyAllObstacles();
+        CreateHeatmap(bounds, pathPreset.EnvironmentSettings.ObstacleNearPathProbability);
+        await CreateAllObstacles(bounds, pathPreset.EnvironmentSettings.NoiseThreshold);
     }
-
-    private void GenerateEnvironment(EnvironmentSettings environmentSettings, Bounds bounds)
+    
+    public void InitializeConfiguration(PathPreset pathPreset, Bounds bounds, int seed)
     {
+        _seed = seed;
+        _noiseSettings = pathPreset.EnvironmentSettings.NoiseSettings;
+        _pathSettings = pathPreset.PathSettings;
+        _bounds = bounds;
         Random.InitState(_seed);
-        DestroyAllObstacles();
-        CreateHeatmap(bounds, environmentSettings.ObstacleNearPathProbability);
-        CreateAllObstacles(bounds, environmentSettings.NoiseThreshold);
     }
 
-    private void DestroyAllObstacles()
+    public async Task DestroyAllObstacles()
     {
         _obstaclePositions.Clear();
-        
+
         for (int i = _createdObstacles.Count - 1; i >= 0; i--)
+        {
+            Vector2 obstaclePosition = _createdObstacles[i].transform.position;
+            
             Object.Destroy(_createdObstacles[i]);
+            
+            if (OnObstacleDestroyedAsync != null)
+                await OnObstacleDestroyedAsync.Invoke(obstaclePosition);
+        }
         
         _createdObstacles.Clear();
     }
@@ -86,7 +99,7 @@ public class EnvironmentGenerator
         }
     }
 
-    private void CreateAllObstacles(Bounds bounds, float noiseThreshold)
+    private async Task CreateAllObstacles(Bounds bounds, float noiseThreshold)
     {
         float[,] noise = NoiseGenerator.GenerateNoise(_noiseSettings, _seed);
 
@@ -101,15 +114,21 @@ public class EnvironmentGenerator
                 Vector2 cellCenterPos = _tilemap.GetCellCenterWorld( _tilemap.WorldToCell(new Vector3(bounds.min.x + x, bounds.min.y + y, 0)));
 
                 if (_heatmap.TryGetValue(cellCenterPos, out TileState state) && state == TileState.Free)
-                    CreateObstacle(cellCenterPos);
+                    await CreateObstacle(cellCenterPos);
             }
         }
     }
 
-    private void CreateObstacle(Vector2 position)
+    private async Task CreateObstacle(Vector2 position)
     {
         _obstaclePositions.Add(position);
-        _createdObstacles.Add(Object.Instantiate(_obstaclePrefabs[Random.Range(0, _obstaclePrefabs.Count)], position, Quaternion.identity));
+        GameObject obstacle = Object.Instantiate(_obstaclePrefabs[Random.Range(0, _obstaclePrefabs.Count)], position,
+            Quaternion.identity);
+        
+        _createdObstacles.Add(obstacle);
+
+        if (OnObstaclePlacedAsync != null)
+            await OnObstaclePlacedAsync.Invoke(obstacle);
     }
 
     private Vector2 GetMaxHeatmapCell()

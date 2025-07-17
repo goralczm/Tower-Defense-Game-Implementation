@@ -10,16 +10,16 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        PathGenerationOrchestrator.OnPathGenerationStarted += StopSpawner;
-        PathGenerationOrchestrator.OnPathGenerationEnded += MoveSpawner;
-        PathGenerationOrchestrator.OnPathGenerationEnded += StartSpawner;
+        //PathGenerationOrchestrator.OnPathGenerationStarted += StopSpawner;
+        //PathGenerationOrchestrator.OnPathGenerationEnded += MoveSpawner;
+        //PathGenerationOrchestrator.OnPathGenerationEnded += StartSpawner;
     }
 
     private void OnDisable()
     {
-        PathGenerationOrchestrator.OnPathGenerationStarted -= StopSpawner;
-        PathGenerationOrchestrator.OnPathGenerationEnded -= MoveSpawner;
-        PathGenerationOrchestrator.OnPathGenerationEnded -= StartSpawner;
+        //PathGenerationOrchestrator.OnPathGenerationStarted -= StopSpawner;
+        //PathGenerationOrchestrator.OnPathGenerationEnded -= MoveSpawner;
+        //PathGenerationOrchestrator.OnPathGenerationEnded -= StartSpawner;
     }
     
     private void StopSpawner(object sender, EventArgs e)
@@ -27,13 +27,13 @@ public class EnemySpawner : MonoBehaviour
         CancelInvoke();
     }
 
-    private void MoveSpawner(object sender, PathGenerationOrchestrator.OnPathGeneratedEventArgs args)
+    private void MoveSpawner(object sender, PathOrchestrator.OnPathGeneratedEventArgs args)
     {
         transform.position = args.StartPointWorld;
     }
 
 
-    private void StartSpawner(object sender, PathGenerationOrchestrator.OnPathGeneratedEventArgs args)
+    private void StartSpawner(object sender, PathOrchestrator.OnPathGeneratedEventArgs args)
     {
         InvokeRepeating("SpawnEnemy", 0, _intervals);
     }

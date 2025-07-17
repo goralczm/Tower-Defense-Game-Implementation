@@ -6,27 +6,26 @@ using UnityEngine.Tilemaps;
 public class WaypointsExtractor
 {
     private TilemapSettings _tilemapSettings;
-    private Tilemap _pathTilemap;
+    private Tilemap _pathPathTilemap;
     private List<Vector2> _waypoints = new();
-    private Dictionary<(TileBase, Vector2), List<TileBase>> _cachedRules = new();
+    //private Dictionary<(TileBase, Vector2), List<TileBase>> _cachedRules = new();
 
-    public void SetTilemap(Tilemap tilemap)
+    public WaypointsExtractor(Tilemap pathTilemap, TilemapSettings tilemapSettings)
     {
-        _pathTilemap = tilemap;
+        _pathPathTilemap = pathTilemap;
+        _tilemapSettings = tilemapSettings;
     }
-    
-    public void SetTilemapSettings(TilemapSettings tilemapSettings) => _tilemapSettings = tilemapSettings;
 
     public void CacheRules()
     {
-        _cachedRules.Clear();
+        /*_cachedRules.Clear();
         foreach (var rule in _tilemapSettings.AdjacencyRules)
         {
             if (_cachedRules.ContainsKey((rule.Tile, rule.Direction)))
                 continue;
 
             _cachedRules.Add((rule.Tile, rule.Direction), rule.PossibleAdjecentTiles);
-        }
+        }*/
     }
 
     public void ClearWaypoints()
@@ -79,8 +78,8 @@ public class WaypointsExtractor
 
     private bool IsDirectionValid(Vector2 start, Vector2? lastDir, Vector2 newDir)
     {
-        TileBase startTile = _pathTilemap.GetTile(_pathTilemap.WorldToCell(start));
-        TileBase nextTile = _pathTilemap.GetTile(_pathTilemap.WorldToCell(start + newDir));
+        TileBase startTile = _pathPathTilemap.GetTile(_pathPathTilemap.WorldToCell(start));
+        TileBase nextTile = _pathPathTilemap.GetTile(_pathPathTilemap.WorldToCell(start + newDir));
 
         if (lastDir == -newDir)
             return false;
@@ -88,10 +87,10 @@ public class WaypointsExtractor
         if (nextTile == null)
             return false;
 
-        if (!_cachedRules.ContainsKey((startTile, newDir)))
+        if (!_tilemapSettings.CanHaveAdjacency(startTile, newDir))
             return false;
 
-        if (!_cachedRules[(startTile, newDir)].Contains(nextTile))
+        if (!_tilemapSettings.GetPossibleAdjacentTiles(newDir).Contains(nextTile))
             return false;
 
         return true;
@@ -104,7 +103,7 @@ public class WaypointsExtractor
 
         while (true)
         {
-            TileBase tile = _pathTilemap.GetTile(_pathTilemap.WorldToCell(current));
+            TileBase tile = _pathPathTilemap.GetTile(_pathPathTilemap.WorldToCell(current));
 
             if (tile != null)
             {
@@ -125,7 +124,7 @@ public class WaypointsExtractor
 
     private void AddWaypoint(Vector2 waypoint)
     {
-        if (_waypoints.Contains(waypoint) && !_pathTilemap.GetTile(_pathTilemap.WorldToCell(waypoint)).name.ToLower().Contains("roundabout"))
+        if (_waypoints.Contains(waypoint) && !_pathPathTilemap.GetTile(_pathPathTilemap.WorldToCell(waypoint)).name.ToLower().Contains("roundabout"))
             return;
 
         _waypoints.Add(waypoint);

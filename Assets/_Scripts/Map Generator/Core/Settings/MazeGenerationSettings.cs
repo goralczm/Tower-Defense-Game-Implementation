@@ -10,6 +10,7 @@ public enum PointsStrategy
     Custom,
 }
 
+[System.Serializable]
 [CreateAssetMenu(menuName = "Path Generation/Maze Generation Settings", fileName = "New Maze Generation Settings")]
 public class MazeGenerationSettings : ScriptableObject
 {

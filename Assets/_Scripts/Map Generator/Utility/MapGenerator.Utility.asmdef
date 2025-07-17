@@ -1,12 +1,9 @@
 {
-    "name": "MapGenerator",
+    "name": "MapGenerator.Utility",
     "rootNamespace": "",
     "references": [
-        "GUID:a281ae1d2c32f134d890098633848dc1",
-        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:6d57ab46be973314d9ef9ff0a3e68ce4",
-        "GUID:53f39548733cf214ab2c80e0b5f6239e"
+        "GUID:6572c3ce24452aa44bab406b75603d7f",
+        "GUID:079672123b74a8243953582e54eaaa7d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

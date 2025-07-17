@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,6 +10,15 @@ public struct TileAdjacency
     public TileBase Tile;
     public Vector2 Direction;
     public List<TileBase> PossibleAdjecentTiles;
+}
+
+[Flags]
+public enum OpenAdjacencySide
+{
+    Top = 0,
+    Bottom = 1,
+    Left = 2,
+    Right = 4,
 }
 
 [CreateAssetMenu(menuName = "Path Generation/Tilemap Settings", fileName = "New Tilemap Settings")]
@@ -24,4 +35,67 @@ public class TilemapSettings : ScriptableObject
     
     [Header("Adjacency Settings")]
     public TileAdjacency[] AdjacencyRules;
+
+    private Dictionary<Vector2, List<TileBase>> _cachedAdjacencyRules = new();
+    private Dictionary<TileBase, List<Vector2>> _openSides = new();
+
+    public bool CanHaveAdjacency(TileBase tile, Vector2 dir)
+    {
+        InitializeTiles();
+
+        return _openSides[tile].Contains(dir);
+    }
+    
+    public List<TileBase> GetPossibleAdjacentTiles(Vector2 dir)
+    {
+        if (_cachedAdjacencyRules.TryGetValue(dir, out List<TileBase> possibleAdjacentTiles))
+            return possibleAdjacentTiles;
+        
+        InitializeTiles();
+        
+        possibleAdjacentTiles = _openSides.Where(pair => pair.Value.Contains(-dir)).Select(pair => pair.Key).ToList();
+        
+        _cachedAdjacencyRules.Add(dir, possibleAdjacentTiles);
+        return possibleAdjacentTiles;
+    }
+
+    private void InitializeTiles()
+    {
+        if (_openSides.Count > 0) return;
+        
+        _openSides.Add(Roundabout, new()
+        {
+            Vector2.up, Vector2.right, Vector2.down, Vector2.left
+        });
+        
+        _openSides.Add(Horizontal, new()
+        {
+            Vector2.left, Vector2.right
+        });
+        
+        _openSides.Add(Vertical, new()
+        {
+            Vector2.down, Vector2.up
+        });
+        
+        _openSides.Add(LeftTopCorner, new()
+        {
+            Vector2.left, Vector2.up
+        });
+        
+        _openSides.Add(RightTopCorner, new()
+        {
+            Vector2.right, Vector2.up
+        });
+        
+        _openSides.Add(LeftBottomCorner, new()
+        {
+            Vector2.left, Vector2.down
+        });
+        
+        _openSides.Add(RightBottomCorner, new()
+        {
+            Vector2.right, Vector2.down
+        });
+    }
 }

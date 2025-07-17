@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(menuName = "Perlin Noise/Noise Settings", fileName = "New Noise Settings")]
 public class NoiseSettings : ScriptableObject
 {

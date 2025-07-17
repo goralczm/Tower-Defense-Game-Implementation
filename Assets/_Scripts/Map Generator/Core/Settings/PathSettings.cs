@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(menuName = "Path Generation/Path Settings", fileName = "New Path Settings")]
 public class PathSettings : ScriptableObject
 {

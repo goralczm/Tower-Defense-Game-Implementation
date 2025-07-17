@@ -4,31 +4,53 @@ using UnityEngine;
 [System.Serializable]
 public class GenerationData
 {
-    [HideInInspector] public MazeGenerationSettings MazeGenerationSettings;
-    [HideInInspector]public int Seed;
-    public Vector2Int StartPoint = new(0, 0);
-    public Vector2Int EndPoint = new(1000, 1000);
+    public MazeGenerationSettings MazeGenerationSettings;
+    public int Seed { get; private set; }
+    public Vector2Int GridStartPoint { get; private set; } = new(0, 0);
+    public Vector2Int GridEndPoint { get; private set; } = new(1000, 1000);
 
-    public Action<int> OnSeedChanged;
+    public GenerationData(MazeGenerationSettings mazeSettings, int seed)
+    {
+        MazeGenerationSettings = mazeSettings;
+        SetSeed(seed);
+    }
 
+    public GenerationData(MazeGenerationSettings mazeSettings, int seed, Vector2Int gridStartPoint,
+        Vector2Int gridEndPoint)
+    {
+        MazeGenerationSettings = mazeSettings;
+        SetSeed(seed);
+        SetGridStartPoint(gridStartPoint);
+        SetGridEndPoint(gridEndPoint);
+    }
+    
     public void SetSeed(int seed)
     {
         Seed = seed;
-        OnSeedChanged?.Invoke(seed);
+    }
+
+    public void SetGridStartPoint(Vector2Int gridStartPoint)
+    {
+        GridStartPoint = gridStartPoint;
+    }
+    
+    public void SetGridEndPoint(Vector2Int gridEndPoint)
+    {
+        GridEndPoint = gridEndPoint;
     }
 
     public void RandomizeAccessPoints()
     {
-        StartPoint = MazeGenerationSettings.GetRandomStartPoint();
-        EndPoint = MazeGenerationSettings.GetRandomEndPoint();
+        SetGridStartPoint(MazeGenerationSettings.GetRandomStartPoint());
+        SetGridEndPoint(MazeGenerationSettings.GetRandomEndPoint());
 
-        if (StartPoint == EndPoint)
+        if (GridStartPoint == GridEndPoint)
             RandomizeAccessPoints();
     }
 
-    public bool IsTileOnEdge(Vector2 pos)
+    public bool IsTileOnEdge(Vector2 position)
     {
-        return pos.x == 0 || pos.x == MazeGenerationSettings.Width - 1 || pos.y == 0 ||
-               pos.y == MazeGenerationSettings.Height - 1;
+        return position.x == 0 || position.x == MazeGenerationSettings.Width - 1 || position.y == 0 ||
+               position.y == MazeGenerationSettings.Height - 1;
     }
 }

@@ -86,7 +86,7 @@ public class PathGenerator
         }
 
         if (_pathSettings.MoveRootToEnd)
-            layout.MoveRootToPosition(_generationData.EndPoint);
+            layout.MoveRootToPosition(_generationData.GridEndPoint);
 
         return layout;
     }
@@ -117,8 +117,8 @@ public class PathGenerator
 
     private List<Vector2> ExtractWaypoints(MazeLayoutGenerator layoutGenerator)
     {
-        var waypoints = new List<Vector2> { ToWorld(_generationData.StartPoint) };
-        var curr = layoutGenerator.GetByCoords(_generationData.StartPoint);
+        var waypoints = new List<Vector2> { ToWorld(_generationData.GridStartPoint) };
+        var curr = layoutGenerator.GetByCoords(_generationData.GridStartPoint);
 
         while (curr?.Next != null)
         {
@@ -133,7 +133,7 @@ public class PathGenerator
             curr = curr.Next;
         }
 
-        waypoints.Add(ToWorld(_generationData.EndPoint));
+        waypoints.Add(ToWorld(_generationData.GridEndPoint));
         return waypoints;
     }
     

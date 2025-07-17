@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(menuName = "Path Generation/Environment Settings", fileName = "New Environment Settings")]
 public class EnvironmentSettings : ScriptableObject
 {

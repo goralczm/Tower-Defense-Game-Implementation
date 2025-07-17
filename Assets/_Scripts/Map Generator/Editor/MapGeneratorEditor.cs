@@ -6,7 +6,8 @@ using UnityEngine;
 public class MapGeneratorEditor : Editor
 {
     private MapGenerator _mapGenerator;
-    
+    private bool _showCustomSettings;
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -14,12 +15,12 @@ public class MapGeneratorEditor : Editor
         _mapGenerator = (MapGenerator)target;
 
         if (GUILayout.Button("Regenerate Path"))
-            _mapGenerator.GenerateMap();
+            _mapGenerator.GenerateMapByContext();
 
         if (GUILayout.Button("Generate With New Seed"))
         {
             _mapGenerator.SetSeed(Randomizer.GetRandomSeed());
-            _mapGenerator.GenerateMap();
+            _mapGenerator.GenerateRandomMap();
         }
     }
 }

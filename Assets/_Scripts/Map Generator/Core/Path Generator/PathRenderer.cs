@@ -7,79 +7,66 @@ using UnityEngine.Tilemaps;
 [System.Serializable]
 public class PathRenderer
 {
-    [Header("Async")]
-    [SerializeField] private int _milisecondDelay = 100;
-    [SerializeField] private int _minDelay = 5;
-    [SerializeField] private int _speedUpFactor = 1;
-
     private PathSettings _pathSettings;
     private GenerationData _generationData;
     private TilemapSettings _tilemapSettings;
-    private Tilemap _tilemap;
+    private Tilemap _pathTilemap;
     private Vector2Int _entranceDir;
     private Vector2Int _exitDir;
+    private bool _renderOverflowTiles;
     
-    public static Action<TileBase> OnTileChanged;
+    public static Func<TileBase, Task> OnTileChangedAsync;
+    
+    public PathRenderer(Tilemap pathTilemap, PathSettings pathSettings, TilemapSettings tilemapSettings, GenerationData generationData, Vector2Int entranceDir, Vector2Int exitDir)
+    {
+        _pathTilemap = pathTilemap;
+        _pathSettings = pathSettings;
+        _tilemapSettings = tilemapSettings;
+        _generationData = generationData;
+        _entranceDir = entranceDir;
+        _exitDir = exitDir;
+    }
 
-    public void SetPathSettings(PathSettings pathSettings) => _pathSettings = pathSettings;
-    public void SetGenerationData(GenerationData generationData) => _generationData = generationData;
-    public void SetEntranceDir(Vector2Int entranceDir) => _entranceDir = entranceDir;
-    public void SetExitDir(Vector2Int exitDir) => _exitDir = exitDir;
-    public void SetTilemap(Tilemap tilemap) => _tilemap = tilemap;
-    public void SetTilemapSettings(TilemapSettings tilemapSettings) => _tilemapSettings = tilemapSettings;
-    public Vector3 Center => _tilemap.transform.position;
-    
     public Vector2 GetStartPointWorld()
     {
-        if (_generationData.IsTileOnEdge(_generationData.StartPoint))
-            return _tilemap.GetCellCenterWorld(new(_generationData.StartPoint.x - _entranceDir.x, _generationData.StartPoint.y - _entranceDir.y));
+        if (_renderOverflowTiles && _generationData.IsTileOnEdge(_generationData.GridStartPoint))
+            return _pathTilemap.GetCellCenterWorld(new(_generationData.GridStartPoint.x - _entranceDir.x, _generationData.GridStartPoint.y - _entranceDir.y));
 
-        return _tilemap.GetCellCenterWorld(new(_generationData.StartPoint.x, _generationData.StartPoint.y));
+        return _pathTilemap.GetCellCenterWorld(new(_generationData.GridStartPoint.x, _generationData.GridStartPoint.y));
     }
+    
     public Vector2 GetEndPointWorld()
     {
-        if (_generationData.IsTileOnEdge(_generationData.EndPoint))
-            return _tilemap.GetCellCenterWorld(new(_generationData.EndPoint.x - _exitDir.x, _generationData.EndPoint.y - _exitDir.y));
+        if (_renderOverflowTiles && _generationData.IsTileOnEdge(_generationData.GridEndPoint))
+            return _pathTilemap.GetCellCenterWorld(new(_generationData.GridEndPoint.x - _exitDir.x, _generationData.GridEndPoint.y - _exitDir.y));
 
-        return _tilemap.GetCellCenterWorld(new(_generationData.EndPoint.x, _generationData.EndPoint.y));
-    }
-    public Bounds GetBounds()
-    {
-        return new Bounds(
-            new Vector3(_generationData.MazeGenerationSettings.Width / 2f, _generationData.MazeGenerationSettings.Height / 2f, 0) + Center,
-            new Vector3(_generationData.MazeGenerationSettings.Width + 1, _generationData.MazeGenerationSettings.Height + 1, 0));
+        return _pathTilemap.GetCellCenterWorld(new(_generationData.GridEndPoint.x, _generationData.GridEndPoint.y));
     }
 
-    public async Task RenderPath(MazeLayoutGenerator layout)
+    public async Task RenderPath(MazeLayoutGenerator layout, bool renderOverflowTiles = false)
     {
         await ClearAllTiles();
-        await Task.Delay(_milisecondDelay);
-
-        await DrawPath(layout);
-        await Task.Delay(_milisecondDelay);
-
+        await DrawPath(layout, renderOverflowTiles);
         await DrawCorners(layout);
-        await Task.Delay(_milisecondDelay);
 
         if (_pathSettings.EnforceRoundabouts)
             await DrawRoundabouts(layout, _generationData.Seed);
     }
 
-    public void FillEntireMap()
+    public async Task FillEntireMap()
     {
         for (int x = -1; x <= _generationData.MazeGenerationSettings.Width; x++)
         {
             for (int y = -1; y <= _generationData.MazeGenerationSettings.Height; y++)
             {
-                SetTile(new(x, y), _tilemapSettings.Roundabout);
+                await SetTile(new(x, y), _tilemapSettings.Roundabout);
             }
         }
     }
 
     public async Task ClearAllTiles()
     {
-        int speedUp = 0;
-        BoundsInt bounds = _tilemap.cellBounds;
+        BoundsInt bounds = _pathTilemap.cellBounds;
 
         for (int y = bounds.yMax; y >= bounds.yMin; y--)
         {
@@ -89,97 +76,81 @@ public class PathRenderer
                 if (y % 2 == 0)
                     cellPos = new(bounds.xMax - x - 1, y);
 
-                if (_tilemap.GetTile(cellPos) != null)
+                if (_pathTilemap.GetTile(cellPos) != null)
                 {
-                    await Task.Delay(Mathf.Max(_minDelay, (_milisecondDelay / 2) - speedUp));
-                    SetTile(cellPos, null);
-                    speedUp += _speedUpFactor;
+                    await SetTile(cellPos, null);
                 }
             }
         }
     }
 
-    private async Task DrawPath(MazeLayoutGenerator layoutGenerator)
+    private async Task DrawPath(MazeLayoutGenerator layout, bool renderOverflowTiles = false)
     {
-        int speedUp = 0;
+        _renderOverflowTiles = renderOverflowTiles;
+        
+        var currNode = layout.GetByCoords(_generationData.GridStartPoint);
+        Vector2Int? prevNodePosition = null;
 
-        var curr = layoutGenerator.GetByCoords(_generationData.StartPoint);
-        Vector2Int? prevPos = null;
-
-        while (curr?.Next != null)
+        while (currNode?.Next != null)
         {
-            Vector2Int pos = curr.GetPosition();
-            Vector3Int tilePos = new(pos.x, pos.y, 0);
-            Vector2 dir = curr.Next.GetPosition() - pos;
+            Vector2Int nodePosition = currNode.GetPosition();
+            Vector3Int tilePosition = new(nodePosition.x, nodePosition.y, 0);
+            Vector2 dir = currNode.Next.GetPosition() - nodePosition;
 
-            if (!prevPos.HasValue)
+            if (!prevNodePosition.HasValue && renderOverflowTiles)
             {
-                if (_generationData.IsTileOnEdge(pos))
+                if (_generationData.IsTileOnEdge(nodePosition))
                 {
-                    Vector3Int overflowTile = new(pos.x - _entranceDir.x, pos.y - _entranceDir.y, 0);
+                    Vector3Int overflowTile = new(nodePosition.x - _entranceDir.x, nodePosition.y - _entranceDir.y, 0);
                     if (_entranceDir.x != 0)
-                        SetTile(overflowTile, _tilemapSettings.Horizontal);
+                        await SetTile(overflowTile, _tilemapSettings.Horizontal);
                     else if (_entranceDir.y != 0)
-                        SetTile(overflowTile, _tilemapSettings.Vertical);
-
-                    await Task.Delay(_milisecondDelay);
+                        await SetTile(overflowTile, _tilemapSettings.Vertical);
                 }
             }
 
             if (dir.x != 0)
-                SetTile(tilePos, _tilemapSettings.Horizontal);
+                await SetTile(tilePosition, _tilemapSettings.Horizontal);
             else if (dir.y != 0)
-                SetTile(tilePos, _tilemapSettings.Vertical);
+                await SetTile(tilePosition, _tilemapSettings.Vertical);
 
-            await Task.Delay(Mathf.Max(_minDelay, _milisecondDelay - speedUp));
-
-            speedUp += _speedUpFactor;
-
-            prevPos = pos;
-            curr = curr.Next;
+            prevNodePosition = nodePosition;
+            currNode = currNode.Next;
         }
 
-        if (prevPos.HasValue && curr != null)
+        if (prevNodePosition.HasValue && currNode != null)
         {
-            Vector3Int lastTile = new(curr.X, curr.Y, 0);
-            Vector2 lastDir = prevPos.Value - curr.GetPosition();
+            Vector3Int lastTile = new(currNode.X, currNode.Y, 0);
+            Vector2 lastDir = prevNodePosition.Value - currNode.GetPosition();
 
             if (lastDir.x != 0)
-                SetTile(lastTile, _tilemapSettings.Horizontal);
+                await SetTile(lastTile, _tilemapSettings.Horizontal);
             else if (lastDir.y != 0)
-                SetTile(lastTile, _tilemapSettings.Vertical);
+                await SetTile(lastTile, _tilemapSettings.Vertical);
 
-            await Task.Delay(_milisecondDelay);
-
-            if (_generationData.IsTileOnEdge(curr.GetPosition()))
+            if (renderOverflowTiles && _generationData.IsTileOnEdge(currNode.GetPosition()))
             {
-                Vector3Int overflowTile = new(curr.X + _exitDir.x, curr.Y + _exitDir.y, 0);
+                Vector3Int overflowTile = new(currNode.X + _exitDir.x, currNode.Y + _exitDir.y, 0);
                 if (_exitDir.x != 0)
-                    SetTile(overflowTile, _tilemapSettings.Horizontal);
+                    await SetTile(overflowTile, _tilemapSettings.Horizontal);
                 else if (_exitDir.y != 0)
-                    SetTile(overflowTile, _tilemapSettings.Vertical);
-
-                await Task.Delay(_milisecondDelay);
+                    await SetTile(overflowTile, _tilemapSettings.Vertical);
             }
         }
     }
 
-    private async Task DrawCorners(MazeLayoutGenerator layoutGenerator)
+    private async Task DrawCorners(MazeLayoutGenerator layout)
     {
-        int speedUp = 0;
-
-        var curr = layoutGenerator.GetByCoords(_generationData.StartPoint);
+        var curr = layout.GetByCoords(_generationData.GridStartPoint);
 
         {
-            Vector2Int pos = layoutGenerator.GetByCoords(_generationData.StartPoint).GetPosition();
+            Vector2Int pos = layout.GetByCoords(_generationData.GridStartPoint).GetPosition();
             Vector2 dir = curr.Next.GetPosition() - pos;
 
             if (_entranceDir != dir && _generationData.IsTileOnEdge(pos))
             {
-                Vector3Int cornerPos = new(_generationData.StartPoint.x, _generationData.StartPoint.y, 0);
-                SetTile(cornerPos, GetCornerTile(_entranceDir, dir));
-
-                await Task.Delay(_milisecondDelay);
+                Vector3Int cornerPos = new(_generationData.GridStartPoint.x, _generationData.GridStartPoint.y, 0);
+                await SetTile(cornerPos, GetCornerTile(_entranceDir, dir));
             }
         }
 
@@ -192,10 +163,7 @@ public class PathRenderer
             if (dir != nextDir)
             {
                 Vector3Int cornerPos = new(curr.Next.X, curr.Next.Y, 0);
-                SetTile(cornerPos, GetCornerTile(dir, nextDir));
-
-                await Task.Delay(Mathf.Max(_minDelay, _milisecondDelay - speedUp));
-                speedUp += _speedUpFactor;
+                await SetTile(cornerPos, GetCornerTile(dir, nextDir));
             }
 
             curr = curr.Next;
@@ -204,23 +172,21 @@ public class PathRenderer
         if (curr != null)
         {
             Vector2Int pos = new(curr.X, curr.Y);
-            Vector2 dir = _generationData.EndPoint - pos;
-            Vector2 nextDir = (_generationData.EndPoint + _exitDir) - _generationData.EndPoint;
+            Vector2 dir = _generationData.GridEndPoint - pos;
+            Vector2 nextDir = (_generationData.GridEndPoint + _exitDir) - _generationData.GridEndPoint;
 
             if (nextDir != dir && _generationData.IsTileOnEdge(pos))
             {
-                Vector3Int cornerPos = new(_generationData.EndPoint.x, _generationData.EndPoint.y, 0);
-                SetTile(cornerPos, GetCornerTile(dir, nextDir));
-
-                await Task.Delay(_milisecondDelay);
+                Vector3Int cornerPos = new(_generationData.GridEndPoint.x, _generationData.GridEndPoint.y, 0);
+                await SetTile(cornerPos, GetCornerTile(dir, nextDir));
             }
         }
     }
 
-    private async Task DrawRoundabouts(MazeLayoutGenerator layoutGenerator, int seed)
+    private async Task DrawRoundabouts(MazeLayoutGenerator layout, int seed)
     {
         UnityEngine.Random.InitState(seed);
-        var curr = layoutGenerator.GetByCoords(_generationData.StartPoint);
+        var curr = layout.GetByCoords(_generationData.GridStartPoint);
 
         int tilesAfterLastRoundabout = 200;
 
@@ -310,7 +276,7 @@ public class PathRenderer
 
         Vector3Int offsetInt = RotateOffset(offsets[^1], orient, size);
         Vector2 offset = new(Mathf.Sign(offsetInt.x), Mathf.Sign(offsetInt.y));
-        Vector2 centerOffset = offset * .5f * (size - 1);
+        Vector2 centerOffset = offset * (.5f * (size - 1));
         Vector2 center = new Vector2(cornerPos.x + centerOffset.x, cornerPos.y + centerOffset.y);
         Vector2 diagonalCorner = center + centerOffset;
 
@@ -347,13 +313,13 @@ public class PathRenderer
                         if (isVertical) toPlace = _tilemapSettings.Vertical;
                     }
 
-                    SetTile(world, toPlace);
-                    await Task.Delay(_milisecondDelay / 2);
+                    await SetTile(world, toPlace);
+                    //await Task.Delay(_milisecondDelay / 2);
                 }
             }
         }
 
-        SetTile(cornerPos, _tilemapSettings.Roundabout);
+        await SetTile(cornerPos, _tilemapSettings.Roundabout);
 
         return true;
     }
@@ -370,11 +336,12 @@ public class PathRenderer
         }
     }
 
-    private void SetTile(Vector3Int tilePos, TileBase tileBase)
+    private async Task SetTile(Vector3Int tilePos, TileBase tileBase)
     {
-        _tilemap.SetTile(tilePos, tileBase);
+        _pathTilemap.SetTile(tilePos, tileBase);
 
-        OnTileChanged?.Invoke(tileBase);
+        if (OnTileChangedAsync != null)
+            await OnTileChangedAsync.Invoke(tileBase);
     }
 
     private bool IsTileInBounds(Vector3Int tilePos)
@@ -385,7 +352,7 @@ public class PathRenderer
 
     private bool IsTileFree(Vector3Int tilePos)
     {
-        return _tilemap.GetTile(tilePos) == null;
+        return _pathTilemap.GetTile(tilePos) == null;
     }
 
     private Tile GetCornerTile(Vector2 fromDir, Vector2 toDir)

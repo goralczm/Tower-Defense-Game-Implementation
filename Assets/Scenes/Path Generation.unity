@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 14865710}
   - component: {fileID: 14865713}
+  - component: {fileID: 14865714}
   - component: {fileID: 14865712}
   m_Layer: 0
   m_Name: Map Generator
@@ -164,6 +165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65ddc9be5e7023a4e854b7e08a4ac14a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _delayBetweenTilesInMs: 25
+  _minDelay: 5
+  _speedUpFactor: 1
+  _mapGenerator: {fileID: 14865713}
   _generationText: {fileID: 1208191303}
 --- !u!114 &14865713
 MonoBehaviour:
@@ -177,39 +182,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d6501ad4d34988aee4d08db109a8da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pathPreset: {fileID: 11400000, guid: 81eec7458eaf12240b46d5435f33fd07, type: 2}
+  _context:
+    PathPreset: {fileID: 11400000, guid: 81eec7458eaf12240b46d5435f33fd07, type: 2}
+    Seed: 42
+    GridStartPoint: {x: 0, y: 0}
+    GridEndPoint: {x: 16, y: 9}
+    GenerateEnvironment: 1
   _tilemapSettings: {fileID: 11400000, guid: 01b7b45121bb40249a32e7f9e7816814, type: 2}
-  _seed: -52024
-  _generateEnvironment: 1
-  _randomizeAccessPoints: 1
-  _enforceRules: 1
-  _startPoint: {x: 0, y: 0}
-  _endPoint: {x: 16, y: 9}
+  _includePathGenerationRules: 1
   _mapTilemap: {fileID: 1110981290}
-  _pathGenerationOrchestrator:
-    _pathRenderer:
-      _milisecondDelay: 0
-      _minDelay: 0
-      _speedUpFactor: 1
+  _debug: 1
+  _pathOrchestrator:
     _waypointsParent: {fileID: 667576701}
-    _generationData:
-      MazeGenerationSettings: {fileID: 11400000, guid: 1d8d2d1ff43269142946433b16664d74, type: 2}
-      Seed: -52024
-      StartPoint: {x: 0, y: 0}
-      EndPoint: {x: 16, y: 9}
   _environmentGenerator:
     _obstaclePrefabs:
-    - {fileID: 8392802503059403852, guid: 57896d3d607fd3a4299b13e05206b432, type: 3}
-    - {fileID: 2053425212365235558, guid: 83de7cbf0c116154799ffac2dbfeffd0, type: 3}
     - {fileID: 4931296659836417704, guid: 3b701f549c6c96d44996fff0499463dd, type: 3}
-    - {fileID: 873989692503932614, guid: a41f83d285bec7f408cfdd6f224f05c2, type: 3}
     - {fileID: 2274539256243474199, guid: 4a428e824d032744d94833a9f187f054, type: 3}
+    - {fileID: 2053425212365235558, guid: 83de7cbf0c116154799ffac2dbfeffd0, type: 3}
     - {fileID: 7661877964713233374, guid: b6f297df9c380d34ca04c618c45d48ee, type: 3}
+    - {fileID: 8392802503059403852, guid: 57896d3d607fd3a4299b13e05206b432, type: 3}
     - {fileID: 5515832509398196459, guid: 38b53e289a8647a43b4156cf6be7a54e, type: 3}
-    - {fileID: 6830613150834113650, guid: 2a5886a566bfd134288d2040b46e366a, type: 3}
+    - {fileID: 873989692503932614, guid: a41f83d285bec7f408cfdd6f224f05c2, type: 3}
     - {fileID: 4332168816486176687, guid: 11967f6991ee7b44494373f0f9fa2b14, type: 3}
+    - {fileID: 6830613150834113650, guid: 2a5886a566bfd134288d2040b46e366a, type: 3}
     _debug: 0
-    _debugView: 1
+    _debugView: 0
+--- !u!114 &14865714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14865708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdbb492f62b181d40b21b83566526625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mapGenerator: {fileID: 14865713}
 --- !u!1 &22607118
 GameObject:
   m_ObjectHideFlags: 0
@@ -6269,7 +6279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &873995093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7773,6 +7783,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 81eec7458eaf12240b46d5435f33fd07, type: 2}
   - {fileID: 11400000, guid: 00aa856193c0ee24792e6950bdfa6f97, type: 2}
   - {fileID: 11400000, guid: 479df03a13984ad4a9ef683bef0dd5d1, type: 2}
+  - {fileID: 11400000, guid: 8f8d9ed74efa5b44eb6b1b698ab1a0d7, type: 2}
   _presetsDropdown: {fileID: 1449249693}
 --- !u!1 &1743784906
 GameObject:
