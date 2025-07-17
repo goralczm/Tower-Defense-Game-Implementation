@@ -3,7 +3,7 @@ using _Scripts.Utilities;
 using UnityEngine;
 
 [System.Serializable]
-public class WaypointsParent : Singleton<WaypointsParent>
+public class WaypointsParent : MonoBehaviour
 {
     [Header("Debug")]
     [SerializeField] private bool _debug;

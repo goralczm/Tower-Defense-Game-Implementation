@@ -18,9 +18,9 @@ public class PathOrchestrator
         public GenerationData GenerationData;
         public int Seed;
     }
-    
-    [Header("References")]
-    [SerializeField] private WaypointsParent _waypointsParent;
+
+    [Header("References")] [SerializeField]
+    private WaypointsParent _waypointsParent;
 
     private GenerationData _generationData;
     private PathGenerator _pathGenerator;
@@ -32,23 +32,25 @@ public class PathOrchestrator
     private Vector2Int _gridStartPoint;
     private Vector2Int _gridEndPoint;
     private int _seed;
-    
+
     public EventHandler OnPathGenerationStarted;
     public EventHandler<OnPathGeneratedEventArgs> OnPathGenerationEnded;
-    
+
     public Vector3 Center => _pathTilemap.transform.position;
-    
+
     public Bounds GetPathBounds()
     {
         if (_generationData == null || _generationData.MazeGenerationSettings == null) return new Bounds();
-        
+
         return new Bounds(
-            new Vector3(_generationData.MazeGenerationSettings.Width / 2f, _generationData.MazeGenerationSettings.Height / 2f, 0) + Center,
-            new Vector3(_generationData.MazeGenerationSettings.Width + 1, _generationData.MazeGenerationSettings.Height + 1, 0));
+            new Vector3(_generationData.MazeGenerationSettings.Width / 2f,
+                _generationData.MazeGenerationSettings.Height / 2f, 0) + Center,
+            new Vector3(_generationData.MazeGenerationSettings.Width + 1,
+                _generationData.MazeGenerationSettings.Height + 1, 0));
     }
 
     public int GetSeed() => _seed;
-    
+
     public void SetSeed(int seed)
     {
         _seed = seed;
@@ -66,42 +68,37 @@ public class PathOrchestrator
 
     public void SetGridStartPoint(Vector2Int gridStartPoint) => _gridStartPoint = gridStartPoint;
     public void SetGridEndPoint(Vector2Int gridEndPoint) => _gridEndPoint = gridEndPoint;
-    
-    public async Task GeneratePath(PathPreset pathPreset, bool randomizeAccessPoints = false, bool enforceRules = true, bool renderOverflowTiles = false)
+
+    public async Task GeneratePath(PathPreset pathPreset, bool randomizeAccessPoints = false, bool enforceRules = true,
+        bool renderOverflowTiles = false)
     {
         OnPathGenerationEnded += ApplyGenerationChanges;
         OnPathGenerationStarted?.Invoke(this, EventArgs.Empty);
-        
+
         InitializeGenerators(pathPreset, randomizeAccessPoints);
         MazeLayoutGenerator layout = _pathGenerator.GeneratePath(enforceRules: enforceRules);
         await _pathRenderer.RenderPath(layout, renderOverflowTiles);
         ExtractAndCacheWaypoints();
-        
+
         NotifyGenerationCompleted(pathPreset);
         OnPathGenerationEnded -= ApplyGenerationChanges;
     }
 
     private void InitializeGenerators(PathPreset pathPreset, bool randomizeAccessPoints = false)
     {
-        if (_generationData == null)
-        {
-            _generationData = new GenerationData(pathPreset.MazeGenerationSettings, _seed);
-            _generationData.SetGridStartPoint(_gridStartPoint);
-            _generationData.SetGridEndPoint(_gridEndPoint);
-        }
-        else
-            _generationData = new GenerationData(pathPreset.MazeGenerationSettings, _seed,
-                _generationData.GridStartPoint, _generationData.GridEndPoint);
-        
+        _generationData = new GenerationData(pathPreset.MazeGenerationSettings, _seed,
+            _gridStartPoint, _gridEndPoint);
+
         if (randomizeAccessPoints)
             _generationData.RandomizeAccessPoints();
-        
+
         _pathGenerator = new PathGenerator(pathPreset.PathSettings, _generationData, _startPosition);
-        
+
         Vector2Int entranceDir = GetAccessPointDir(_generationData.GridStartPoint);
         Vector2Int exitDir = -GetAccessPointDir(_generationData.GridEndPoint);
 
-        _pathRenderer = new PathRenderer(_pathTilemap, pathPreset.PathSettings, _tilemapSettings, _generationData, entranceDir, exitDir);
+        _pathRenderer = new PathRenderer(_pathTilemap, pathPreset.PathSettings, _tilemapSettings, _generationData,
+            entranceDir, exitDir);
 
         _waypointsExtractor = new WaypointsExtractor(_pathTilemap, _tilemapSettings);
     }
@@ -109,7 +106,7 @@ public class PathOrchestrator
     private void ExtractAndCacheWaypoints()
     {
         Vector3 startWorldPoint = _pathRenderer.GetStartPointWorld();
-        
+
         _waypointsExtractor.CacheRules();
         List<Vector2> waypoints = _waypointsExtractor.ExtractWaypoints(startWorldPoint);
         _waypointsParent.CacheWaypoints(waypoints);
@@ -134,7 +131,7 @@ public class PathOrchestrator
     {
         SetSeed(e.Seed);
     }
-    
+
     private Vector2Int GetAccessPointDir(Vector2Int accessPoint)
     {
         Vector2Int accessDir = accessPoint.x == 0 ? Vector2Int.right : Vector2Int.left;

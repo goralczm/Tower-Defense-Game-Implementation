@@ -1,10 +1,7 @@
 {
     "name": "MapGenerator.Utility",
-    "rootNamespace": "",
-    "references": [
-        "GUID:6572c3ce24452aa44bab406b75603d7f",
-        "GUID:079672123b74a8243953582e54eaaa7d"
-    ],
+    "rootNamespace": "MapGenerator",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

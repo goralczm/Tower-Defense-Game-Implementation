@@ -1,8 +1,10 @@
 {
-    "name": "World",
-    "rootNamespace": "",
+    "name": "MapGenerator.Utility.MapSaver",
+    "rootNamespace": "MapGenerator",
     "references": [
-        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad"
+        "GUID:6572c3ce24452aa44bab406b75603d7f",
+        "GUID:4dbc17b09e04cc04ab0631f9d1b4a2f6",
+        "GUID:079672123b74a8243953582e54eaaa7d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

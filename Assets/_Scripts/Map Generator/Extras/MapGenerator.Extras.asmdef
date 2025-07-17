@@ -1,0 +1,4 @@
+{
+	"name": "MapGenerator.Extras",
+	"references":[ "GUID:6572c3ce24452aa44bab406b75603d7f", "GUID:53f39548733cf214ab2c80e0b5f6239e", "GUID:6d57ab46be973314d9ef9ff0a3e68ce4" ]
+}

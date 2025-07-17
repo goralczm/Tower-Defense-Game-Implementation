@@ -1,25 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
-[System.Serializable]
-public struct TileAdjacency
-{
-    public TileBase Tile;
-    public Vector2 Direction;
-    public List<TileBase> PossibleAdjecentTiles;
-}
-
-[Flags]
-public enum OpenAdjacencySide
-{
-    Top = 0,
-    Bottom = 1,
-    Left = 2,
-    Right = 4,
-}
 
 [CreateAssetMenu(menuName = "Path Generation/Tilemap Settings", fileName = "New Tilemap Settings")]
 public class TilemapSettings : ScriptableObject
@@ -32,9 +14,6 @@ public class TilemapSettings : ScriptableObject
     public Tile RightTopCorner;
     public Tile LeftBottomCorner;
     public Tile RightBottomCorner;
-    
-    [Header("Adjacency Settings")]
-    public TileAdjacency[] AdjacencyRules;
 
     private Dictionary<Vector2, List<TileBase>> _cachedAdjacencyRules = new();
     private Dictionary<TileBase, List<Vector2>> _openSides = new();

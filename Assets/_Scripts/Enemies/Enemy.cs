@@ -11,17 +11,19 @@ public class Enemy : MonoBehaviour
     private int _currentWaypointIndex;
     private bool _isStopped;
 
-    public float PathTraveled => GetDistanceOnPath() / WaypointsParent.Instance.Length;
+    public float PathTraveled => GetDistanceOnPath() /*/ WaypointsParent.Instance.Length*/;
     public int DifficultyLevel => 1;
     public PathColor PathColor => PathColor.Red;
 
     public float GetDistanceOnPath()
     {
-        List<Vector2> waypointsBehind = WaypointsParent.Instance.Waypoints.Take(_currentWaypointIndex).ToList();
-        
+        return 1;
+
+        /*List<Vector2> waypointsBehind = WaypointsParent.Instance.Waypoints.Take(_currentWaypointIndex).ToList();
+
         waypointsBehind.Add(transform.position);
 
-        return Helpers.CalculatePathLength(waypointsBehind);
+        return Helpers.CalculatePathLength(waypointsBehind);*/
     }
     
     public void ResetCache()
@@ -45,7 +47,7 @@ public class Enemy : MonoBehaviour
     
     private void FindNearestPoint(object sender, PathOrchestrator.OnPathGeneratedEventArgs args)
     {
-        _currentWaypointIndex = WaypointsParent.Instance.GetIndexOfNearestWaypoint(transform.position);
+        //_currentWaypointIndex = WaypointsParent.Instance.GetIndexOfNearestWaypoint(transform.position);
         _isStopped = false;
     }
 
@@ -58,7 +60,7 @@ public class Enemy : MonoBehaviour
     {
         if (_isStopped) return;
         
-        transform.position = Vector2.MoveTowards(transform.position, WaypointsParent.Instance.Waypoints[_currentWaypointIndex], _speed * Time.deltaTime);
+        /*transform.position = Vector2.MoveTowards(transform.position, WaypointsParent.Instance.Waypoints[_currentWaypointIndex], _speed * Time.deltaTime);
         if ((Vector2)transform.position == WaypointsParent.Instance.Waypoints[_currentWaypointIndex])
         {
             if (_currentWaypointIndex >= WaypointsParent.Instance.Waypoints.Count - 1)
@@ -68,6 +70,6 @@ public class Enemy : MonoBehaviour
             }
 
             _currentWaypointIndex++;
-        }
+        }*/
     }
 }

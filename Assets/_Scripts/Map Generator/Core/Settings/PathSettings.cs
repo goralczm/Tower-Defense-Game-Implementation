@@ -10,6 +10,7 @@ public class PathSettings : ScriptableObject
     public float MinimalPathLength = 0;
     public bool EnforceMaximumStraightTilesInRow = false;
     public int MaximumStraightTilesInRow = 5;
+    //TODO: MaximalPathLength
     
     [Header("Roundabouts")]
     public bool EnforceRoundabouts = true;
@@ -17,6 +18,7 @@ public class PathSettings : ScriptableObject
     public bool RandomizeRoundaboutSize = true;
     [Range(0f, 1f)] public float RoundaboutProbability = .2f;
     public int MinimalTilesDistanceBetweenRoundabouts = 2;
+    //TODO: MinimumRounaboutSize
     
     [Header("Generation")]
     public int Steps = 10000;

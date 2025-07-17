@@ -2,6 +2,9 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace _Scripts.Map_Generator.Core.Map
 {
@@ -148,6 +151,7 @@ namespace _Scripts.Map_Generator.Core.Map
         [SerializeField] private MapGenerationContext _context;
         [SerializeField] private TilemapSettings _tilemapSettings;
         [SerializeField] private bool _includePathGenerationRules = true;
+        [SerializeField] private bool _randomizeAccessPoints = true;
         [SerializeField] private bool _renderOverflowTiles = true;
 
         [Header("References")]
@@ -155,6 +159,8 @@ namespace _Scripts.Map_Generator.Core.Map
 
         [Header("Debug")]
         [SerializeField] private bool _debug;
+        [SerializeField] private Color _accessPointsColor = Color.red;
+        [SerializeField] private float _accessPointsRadius = .2f;       
 
         [SerializeField] private PathOrchestrator _pathOrchestrator;
         [SerializeField] private EnvironmentGenerator _environmentGenerator;
@@ -193,6 +199,8 @@ namespace _Scripts.Map_Generator.Core.Map
         {
             _context = context;
         }
+        
+        public Tilemap GetTilemap() => _mapTilemap;
 
         private void ApplyGenerationChanges(object sender, PathOrchestrator.OnPathGeneratedEventArgs e)
         {
@@ -227,7 +235,7 @@ namespace _Scripts.Map_Generator.Core.Map
                 .WithSeed(_context.Seed)
                 .WithStartPoint(_context.GridStartPoint)
                 .WithEndPoint(_context.GridEndPoint)
-                .RandomizeAccessPoints(true)
+                .RandomizeAccessPoints(_randomizeAccessPoints)
                 .IncludePathGenerationRules(_includePathGenerationRules)
                 .IncludeEnvironment(_context.GenerateEnvironment)
                 .WithOverflowTiles(_renderOverflowTiles);
@@ -264,10 +272,37 @@ namespace _Scripts.Map_Generator.Core.Map
             
             _environmentGenerator.OnDrawGizmos();
 
-            Bounds mapBounds = _pathOrchestrator.GetPathBounds();
+            BoundingBoxGizmos();
+            AccessPointsGizmos();
+        }
+
+        private void BoundingBoxGizmos()
+        {
+            Vector3 size = new(_context.PathPreset.MazeGenerationSettings.Width,
+                _context.PathPreset.MazeGenerationSettings.Height,
+                0);
+
+            Vector3 position = _mapTilemap.transform.position + size / 2f;
+
+            if (_renderOverflowTiles)
+                size += Vector3.one * 2f;
 
             Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(mapBounds.center, mapBounds.size);
+            Gizmos.DrawWireCube(position, size);
+        }
+
+        private void AccessPointsGizmos()
+        {
+            Vector3Int startCell = new(_context.GridStartPoint.x, _context.GridStartPoint.y, 0);
+            Vector3Int endCell = new(_context.GridEndPoint.x, _context.GridEndPoint.y, 0);
+            
+            Gizmos.color = _accessPointsColor;
+#if UNITY_EDITOR
+            Handles.Label(_mapTilemap.GetCellCenterWorld(startCell) + Vector3.up * 0.5f, "Start Point");
+            Handles.Label(_mapTilemap.GetCellCenterWorld(endCell) + Vector3.up * 0.5f, "End Point");
+#endif
+            Gizmos.DrawWireSphere(_mapTilemap.GetCellCenterWorld(startCell), _accessPointsRadius);
+            Gizmos.DrawWireSphere(_mapTilemap.GetCellCenterWorld(endCell), _accessPointsRadius);
         }
 
         private void OnValidate()

@@ -160,7 +160,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14865708}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65ddc9be5e7023a4e854b7e08a4ac14a, type: 3}
   m_Name: 
@@ -187,11 +187,15 @@ MonoBehaviour:
     Seed: 42
     GridStartPoint: {x: 0, y: 0}
     GridEndPoint: {x: 16, y: 9}
-    GenerateEnvironment: 1
+    GenerateEnvironment: 0
   _tilemapSettings: {fileID: 11400000, guid: 01b7b45121bb40249a32e7f9e7816814, type: 2}
-  _includePathGenerationRules: 1
+  _includePathGenerationRules: 0
+  _randomizeAccessPoints: 0
+  _renderOverflowTiles: 1
   _mapTilemap: {fileID: 1110981290}
   _debug: 1
+  _accessPointsColor: {r: 1, g: 0, b: 0, a: 1}
+  _accessPointsRadius: 0.2
   _pathOrchestrator:
     _waypointsParent: {fileID: 667576701}
   _environmentGenerator:
