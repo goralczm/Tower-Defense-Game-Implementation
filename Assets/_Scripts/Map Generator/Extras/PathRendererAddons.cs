@@ -1,6 +1,4 @@
-using System;
 using System.Threading.Tasks;
-using _Scripts.Map_Generator.Core.Map;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -12,7 +10,7 @@ public class PathRendererAddons : MonoBehaviour
     [SerializeField] private int _speedUpFactor = 1;
     
     [Header("References")]
-    [SerializeField] private MapGenerator _mapGenerator;
+    [SerializeField] private MapGenerator.Core.Map.MapGenerator _mapGenerator;
     [SerializeField] private GameObject _generationText;
     
     private AudioSystem.AudioSystem _audio;

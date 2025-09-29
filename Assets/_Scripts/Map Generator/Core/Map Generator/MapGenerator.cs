@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 using UnityEditor;
 #endif
 
-namespace _Scripts.Map_Generator.Core.Map
+namespace MapGenerator.Core.Map
 {
     public class MapGenerator : MonoBehaviour
     {

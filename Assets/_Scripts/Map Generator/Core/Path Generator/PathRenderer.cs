@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class PathRenderer
 {
     private PathSettings _pathSettings;
-    private GenerationData _generationData;
+    private GenerationConfig _generationData;
     private TilemapSettings _tilemapSettings;
     private Tilemap _pathTilemap;
     private Vector2Int _entranceDir;
@@ -17,7 +17,7 @@ public class PathRenderer
     
     public static Func<TileBase, Task> OnTileChangedAsync;
     
-    public PathRenderer(Tilemap pathTilemap, PathSettings pathSettings, TilemapSettings tilemapSettings, GenerationData generationData, Vector2Int entranceDir, Vector2Int exitDir)
+    public PathRenderer(Tilemap pathTilemap, PathSettings pathSettings, TilemapSettings tilemapSettings, GenerationConfig generationData, Vector2Int entranceDir, Vector2Int exitDir)
     {
         _pathTilemap = pathTilemap;
         _pathSettings = pathSettings;

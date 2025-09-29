@@ -15,14 +15,14 @@ public class PathOrchestrator
         public Vector2Int GridEndPoint;
         public Bounds Bounds;
         public PathPreset PathPreset;
-        public GenerationData GenerationData;
+        public GenerationConfig GenerationData;
         public int Seed;
     }
 
-    [Header("References")] [SerializeField]
-    private WaypointsParent _waypointsParent;
+    [Header("References")]
+    [SerializeField] private WaypointsParent _waypointsParent;
 
-    private GenerationData _generationData;
+    private GenerationConfig _generationData;
     private PathGenerator _pathGenerator;
     private PathRenderer _pathRenderer;
     private WaypointsExtractor _waypointsExtractor;
@@ -86,7 +86,7 @@ public class PathOrchestrator
 
     private void InitializeGenerators(PathPreset pathPreset, bool randomizeAccessPoints = false)
     {
-        _generationData = new GenerationData(pathPreset.MazeGenerationSettings, _seed,
+        _generationData = new GenerationConfig(pathPreset.MazeGenerationSettings, _seed,
             _gridStartPoint, _gridEndPoint);
 
         if (randomizeAccessPoints)

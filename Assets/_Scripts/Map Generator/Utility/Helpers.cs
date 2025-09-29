@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Scripts.Utilities
+namespace MapGenerator.Utilities
 {
     public class Helpers
     {

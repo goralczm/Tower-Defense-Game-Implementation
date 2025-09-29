@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
-using _Scripts.Map_Generator.Core.Map;
 using UnityEngine;
 
 public class MapSaver : MonoBehaviour
 {
-    [SerializeField] private MapGenerator _mapGenerator;
+    [SerializeField] private MapGenerator.Core.Map.MapGenerator _mapGenerator;
 
     private void Update()
     {

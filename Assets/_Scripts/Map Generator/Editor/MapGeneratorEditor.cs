@@ -1,19 +1,17 @@
-using _Scripts.Map_Generator.Core.Map;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[CustomEditor(typeof(MapGenerator))]
+[CustomEditor(typeof(MapGenerator.Core.Map.MapGenerator))]
 public class MapGeneratorEditor : Editor
 {
-    private MapGenerator _mapGenerator;
-    private bool _showCustomSettings;
+    private MapGenerator.Core.Map.MapGenerator _mapGenerator;
 
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        _mapGenerator = (MapGenerator)target;
+        _mapGenerator = (MapGenerator.Core.Map.MapGenerator)target;
 
         if (GUILayout.Button("Regenerate Path"))
             _mapGenerator.GenerateMapByContext();

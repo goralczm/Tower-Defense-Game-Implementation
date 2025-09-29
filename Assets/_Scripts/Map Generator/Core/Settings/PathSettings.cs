@@ -5,7 +5,6 @@ using UnityEngine;
 public class PathSettings : ScriptableObject
 {
     [Header("Path Settings")]
-    public bool MoveRootToEnd = true;
     public bool EnforceMinimalPathLength = false;
     public float MinimalPathLength = 0;
     public bool EnforceMaximumStraightTilesInRow = false;

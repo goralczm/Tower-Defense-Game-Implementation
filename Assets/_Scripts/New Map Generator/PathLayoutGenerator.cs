@@ -1,30 +1,28 @@
+using MapGeneration;
 using MapGenerator.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PathGenerator
+public class PathLayoutGenerator : IGenerator
 {
-    /*[Header("Debug")]
-    public bool _debug;
-    public Vector2 _offset;
-    public float _cellSize = .1f;
-    public float _rootCellSize = .3f;
-    public bool _showPath;
-    */
-
     private PathSettings _pathSettings;
     private GenerationConfig _generationData;
-    private Vector2 _startPos;
+    private bool _enforceRules;
     
-    public PathGenerator(PathSettings pathSettings, GenerationConfig generationData, Vector2 startPos)
+    public PathLayoutGenerator(PathSettings pathSettings, GenerationConfig generationData, bool enfroceRules)
     {
         _pathSettings = pathSettings;
         _generationData = generationData;
-        _startPos = startPos;
+        _enforceRules = enfroceRules;
     }
 
-    public MazeLayoutGenerator GeneratePath(int depth = 0, bool enforceRules = true)
+    public MapLayout Generate(MapLayout layout)
+    {
+        return GeneratePath(enforceRules: _enforceRules);
+    }
+
+    public MapLayout GeneratePath(int depth = 0, bool enforceRules = true)
     {
         if (depth > _pathSettings.MaximumGenerationDepth)
         {
@@ -35,10 +33,10 @@ public class PathGenerator
             }
             
             Debug.Log("Exceeded generation depth");
-            return GenerateBaseMaze();
+            return GenerateBaseMaze(_generationData.Seed + depth);
         }
         
-        MazeLayoutGenerator layout = GenerateBaseMaze();
+        MapLayout layout = GenerateBaseMaze(_generationData.Seed + depth);
         List<Vector2> waypoints = ExtractWaypoints(layout);
 
         if (enforceRules)
@@ -48,10 +46,7 @@ public class PathGenerator
                 float distance = Helpers.CalculatePathLength(waypoints);
 
                 if (distance < _pathSettings.MinimalPathLength)
-                {
-                    _generationData.SetSeed(_generationData.Seed + 1);
                     return GeneratePath(depth + 1, enforceRules);
-                }
             }
 
             if (_pathSettings.EnforceMaximumStraightTilesInRow)
@@ -59,19 +54,16 @@ public class PathGenerator
                 float longest = CalculateLongestStraightSection(waypoints);
 
                 if (longest > _pathSettings.MaximumStraightTilesInRow - 1)
-                {
-                    _generationData.SetSeed(_generationData.Seed + 1);
                     return GeneratePath(depth + 1, enforceRules);
-                }
             }
         }
 
         return layout;
     }
     
-    private MazeLayoutGenerator GenerateBaseMaze()
+    private MapLayout GenerateBaseMaze(int seed)
     {
-        MazeLayoutGenerator layout = new(_generationData.MazeGenerationSettings.Width, _generationData.MazeGenerationSettings.Height, _generationData.Seed);
+        MapLayout layout = new(_generationData.MazeGenerationSettings.Width, _generationData.MazeGenerationSettings.Height, seed);
         layout.GenerateMaze(_pathSettings.Steps);
 
         List<Vector2Int> middlePointsToOmit = GetMiddlePointsToOmit();
@@ -113,9 +105,9 @@ public class PathGenerator
         return middlePoints;
     }
 
-    private List<Vector2> ExtractWaypoints(MazeLayoutGenerator layoutGenerator)
+    private List<Vector2> ExtractWaypoints(MapLayout layoutGenerator)
     {
-        var waypoints = new List<Vector2> { ToWorld(_generationData.GridStartPoint) };
+        var waypoints = new List<Vector2> { _generationData.GridStartPoint };
         var curr = layoutGenerator.GetByCoords(_generationData.GridStartPoint);
 
         while (curr?.Next != null)
@@ -126,12 +118,12 @@ public class PathGenerator
                 : currDir;
 
             if (currDir != nextDir)
-                waypoints.Add(ToWorld(curr.Next.GetPosition()));
+                waypoints.Add(curr.Next.GetPosition());
 
             curr = curr.Next;
         }
 
-        waypoints.Add(ToWorld(_generationData.GridEndPoint));
+        waypoints.Add(_generationData.GridEndPoint);
         return waypoints;
     }
     
@@ -145,69 +137,8 @@ public class PathGenerator
         return longest;
     }
 
-    private Vector2 ToWorld(Vector2Int gridPos)
+    public void Cleanup()
     {
-        return gridPos + _startPos;
+        //noop
     }
-
-    /*private void OnDrawGizmos()
-    {
-        if (!_debug) return;
-
-        _startPos = transform.position;
-        
-        MazeLayoutGenerator layoutGenerator = GenerateBaseMaze();
-        
-        var nodes = layoutGenerator.GetNodes();
-
-        foreach (var node in nodes)
-        {
-            Vector2 pos = ToWorld(node.GetPosition());
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(pos, _cellSize);
-
-            if (node.next != null)
-                DrawGizmosArrow(pos, ToWorld(node.next.GetPosition()), Color.green);
-        }
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(ToWorld(_generationData.StartPoint), _rootCellSize);
-        
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(ToWorld(_generationData.EndPoint), _rootCellSize);
-
-        List<Vector2Int> middlePointsToOmit = GetMiddlePointsToOmit();
-
-        Gizmos.color = Color.yellow;
-        foreach (var middle in _generationData.MazeGenerationSettings.MiddlePoints)
-        {
-            if (middlePointsToOmit.Contains(middle))
-                continue;
-
-            Gizmos.DrawWireSphere(ToWorld(middle), _rootCellSize);
-        }
-
-        if (_showPath)
-        {
-            var curr = layoutGenerator.GetByCoords(_generationData.StartPoint);
-            while (curr?.next != null)
-            {
-                DrawGizmosArrow(ToWorld(curr.GetPosition()), ToWorld(curr.next.GetPosition()), Color.magenta);
-                curr = curr.next;
-            }
-        }
-    }*/
-
-    /*public static void DrawGizmosArrow(Vector3 start, Vector3 end, Color color, float headLength = 0.2f, float headAngle = 20f)
-    {
-        Gizmos.color = color;
-        Gizmos.DrawLine(start, end);
-
-        Vector3 direction = (end - start).normalized;
-        Vector3 right = Quaternion.Euler(0, 0, headAngle) * -direction;
-        Vector3 left = Quaternion.Euler(0, 0, -headAngle) * -direction;
-
-        Gizmos.DrawLine(end, end + right * headLength);
-        Gizmos.DrawLine(end, end + left * headLength);
-    }*/
 }

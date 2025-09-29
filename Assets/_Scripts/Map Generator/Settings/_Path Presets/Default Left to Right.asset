@@ -15,3 +15,7 @@ MonoBehaviour:
   PathSettings: {fileID: 11400000, guid: 1646d9d457cfe1147b2bf61257f762c6, type: 2}
   MazeGenerationSettings: {fileID: 11400000, guid: 1d8d2d1ff43269142946433b16664d74, type: 2}
   EnvironmentSettings: {fileID: 11400000, guid: e58becc397aafda45a5efa8995127331, type: 2}
+  Generators: []
+  references:
+    version: 2
+    RefIds: []

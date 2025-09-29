@@ -1,5 +1,5 @@
+using MapGenerator.Utilities;
 using System.Collections.Generic;
-using _Scripts.Utilities;
 using UnityEngine;
 
 [System.Serializable]

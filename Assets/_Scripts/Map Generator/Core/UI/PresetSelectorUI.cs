@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using _Scripts.Map_Generator.Core.Map;
 using TMPro;
 using UnityEngine;
 
 public class PresetSelectorUI : MonoBehaviour
 {
-    [SerializeField] private MapGenerator _mapGenerator;
+    [SerializeField] private MapGenerator.Core.Map.MapGenerator _mapGenerator;
     
     [SerializeField] private PathPreset[] _presets;
     [SerializeField] private TMP_Dropdown _presetsDropdown;

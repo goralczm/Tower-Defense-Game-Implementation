@@ -3,6 +3,26 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public enum NodeType
+{
+    Empty,
+    Occupied,
+    Roundabout,
+    Horizontal,
+    Vertical,
+    LeftTopCorner,
+    RightTopCorner,
+    LeftBottomCorner,
+    RightBottomCorner,
+}
+
+[System.Serializable]
+public struct TileConfig
+{
+    public Tile Tile;
+    public NodeType Type;
+}
+
 [CreateAssetMenu(menuName = "Path Generation/Tilemap Settings", fileName = "New Tilemap Settings")]
 public class TilemapSettings : ScriptableObject
 {
@@ -15,8 +35,12 @@ public class TilemapSettings : ScriptableObject
     public Tile LeftBottomCorner;
     public Tile RightBottomCorner;
 
+    public List<TileConfig> TileConfigs = new();
+
     private Dictionary<Vector2, List<TileBase>> _cachedAdjacencyRules = new();
     private Dictionary<TileBase, List<Vector2>> _openSides = new();
+
+    public Tile GetTileByType(NodeType type) => TileConfigs.First(tc => tc.Type == type).Tile;
 
     public bool CanHaveAdjacency(TileBase tile, Vector2 dir)
     {
@@ -41,38 +65,38 @@ public class TilemapSettings : ScriptableObject
     private void InitializeTiles()
     {
         if (_openSides.Count > 0) return;
-        
-        _openSides.Add(Roundabout, new()
+
+        _openSides.Add(GetTileByType(NodeType.Roundabout), new()
         {
             Vector2.up, Vector2.right, Vector2.down, Vector2.left
         });
-        
-        _openSides.Add(Horizontal, new()
+
+        _openSides.Add(GetTileByType(NodeType.Horizontal), new()
         {
             Vector2.left, Vector2.right
         });
-        
-        _openSides.Add(Vertical, new()
+
+        _openSides.Add(GetTileByType(NodeType.Vertical), new()
         {
             Vector2.down, Vector2.up
         });
-        
-        _openSides.Add(LeftTopCorner, new()
+
+        _openSides.Add(GetTileByType(NodeType.LeftTopCorner), new()
         {
             Vector2.left, Vector2.up
         });
-        
-        _openSides.Add(RightTopCorner, new()
+
+        _openSides.Add(GetTileByType(NodeType.RightTopCorner), new()
         {
             Vector2.right, Vector2.up
         });
-        
-        _openSides.Add(LeftBottomCorner, new()
+
+        _openSides.Add(GetTileByType(NodeType.LeftBottomCorner), new()
         {
             Vector2.left, Vector2.down
         });
-        
-        _openSides.Add(RightBottomCorner, new()
+
+        _openSides.Add(GetTileByType(NodeType.RightBottomCorner), new()
         {
             Vector2.right, Vector2.down
         });
