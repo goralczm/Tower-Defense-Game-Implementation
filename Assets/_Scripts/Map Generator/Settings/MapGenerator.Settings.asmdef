@@ -1,7 +1,9 @@
 {
-    "name": "Utilities",
-    "rootNamespace": "Utilities",
-    "references": [],
+    "name": "MapGenerator.Settings",
+    "rootNamespace": "MapGenerator.Settings",
+    "references": [
+        "GUID:22b3d77959b2a0540983dbc3b92b0ca7"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

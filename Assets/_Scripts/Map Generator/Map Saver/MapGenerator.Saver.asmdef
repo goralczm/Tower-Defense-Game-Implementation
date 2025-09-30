@@ -1,0 +1,19 @@
+{
+    "name": "MapGenerator.Saver",
+    "rootNamespace": "MapGenerator.Saver",
+    "references": [
+        "GUID:079672123b74a8243953582e54eaaa7d",
+        "GUID:675a5ac2960cf9f49bbf8cbf71b4021d",
+        "GUID:22b3d77959b2a0540983dbc3b92b0ca7",
+        "GUID:a03e815a32ba8cd46b708872ec564cf8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

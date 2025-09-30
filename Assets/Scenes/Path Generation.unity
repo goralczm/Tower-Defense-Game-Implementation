@@ -119,111 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &14865708
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 14865710}
-  - component: {fileID: 14865713}
-  - component: {fileID: 14865714}
-  - component: {fileID: 14865712}
-  m_Layer: 0
-  m_Name: Map Generator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &14865710
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 14865708}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1337035414}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &14865712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 14865708}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65ddc9be5e7023a4e854b7e08a4ac14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _delayBetweenTilesInMs: 25
-  _minDelay: 5
-  _speedUpFactor: 1
-  _mapGenerator: {fileID: 14865713}
-  _generationText: {fileID: 1208191303}
---- !u!114 &14865713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 14865708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d6501ad4d34988aee4d08db109a8da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _context:
-    PathPreset: {fileID: 11400000, guid: 81eec7458eaf12240b46d5435f33fd07, type: 2}
-    Seed: 42
-    GridStartPoint: {x: 0, y: 0}
-    GridEndPoint: {x: 16, y: 9}
-    GenerateEnvironment: 0
-  _tilemapSettings: {fileID: 11400000, guid: 01b7b45121bb40249a32e7f9e7816814, type: 2}
-  _includePathGenerationRules: 0
-  _randomizeAccessPoints: 0
-  _renderOverflowTiles: 1
-  _mapTilemap: {fileID: 1110981290}
-  _debug: 1
-  _accessPointsColor: {r: 1, g: 0, b: 0, a: 1}
-  _accessPointsRadius: 0.2
-  _pathOrchestrator:
-    _waypointsParent: {fileID: 667576701}
-  _environmentGenerator:
-    _obstaclePrefabs:
-    - {fileID: 4931296659836417704, guid: 3b701f549c6c96d44996fff0499463dd, type: 3}
-    - {fileID: 2274539256243474199, guid: 4a428e824d032744d94833a9f187f054, type: 3}
-    - {fileID: 2053425212365235558, guid: 83de7cbf0c116154799ffac2dbfeffd0, type: 3}
-    - {fileID: 7661877964713233374, guid: b6f297df9c380d34ca04c618c45d48ee, type: 3}
-    - {fileID: 8392802503059403852, guid: 57896d3d607fd3a4299b13e05206b432, type: 3}
-    - {fileID: 5515832509398196459, guid: 38b53e289a8647a43b4156cf6be7a54e, type: 3}
-    - {fileID: 873989692503932614, guid: a41f83d285bec7f408cfdd6f224f05c2, type: 3}
-    - {fileID: 4332168816486176687, guid: 11967f6991ee7b44494373f0f9fa2b14, type: 3}
-    - {fileID: 6830613150834113650, guid: 2a5886a566bfd134288d2040b46e366a, type: 3}
-    _debug: 0
-    _debugView: 0
---- !u!114 &14865714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 14865708}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdbb492f62b181d40b21b83566526625, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mapGenerator: {fileID: 14865713}
 --- !u!1 &22607118
 GameObject:
   m_ObjectHideFlags: 0
@@ -7608,11 +7503,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 14865710}
+  - {fileID: 1824830797}
   - {fileID: 873995094}
   - {fileID: 304970770}
   - {fileID: 331017055}
-  - {fileID: 1824830797}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1449249691
@@ -7783,7 +7677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbba0dddf065cf64987e61918ad997d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapGenerator: {fileID: 14865713}
+  _mapGenerator: {fileID: 0}
   _presets:
   - {fileID: 11400000, guid: 81eec7458eaf12240b46d5435f33fd07, type: 2}
   - {fileID: 11400000, guid: 00aa856193c0ee24792e6950bdfa6f97, type: 2}
@@ -7879,8 +7773,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1824830797}
   - component: {fileID: 1824830798}
+  - component: {fileID: 1824830799}
   m_Layer: 0
-  m_Name: New Map Generator
+  m_Name: Map Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7934,6 +7829,19 @@ MonoBehaviour:
   - {fileID: 6830613150834113650, guid: 2a5886a566bfd134288d2040b46e366a, type: 3}
   _debug: 1
   _offset: {x: 0.5, y: 0.5}
+--- !u!114 &1824830799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824830796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdbb492f62b181d40b21b83566526625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mapGenerator: {fileID: 1824830798}
 --- !u!1 &1952990606
 GameObject:
   m_ObjectHideFlags: 0

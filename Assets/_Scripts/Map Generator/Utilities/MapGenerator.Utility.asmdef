@@ -1,6 +1,6 @@
 {
-    "name": "Utilities",
-    "rootNamespace": "Utilities",
+    "name": "MapGenerator.Utilities",
+    "rootNamespace": "MapGenerator.Utilities",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

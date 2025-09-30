@@ -43,12 +43,6 @@ public class Enemy : MonoBehaviour
     {
         _isStopped = true;
     }
-    
-    private void FindNearestPoint(object sender, PathOrchestrator.OnPathGeneratedEventArgs args)
-    {
-        //_currentWaypointIndex = WaypointsParent.Instance.GetIndexOfNearestWaypoint(transform.position);
-        _isStopped = false;
-    }
 
     private void Update()
     {

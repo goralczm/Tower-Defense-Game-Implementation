@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
         CancelInvoke();
     }
 
-    private void MoveSpawner(object sender, PathOrchestrator.OnPathGeneratedEventArgs args)
+    /*private void MoveSpawner(object sender, PathOrchestrator.OnPathGeneratedEventArgs args)
     {
         transform.position = args.StartPointWorld;
     }
@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
     private void StartSpawner(object sender, PathOrchestrator.OnPathGeneratedEventArgs args)
     {
         InvokeRepeating("SpawnEnemy", 0, _intervals);
-    }
+    }*/
 
     public void SpawnEnemy()
     {

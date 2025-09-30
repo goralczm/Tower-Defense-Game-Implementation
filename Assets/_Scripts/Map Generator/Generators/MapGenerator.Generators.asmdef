@@ -1,0 +1,20 @@
+{
+    "name": "MapGenerator.Generators",
+    "rootNamespace": "MapGenerator.Generators",
+    "references": [
+        "GUID:22b3d77959b2a0540983dbc3b92b0ca7",
+        "GUID:a03e815a32ba8cd46b708872ec564cf8",
+        "GUID:4dbc17b09e04cc04ab0631f9d1b4a2f6",
+        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad",
+        "GUID:a281ae1d2c32f134d890098633848dc1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
