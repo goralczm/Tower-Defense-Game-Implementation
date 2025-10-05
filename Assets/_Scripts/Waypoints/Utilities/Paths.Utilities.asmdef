@@ -1,9 +1,7 @@
 {
-    "name": "Waypoints",
-    "rootNamespace": "",
-    "references": [
-        "GUID:4dbc17b09e04cc04ab0631f9d1b4a2f6"
-    ],
+    "name": "Paths.Utilities",
+    "rootNamespace": "Paths.Utilities",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

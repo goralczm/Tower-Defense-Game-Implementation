@@ -15,11 +15,12 @@ namespace MapGenerator.Settings
 
         [Header("Roundabouts")]
         public bool EnforceRoundabouts = true;
+        [Range(2, 10)] public int SmallestRoundaboutSize = 2;
         [Range(2, 10)] public int BiggestRoundaboutSize = 4;
         public bool RandomizeRoundaboutSize = true;
         [Range(0f, 1f)] public float RoundaboutProbability = .2f;
         public int MinimalTilesDistanceBetweenRoundabouts = 2;
-        //TODO: MinimumRounaboutSize
+        [Range(0, 2)] public int MinimalRounabouts = 0;
 
         [Header("Generation")]
         public int Steps = 10000;

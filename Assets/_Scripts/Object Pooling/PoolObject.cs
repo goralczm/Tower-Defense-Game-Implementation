@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class PoolObject : MonoBehaviour
+namespace ObjectPooling
 {
-    private string _tag;
-
-    private void OnDisable()
+    public class PoolObject : MonoBehaviour
     {
-        Release();
-    }
+        private string _tag;
 
-    public void Init(string tag)
-    {
-        _tag = tag;
-    }
+        private void OnDisable()
+        {
+            Release();
+        }
 
-    protected void Release()
-    {
-        PoolManager.Instance?.ReleaseObject(_tag, gameObject);
+        public void Init(string tag)
+        {
+            _tag = tag;
+        }
+
+        protected void Release()
+        {
+            PoolManager.Instance?.ReleaseObject(_tag, gameObject);
+        }
     }
 }

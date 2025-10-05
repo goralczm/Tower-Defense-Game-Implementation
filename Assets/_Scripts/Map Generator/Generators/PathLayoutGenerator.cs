@@ -47,7 +47,7 @@ namespace MapGenerator.Generators
             {
                 if (_pathSettings.EnforceMinimalPathLength)
                 {
-                    float distance = MapGenerator.Utilities.Helpers.CalculatePathLength(waypoints);
+                    float distance = Paths.Utilities.Helpers.CalculatePathLength(waypoints);
 
                     if (distance < _pathSettings.MinimalPathLength)
                         return GeneratePath(depth + 1, enforceRules);

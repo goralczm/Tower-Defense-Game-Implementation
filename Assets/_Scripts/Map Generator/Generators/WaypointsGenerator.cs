@@ -3,6 +3,7 @@ using MapGenerator.Settings;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Paths;
 
 namespace MapGenerator.Generators
 {
@@ -25,7 +26,7 @@ namespace MapGenerator.Generators
             Vector2 startPoint = _tilemap.GetCellCenterWorld(cellPos);
 
             List<Vector2> waypoints = ExtractWaypoints(startPoint);
-            Object.FindFirstObjectByType<WaypointsParent>().CacheWaypoints(waypoints);
+            Object.FindFirstObjectByType<Path>().SetWaypoints(waypoints);
 
             return layout;
         }

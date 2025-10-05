@@ -1,52 +1,48 @@
+using ObjectPooling;
+using Paths;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+namespace Enemies
 {
-    [SerializeField] private float _intervals;
-
-    private Dictionary<GameObject, Enemy> _enemyCache = new();
-
-    private void Start()
+    public class EnemySpawner : MonoBehaviour
     {
-        //PathGenerationOrchestrator.OnPathGenerationStarted += StopSpawner;
-        //PathGenerationOrchestrator.OnPathGenerationEnded += MoveSpawner;
-        //PathGenerationOrchestrator.OnPathGenerationEnded += StartSpawner;
-    }
+        [Header("Settings")]
+        [SerializeField] private float _intervals;
 
-    private void OnDisable()
-    {
-        //PathGenerationOrchestrator.OnPathGenerationStarted -= StopSpawner;
-        //PathGenerationOrchestrator.OnPathGenerationEnded -= MoveSpawner;
-        //PathGenerationOrchestrator.OnPathGenerationEnded -= StartSpawner;
-    }
-    
-    private void StopSpawner(object sender, EventArgs e)
-    {
-        CancelInvoke();
-    }
+        [Header("References")]
+        [SerializeField] private Path _path;
 
-    /*private void MoveSpawner(object sender, PathOrchestrator.OnPathGeneratedEventArgs args)
-    {
-        transform.position = args.StartPointWorld;
-    }
+        private Dictionary<GameObject, Enemy> _enemyCache = new();
 
+        private bool _isStopped;
 
-    private void StartSpawner(object sender, PathOrchestrator.OnPathGeneratedEventArgs args)
-    {
-        InvokeRepeating("SpawnEnemy", 0, _intervals);
-    }*/
+        public bool IsStopped => _isStopped;
 
-    public void SpawnEnemy()
-    {
-        GameObject enemyObject = PoolManager.Instance.SpawnFromPool("Enemy", transform.position, Quaternion.identity);
-        if (!_enemyCache.TryGetValue(enemyObject, out Enemy enemy))
+        public void StartSpawner()
         {
-            enemy = enemyObject.GetComponent<Enemy>();
-            _enemyCache.Add(enemyObject, enemy);
+            InvokeRepeating("SpawnEnemy", 0, _intervals);
+            _isStopped = false;
         }
 
-        enemy.ResetCache();
+        public void StopSpawner()
+        {
+            CancelInvoke();
+            _isStopped = true;
+        }
+
+        public void SpawnEnemy()
+        {
+            GameObject enemyObject = PoolManager.Instance.SpawnFromPool("Enemy", transform.position, Quaternion.identity);
+            if (!_enemyCache.TryGetValue(enemyObject, out Enemy enemy))
+            {
+                enemy = enemyObject.GetComponent<Enemy>();
+                _enemyCache.Add(enemyObject, enemy);
+            }
+
+            enemy.Reset();
+            enemy.SetPath(_path);
+        }
     }
 }

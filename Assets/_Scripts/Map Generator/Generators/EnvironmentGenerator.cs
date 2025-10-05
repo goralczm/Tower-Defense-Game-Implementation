@@ -169,8 +169,6 @@ namespace MapGenerator.Generators
         {
             if (!_debug || _pathSettings == null) return;
 
-            float maxX = 0;
-            float maxY = 0;
             float[,] noise;
 
             switch (_debugView)

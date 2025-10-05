@@ -1,0 +1,19 @@
+{
+    "name": "Enemies",
+    "rootNamespace": "Enemies",
+    "references": [
+        "ObjectPooling",
+        "Utilities",
+        "Paths",
+        "Paths.Utilities"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -12,18 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eca005144104e01beb4375adab2bb8a, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: 
-  MoveRootToEnd: 1
   EnforceMinimalPathLength: 1
   MinimalPathLength: 30
   EnforceMaximumStraightTilesInRow: 1
   MaximumStraightTilesInRow: 4
   EnforceRoundabouts: 1
+  SmallestRoundaboutSize: 3
   BiggestRoundaboutSize: 4
   RandomizeRoundaboutSize: 1
-  RoundaboutProbability: 0.35
-  MinimalTilesDistanceBetweenRoundabouts: 4
+  RoundaboutProbability: 0.3
+  MinimalTilesDistanceBetweenRoundabouts: 6
+  MinimalRounabouts: 0
   Steps: 11869
   MaximumGenerationDepth: 500
-  ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 0
-  OmitNeighborProbability: 0.7
-  NoiseThreshold: 0.35
+  ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 1

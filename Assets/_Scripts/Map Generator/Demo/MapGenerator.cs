@@ -2,6 +2,7 @@ using MapGenerator.Core;
 using MapGenerator.Generators;
 using MapGenerator.Settings;
 using MapGenerator.Utilities;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -58,6 +59,12 @@ namespace MapGenerator.Demo
 
     public class MapGenerator : MonoBehaviour
     {
+        public class OnMapGeneratedEventArgs : EventArgs
+        {
+            public Vector2 StartPoint;
+            public Vector2 EndPoint;
+        }
+
         [Header("Settings")]
         [SerializeField] private PathPreset _pathPreset;
         [SerializeField] private GenerationConfig _generationConfig;
@@ -72,6 +79,8 @@ namespace MapGenerator.Demo
         [SerializeField] private Vector2 _offset;
 
         private MapBuilder _mapBuilder;
+
+        public event EventHandler<OnMapGeneratedEventArgs> OnMapGenerated;
 
         public GenerationConfig GetGenerationConfig() => _generationConfig;
 
@@ -91,17 +100,6 @@ namespace MapGenerator.Demo
             _generationConfig.OnValidate();
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                if (Input.GetKey(KeyCode.LeftShift))
-                    Randomize();
-
-                GenerateMap();
-            }
-        }
-
         public void GenerateMap()
         {
             _mapBuilder?.Cleanup();
@@ -115,9 +113,15 @@ namespace MapGenerator.Demo
                 .WithGenerator(new EnvironmentGenerator(_pathPreset.EnvironmentSettings, _pathPreset.PathSettings, _generationConfig, _tilemap, _obstaclePrefabs))
                 .WithGenerator(new WaypointsGenerator(_tilemapSettings, _tilemap))
                 .Build();
+
+            OnMapGenerated?.Invoke(this, new OnMapGeneratedEventArgs
+            {
+                StartPoint = _tilemap.GetCellCenterWorld(_mapBuilder.GetMapLayout().StartPoint.ToVector3Int()),
+                EndPoint = _tilemap.GetCellCenterWorld(_mapBuilder.GetMapLayout().EndPoint.ToVector3Int()),
+            });
         }
 
-        private void Randomize()
+        public void RandomizeConfig()
         {
             _generationConfig.SetSeed(Randomizer.GetRandomSeed());
             _generationConfig.RandomizeAccessPoints();
@@ -130,6 +134,7 @@ namespace MapGenerator.Demo
 
             DrawBoundingBoxGizmos();
             DrawAccessPointsGizmos();
+            DrawMiddlePointsGizmos();
 
             if (_mapBuilder == null || _mapBuilder.GetMapLayout() == null || _tilemap == null) return;
 
@@ -193,6 +198,19 @@ namespace MapGenerator.Demo
             Handles.Label(_tilemap.GetCellCenterWorld(endCell) + Vector3.up * 0.5f, "End Point");
             Gizmos.DrawWireSphere(_tilemap.GetCellCenterWorld(startCell), .2f);
             Gizmos.DrawWireSphere(_tilemap.GetCellCenterWorld(endCell), .2f);
+        }
+
+        private void DrawMiddlePointsGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            int i = 0;
+            foreach (var middlePoint in _pathPreset.MazeGenerationSettings.MiddlePoints)
+            {
+                Vector2 middlePointWorldPos = _tilemap.GetCellCenterWorld(middlePoint.ToVector3Int());
+                Gizmos.DrawWireSphere(middlePointWorldPos, .2f);
+                Handles.Label(middlePointWorldPos.Add(y: .5f), $"Middle Point {i}");
+                i++;
+            }
         }
 
         private void DrawPathArrowsGizmos()

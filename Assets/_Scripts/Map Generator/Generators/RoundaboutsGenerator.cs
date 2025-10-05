@@ -30,7 +30,7 @@ namespace MapGenerator.Generators
             return _layout;
         }
 
-        private void DrawRoundabouts(int seed)
+        private void DrawRoundabouts(int seed, int roundaboutsGenerated = 0)
         {
             UnityEngine.Random.InitState(seed);
             var curr = _layout.GetByCoords(_generationData.GridStartPoint);
@@ -55,21 +55,25 @@ namespace MapGenerator.Generators
                         else
                             tilesAfterLastRoundabout = GenerateBiggestRoundabout(cornerPos, corner, tilesAfterLastRoundabout);
                     }
+
+                    if (tilesAfterLastRoundabout == 0)
+                        roundaboutsGenerated++;
                 }
 
                 curr = curr.Next;
                 tilesAfterLastRoundabout++;
             }
+
+            if (roundaboutsGenerated < _pathSettings.MinimalRounabouts)
+                DrawRoundabouts(seed + 1, roundaboutsGenerated);
         }
 
         private int GenerateRandomRoundabout(Vector2Int cornerPos, NodeType corner, int tilesAfterLastRoundabout)
         {
             List<int> randomSizes = new();
 
-            for (int i = 2; i <= _pathSettings.BiggestRoundaboutSize; i++)
-            {
+            for (int i = _pathSettings.SmallestRoundaboutSize; i <= _pathSettings.BiggestRoundaboutSize; i++)
                 randomSizes.Add(i);
-            }
 
             randomSizes.Shuffle();
 
@@ -84,7 +88,7 @@ namespace MapGenerator.Generators
 
         private int GenerateBiggestRoundabout(Vector2Int cornerPos, NodeType corner, int tilesAfterLastRoundabout)
         {
-            for (int i = _pathSettings.BiggestRoundaboutSize; i >= 2; i--)
+            for (int i = _pathSettings.BiggestRoundaboutSize; i >= _pathSettings.SmallestRoundaboutSize; i--)
             {
                 if (GenerateRoundaboutForCorner(cornerPos, corner, tilesAfterLastRoundabout, i))
                     return 0;

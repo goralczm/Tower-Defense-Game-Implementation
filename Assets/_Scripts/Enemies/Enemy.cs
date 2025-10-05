@@ -1,68 +1,65 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Paths;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+namespace Enemies
 {
-    [SerializeField] private float _speed = 1f;
-    
-    private int _currentWaypointIndex;
-    private bool _isStopped;
-
-    public float PathTraveled => GetDistanceOnPath() /*/ WaypointsParent.Instance.Length*/;
-    public int DifficultyLevel => 1;
-    public PathColor PathColor => PathColor.Red;
-
-    public float GetDistanceOnPath()
+    public class Enemy : MonoBehaviour
     {
-        return 1;
+        [SerializeField] private float _speed = 1f;
 
-        /*List<Vector2> waypointsBehind = WaypointsParent.Instance.Waypoints.Take(_currentWaypointIndex).ToList();
+        private int _currentWaypointIndex;
+        private bool _isStopped;
 
-        waypointsBehind.Add(transform.position);
+        public float PathTraveled => GetDistanceOnPath() / _path.Length;
+        public int DifficultyLevel => 1;
+        public PathColor PathColor => PathColor.Red;
 
-        return Helpers.CalculatePathLength(waypointsBehind);*/
-    }
-    
-    public void ResetCache()
-    {
-        _currentWaypointIndex = 0;
+        private Path _path;
 
-        //PathGenerationOrchestrator.OnPathGenerationStarted += Stop;
-        //PathGenerationOrchestrator.OnPathGenerationEnded += FindNearestPoint;
-    }
+        public void SetPath(Path path) => _path = path;
 
-    private void OnDisable()
-    {
-        //PathGenerationOrchestrator.OnPathGenerationStarted -= Stop;
-        //PathGenerationOrchestrator.OnPathGenerationEnded -= FindNearestPoint;
-    }
-
-    private void Stop(object sender, EventArgs args)
-    {
-        _isStopped = true;
-    }
-
-    private void Update()
-    {
-        Move();
-    }
-
-    private void Move()
-    {
-        if (_isStopped) return;
-        
-        /*transform.position = Vector2.MoveTowards(transform.position, WaypointsParent.Instance.Waypoints[_currentWaypointIndex], _speed * Time.deltaTime);
-        if ((Vector2)transform.position == WaypointsParent.Instance.Waypoints[_currentWaypointIndex])
+        public void Reset()
         {
-            if (_currentWaypointIndex >= WaypointsParent.Instance.Waypoints.Count - 1)
+            _currentWaypointIndex = 0;
+        }
+
+        public float GetDistanceOnPath()
+        {
+            return _path.GetDistanceOnPath(transform.position, _currentWaypointIndex - 1);
+        }
+
+        private void Update()
+        {
+            MoveTowardsWaypoint();
+        }
+
+        private void MoveTowardsWaypoint()
+        {
+            if (_isStopped) return;
+
+            if (_path.Waypoints.Count == 0)
             {
-                gameObject.SetActive(false);
+                Die();
                 return;
             }
 
-            _currentWaypointIndex++;
-        }*/
+            transform.position = Vector2.MoveTowards(transform.position, _path.Waypoints[_currentWaypointIndex], _speed * Time.deltaTime);
+            if ((Vector2)transform.position == _path.Waypoints[_currentWaypointIndex])
+            {
+                if (_currentWaypointIndex >= _path.Waypoints.Count - 1)
+                {
+                    Die();
+                    return;
+                }
+
+                _currentWaypointIndex++;
+            }
+        }
+
+        public void Die()
+        {
+            gameObject.SetActive(false);
+
+        }
     }
 }

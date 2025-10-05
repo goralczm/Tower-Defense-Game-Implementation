@@ -4,10 +4,19 @@ namespace Utilities.Extensions
 {
     public static class VectorExtensions
     {
-        public static Vector2 Add(this Vector2 first, Vector3 second)
+        public static Vector2 Add(this Vector2 v1, float x = 0, float y = 0)
         {
-            return new Vector2(first.x + second.x, first.y + second.y);
+            return new Vector2(v1.x + x, v1.y + y);
+        }
+
+        public static Vector2 Add(this Vector2 v1, Vector3 v2)
+        {
+            return new Vector2(v1.x + v2.x, v1.y + v2.y);
+        }
+
+        public static Vector3Int ToVector3Int(this Vector2Int v)
+        {
+            return new Vector3Int(v.x, v.y, 0);
         }
     }
-
 }
