@@ -50,15 +50,5 @@ namespace Paths
 
             return Waypoints.IndexOf(cp[0]);
         }
-
-        private void OnDrawGizmos()
-        {
-            if (!_debug) return;
-
-            Gizmos.color = _waypointColor;
-
-            foreach (var waypoint in Waypoints)
-                Gizmos.DrawWireSphere(waypoint, _waypointsSize);
-        }
     }
 }

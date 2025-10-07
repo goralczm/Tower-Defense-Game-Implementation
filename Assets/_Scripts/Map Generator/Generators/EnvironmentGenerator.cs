@@ -15,20 +15,9 @@ namespace MapGenerator.Generators
         Occupied
     }
 
-    public enum DebugView
-    {
-        Heatmap,
-        Noise,
-        Obstacles
-    }
-
     [System.Serializable]
     public class EnvironmentGenerator : IGenerator
     {
-        [Header("Debug")]
-        [SerializeField] private bool _debug;
-        [SerializeField] private DebugView _debugView;
-
         private PathSettings _pathSettings;
         private NoiseSettings _noiseSettings;
         private EnvironmentSettings _environmentSettings;
@@ -165,15 +154,15 @@ namespace MapGenerator.Generators
             return neighbors;
         }
 
-        public void OnDrawGizmos()
+        public void DrawGizmos(DebugConfig debugConfig)
         {
-            if (!_debug || _pathSettings == null) return;
+            if (_pathSettings == null) return;
 
             float[,] noise;
 
-            switch (_debugView)
+            switch (debugConfig.EnvironmentDebugView)
             {
-                case DebugView.Heatmap:
+                case EnvironmentDebugView.Heatmap:
                     foreach (var occupancy in _heatmap)
                     {
                         switch (occupancy.Value)
@@ -193,7 +182,7 @@ namespace MapGenerator.Generators
                     }
 
                     break;
-                case DebugView.Noise:
+                case EnvironmentDebugView.Noise:
                     noise = NoiseGenerator.GenerateNoise(_noiseSettings, _generationData.Seed);
 
                     for (int y = 0; y < _noiseSettings.Height; y++)
@@ -210,10 +199,12 @@ namespace MapGenerator.Generators
                     }
 
                     break;
-                case DebugView.Obstacles:
+                case EnvironmentDebugView.Obstacles:
                     Gizmos.color = Color.red;
                     foreach (var obstaclePos in _obstaclePositions)
                         Gizmos.DrawCube(obstaclePos, _tilemap.cellSize);
+                    break;
+                case EnvironmentDebugView.None:
                     break;
             }
         }

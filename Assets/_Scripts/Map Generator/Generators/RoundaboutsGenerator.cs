@@ -201,5 +201,10 @@ namespace MapGenerator.Generators
         {
             //noop
         }
+
+        public void DrawGizmos(DebugConfig debugConfig)
+        {
+            //noop
+        }
     }
 }

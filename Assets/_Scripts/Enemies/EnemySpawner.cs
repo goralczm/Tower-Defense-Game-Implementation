@@ -16,7 +16,7 @@ namespace Enemies
 
         private Dictionary<GameObject, Enemy> _enemyCache = new();
 
-        private bool _isStopped;
+        private bool _isStopped = true;
 
         public bool IsStopped => _isStopped;
 

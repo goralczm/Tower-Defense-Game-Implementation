@@ -135,5 +135,32 @@ namespace MapGenerator.Generators
         {
             //noop
         }
+
+        public void DrawGizmos(DebugConfig debugConfig)
+        {
+            Gizmos.color = Color.magenta;
+            var curr = debugConfig.Layout.GetByCoords(_generationConfig.GridStartPoint);
+            DrawGizmosArrow(debugConfig.GetPositionOnTilemap(curr.GetPosition()), debugConfig.GetPositionOnTilemap(curr.Next.GetPosition()), Color.magenta);
+
+            while (curr.Next != null)
+            {
+                curr = curr.Next;
+                if (curr.Next != null)
+                    DrawGizmosArrow(debugConfig.GetPositionOnTilemap(curr.GetPosition()), debugConfig.GetPositionOnTilemap(curr.Next.GetPosition()), Color.magenta);
+            }
+        }
+
+        public static void DrawGizmosArrow(Vector3 start, Vector3 end, Color color, float headLength = 0.2f, float headAngle = 20f)
+        {
+            Gizmos.color = color;
+            Gizmos.DrawLine(start, end);
+
+            Vector3 direction = (end - start).normalized;
+            Vector3 right = Quaternion.Euler(0, 0, headAngle) * -direction;
+            Vector3 left = Quaternion.Euler(0, 0, -headAngle) * -direction;
+
+            Gizmos.DrawLine(end, end + right * headLength);
+            Gizmos.DrawLine(end, end + left * headLength);
+        }
     }
 }

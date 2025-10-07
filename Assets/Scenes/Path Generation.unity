@@ -7836,7 +7836,10 @@ MonoBehaviour:
   - {fileID: 4332168816486176687, guid: 11967f6991ee7b44494373f0f9fa2b14, type: 3}
   - {fileID: 6830613150834113650, guid: 2a5886a566bfd134288d2040b46e366a, type: 3}
   _debug: 1
-  _offset: {x: 0.5, y: 0.5}
+  _debugConfig:
+    Tilemap: {fileID: 0}
+    Offset: {x: 0.5, y: 0.5}
+    EnvironmentDebugView: 0
 --- !u!1 &1952990606
 GameObject:
   m_ObjectHideFlags: 0
@@ -8031,7 +8034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2124049625
 RectTransform:
   m_ObjectHideFlags: 0

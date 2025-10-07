@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utilities.Extensions;
 using Utilities;
+using UnityEngine.Tilemaps;
 
 namespace MapGenerator.Generators
 {
@@ -145,6 +146,11 @@ namespace MapGenerator.Generators
         }
 
         public void Cleanup()
+        {
+            //noop
+        }
+
+        public void DrawGizmos(DebugConfig debugConfig)
         {
             //noop
         }

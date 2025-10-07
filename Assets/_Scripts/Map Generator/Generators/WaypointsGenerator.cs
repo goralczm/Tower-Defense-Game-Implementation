@@ -137,5 +137,13 @@ namespace MapGenerator.Generators
         {
             //noop
         }
+
+        public void DrawGizmos(DebugConfig debugConfig)
+        {
+            Gizmos.color = Color.red;
+
+            foreach (var waypoint in _waypoints)
+                Gizmos.DrawWireSphere(waypoint, .2f);
+        }
     }
 }

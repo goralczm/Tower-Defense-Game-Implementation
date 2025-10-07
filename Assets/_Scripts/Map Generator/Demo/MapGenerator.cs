@@ -33,6 +33,8 @@ namespace MapGenerator.Demo
 
 #if UNITY_EDITOR
         public MapLayout GetMapLayout() => _layout;
+
+        public List<IGenerator> GetGenerators() => _generators;
 #endif
 
         public MapBuilder WithGenerator(IGenerator generator)
@@ -57,7 +59,7 @@ namespace MapGenerator.Demo
         }
     }
 
-    public class MapGenerator : MonoBehaviour
+public class MapGenerator : MonoBehaviour
     {
         public class OnMapGeneratedEventArgs : EventArgs
         {
@@ -69,14 +71,14 @@ namespace MapGenerator.Demo
         [SerializeField] private PathPreset _pathPreset;
         [SerializeField] private GenerationConfig _generationConfig;
         [SerializeField] private TilemapSettings _tilemapSettings;
-        
+
         [Header("References")]
         [SerializeField] private Tilemap _tilemap;
         [SerializeField] private List<GameObject> _obstaclePrefabs;
 
         [Header("Debug")]
         [SerializeField] private bool _debug;
-        [SerializeField] private Vector2 _offset;
+        [SerializeField] private DebugConfig _debugConfig;
 
         private MapBuilder _mapBuilder;
 
@@ -138,26 +140,11 @@ namespace MapGenerator.Demo
 
             if (_mapBuilder == null || _mapBuilder.GetMapLayout() == null || _tilemap == null) return;
 
-            DrawNodesGizmos();
-            DrawPathArrowsGizmos();
-        }
+            _debugConfig.Layout = _mapBuilder.GetMapLayout();
+            _debugConfig.Tilemap = _tilemap;
 
-        private void DrawNodesGizmos()
-        {
-            foreach (var node in _mapBuilder.GetMapLayout().GetNodes())
-            {
-                if (node.Type == NodeType.Empty)
-                    Gizmos.color = Color.red;
-                else
-                    Gizmos.color = Color.green;
-
-                Gizmos.DrawWireSphere(GetPositionOnTilemap(node.GetPosition()), .2f);
-            }
-        }
-
-        private Vector2 GetPositionOnTilemap(Vector2Int tilePos)
-        {
-            return ((Vector2)tilePos).Add(_tilemap.transform.position).Add(_offset);
+            foreach (var generator in _mapBuilder.GetGenerators())
+                generator.DrawGizmos(_debugConfig);
         }
 
         public static void DrawGizmosArrow(Vector3 start, Vector3 end, Color color, float headLength = 0.2f, float headAngle = 20f)
@@ -210,20 +197,6 @@ namespace MapGenerator.Demo
                 Gizmos.DrawWireSphere(middlePointWorldPos, .2f);
                 Handles.Label(middlePointWorldPos.Add(y: .5f), $"Middle Point {i}");
                 i++;
-            }
-        }
-
-        private void DrawPathArrowsGizmos()
-        {
-            Gizmos.color = Color.magenta;
-            var curr = _mapBuilder.GetMapLayout().GetByCoords(_generationConfig.GridStartPoint);
-            DrawGizmosArrow(GetPositionOnTilemap(curr.GetPosition()), GetPositionOnTilemap(curr.Next.GetPosition()), Color.magenta);
-
-            while (curr.Next != null)
-            {
-                curr = curr.Next;
-                if (curr.Next != null)
-                    DrawGizmosArrow(GetPositionOnTilemap(curr.GetPosition()), GetPositionOnTilemap(curr.Next.GetPosition()), Color.magenta);
             }
         }
 #endif
