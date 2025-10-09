@@ -41,7 +41,6 @@ namespace Enemies
                 _enemyCache.Add(enemyObject, enemy);
             }
 
-            enemy.Reset();
             enemy.SetPath(_path);
         }
     }

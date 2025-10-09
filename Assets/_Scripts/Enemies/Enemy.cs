@@ -21,8 +21,6 @@ namespace Enemies
         {
             _currentWaypointIndex = nextWaypointIndex;
             _enemyData = enemyData;
-
-
         }
 
         public float GetDistanceOnPath()
