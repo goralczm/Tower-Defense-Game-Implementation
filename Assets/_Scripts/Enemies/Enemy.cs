@@ -7,20 +7,22 @@ namespace Enemies
     {
         [SerializeField] private float _speed = 1f;
 
+        private Path _path;
+        private EnemyData _enemyData;
         private int _currentWaypointIndex;
         private bool _isStopped;
 
         public float PathTraveled => GetDistanceOnPath() / _path.Length;
         public int DifficultyLevel => 1;
-        public PathColor PathColor => PathColor.Red;
-
-        private Path _path;
 
         public void SetPath(Path path) => _path = path;
 
-        public void Reset()
+        public void Setup(EnemyData enemyData, int nextWaypointIndex)
         {
-            _currentWaypointIndex = 0;
+            _currentWaypointIndex = nextWaypointIndex;
+            _enemyData = enemyData;
+
+
         }
 
         public float GetDistanceOnPath()
