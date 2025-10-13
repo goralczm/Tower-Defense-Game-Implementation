@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9b6ac0eb3b173a47ab85159bf3e1a50, type: 3}
+  m_Script: {fileID: 11500000, guid: 694998cb491a2ff4e85656eb279c7b2d, type: 3}
   m_Name: Easy Waves
   m_EditorClassIdentifier: Waves::Waves.WaveData
   Entries:
@@ -19,18 +19,18 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: -0.009
-        outSlope: -0.009
+        value: 0.5
+        inSlope: -0.003
+        outSlope: -0.003
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 100
-        value: 0.1
-        inSlope: -0.009
-        outSlope: -0.009
+        value: 0.2
+        inSlope: -0.003
+        outSlope: -0.003
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -44,17 +44,17 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 10
-        inSlope: 0.4
-        outSlope: 0.4
+        inSlope: 0.9
+        outSlope: 0.9
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 100
-        value: 50
-        inSlope: 0.4
-        outSlope: 0.4
+        value: 100
+        inSlope: 0.9
+        outSlope: 0.9
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -63,3 +63,4 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   Reward: 100
+  WavesCount: 50

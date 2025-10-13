@@ -4,6 +4,7 @@ using MapGenerator.Settings;
 using MapGenerator.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -59,7 +60,7 @@ namespace MapGenerator.Demo
         }
     }
 
-public class MapGenerator : MonoBehaviour
+    public class MapGenerator : MonoBehaviour
     {
         public class OnMapGeneratedEventArgs : EventArgs
         {
@@ -71,6 +72,7 @@ public class MapGenerator : MonoBehaviour
         [SerializeField] private PathPreset _pathPreset;
         [SerializeField] private GenerationConfig _generationConfig;
         [SerializeField] private TilemapSettings _tilemapSettings;
+        [SerializeField] private bool _generateRandomOnStart;
 
         [Header("References")]
         [SerializeField] private Tilemap _tilemap;
@@ -102,6 +104,15 @@ public class MapGenerator : MonoBehaviour
             _generationConfig.OnValidate();
         }
 
+        private void Start()
+        {
+            if (_generateRandomOnStart)
+            {
+                RandomizeConfig();
+                GenerateMap();
+            }
+        }
+
         public void GenerateMap()
         {
             _mapBuilder?.Cleanup();
@@ -113,8 +124,9 @@ public class MapGenerator : MonoBehaviour
                 .WithGenerator(new RoundaboutsGenerator(_pathPreset.PathSettings, _generationConfig))
                 .WithGenerator(new TilemapGenerator(_tilemap, _tilemapSettings))
                 .WithGenerator(new EnvironmentGenerator(_pathPreset.EnvironmentSettings, _pathPreset.PathSettings, _generationConfig, _tilemap, _obstaclePrefabs))
-                .WithGenerator(new WaypointsGenerator(_tilemapSettings, _tilemap))
-                .Build();
+                .WithGenerator(new WaypointsGenerator(_tilemapSettings, _tilemap));
+
+            _mapBuilder.Build();
 
             OnMapGenerated?.Invoke(this, new OnMapGeneratedEventArgs
             {

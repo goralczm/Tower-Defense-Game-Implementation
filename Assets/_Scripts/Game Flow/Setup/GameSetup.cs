@@ -1,13 +1,14 @@
 using Enemies;
 using MapGenerator.Saver;
 using UnityEngine;
+using Waves;
 
 namespace GameFlow.Setup
 {
     public class GameSetup : MonoBehaviour
     {
         [SerializeField] private MapGenerator.Demo.MapGenerator _mapGenerator;
-        [SerializeField] private WaveGenerator _waveGenerator;
+        [SerializeField] private WavesController _waveController;
 
         private void OnEnable()
         {
@@ -21,7 +22,7 @@ namespace GameFlow.Setup
 
         private void OnMapGenerated(object sender, MapGenerator.Demo.MapGenerator.OnMapGeneratedEventArgs e)
         {
-            _waveGenerator.transform.position = e.StartPoint;
+            _waveController.transform.position = e.StartPoint;
         }
 
         private void Update()
@@ -36,7 +37,7 @@ namespace GameFlow.Setup
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _waveGenerator.StartGenerator(1);
+                _waveController.StartGenerator();
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))

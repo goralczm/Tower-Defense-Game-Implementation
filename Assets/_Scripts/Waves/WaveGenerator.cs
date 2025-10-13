@@ -2,27 +2,29 @@ using ObjectPooling;
 using Paths;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using Waves;
 
 namespace Enemies
 {
-    public class WaveGenerator : MonoBehaviour
+    public class WaveGenerator
     {
-        [Header("Settings")]
-        [SerializeField] private WaveData _wave;
-
-        [Header("References")]
-        [SerializeField] private Path _path;
-
-        // Set for faster lookup and removal
-        private List<EnemyBehaviour> _enemiesAlive = new();
+        private HashSet<EnemyBehaviour> _enemiesAlive = new();
+        private Transform _origin;
+        private WavesData _waves;
+        private Path _path;
         private bool _isStopped;
-        private CancellationTokenSource _cts = new();
 
         public bool IsStopped => _isStopped;
+        public int EnemiesAliveCount => _enemiesAlive.Count;
+
+        public WaveGenerator(WavesData waves, Path path, Transform origin)
+        {
+            _waves = waves;
+            _path = path;
+            _origin = origin;
+        }
 
         public void UnstopGenerator()
         {
@@ -31,55 +33,35 @@ namespace Enemies
 
         public void StopGenerator()
         {
-            _cts.Cancel();
-
-            for (int i = _enemiesAlive.Count - 1; i >= 0; i--)
-                _enemiesAlive[i].Die(notify: false);
+            foreach (var enemy in _enemiesAlive)
+                enemy.Die(notify: false);
 
             _enemiesAlive.Clear();
 
             _isStopped = true;
         }
 
-        private void OnEnable()
+        public void OnEnable()
         {
             EnemyBehaviour.OnEnemyDied += RemoveAliveEnemy;
         }
 
-        private void OnDisable()
+        public void OnDisable()
         {
             EnemyBehaviour.OnEnemyDied -= RemoveAliveEnemy;
         }
 
         private void RemoveAliveEnemy(EnemyBehaviour enemy)
         {
-            if (_enemiesAlive.Contains(enemy))
-                _enemiesAlive.Remove(enemy);
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                if (IsStopped)
-                    UnstopGenerator();
-                else
-                    StopGenerator();
-            }
+            _enemiesAlive.Remove(enemy);
         }
 
         public async Task StartGenerator(int wave)
         {
             if (IsStopped) return;
 
-            _cts = new();
-            await SpawnWave(wave);
-        }
-
-        private async Task SpawnWave(int wave)
-        {
             _enemiesAlive.Clear();
-            foreach (var entry in _wave.Entries)
+            foreach (var entry in _waves.Entries)
             {
                 await SpawnEnemiesByEntry(entry, wave);
             }
@@ -90,7 +72,7 @@ namespace Enemies
             int enemiesCount = entry.GetCountByWave(wave);
             for (int i = 0; i < enemiesCount; i++)
             {
-                _cts.Token.ThrowIfCancellationRequested();
+                if (IsStopped) return;
 
                 SpawnEnemy(entry.Enemy, 0);
                 await Task.Delay(TimeSpan.FromSeconds(entry.GetIntervalByWave(wave)));
@@ -99,7 +81,7 @@ namespace Enemies
 
         private void SpawnEnemy(EnemyData enemyData, int nextWaypointIndex)
         {
-            GameObject enemyObject = PoolManager.Instance.SpawnFromPool("Enemy", transform.position, Quaternion.identity);
+            GameObject enemyObject = PoolManager.Instance.SpawnFromPool("Enemy", _origin.position, Quaternion.identity);
             EnemyBehaviour enemy = EnemiesCache.GetEnemyByGameObject(enemyObject);
 
             enemy.Setup(enemyData, _path, nextWaypointIndex);

@@ -8,6 +8,20 @@ namespace Enemies
         private static Dictionary<Collider2D, EnemyBehaviour> _enemiesByCollider = new();
         private static Dictionary<GameObject, EnemyBehaviour> _enemiesByGameObject = new();
 
+        public static bool TryGetEnemy(Collider2D collider, out EnemyBehaviour enemy)
+        {
+            enemy = GetEnemyByCollider(collider);
+
+            return enemy != null;
+        }
+
+        public static bool TryGetEnemy(GameObject gameObject, out EnemyBehaviour enemy)
+        {
+            enemy = GetEnemyByGameObject(gameObject);
+
+            return enemy != null;
+        }
+
         public static EnemyBehaviour GetEnemyByCollider(Collider2D collider)
         {
             if (!_enemiesByCollider.TryGetValue(collider, out EnemyBehaviour enemy))

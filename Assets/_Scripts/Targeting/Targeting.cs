@@ -18,7 +18,7 @@ namespace Targeting
 
     public static class Targeting
     {
-        public static LayerMask NodesLayers = 1 << 6;
+        public static LayerMask GroundLayer = 1 << 6;
         public static LayerMask TowersLayer = 1 << 7;
         public static LayerMask EnemiesLayer = 1 << 8;
         public static LayerMask ObstaclesLayer = 1 << 9;

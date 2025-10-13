@@ -45,8 +45,13 @@ namespace Enemies
                 return;
             }
 
-            transform.position = Vector2.MoveTowards(transform.position, _path.Waypoints[_currentWaypointIndex], _speed * Time.deltaTime);
-            if ((Vector2)transform.position == _path.Waypoints[_currentWaypointIndex])
+            var position = (Vector2)transform.position;
+            var target = _path.Waypoints[_currentWaypointIndex];
+
+            position = Vector2.MoveTowards(position, target, _speed * Time.deltaTime);
+            transform.position = position;
+
+            if ((position - target).sqrMagnitude < 0.000001f)
             {
                 if (_currentWaypointIndex >= _path.Waypoints.Count - 1)
                 {

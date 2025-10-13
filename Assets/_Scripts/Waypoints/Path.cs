@@ -6,11 +6,6 @@ namespace Paths
     [System.Serializable]
     public class Path : MonoBehaviour
     {
-        [Header("Debug")]
-        [SerializeField] private bool _debug;
-        [SerializeField] private Color _waypointColor = Color.red;
-        [SerializeField] private float _waypointsSize = .1f;
-
         private List<Vector2> _waypoints = new();
         private float _pathLength;
         private Dictionary<int, float> _distanceByWaypoint = new();
