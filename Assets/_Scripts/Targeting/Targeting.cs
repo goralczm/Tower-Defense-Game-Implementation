@@ -23,22 +23,22 @@ namespace Targeting
         public static LayerMask EnemiesLayer = 1 << 8;
         public static LayerMask ObstaclesLayer = 1 << 9;
 
-        public delegate float SortingCondition(Enemy enemy);
+        public delegate float SortingCondition(EnemyBehaviour enemy);
 
-        public static List<Enemy> GetNEnemiesInRangeByConditions(Vector2 origin, float range, int enemiesCount, TargetingOptions targetingOption, PathColor pathColorsFilter = 0)
+        public static List<EnemyBehaviour> GetNEnemiesInRangeByConditions(Vector2 origin, float range, int enemiesCount, TargetingOptions targetingOption)
         {
-            List<Enemy> enemiesInRange = GetEnemiesInRange(origin, range, pathColorsFilter);
+            List<EnemyBehaviour> enemiesInRange = GetEnemiesInRange(origin, range);
             return GetNEnemiesByCondition(enemiesInRange, enemiesCount, targetingOption);
         }
 
-        public static List<Enemy> GetNEnemiesByCondition(List<Enemy> enemies, int enemiesCount, TargetingOptions targetingOption)
+        public static List<EnemyBehaviour> GetNEnemiesByCondition(List<EnemyBehaviour> enemies, int enemiesCount, TargetingOptions targetingOption)
         {
-            List<Enemy> enemiesCopy = new List<Enemy>(enemies);
-            List<Enemy> selectedEnemies = new List<Enemy>();
+            List<EnemyBehaviour> enemiesCopy = new List<EnemyBehaviour>(enemies);
+            List<EnemyBehaviour> selectedEnemies = new List<EnemyBehaviour>();
 
             for (int i = 0; i < enemiesCount; i++)
             {
-                Enemy bestEnemy = GetEnemyByCondition(enemiesCopy, GetSortingCondition(targetingOption));
+                EnemyBehaviour bestEnemy = GetEnemyByCondition(enemiesCopy, GetSortingCondition(targetingOption));
                 if (bestEnemy == null)
                     break;
 
@@ -49,12 +49,12 @@ namespace Targeting
             return selectedEnemies;
         }
 
-        private static Enemy GetEnemyByCondition(List<Enemy> enemies, SortingCondition sortingCondition)
+        private static EnemyBehaviour GetEnemyByCondition(List<EnemyBehaviour> enemies, SortingCondition sortingCondition)
         {
             if (enemies.Count == 0)
                 return null;
 
-            Enemy bestCandidate = enemies[0];
+            EnemyBehaviour bestCandidate = enemies[0];
             float highestCondition = sortingCondition(bestCandidate);
 
             for (int i = 1; i < enemies.Count; i++)
@@ -71,13 +71,13 @@ namespace Targeting
         }
 
         [Obsolete]
-        public static List<Enemy> GetSortedEnemiesInRange(Vector2 origin, float range, TargetingOptions targetingOption, PathColor pathColorsFilter = 0)
+        public static List<EnemyBehaviour> GetSortedEnemiesInRange(Vector2 origin, float range, TargetingOptions targetingOption)
         {
             SortingCondition sortingCodition = enemy => enemy.PathTraveled;
             switch (targetingOption)
             {
                 case TargetingOptions.Strongest:
-                    sortingCodition = enemy => enemy.DifficultyLevel;
+                    sortingCodition = enemy => enemy.DangerLevel;
                     break;
                 case TargetingOptions.First:
                 case TargetingOptions.Last:
@@ -85,8 +85,8 @@ namespace Targeting
                     break;
             }
 
-            List<Enemy> enemiesInRange = GetEnemiesInRange(origin, range, pathColorsFilter);
-            List<Enemy> sortedEnemies = SortEnemiesByCondition(enemiesInRange, sortingCodition);
+            List<EnemyBehaviour> enemiesInRange = GetEnemiesInRange(origin, range);
+            List<EnemyBehaviour> sortedEnemies = SortEnemiesByCondition(enemiesInRange, sortingCodition);
 
             if (targetingOption != TargetingOptions.Last)
                 sortedEnemies.Reverse();
@@ -99,7 +99,7 @@ namespace Targeting
             switch (targetingOption)
             {
                 case TargetingOptions.Strongest:
-                    return enemy => enemy.DifficultyLevel;
+                    return enemy => enemy.DangerLevel;
                 case TargetingOptions.First:
                     return enemy => enemy.PathTraveled;
                 case TargetingOptions.Last:
@@ -109,18 +109,18 @@ namespace Targeting
             return enemy => enemy.PathTraveled;
         }
 
-        private static List<Enemy> SortEnemiesByCondition(List<Enemy> enemiesToSort, SortingCondition sortingCondition)
+        private static List<EnemyBehaviour> SortEnemiesByCondition(List<EnemyBehaviour> enemiesToSort, SortingCondition sortingCondition)
         {
-            List<Enemy> sortedEnemies = new List<Enemy>(enemiesToSort);
+            List<EnemyBehaviour> sortedEnemies = new List<EnemyBehaviour>(enemiesToSort);
             QuickSortEnemies(sortedEnemies, sortingCondition, 0, enemiesToSort.Count - 1);
 
             return sortedEnemies;
         }
 
-        public static List<Enemy> GetEnemiesInRange(Vector2 origin, float range, PathColor pathColorsFilter = 0)
+        public static List<EnemyBehaviour> GetEnemiesInRange(Vector2 origin, float range)
         {
-            List<Enemy> enemiesInRange = new List<Enemy>();
-            List<Enemy> standByEnemies = new List<Enemy>();
+            List<EnemyBehaviour> enemiesInRange = new List<EnemyBehaviour>();
+            List<EnemyBehaviour> standByEnemies = new List<EnemyBehaviour>();
 
             Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range, EnemiesLayer);
             foreach (Collider2D hit in hits)
@@ -128,16 +128,10 @@ namespace Targeting
                 if (!hit.gameObject.activeSelf)
                     continue;
 
-                Enemy enemy = EnemiesCache.GetEnemyByCollider(hit);
+                EnemyBehaviour enemy = EnemiesCache.GetEnemyByCollider(hit);
 
                 // if (enemy.AvoidTargeting)
                 //    continue;
-
-                if (pathColorsFilter != 0 && !pathColorsFilter.HasFlag(enemy.PathColor))
-                {
-                    standByEnemies.Add(enemy);
-                    continue;
-                }
 
                 enemiesInRange.Add(enemy);
             }
@@ -148,7 +142,7 @@ namespace Targeting
             return enemiesInRange;
         }
 
-        public static void QuickSortEnemies(List<Enemy> enemies, SortingCondition sortingCondition, int left, int right)
+        public static void QuickSortEnemies(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right)
         {
             if (left >= right)
                 return;
@@ -159,7 +153,7 @@ namespace Targeting
             QuickSortEnemies(enemies, sortingCondition, index, right);
         }
 
-        public static int Partition(List<Enemy> enemies, SortingCondition sortingCondition, int left, int right, float pivot)
+        public static int Partition(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right, float pivot)
         {
             while (left <= right)
             {
@@ -179,7 +173,7 @@ namespace Targeting
             return left;
         }
 
-        public static float MedianOfThree(List<Enemy> enemies, SortingCondition sortingCondition, int left, int right)
+        public static float MedianOfThree(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right)
         {
             int mid = left + (right - left) / 2;
 
@@ -193,9 +187,9 @@ namespace Targeting
             return sortingCondition(enemies[mid]);
         }
 
-        private static void SwapElements(List<Enemy> enemies, int firstIndex, int secondIndex)
+        private static void SwapElements(List<EnemyBehaviour> enemies, int firstIndex, int secondIndex)
         {
-            Enemy enemyCopy = enemies[firstIndex];
+            EnemyBehaviour enemyCopy = enemies[firstIndex];
             enemies[firstIndex] = enemies[secondIndex];
             enemies[secondIndex] = enemyCopy;
         }

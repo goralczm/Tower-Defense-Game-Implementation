@@ -7,7 +7,7 @@ namespace GameFlow.Setup
     public class GameSetup : MonoBehaviour
     {
         [SerializeField] private MapGenerator.Demo.MapGenerator _mapGenerator;
-        [SerializeField] private EnemySpawner _enemySpawner;
+        [SerializeField] private WaveGenerator _waveGenerator;
 
         private void OnEnable()
         {
@@ -21,7 +21,7 @@ namespace GameFlow.Setup
 
         private void OnMapGenerated(object sender, MapGenerator.Demo.MapGenerator.OnMapGeneratedEventArgs e)
         {
-            _enemySpawner.transform.position = e.StartPoint;
+            _waveGenerator.transform.position = e.StartPoint;
         }
 
         private void Update()
@@ -36,10 +36,7 @@ namespace GameFlow.Setup
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (_enemySpawner.IsStopped)
-                    _enemySpawner.StartSpawner();
-                else
-                    _enemySpawner.StopSpawner();
+                _waveGenerator.StartGenerator(1);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))

@@ -1,11 +1,11 @@
 {
-    "name": "GameFlow",
-    "rootNamespace": "GameFlow",
+    "name": "Waves",
+    "rootNamespace": "Waves",
     "references": [
-        "GUID:675a5ac2960cf9f49bbf8cbf71b4021d",
-        "GUID:fef83fbb0a614ef49855a4e904e71ec3",
         "GUID:aeeb5f74e409eaa44ae2137384aed055",
-        "GUID:156e2aa2cdb528947a790c1f14da0987"
+        "GUID:a281ae1d2c32f134d890098633848dc1",
+        "GUID:70074737be8cf6340afb2f543ea85781",
+        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

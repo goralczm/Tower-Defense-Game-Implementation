@@ -1,26 +1,28 @@
 using Paths;
+using System;
 using UnityEngine;
 
 namespace Enemies
 {
-    public class Enemy : MonoBehaviour
+    public class EnemyBehaviour : MonoBehaviour
     {
-        [SerializeField] private float _speed = 1f;
-
         private Path _path;
         private EnemyData _enemyData;
         private int _currentWaypointIndex;
         private bool _isStopped;
+        private float _speed = 1f;
 
         public float PathTraveled => GetDistanceOnPath() / _path.Length;
-        public int DifficultyLevel => 1;
+        public int DangerLevel => 1;
 
-        public void SetPath(Path path) => _path = path;
+        public static Action<EnemyBehaviour> OnEnemyDied;
 
-        public void Setup(EnemyData enemyData, int nextWaypointIndex)
+        public void Setup(EnemyData enemyData, Path path, int nextWaypointIndex)
         {
+            _path = path;
             _currentWaypointIndex = nextWaypointIndex;
             _enemyData = enemyData;
+            _speed = enemyData.Speed;
         }
 
         public float GetDistanceOnPath()
@@ -56,10 +58,11 @@ namespace Enemies
             }
         }
 
-        public void Die()
+        public void Die(bool notify = true)
         {
             gameObject.SetActive(false);
-
+            if (notify)
+                OnEnemyDied?.Invoke(this);
         }
     }
 }
