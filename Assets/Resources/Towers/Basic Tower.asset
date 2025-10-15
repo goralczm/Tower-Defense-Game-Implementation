@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ae7cce2881851540b637a8cb5a47d2e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c1dfde4b277edb4386cfeb8189684bb, type: 3}
   m_Name: Basic Tower
   m_EditorClassIdentifier: Towers::Towers.BasicTower
   Description: 
@@ -28,4 +28,12 @@ MonoBehaviour:
         Value: 3
       - Type: 4
         Value: 0.2
-  Projectile: {fileID: 8947499434511237714, guid: fccf606852fc96d45b5da865a90843d2, type: 3}
+  AttackStrategies:
+  - rid: 3343487648579977470
+  references:
+    version: 2
+    RefIds:
+    - rid: 3343487648579977470
+      type: {class: ShootStrategy, ns: Towers, asm: Towers}
+      data:
+        Projectile: {fileID: 8947499434511237714, guid: fccf606852fc96d45b5da865a90843d2, type: 3}

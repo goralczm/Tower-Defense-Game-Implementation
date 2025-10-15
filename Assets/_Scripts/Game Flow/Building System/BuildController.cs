@@ -1,3 +1,4 @@
+using ArtificeToolkit.Attributes;
 using Core;
 using System.Linq;
 using UnityEngine;
@@ -8,8 +9,8 @@ namespace GameFlow
     public class BuildController : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField, SerializeReference] private IBuilding _building;
-        [SerializeField] private GameObject _lineOfSight;
+        [SerializeField, SerializeReference, ForceArtifice] private IBuilding _building;
+        [SerializeField] private LineOfSight _lineOfSight;
         [SerializeField] private Color _noCollisionColor;
         [SerializeField] private Color _collisionColor;
         [SerializeField] private LayerMask _obstacleLayer;
@@ -64,7 +65,8 @@ namespace GameFlow
             _buildingGhost = new GameObject("Building Ghost").AddComponent<SpriteRenderer>();
             _buildingGhost.sprite = _building.Sprite;
             _buildingGhost.transform.position = new(50f, 50f);
-            _lineOfSight.SetActive(true);
+            _lineOfSight.SetRadius(_building.LineOfSightRadius);
+            _lineOfSight.gameObject.SetActive(true);
         }
 
         private void AcceptBuilding()
@@ -76,7 +78,7 @@ namespace GameFlow
 
         private void CancelBuilding()
         {
-            _lineOfSight.SetActive(false);
+            _lineOfSight.gameObject.SetActive(false);
             Destroy(_buildingGhost);
         }
     }

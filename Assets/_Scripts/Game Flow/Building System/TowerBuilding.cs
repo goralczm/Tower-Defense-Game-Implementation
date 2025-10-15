@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace GameFlow
 {
-    [CreateAssetMenu(menuName = "Buildings/Tower Building", fileName = "New Tower Building")]
-    public class TowerBuilding : ScriptableObject, IBuilding
+    public class TowerBuilding : IBuilding
     {
         public TowerData Tower;
         public GameObject Prefab;
@@ -12,7 +11,7 @@ namespace GameFlow
         public GameObject BuildingPrefab => Prefab;
         public Sprite Sprite => Tower.Levels[0].Icon;
         public bool ShowLineOfSight => true;
-        public float LineOfSightRange => Tower.Levels[0].BaseAttributes.GetBaseAttribute(Attributes.TowerAttributes.Range);
+        public float LineOfSightRadius => Tower.Levels[0].BaseAttributes.GetBaseAttribute(Attributes.TowerAttributes.Range);
 
         public void Build(GameObject newBuilding)
         {

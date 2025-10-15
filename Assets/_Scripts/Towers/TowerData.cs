@@ -1,3 +1,4 @@
+using ArtificeToolkit.Attributes;
 using Attributes;
 using UnityEngine;
 
@@ -11,11 +12,11 @@ namespace Towers
         public BaseAttributes<TowerAttributes> BaseAttributes;
     }
 
-    public abstract class TowerData : ScriptableObject
+    public class TowerData : ScriptableObject
     {
         public string Description;
         public TowerLevel[] Levels;
 
-        public virtual IAttackStrategy[] AttackStrategies => new IAttackStrategy[0];
+        [SerializeReference, ForceArtifice] public IAttackStrategy[] AttackStrategies;
     }
 }

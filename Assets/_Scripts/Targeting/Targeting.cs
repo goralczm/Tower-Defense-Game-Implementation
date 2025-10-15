@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Paths;
+using System.Linq;
+using Utilities;
 
 namespace Targeting
 {
@@ -17,27 +19,27 @@ namespace Targeting
 
     public static class Targeting
     {
-        public static LayerMask GroundLayer = 1 << 6;
         public static LayerMask TowersLayer = 1 << 7;
         public static LayerMask EnemiesLayer = 1 << 8;
         public static LayerMask ObstaclesLayer = 1 << 9;
 
         public delegate float SortingCondition(EnemyBehaviour enemy);
 
-        public static List<EnemyBehaviour> GetNEnemiesInRangeByConditions(Vector2 origin, float range, int enemiesCount, TargetingOptions targetingOption)
+        public static List<EnemyBehaviour> GetNEnemiesInRangeByConditions(Vector2 origin, float range, int enemiesCount, TargetingOptions targetingOption, bool needClearVision = false)
         {
             List<EnemyBehaviour> enemiesInRange = GetEnemiesInRange(origin, range);
-            return GetNEnemiesByCondition(enemiesInRange, enemiesCount, targetingOption);
+
+            return GetNEnemiesByCondition(origin, enemiesInRange, enemiesCount, targetingOption, needClearVision);
         }
 
-        private static List<EnemyBehaviour> GetNEnemiesByCondition(List<EnemyBehaviour> enemies, int enemiesCount, TargetingOptions targetingOption)
+        private static List<EnemyBehaviour> GetNEnemiesByCondition(Vector2 origin, List<EnemyBehaviour> enemies, int enemiesCount, TargetingOptions targetingOption, bool needClearVision = false)
         {
             List<EnemyBehaviour> enemiesCopy = new List<EnemyBehaviour>(enemies);
             List<EnemyBehaviour> selectedEnemies = new List<EnemyBehaviour>();
 
             for (int i = 0; i < enemiesCount; i++)
             {
-                EnemyBehaviour bestEnemy = GetEnemyByCondition(enemiesCopy, GetSortingCondition(targetingOption));
+                EnemyBehaviour bestEnemy = GetEnemyByCondition(origin, enemiesCopy, GetSortingCondition(targetingOption), needClearVision);
                 if (bestEnemy == null)
                     break;
 
@@ -48,7 +50,7 @@ namespace Targeting
             return selectedEnemies;
         }
 
-        private static EnemyBehaviour GetEnemyByCondition(List<EnemyBehaviour> enemies, SortingCondition sortingCondition)
+        private static EnemyBehaviour GetEnemyByCondition(Vector2 origin, List<EnemyBehaviour> enemies, SortingCondition sortingCondition, bool needClearVision = false)
         {
             if (enemies.Count == 0)
                 return null;
@@ -58,6 +60,9 @@ namespace Targeting
 
             for (int i = 1; i < enemies.Count; i++)
             {
+                if (needClearVision && !HasClearVision(origin, enemies[i].transform.position))
+                    continue;
+
                 float currentCondition = sortingCondition(enemies[i]);
                 if (currentCondition > highestCondition)
                 {
@@ -66,7 +71,15 @@ namespace Targeting
                 }
             }
 
+            if (needClearVision && !HasClearVision(origin, bestCandidate.transform.position))
+                return null;
+
             return bestCandidate;
+        }
+
+        private static bool HasClearVision(Vector2 origin, Vector2 target)
+        {
+            return !Physics2D.LinecastAll(origin, target).Any(h => Helpers.IsInLayerMask(h.collider.gameObject.layer, ObstaclesLayer));
         }
 
         [Obsolete]
@@ -131,10 +144,6 @@ namespace Targeting
                     continue;
 
                 EnemyBehaviour enemy = EnemiesCache.GetEnemyByCollider(hit);
-
-                // if (enemy.AvoidTargeting)
-                //    continue;
-
                 enemiesInRange.Add(enemy);
             }
 

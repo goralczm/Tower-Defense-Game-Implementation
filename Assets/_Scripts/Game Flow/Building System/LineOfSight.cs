@@ -17,7 +17,7 @@ public class LineOfSight : MonoBehaviour
     private Vector3[] _vertices;
     private int[] _triangles;
 
-    public void SetGrid(Grid grid) => _grid = grid;
+    public void SetRadius(float radius) => _viewRadius = radius;
 
     private void Start()
     {

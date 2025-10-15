@@ -7,7 +7,7 @@ namespace GameFlow
         public GameObject BuildingPrefab { get; }
         public Sprite Sprite { get; }
         public bool ShowLineOfSight { get; }
-        public float LineOfSightRange { get; }
+        public float LineOfSightRadius { get; }
 
         public void Build(GameObject newBuilding);
     }

@@ -4,15 +4,11 @@ namespace Towers
 {
     public class ShootStrategy : IAttackStrategy
     {
+        public ProjectileBase Projectile;
+
         private TowerBehaviour _tower;
-        private ProjectileBase _projectile;
 
         private float _timer;
-
-        public ShootStrategy(ProjectileBase projectile)
-        {
-            _projectile = projectile;
-        }
 
         public void Setup(TowerBehaviour tower)
         {
@@ -33,7 +29,8 @@ namespace Towers
                 _tower.transform.position,
                 _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Range),
                 (int)_tower.Attributes.GetAttribute(Attributes.TowerAttributes.ProjectilesCount),
-                _tower.TargetingOption);
+                _tower.TargetingOption,
+                true);
 
             if (enemies.Count > 0)
             {
@@ -44,7 +41,7 @@ namespace Towers
 
         private void Shoot(Transform target)
         {
-            ProjectileBase projectile = Object.Instantiate(_projectile, _tower.transform.position, Quaternion.identity);
+            ProjectileBase projectile = Object.Instantiate(Projectile, _tower.transform.position, Quaternion.identity);
             projectile.Setup(target, _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Damage));
         }
     }

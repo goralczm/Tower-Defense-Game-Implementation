@@ -740,11 +740,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2047268286958043837, guid: 17e40eac71ab56441aa4d9d1650deed5, type: 3}
   m_PrefabInstance: {fileID: 375614413}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &375614415 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8160707763346283685, guid: 17e40eac71ab56441aa4d9d1650deed5, type: 3}
+--- !u!114 &375614416 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6661267246859579836, guid: 17e40eac71ab56441aa4d9d1650deed5, type: 3}
   m_PrefabInstance: {fileID: 375614413}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19dd9bdfc9ae65f49bc0fd1d82ab36fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &377767575
 GameObject:
   m_ObjectHideFlags: 0
@@ -6556,14 +6562,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a9dbefe30652ba4d8876d4e7d77b243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GameFlow::GameFlow.BuildController
-  _buildingPrefab: {fileID: 1251023497250277589, guid: b208e996f0740ea4ebe9aed9a0f50b07, type: 3}
-  _lineOfSight: {fileID: 375614415}
+  _building:
+    rid: 3343487648579977468
+  _lineOfSight: {fileID: 375614416}
   _noCollisionColor: {r: 0.45215738, g: 0.8867924, b: 0.14640439, a: 0.5019608}
   _collisionColor: {r: 0.8396226, g: 0.2653524, b: 0.2653524, a: 0.5019608}
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 1664
   _grid: {fileID: 1743784908}
+  references:
+    version: 2
+    RefIds:
+    - rid: 3343487648579977468
+      type: {class: TowerBuilding, ns: GameFlow, asm: GameFlow}
+      data:
+        Tower: {fileID: 11400000, guid: 8f17e7576949d3d4b93cf1a688d447a4, type: 2}
+        Prefab: {fileID: 1251023497250277589, guid: b208e996f0740ea4ebe9aed9a0f50b07, type: 3}
 --- !u!1 &1077487873
 GameObject:
   m_ObjectHideFlags: 0
