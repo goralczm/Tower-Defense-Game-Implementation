@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6353800442869573424}
   - component: {fileID: 8947499434511237714}
   m_Layer: 0
-  m_Name: Homing Projectile
+  m_Name: Piercing Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,11 +100,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3862339306859865462}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a7de28a975c1c64c998825f19c8d2c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 36460c418567c68468da1cff08b32601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Towers::Towers.HomingProjectile
   _canDamageAlignments: 00000000
   _baseAttributes:
     Queries:
     - Type: 0
-      Value: 10
+      Value: 15
+  _isPiercing: 1

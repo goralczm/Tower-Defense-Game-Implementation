@@ -20,7 +20,7 @@ namespace Attributes
             _timer.Start();
         }
 
-        public void Update(float deltaTime) => _timer.Tick(deltaTime);
+        public void Update(float deltaTime) => _timer?.Tick(deltaTime);
 
         public abstract void Handle(object sender, AttributeQuery<TEnum> query);
 

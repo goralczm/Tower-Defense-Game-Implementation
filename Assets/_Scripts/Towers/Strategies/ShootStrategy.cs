@@ -1,3 +1,5 @@
+using Attributes;
+using Towers.Projectiles;
 using UnityEngine;
 
 namespace Towers
@@ -42,7 +44,13 @@ namespace Towers
         private void Shoot(Transform target)
         {
             ProjectileBase projectile = Object.Instantiate(Projectile, _tower.transform.position, Quaternion.identity);
-            projectile.Setup(target, _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Damage));
+
+            var baseAttributes = new BaseAttributesBuilder<ProjectileAttributes>()
+                .Add(ProjectileAttributes.Damage, _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Damage))
+                .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Range))
+                .Build();
+
+            projectile.Setup(target, baseAttributes);
         }
     }
 }

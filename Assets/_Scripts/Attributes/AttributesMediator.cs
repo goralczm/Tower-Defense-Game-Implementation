@@ -57,5 +57,21 @@ namespace Attributes
             Type = type;
             Value = value;
         }
+
+        public static AttributeQuery<TEnum> operator +(AttributeQuery<TEnum> a, AttributeQuery<TEnum> b)
+        {
+            if (!a.Type.Equals(b.Type))
+                throw new InvalidOperationException($"Cannot add AttributeQuery of different types ({a.Type} vs {b.Type})");
+
+            return new AttributeQuery<TEnum>(a.Type, a.Value + b.Value);
+        }
+
+        public static AttributeQuery<TEnum> operator -(AttributeQuery<TEnum> a, AttributeQuery<TEnum> b)
+        {
+            if (!a.Type.Equals(b.Type))
+                throw new InvalidOperationException($"Cannot subtract AttributeQuery of different types ({a.Type} vs {b.Type})");
+
+            return new AttributeQuery<TEnum>(a.Type, a.Value - b.Value);
+        }
     }
 }
