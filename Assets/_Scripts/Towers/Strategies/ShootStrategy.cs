@@ -1,0 +1,51 @@
+using UnityEngine;
+
+namespace Towers
+{
+    public class ShootStrategy : IAttackStrategy
+    {
+        private TowerBehaviour _tower;
+        private ProjectileBase _projectile;
+
+        private float _timer;
+
+        public ShootStrategy(ProjectileBase projectile)
+        {
+            _projectile = projectile;
+        }
+
+        public void Setup(TowerBehaviour tower)
+        {
+            _tower = tower;
+        }
+
+        public void Tick(float deltaTime)
+        {
+            if (_timer > 0f)
+            {
+                _timer -= deltaTime;
+                return;
+            }
+
+            _timer = _tower.Attributes.GetAttribute(Attributes.TowerAttributes.RateOfFire);
+
+            var enemies = Targeting.Targeting.GetNEnemiesInRangeByConditions(
+                _tower.transform.position,
+                _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Range),
+                (int)_tower.Attributes.GetAttribute(Attributes.TowerAttributes.ProjectilesCount),
+                _tower.TargetingOption);
+
+            if (enemies.Count > 0)
+            {
+                foreach (var enemy in enemies)
+                    Shoot(enemy.transform);
+            }
+        }
+
+        private void Shoot(Transform target)
+        {
+            ProjectileBase projectile = Object.Instantiate(_projectile, _tower.transform.position, Quaternion.identity);
+            projectile.Setup(target, _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Damage));
+        }
+    }
+}

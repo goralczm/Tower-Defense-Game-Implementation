@@ -3,11 +3,11 @@ using Utilities;
 
 namespace Attributes
 {
-    public abstract class AttributeModifier : IDisposable
+    public abstract class AttributeModifier<TEnum> : IDisposable where TEnum : Enum
     {
         public bool MarkedForRemoval { get; private set; }
 
-        public event Action<AttributeModifier> OnDispose = delegate { };
+        public event Action<AttributeModifier<TEnum>> OnDispose = delegate { };
 
         private readonly CountdownTimer _timer;
 
@@ -22,7 +22,7 @@ namespace Attributes
 
         public void Update(float deltaTime) => _timer.Tick(deltaTime);
 
-        public abstract void Handle(object sender, AttributeQuery query);
+        public abstract void Handle(object sender, AttributeQuery<TEnum> query);
 
         public void Dispose()
         {

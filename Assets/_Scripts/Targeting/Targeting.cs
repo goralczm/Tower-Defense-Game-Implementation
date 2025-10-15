@@ -10,10 +10,9 @@ namespace Targeting
     public enum TargetingOptions
     {
         First,
-        Strongest,
         Last,
-        Left,
-        Right,
+        Strongest,
+        Fastest,
     }
 
     public static class Targeting
@@ -31,7 +30,7 @@ namespace Targeting
             return GetNEnemiesByCondition(enemiesInRange, enemiesCount, targetingOption);
         }
 
-        public static List<EnemyBehaviour> GetNEnemiesByCondition(List<EnemyBehaviour> enemies, int enemiesCount, TargetingOptions targetingOption)
+        private static List<EnemyBehaviour> GetNEnemiesByCondition(List<EnemyBehaviour> enemies, int enemiesCount, TargetingOptions targetingOption)
         {
             List<EnemyBehaviour> enemiesCopy = new List<EnemyBehaviour>(enemies);
             List<EnemyBehaviour> selectedEnemies = new List<EnemyBehaviour>();
@@ -78,6 +77,9 @@ namespace Targeting
             {
                 case TargetingOptions.Strongest:
                     sortingCodition = enemy => enemy.DangerLevel;
+                    break;
+                case TargetingOptions.Fastest:
+                    sortingCodition = enemy => enemy.Attributes.GetAttribute(Attributes.EnemyAttributes.Speed);
                     break;
                 case TargetingOptions.First:
                 case TargetingOptions.Last:
@@ -142,7 +144,7 @@ namespace Targeting
             return enemiesInRange;
         }
 
-        public static void QuickSortEnemies(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right)
+        private static void QuickSortEnemies(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right)
         {
             if (left >= right)
                 return;
@@ -153,7 +155,7 @@ namespace Targeting
             QuickSortEnemies(enemies, sortingCondition, index, right);
         }
 
-        public static int Partition(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right, float pivot)
+        private static int Partition(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right, float pivot)
         {
             while (left <= right)
             {
@@ -173,7 +175,7 @@ namespace Targeting
             return left;
         }
 
-        public static float MedianOfThree(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right)
+        private static float MedianOfThree(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right)
         {
             int mid = left + (right - left) / 2;
 

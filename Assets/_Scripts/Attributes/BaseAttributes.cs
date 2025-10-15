@@ -1,26 +1,22 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Attributes
 {
-    public enum AttributeType
-    {
-        Health,
-        Damage,
-    }
-    
     [System.Serializable]
-    public class BaseAttributes
+    public class BaseAttributes<TEnum> where TEnum : Enum
     {
-        public List<AttributeQuery> Queries;
+        public List<AttributeQuery<TEnum>> Queries;
 
-        private Dictionary<AttributeType, AttributeQuery> _queryByType = new();
+        private Dictionary<TEnum, AttributeQuery<TEnum>> _queryByType = new();
 
-        public float GetBaseAttribute(AttributeType type)
+        public float GetBaseAttribute(TEnum type)
         {
-            if (!_queryByType.TryGetValue(type, out AttributeQuery query))
+            if (!_queryByType.TryGetValue(type, out AttributeQuery<TEnum> query))
             {
-                query = Queries.First(q => q.Type == type);
+                query = Queries.First(q => EqualityComparer<TEnum>.Default.Equals(q.Type, type));
                 if (query == null)
                     return 0;
 

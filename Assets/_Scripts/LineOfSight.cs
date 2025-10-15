@@ -11,11 +11,13 @@ public class LineOfSight : MonoBehaviour
     [SerializeField] private LayerMask _obstaclesMask;
 
     [Header("Grid Settings")]
-    [SerializeField] private Tilemap _tilemap;
+    [SerializeField] private Grid _grid;
 
     private Mesh _mesh;
     private Vector3[] _vertices;
     private int[] _triangles;
+
+    public void SetGrid(Grid grid) => _grid = grid;
 
     private void Start()
     {
@@ -27,7 +29,7 @@ public class LineOfSight : MonoBehaviour
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = -1;
-        transform.position = _tilemap.GetCellCenterLocal(_tilemap.WorldToCell(mouseWorldPos)) + _tilemap.transform.position;
+        transform.position = _grid.GetCellCenterLocal(_grid.WorldToCell(mouseWorldPos)) + _grid.transform.position;
     }
 
     private void LateUpdate()

@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43809731bf52d24aa47553a79cb9a23, type: 3}
   m_Name: Basic Enemy
   m_EditorClassIdentifier: Enemies::Enemies.EnemyData
-  Health: 1
-  Armor: 0
-  Speed: 2
-  Damage: 1
+  BaseAttributes:
+    Queries:
+    - Type: 0
+      Value: 1
+    - Type: 1
+      Value: 2
+    - Type: 2
+      Value: 1
+    - Type: 3
+      Value: 0
   DangerLevel: 1
   Sprite: {fileID: -1894586206897897056, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}

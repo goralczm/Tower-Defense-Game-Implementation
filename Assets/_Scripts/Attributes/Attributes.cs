@@ -1,24 +1,32 @@
+using System;
+
 namespace Attributes
 {
     [System.Serializable]
-    public class Attributes
+    public class Attributes<TEnum> where TEnum : Enum
     {
-        private readonly AttributesMediator _mediator;
-        private readonly BaseAttributes _baseAttributes;
+        private readonly AttributesMediator<TEnum> _mediator;
 
-        public AttributesMediator Mediator => _mediator;
+        private BaseAttributes<TEnum> _baseAttributes;
 
-        public float GetAttribute(AttributeType type)
+        public AttributesMediator<TEnum> Mediator => _mediator;
+
+        public Attributes(AttributesMediator<TEnum> mediator, BaseAttributes<TEnum> baseAttributes)
         {
-            var q = new AttributeQuery(type, _baseAttributes.GetBaseAttribute(type));
+            _mediator = mediator;
+            _baseAttributes = baseAttributes;
+        }
+
+        public float GetAttribute(TEnum type)
+        {
+            var q = new AttributeQuery<TEnum>(type, _baseAttributes.GetBaseAttribute(type));
             _mediator.PerformQuery(this, q);
 
             return q.Value;
         }
 
-        public Attributes(AttributesMediator mediator, BaseAttributes baseAttributes)
+        public void SetBaseAttributes(BaseAttributes<TEnum> baseAttributes)
         {
-            _mediator = mediator;
             _baseAttributes = baseAttributes;
         }
     }

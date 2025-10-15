@@ -1,28 +1,30 @@
+using Attributes;
+using Core;
 using Paths;
 using System;
 using UnityEngine;
 
 namespace Enemies
 {
-    public class EnemyBehaviour : MonoBehaviour
+    public class EnemyBehaviour : MonoBehaviour, IDamageable
     {
         private Path _path;
-        private EnemyData _enemyData;
+        private Attributes<EnemyAttributes> _attributes;
         private int _currentWaypointIndex;
         private bool _isStopped;
-        private float _speed = 1f;
 
+        public static event Action<EnemyBehaviour> OnEnemyDied;
+
+        public Attributes<EnemyAttributes> Attributes => _attributes;
         public float PathTraveled => GetDistanceOnPath() / _path.Length;
+        public Alignment Alignment => Alignment.Hostile;
         public int DangerLevel => 1;
-
-        public static Action<EnemyBehaviour> OnEnemyDied;
 
         public void Setup(EnemyData enemyData, Path path, int nextWaypointIndex)
         {
             _path = path;
             _currentWaypointIndex = nextWaypointIndex;
-            _enemyData = enemyData;
-            _speed = enemyData.Speed;
+            _attributes = new(new(), enemyData.BaseAttributes);
         }
 
         public float GetDistanceOnPath()
@@ -32,6 +34,8 @@ namespace Enemies
 
         private void Update()
         {
+            _attributes.Mediator.Update(Time.deltaTime);
+
             MoveTowardsWaypoint();
         }
 
@@ -48,7 +52,7 @@ namespace Enemies
             var position = (Vector2)transform.position;
             var target = _path.Waypoints[_currentWaypointIndex];
 
-            position = Vector2.MoveTowards(position, target, _speed * Time.deltaTime);
+            position = Vector2.MoveTowards(position, target, _attributes.GetAttribute(EnemyAttributes.Speed) * Time.deltaTime);
             transform.position = position;
 
             if ((position - target).sqrMagnitude < 0.000001f)
@@ -63,11 +67,27 @@ namespace Enemies
             }
         }
 
-        public void Die(bool notify = true)
+        public void TakeDamage(float damage)
+        {
+            var modifier = new BasicAttributeModifier<EnemyAttributes>(EnemyAttributes.Health, 0f, v => v - damage);
+
+            _attributes.Mediator.AddModifier(modifier);
+
+            if (_attributes.GetAttribute(EnemyAttributes.Health) <= 0f)
+                Die();
+        }
+
+        public void Die()
         {
             gameObject.SetActive(false);
-            if (notify)
-                OnEnemyDied?.Invoke(this);
+            OnEnemyDied?.Invoke(this);
+        }
+
+        private void OnMouseDown()
+        {
+            var modifier = new BasicAttributeModifier<EnemyAttributes>(EnemyAttributes.Speed, 2f, v => v + 2);
+
+            _attributes.Mediator.AddModifier(modifier);
         }
     }
 }

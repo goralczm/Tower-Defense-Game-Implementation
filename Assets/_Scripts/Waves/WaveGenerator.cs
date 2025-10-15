@@ -2,6 +2,7 @@ using ObjectPooling;
 using Paths;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using Waves;
@@ -33,11 +34,11 @@ namespace Enemies
 
         public void StopGenerator()
         {
-            foreach (var enemy in _enemiesAlive)
-                enemy.Die(notify: false);
+            var enemiesCopy = _enemiesAlive.ToList();
+            foreach (var enemy in enemiesCopy)
+                enemy.Die();
 
             _enemiesAlive.Clear();
-
             _isStopped = true;
         }
 

@@ -2,8 +2,7 @@ namespace Towers
 {
     public interface IAttackStrategy
     {
-        public void Setup();
-        public void Tick();
-        public void Cleanup();
+        public void Setup(TowerBehaviour tower);
+        public void Tick(float deltaTime);
     }
 }

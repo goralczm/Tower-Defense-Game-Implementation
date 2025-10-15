@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace Attributes
 {
-    public class AttributesMediator
+    public class AttributesMediator<TEnum> where TEnum : Enum
     {
-        private readonly LinkedList<AttributeModifier> _modifiers = new();
+        private readonly LinkedList<AttributeModifier<TEnum>> _modifiers = new();
 
-        public event EventHandler<AttributeQuery> Queries;
+        public event EventHandler<AttributeQuery<TEnum>> Queries;
 
-        public void PerformQuery(object sender, AttributeQuery query) => Queries?.Invoke(sender, query);
+        public void PerformQuery(object sender, AttributeQuery<TEnum> query) => Queries?.Invoke(sender, query);
 
-        public void AddModifier(AttributeModifier modifier)
+        public void AddModifier(AttributeModifier<TEnum> modifier)
         {
             _modifiers.AddLast(modifier);
             Queries += modifier.Handle;
@@ -47,12 +47,12 @@ namespace Attributes
     }
 
     [System.Serializable]
-    public class AttributeQuery
+    public class AttributeQuery<TEnum> where TEnum : Enum
     {
-        public AttributeType Type;
+        public TEnum Type;
         public float Value;
 
-        public AttributeQuery(AttributeType type, float value)
+        public AttributeQuery(TEnum type, float value)
         {
             Type = type;
             Value = value;

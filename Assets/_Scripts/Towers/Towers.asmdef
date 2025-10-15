@@ -1,7 +1,13 @@
 {
     "name": "Towers",
     "rootNamespace": "Towers",
-    "references": [],
+    "references": [
+        "GUID:a0a6965dc082d8c41970f50d4aa08d33",
+        "GUID:5dec013bfe0c73446ae3affb05586ad3",
+        "GUID:aeeb5f74e409eaa44ae2137384aed055",
+        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad",
+        "GUID:9ba9f47b380bfd245a7c648c893dab84"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

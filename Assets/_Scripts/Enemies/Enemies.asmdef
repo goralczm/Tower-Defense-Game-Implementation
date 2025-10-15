@@ -5,7 +5,9 @@
         "ObjectPooling",
         "Utilities",
         "Paths",
-        "Paths.Utilities"
+        "Paths.Utilities",
+        "Attributes",
+        "Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
