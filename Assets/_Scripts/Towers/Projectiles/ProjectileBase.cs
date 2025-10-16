@@ -45,11 +45,11 @@ namespace Towers.Projectiles
             return ((Vector2)transform.position - target).sqrMagnitude < STOPPING_DISTANCE;
         }
 
-        public bool TryDamageTarget(Transform target)
+        public bool TryDamageTarget(Transform target, List<Alignment> canDamageAlignments)
         {
             if (target.TryGetComponent(out IDamageable damageable))
             {
-                if (_canDamageAlignments.Contains(damageable.Alignment))
+                if (canDamageAlignments.Contains(damageable.Alignment))
                 {
                     damageable.TakeDamage(_attributes.GetAttribute(ProjectileAttributes.Damage));
                     return true;

@@ -21,7 +21,7 @@ MonoBehaviour:
       - Type: 0
         Value: 5
       - Type: 1
-        Value: 0
+        Value: 1
       - Type: 2
         Value: 25
       - Type: 3
@@ -36,4 +36,4 @@ MonoBehaviour:
     - rid: 3343487648579977470
       type: {class: ShootStrategy, ns: Towers, asm: Towers}
       data:
-        Projectile: {fileID: 8947499434511237714, guid: 7c8207ca022bbb14aa6d9d663d75c0f9, type: 3}
+        Projectile: {fileID: 8947499434511237714, guid: 1a8b50543042b4f47877161ffc7b20c4, type: 3}

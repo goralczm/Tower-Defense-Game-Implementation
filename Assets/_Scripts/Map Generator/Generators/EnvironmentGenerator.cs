@@ -25,9 +25,10 @@ namespace MapGenerator.Generators
         private Dictionary<Vector2, TileState> _heatmap = new();
         private List<Vector2> _obstaclePositions = new();
         private List<GameObject> _createdObstacles = new();
-        private Bounds _bounds;
         private Tilemap _tilemap;
-        private GenerationConfig _generationData;
+        private GenerationConfig _generationConfig;
+        private Transform _environmentParent;
+        private Bounds _bounds;
 
         public EnvironmentGenerator(EnvironmentSettings environmentSettings, PathSettings pathSettings, GenerationConfig generationData, Tilemap tilemap, List<GameObject> obstaclePrefabs)
         {
@@ -36,20 +37,20 @@ namespace MapGenerator.Generators
             _noiseSettings = environmentSettings.NoiseSettings;
             _pathSettings = pathSettings;
             _tilemap = tilemap;
-            _generationData = generationData;
+            _generationConfig = generationData;
             _obstaclePrefabs = obstaclePrefabs;
             _bounds = GetPathBounds();
         }
 
         public Bounds GetPathBounds()
         {
-            if (_generationData == null || _generationData.MazeGenerationSettings == null) return new Bounds();
+            if (_generationConfig == null || _generationConfig.MazeGenerationSettings == null) return new Bounds();
 
             return new Bounds(
-                new Vector3(_generationData.MazeGenerationSettings.Width / 2f,
-                    _generationData.MazeGenerationSettings.Height / 2f, 0) + _tilemap.transform.position,
-                new Vector3(_generationData.MazeGenerationSettings.Width + 1,
-                    _generationData.MazeGenerationSettings.Height + 1, 0));
+                new Vector3(_generationConfig.MazeGenerationSettings.Width / 2f,
+                    _generationConfig.MazeGenerationSettings.Height / 2f, 0) + _tilemap.transform.position,
+                new Vector3(_generationConfig.MazeGenerationSettings.Width + 1,
+                    _generationConfig.MazeGenerationSettings.Height + 1, 0));
         }
 
         public MapLayout Generate(MapLayout layout)
@@ -82,7 +83,7 @@ namespace MapGenerator.Generators
 
         private void CreateAllObstacles(float noiseThreshold)
         {
-            float[,] noise = NoiseGenerator.GenerateNoise(_noiseSettings, _generationData.Seed);
+            float[,] noise = NoiseGenerator.GenerateNoise(_noiseSettings, _generationConfig.Seed);
 
             for (int y = 0; y < noise.GetLength(1); y++)
             {
@@ -102,19 +103,17 @@ namespace MapGenerator.Generators
 
         private void CreateObstacle(Vector2 position)
         {
+            if (!_environmentParent)
+                _environmentParent = new GameObject("Obstacles").transform;
+
+            GameObject obstacle = UnityEngine.Object.Instantiate(
+                _obstaclePrefabs[UnityEngine.Random.Range(0, _obstaclePrefabs.Count)],
+                position,
+                Quaternion.identity,
+                _environmentParent);
+
             _obstaclePositions.Add(position);
-            GameObject obstacle = UnityEngine.Object.Instantiate(_obstaclePrefabs[UnityEngine.Random.Range(0, _obstaclePrefabs.Count)], position,
-                Quaternion.identity);
-
             _createdObstacles.Add(obstacle);
-        }
-
-        private Vector2 GetMaxHeatmapCell()
-        {
-            return new Vector2(
-                _heatmap.Keys.Max(k => k.x),
-                _heatmap.Keys.Max(k => k.y)
-            );
         }
 
         private void SetHeatmapCellOccupied(Vector2 position, float omitProbability)
@@ -183,7 +182,7 @@ namespace MapGenerator.Generators
 
                     break;
                 case EnvironmentDebugView.Noise:
-                    noise = NoiseGenerator.GenerateNoise(_noiseSettings, _generationData.Seed);
+                    noise = NoiseGenerator.GenerateNoise(_noiseSettings, _generationConfig.Seed);
 
                     for (int y = 0; y < _noiseSettings.Height; y++)
                     {
@@ -211,10 +210,7 @@ namespace MapGenerator.Generators
 
         public void Cleanup()
         {
-            foreach (var obstacle in _createdObstacles)
-            {
-                UnityEngine.Object.Destroy(obstacle);
-            }
+            Object.Destroy(_environmentParent.gameObject);
         }
     }
 }

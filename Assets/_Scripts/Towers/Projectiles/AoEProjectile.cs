@@ -1,9 +1,9 @@
-using Core;
+using Towers.Projectiles;
 using UnityEngine;
 
-namespace Towers.Projectiles
+namespace Towers
 {
-    public class HomingProjectile : ProjectileBase
+    public class AoEProjectile : ProjectileBase
     {
         public override void Tick()
         {
@@ -26,7 +26,10 @@ namespace Towers.Projectiles
         {
             if (IsNearTarget(_targetPosition))
             {
-                TryDamageTarget(_target, _canDamageAlignments);
+                var hits = Physics2D.OverlapCircleAll(transform.position, _attributes.GetAttribute(Attributes.ProjectileAttributes.Range));
+                foreach (var hit in hits)
+                    TryDamageTarget(hit.transform, _canDamageAlignments);
+
                 DestroyProjectile();
                 return;
             }

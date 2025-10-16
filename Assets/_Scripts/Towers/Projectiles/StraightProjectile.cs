@@ -31,7 +31,7 @@ namespace Towers.Projectiles
                 if (_damagedTargets.Contains(hit))
                     continue;
 
-                if (TryDamageTarget(hit.transform))
+                if (TryDamageTarget(hit.transform, _canDamageAlignments))
                 {
                     if (!_isPiercing)
                     {
