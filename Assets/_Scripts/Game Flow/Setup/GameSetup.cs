@@ -12,12 +12,12 @@ namespace GameFlow.Setup
 
         private void OnEnable()
         {
-            _mapGenerator.OnMapGenerated += OnMapGenerated;
+            _mapGenerator.OnMapGenerationEnded += OnMapGenerated;
         }
 
         private void OnDisable()
         {
-            _mapGenerator.OnMapGenerated -= OnMapGenerated;
+            _mapGenerator.OnMapGenerationEnded -= OnMapGenerated;
         }
 
         private void OnMapGenerated(object sender, MapGenerator.Demo.MapGenerator.OnMapGeneratedEventArgs e)
@@ -32,8 +32,11 @@ namespace GameFlow.Setup
                 if (Input.GetKey(KeyCode.LeftShift))
                     _mapGenerator.RandomizeConfig();
 
-                _mapGenerator.GenerateMap();
+                _mapGenerator.GenerateMapAsync();
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+                _mapGenerator.CancelBuild();
 
             if (Input.GetKeyDown(KeyCode.Space))
             {

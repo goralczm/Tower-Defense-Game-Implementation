@@ -1,9 +1,11 @@
+using ArtificeToolkit.Attributes;
 using MapGenerator.Core;
 using MapGenerator.Generators;
 using MapGenerator.Settings;
 using MapGenerator.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -18,8 +20,11 @@ namespace MapGenerator.Demo
 
         private PathPreset _pathPreset;
         private GenerationConfig _generationConfig;
-        private bool _enforceRules;
         private MapLayout _layout;
+        private CancellationTokenSource _cts;
+        private bool _enforceRules;
+
+        public event Action<string> OnStatusChanged;
 
         public MapBuilder(PathPreset pathPreset, GenerationConfig generationConfig, bool enforceRules)
         {
@@ -40,23 +45,39 @@ namespace MapGenerator.Demo
 
         public MapBuilder WithGenerator(IGenerator generator)
         {
+            generator.OnStatusChanged += OnStatusChanged;
             _generators.Add(generator);
 
             return this;
         }
 
-        public void Build()
+        public async Task BuildAsync()
         {
             _layout = new();
 
+            _cts = new();
+
             foreach (var generator in _generators)
-                _layout = generator.Generate(_layout);
+            {
+                _cts.Token.ThrowIfCancellationRequested();
+
+                _layout = await generator.Generate(_layout, _cts);
+                await Task.Delay(100);
+            }
         }
 
         public void Cleanup()
         {
             foreach (var generator in _generators)
+            {
                 generator.Cleanup();
+                generator.OnStatusChanged -= OnStatusChanged;
+            }
+        }
+
+        public void CancelBuild()
+        {
+            _cts?.Cancel();
         }
     }
 
@@ -72,19 +93,23 @@ namespace MapGenerator.Demo
         [SerializeField] private PathPreset _pathPreset;
         [SerializeField] private GenerationConfig _generationConfig;
         [SerializeField] private TilemapSettings _tilemapSettings;
-        [SerializeField] private bool _generateRandomOnStart;
 
         [Header("References")]
         [SerializeField] private Tilemap _tilemap;
-        [SerializeField] private List<GameObject> _obstaclePrefabs;
 
         [Header("Debug")]
         [SerializeField] private bool _debug;
         [SerializeField] private DebugConfig _debugConfig;
+#if UNITY_EDITOR
+        [SerializeField, SerializeReference, ForceArtifice] private List<IGenerator> _generators = new();
+#endif
 
         private MapBuilder _mapBuilder;
 
-        public event EventHandler<OnMapGeneratedEventArgs> OnMapGenerated;
+        public event EventHandler OnMapGenerationStarted;
+        public event EventHandler OnMapGenerationCanceled;
+        public event EventHandler<OnMapGeneratedEventArgs> OnMapGenerationEnded;
+        public event Action<string> OnStatusChanged;
 
         public GenerationConfig GetGenerationConfig() => _generationConfig;
 
@@ -94,7 +119,7 @@ namespace MapGenerator.Demo
             OnValidate();
         }
 
-        private void OnValidate()
+        public void OnValidate()
         {
             if (_pathPreset)
                 _generationConfig.MazeGenerationSettings = _pathPreset.MazeGenerationSettings;
@@ -104,35 +129,50 @@ namespace MapGenerator.Demo
             _generationConfig.OnValidate();
         }
 
-        private void Start()
+        public async Task GenerateMapAsync()
         {
-            if (_generateRandomOnStart)
-            {
-                RandomizeConfig();
-                GenerateMap();
-            }
+            PrepareBuilder();
+
+            await ContinueBuilderAsync();
         }
 
-        public void GenerateMap()
+        public void PrepareBuilder()
         {
             _mapBuilder?.Cleanup();
 
+            OnMapGenerationStarted?.Invoke(this, EventArgs.Empty);
+
             _mapBuilder = new MapBuilder(_pathPreset, _generationConfig, _generationConfig.EnforceRules);
+            _mapBuilder.OnStatusChanged += OnStatusChanged;
 
             _mapBuilder
-                .WithGenerator(new PathGenerator(_generationConfig, _generationConfig.RenderOverflowTiles))
+                .WithGenerator(new PathGenerator(_pathPreset.MazeGenerationSettings, _generationConfig, _generationConfig.RenderOverflowTiles))
                 .WithGenerator(new RoundaboutsGenerator(_pathPreset.PathSettings, _generationConfig))
-                .WithGenerator(new TilemapGenerator(_tilemap, _tilemapSettings))
-                .WithGenerator(new EnvironmentGenerator(_pathPreset.EnvironmentSettings, _pathPreset.PathSettings, _generationConfig, _tilemap, _obstaclePrefabs))
+                .WithGenerator(new TilemapGenerator(_tilemapSettings, _tilemap))
+                .WithGenerator(new EnvironmentGenerator(_pathPreset.EnvironmentSettings, _pathPreset.PathSettings, _generationConfig, _tilemap))
                 .WithGenerator(new WaypointsGenerator(_tilemapSettings, _tilemap));
 
-            _mapBuilder.Build();
+#if UNITY_EDITOR
+            _generators = _mapBuilder.GetGenerators();
+#endif
+        }
 
-            OnMapGenerated?.Invoke(this, new OnMapGeneratedEventArgs
+        public async Task ContinueBuilderAsync()
+        {
+            await _mapBuilder.BuildAsync();
+
+            OnMapGenerationEnded?.Invoke(this, new OnMapGeneratedEventArgs
             {
                 StartPoint = _tilemap.GetCellCenterWorld(_mapBuilder.GetMapLayout().StartPoint.ToVector3Int()),
                 EndPoint = _tilemap.GetCellCenterWorld(_mapBuilder.GetMapLayout().EndPoint.ToVector3Int()),
             });
+        }
+
+        public void CancelBuild()
+        {
+            _mapBuilder?.CancelBuild();
+            _mapBuilder?.Cleanup();
+            OnMapGenerationCanceled?.Invoke(this, EventArgs.Empty);
         }
 
         public void RandomizeConfig()
@@ -141,7 +181,26 @@ namespace MapGenerator.Demo
             _generationConfig.RandomizeAccessPoints();
         }
 
+        private Bounds GetBoundingBox()
+        {
+            Vector3 size = new(_pathPreset.MazeGenerationSettings.Width,
+                _pathPreset.MazeGenerationSettings.Height,
+                0);
+
+            Vector3 position = _tilemap.transform.position + size / 2f;
+
+            if (_generationConfig.RenderOverflowTiles)
+                size += Vector3.one * 2f;
+
+            return new Bounds(position, size);
+        }
+
 #if UNITY_EDITOR
+        private void OnApplicationQuit()
+        {
+            _mapBuilder?.CancelBuild();
+        }
+
         private void OnDrawGizmos()
         {
             if (!_debug) return;
@@ -155,8 +214,12 @@ namespace MapGenerator.Demo
             _debugConfig.Layout = _mapBuilder.GetMapLayout();
             _debugConfig.Tilemap = _tilemap;
 
-            foreach (var generator in _mapBuilder.GetGenerators())
+            foreach (var generator in _generators)
+            {
+                if (!generator.ShowDebug) continue;
+
                 generator.DrawGizmos(_debugConfig);
+            }
         }
 
         public static void DrawGizmosArrow(Vector3 start, Vector3 end, Color color, float headLength = 0.2f, float headAngle = 20f)
@@ -174,17 +237,10 @@ namespace MapGenerator.Demo
 
         private void DrawBoundingBoxGizmos()
         {
-            Vector3 size = new(_pathPreset.MazeGenerationSettings.Width,
-                _pathPreset.MazeGenerationSettings.Height,
-                0);
-
-            Vector3 position = _tilemap.transform.position + size / 2f;
-
-            if (_generationConfig.RenderOverflowTiles)
-                size += Vector3.one * 2f;
+            Bounds boundingBox = GetBoundingBox();
 
             Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(position, size);
+            Gizmos.DrawWireCube(boundingBox.center, boundingBox.size);
         }
 
         private void DrawAccessPointsGizmos()

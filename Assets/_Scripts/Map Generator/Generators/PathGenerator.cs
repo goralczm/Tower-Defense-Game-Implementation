@@ -1,37 +1,50 @@
 using MapGenerator.Core;
 using MapGenerator.Settings;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
+using Utilities;
 
 namespace MapGenerator.Generators
 {
     [System.Serializable]
     public class PathGenerator : IGenerator
     {
+        [Header("Debug")]
+        [SerializeField] private bool _debug = true;
+
         private MapLayout _layout;
         private GenerationConfig _generationConfig;
         private Vector2Int _entranceDir;
         private Vector2Int _exitDir;
         private bool _renderOverflowTiles;
 
-        public PathGenerator(GenerationConfig generationData, bool renderOverflowTiles = false)
+        public event Action<string> OnStatusChanged;
+
+        public bool ShowDebug => _debug;
+
+        public PathGenerator(MazeGenerationSettings mazeGenerationSettings, GenerationConfig generationData, bool renderOverflowTiles = false)
         {
             _generationConfig = generationData;
-            _entranceDir = _generationConfig.GetAccessPointDir(_generationConfig.GridStartPoint);
-            _exitDir = -_generationConfig.GetAccessPointDir(_generationConfig.GridEndPoint);
+            _entranceDir = _generationConfig.GetAccessPointDir(mazeGenerationSettings.StartSide);
+            _exitDir = -_generationConfig.GetAccessPointDir(mazeGenerationSettings.EndSide);
             _renderOverflowTiles = renderOverflowTiles;
         }
 
-        public MapLayout Generate(MapLayout layout)
+        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
         {
             _layout = layout;
 
-            DrawPath();
-            DrawCorners();
+            OnStatusChanged?.Invoke("Setting path tiles...");
+            SetPathTiles();
+            OnStatusChanged?.Invoke("Setting corner tiles...");
+            SetCornerTiles();
 
             return _layout;
         }
 
-        private void DrawPath()
+        private void SetPathTiles()
         {
             var currNode = _layout.GetByCoords(_generationConfig.GridStartPoint);
             Vector2Int? prevNodePosition = null;
@@ -87,7 +100,7 @@ namespace MapGenerator.Generators
             }
         }
 
-        private void DrawCorners()
+        private void SetCornerTiles()
         {
             var curr = _layout.GetByCoords(_generationConfig.GridStartPoint);
 
@@ -140,27 +153,16 @@ namespace MapGenerator.Generators
         {
             Gizmos.color = Color.magenta;
             var curr = debugConfig.Layout.GetByCoords(_generationConfig.GridStartPoint);
-            DrawGizmosArrow(debugConfig.GetPositionOnTilemap(curr.GetPosition()), debugConfig.GetPositionOnTilemap(curr.Next.GetPosition()), Color.magenta);
+            
+            if (curr.Next != null)
+                GizmosHelpers.DrawGizmosArrow(debugConfig.GetPositionOnTilemap(curr.GetPosition()), debugConfig.GetPositionOnTilemap(curr.Next.GetPosition()), Color.magenta);
 
             while (curr.Next != null)
             {
                 curr = curr.Next;
                 if (curr.Next != null)
-                    DrawGizmosArrow(debugConfig.GetPositionOnTilemap(curr.GetPosition()), debugConfig.GetPositionOnTilemap(curr.Next.GetPosition()), Color.magenta);
+                    GizmosHelpers.DrawGizmosArrow(debugConfig.GetPositionOnTilemap(curr.GetPosition()), debugConfig.GetPositionOnTilemap(curr.Next.GetPosition()), Color.magenta);
             }
-        }
-
-        public static void DrawGizmosArrow(Vector3 start, Vector3 end, Color color, float headLength = 0.2f, float headAngle = 20f)
-        {
-            Gizmos.color = color;
-            Gizmos.DrawLine(start, end);
-
-            Vector3 direction = (end - start).normalized;
-            Vector3 right = Quaternion.Euler(0, 0, headAngle) * -direction;
-            Vector3 left = Quaternion.Euler(0, 0, -headAngle) * -direction;
-
-            Gizmos.DrawLine(end, end + right * headLength);
-            Gizmos.DrawLine(end, end + left * headLength);
         }
     }
 }

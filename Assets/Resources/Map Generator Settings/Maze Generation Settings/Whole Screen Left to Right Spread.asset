@@ -23,7 +23,8 @@ MonoBehaviour:
   RandomlyOmitSomeMiddlePoints: 1
   MiddlePointsOmissionProbability: 0.2
   MinimalMiddlePointsCount: 3
-  PointsStrategy: 0
+  StartSide: 0
+  EndSide: 1
   MinStartPoint: {x: 0, y: 0}
   MaxStartPoint: {x: 0, y: 9}
   MinEndPoint: {x: 16, y: 0}

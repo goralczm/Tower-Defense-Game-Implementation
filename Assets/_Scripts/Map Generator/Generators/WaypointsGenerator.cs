@@ -1,18 +1,29 @@
 using MapGenerator.Core;
 using MapGenerator.Settings;
+using Paths;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Paths;
 
 namespace MapGenerator.Generators
 {
     [System.Serializable]
     public class WaypointsGenerator : IGenerator
     {
+        [Header("Debug")]
+        [SerializeField] private bool _debug = true;
+        [SerializeField] private float _waypointsRadius = .2f;
+        [SerializeField] private Color _waypointsColor = Color.red;
+
         private TilemapSettings _tilemapSettings;
         private Tilemap _tilemap;
         private List<Vector2> _waypoints = new();
+
+        public event System.Action<string> OnStatusChanged;
+
+        public bool ShowDebug => _debug;
 
         public WaypointsGenerator(TilemapSettings tilemapSettings, Tilemap pathTilemap)
         {
@@ -20,11 +31,12 @@ namespace MapGenerator.Generators
             _tilemap = pathTilemap;
         }
 
-        public MapLayout Generate(MapLayout layout)
+        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
         {
             Vector3Int cellPos = new(layout.StartPoint.x, layout.StartPoint.y, 0);
             Vector2 startPoint = _tilemap.GetCellCenterWorld(cellPos);
 
+            OnStatusChanged?.Invoke("Extracting waypoints...");
             List<Vector2> waypoints = ExtractWaypoints(startPoint);
             Object.FindFirstObjectByType<Path>().SetWaypoints(waypoints);
 
@@ -140,10 +152,10 @@ namespace MapGenerator.Generators
 
         public void DrawGizmos(DebugConfig debugConfig)
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = _waypointsColor;
 
             foreach (var waypoint in _waypoints)
-                Gizmos.DrawWireSphere(waypoint, .2f);
+                Gizmos.DrawWireSphere(waypoint, _waypointsRadius);
         }
     }
 }

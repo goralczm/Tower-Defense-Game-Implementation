@@ -4,16 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utilities.Extensions;
 using Utilities;
-using UnityEngine.Tilemaps;
+using System.Threading.Tasks;
+using System;
+using System.Threading;
 
 namespace MapGenerator.Generators
 {
     [System.Serializable]
     public class PathLayoutGenerator : IGenerator
     {
+        [Header("Debug")]
+        [SerializeField] private bool _debug = true;
+        [SerializeField] private float _nodesRadius = .1f;
+        [SerializeField] private Color _nodesColor = Color.teal;
+        [SerializeField] private Color _pathColor = Color.green;
+
         private PathSettings _pathSettings;
         private GenerationConfig _generationConfig;
         private bool _enforceRules;
+        private CancellationTokenSource _cts;
+
+        public event Action<string> OnStatusChanged;
+
+        public bool ShowDebug => _debug;
 
         public PathLayoutGenerator(PathSettings pathSettings, GenerationConfig generationData, bool enfroceRules)
         {
@@ -22,27 +35,34 @@ namespace MapGenerator.Generators
             _enforceRules = enfroceRules;
         }
 
-        public MapLayout Generate(MapLayout layout)
+        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
         {
-            return GeneratePath(enforceRules: _enforceRules);
+            _cts = cts;
+            OnStatusChanged?.Invoke("Generating path...");
+            return await GeneratePath(enforceRules: _enforceRules);
         }
 
-        public MapLayout GeneratePath(int depth = 0, bool enforceRules = true)
+        public async Task<MapLayout> GeneratePath(int depth = 0, bool enforceRules = true)
         {
+            _cts.Token.ThrowIfCancellationRequested();
+            UnityEngine.Random.InitState(_generationConfig.Seed + depth);
+
+            var middlePointsToOmit = GetMiddlePointsToOmit();
+
             if (depth > _pathSettings.MaximumGenerationDepth)
             {
                 if (_pathSettings.ExperimentalRandomizeSeedWhenGenerationDepthExceeded)
                 {
                     _generationConfig.SetSeed(MapGenerator.Utilities.Randomizer.GetRandomSeed());
-                    return GeneratePath(0, enforceRules);
+                    return await GeneratePath(0, enforceRules);
                 }
 
                 Debug.Log("Exceeded generation depth");
-                return GenerateBaseMaze(_generationConfig.Seed + depth);
+                return await Task.Run(() => GenerateBaseMaze(_generationConfig.Seed + depth, middlePointsToOmit));
             }
 
-            MapLayout layout = GenerateBaseMaze(_generationConfig.Seed + depth);
-            List<Vector2> waypoints = ExtractWaypoints(layout);
+            MapLayout layout = await Task.Run(() => GenerateBaseMaze(_generationConfig.Seed + depth, middlePointsToOmit));
+            List<Vector2> waypoints = await Task.Run(() => ExtractWaypoints(layout));
 
             if (enforceRules)
             {
@@ -51,7 +71,7 @@ namespace MapGenerator.Generators
                     float distance = Paths.Utilities.Helpers.CalculatePathLength(waypoints);
 
                     if (distance < _pathSettings.MinimalPathLength)
-                        return GeneratePath(depth + 1, enforceRules);
+                        return await GeneratePath(depth + 1, enforceRules);
                 }
 
                 if (_pathSettings.EnforceMaximumStraightTilesInRow)
@@ -59,7 +79,7 @@ namespace MapGenerator.Generators
                     float longest = CalculateLongestStraightSection(waypoints);
 
                     if (longest > _pathSettings.MaximumStraightTilesInRow - 1)
-                        return GeneratePath(depth + 1, enforceRules);
+                        return await GeneratePath(depth + 1, enforceRules);
                 }
             }
 
@@ -69,12 +89,12 @@ namespace MapGenerator.Generators
             return layout;
         }
 
-        private MapLayout GenerateBaseMaze(int seed)
+        private MapLayout GenerateBaseMaze(int seed, List<Vector2Int> middlePointsToOmit)
         {
+            _cts.Token.ThrowIfCancellationRequested();
+
             MapLayout layout = new(_generationConfig.MazeGenerationSettings.Width, _generationConfig.MazeGenerationSettings.Height, seed);
             layout.GenerateMaze(_pathSettings.Steps);
-
-            List<Vector2Int> middlePointsToOmit = GetMiddlePointsToOmit();
 
             foreach (var middle in _generationConfig.MazeGenerationSettings.MiddlePoints)
             {
@@ -93,8 +113,6 @@ namespace MapGenerator.Generators
         {
             if (!_generationConfig.MazeGenerationSettings.RandomlyOmitSomeMiddlePoints)
                 return new();
-
-            UnityEngine.Random.InitState(_generationConfig.Seed);
 
             int middlePointsCount = _generationConfig.MazeGenerationSettings.MiddlePoints.Count;
             List<Vector2Int> middlePoints = new List<Vector2Int>(_generationConfig.MazeGenerationSettings.MiddlePoints);
@@ -152,7 +170,17 @@ namespace MapGenerator.Generators
 
         public void DrawGizmos(DebugConfig debugConfig)
         {
-            //noop
+            var nodes = debugConfig.Layout.GetNodes();
+
+            foreach (var node in nodes)
+            {
+                Vector2 pos = debugConfig.GetPositionOnTilemap(node.GetPosition());
+                Gizmos.color = _nodesColor;
+                Gizmos.DrawWireSphere(pos, _nodesRadius);
+
+                if (node.Next != null)
+                    GizmosHelpers.DrawGizmosArrow(pos, debugConfig.GetPositionOnTilemap(node.Next.GetPosition()), _pathColor);
+            }
         }
     }
 }

@@ -1,4 +1,7 @@
 #if UNITY_EDITOR
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Utilities.Extensions;
@@ -7,21 +10,12 @@ using Utilities.Extensions;
 namespace MapGenerator.Core
 {
 #if UNITY_EDITOR
-    public enum EnvironmentDebugView
-    {
-        None,
-        Heatmap,
-        Noise,
-        Obstacles
-    }
-
     [System.Serializable]
     public class DebugConfig
     {
         [HideInInspector] public Tilemap Tilemap;
         [HideInInspector] public MapLayout Layout;
         public Vector2 Offset;
-        public EnvironmentDebugView EnvironmentDebugView;
 
         public Vector2 GetPositionOnTilemap(Vector2Int tilePos)
         {
@@ -32,12 +26,15 @@ namespace MapGenerator.Core
 
     public interface IGenerator
     {
-        public MapLayout Generate(MapLayout layout);
+        public Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts);
 
         public void Cleanup();
 
 #if UNITY_EDITOR
         public void DrawGizmos(DebugConfig debugConfig);
+
+        public bool ShowDebug { get; }
 #endif
+        public event Action<string> OnStatusChanged;
     }
 }

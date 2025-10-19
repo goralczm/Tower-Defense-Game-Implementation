@@ -22,6 +22,11 @@ namespace MapGenerator.Core
         {
             return new Vector2Int(X, Y);
         }
+
+        public override string ToString()
+        {
+            return $"({X}), {Y})";
+        }
     }
 
     public class MapLayout

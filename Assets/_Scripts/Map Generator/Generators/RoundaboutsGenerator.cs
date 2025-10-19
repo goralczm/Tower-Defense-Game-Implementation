@@ -1,18 +1,30 @@
+using Codice.CM.Common;
 using MapGenerator.Core;
 using MapGenerator.Settings;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using Utilities;
 using Utilities.Extensions;
 
 namespace MapGenerator.Generators
 {
+    [System.Serializable]
     public class RoundaboutsGenerator : IGenerator
     {
+        [Header("Debug")]
+        [SerializeField] private bool _debug = true;
+
         private MapLayout _layout;
         private PathSettings _pathSettings;
         private GenerationConfig _generationData;
+        private CancellationTokenSource _cts;
+
+        public event Action<string> OnStatusChanged;
+
+        public bool ShowDebug => _debug;
 
         public RoundaboutsGenerator(PathSettings pathSettings, GenerationConfig generationData)
         {
@@ -20,18 +32,24 @@ namespace MapGenerator.Generators
             _generationData = generationData;
         }
 
-        public MapLayout Generate(MapLayout layout)
+        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
         {
+            _cts = cts;
             _layout = layout;
 
             if (_pathSettings.EnforceRoundabouts)
-                DrawRoundabouts(_generationData.Seed);
+            {
+                OnStatusChanged?.Invoke("Generating roundabouts...");
+                await DrawRoundabouts(_generationData.Seed);
+            }
 
             return _layout;
         }
 
-        private void DrawRoundabouts(int seed, int roundaboutsGenerated = 0)
+        private async Task DrawRoundabouts(int seed, int roundaboutsGenerated = 0)
         {
+            _cts.Token.ThrowIfCancellationRequested();
+
             UnityEngine.Random.InitState(seed);
             var curr = _layout.GetByCoords(_generationData.GridStartPoint);
 
@@ -65,7 +83,7 @@ namespace MapGenerator.Generators
             }
 
             if (roundaboutsGenerated < _pathSettings.MinimalRounabouts)
-                DrawRoundabouts(seed + 1, roundaboutsGenerated);
+                await DrawRoundabouts(seed + 1, roundaboutsGenerated);
         }
 
         private int GenerateRandomRoundabout(Vector2Int cornerPos, NodeType corner, int tilesAfterLastRoundabout)

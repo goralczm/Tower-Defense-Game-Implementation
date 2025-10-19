@@ -20,7 +20,7 @@ namespace MapGenerator.Saver
             }
 
             mapGenerator.SetGenerationConfig(config);
-            mapGenerator.GenerateMap();
+            mapGenerator.GenerateMapAsync();
         }
     }
 }

@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace MapGenerator.Settings
 {
-    public enum PointsStrategy
+    public enum Side
     {
-        LeftToRight,
-        RightToLeft,
-        TopToBottom,
-        BottomToTop,
+        Left,
+        Right,
+        Top,
+        Bottom,
         Custom,
     }
 
@@ -22,7 +22,9 @@ namespace MapGenerator.Settings
         public bool RandomlyOmitSomeMiddlePoints = false;
         public float MiddlePointsOmissionProbability = 0.2f;
         public int MinimalMiddlePointsCount = 0;
-        public PointsStrategy PointsStrategy;
+        public Side StartSide;
+        public Side EndSide;
+
         [HideInInspector] public Vector2Int MinStartPoint = new(0, -5);
         [HideInInspector] public Vector2Int MaxStartPoint = new(0, 5);
         [HideInInspector] public Vector2Int MinEndPoint = new(5, -5);
@@ -30,15 +32,15 @@ namespace MapGenerator.Settings
 
         public Vector2Int GetMinStartPoint()
         {
-            switch (PointsStrategy)
+            switch (StartSide)
             {
-                case PointsStrategy.LeftToRight:
+                case Side.Left:
                     return new Vector2Int(0, 0);
-                case PointsStrategy.RightToLeft:
+                case Side.Right:
                     return new Vector2Int(Width - 1, 0);
-                case PointsStrategy.TopToBottom:
+                case Side.Top:
                     return new Vector2Int(0, Height - 1);
-                case PointsStrategy.BottomToTop:
+                case Side.Bottom:
                     return new Vector2Int(0, 0);
                 default:
                     return MinStartPoint;
@@ -47,15 +49,15 @@ namespace MapGenerator.Settings
 
         public Vector2Int GetMaxStartPoint()
         {
-            switch (PointsStrategy)
+            switch (StartSide)
             {
-                case PointsStrategy.LeftToRight:
+                case Side.Left:
                     return new Vector2Int(0, Height - 1);
-                case PointsStrategy.RightToLeft:
+                case Side.Right:
                     return new Vector2Int(Width - 1, Height - 1);
-                case PointsStrategy.TopToBottom:
+                case Side.Top:
                     return new Vector2Int(Width - 1, Height - 1);
-                case PointsStrategy.BottomToTop:
+                case Side.Bottom:
                     return new Vector2Int(Width - 1, 0);
                 default:
                     return MaxStartPoint;
@@ -64,15 +66,15 @@ namespace MapGenerator.Settings
 
         public Vector2Int GetMinEndPoint()
         {
-            switch (PointsStrategy)
+            switch (EndSide)
             {
-                case PointsStrategy.LeftToRight:
+                case Side.Right:
                     return new Vector2Int(Width - 1, 0);
-                case PointsStrategy.RightToLeft:
+                case Side.Left:
                     return new Vector2Int(0, 0);
-                case PointsStrategy.TopToBottom:
+                case Side.Bottom:
                     return new Vector2Int(0, 0);
-                case PointsStrategy.BottomToTop:
+                case Side.Top:
                     return new Vector2Int(0, Height - 1);
                 default:
                     return MinEndPoint;
@@ -81,15 +83,15 @@ namespace MapGenerator.Settings
 
         public Vector2Int GetMaxEndPoint()
         {
-            switch (PointsStrategy)
+            switch (EndSide)
             {
-                case PointsStrategy.LeftToRight:
+                case Side.Right:
                     return new Vector2Int(Width - 1, Height - 1);
-                case PointsStrategy.RightToLeft:
+                case Side.Left:
                     return new Vector2Int(0, Height - 1);
-                case PointsStrategy.TopToBottom:
+                case Side.Bottom:
                     return new Vector2Int(Width - 1, 0);
-                case PointsStrategy.BottomToTop:
+                case Side.Top:
                     return new Vector2Int(Width - 1, Height - 1);
                 default:
                     return MaxEndPoint;

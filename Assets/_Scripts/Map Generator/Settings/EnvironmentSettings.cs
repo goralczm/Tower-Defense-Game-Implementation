@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MapGenerator.Settings
@@ -9,5 +10,7 @@ namespace MapGenerator.Settings
         [Range(0f, 1f)] public float NoiseThreshold = .5f;
         [Range(0f, 1f)] public float ObstacleNearPathProbability = .2f;
         public NoiseSettings NoiseSettings;
+
+        public List<GameObject> ObstaclePrefabs;
     }
 }

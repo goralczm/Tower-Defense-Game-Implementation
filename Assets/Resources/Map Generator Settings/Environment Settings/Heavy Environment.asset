@@ -15,3 +15,13 @@ MonoBehaviour:
   NoiseThreshold: 0.7
   ObstacleNearPathProbability: 0.35
   NoiseSettings: {fileID: 11400000, guid: 96db48527d0f8264e9a598dfa7eff8e8, type: 2}
+  ObstaclePrefabs:
+  - {fileID: 4931296659836417704, guid: 3b701f549c6c96d44996fff0499463dd, type: 3}
+  - {fileID: 2274539256243474199, guid: 4a428e824d032744d94833a9f187f054, type: 3}
+  - {fileID: 2053425212365235558, guid: 83de7cbf0c116154799ffac2dbfeffd0, type: 3}
+  - {fileID: 7661877964713233374, guid: b6f297df9c380d34ca04c618c45d48ee, type: 3}
+  - {fileID: 8392802503059403852, guid: 57896d3d607fd3a4299b13e05206b432, type: 3}
+  - {fileID: 5515832509398196459, guid: 38b53e289a8647a43b4156cf6be7a54e, type: 3}
+  - {fileID: 873989692503932614, guid: a41f83d285bec7f408cfdd6f224f05c2, type: 3}
+  - {fileID: 4332168816486176687, guid: 11967f6991ee7b44494373f0f9fa2b14, type: 3}
+  - {fileID: 6830613150834113650, guid: 2a5886a566bfd134288d2040b46e366a, type: 3}

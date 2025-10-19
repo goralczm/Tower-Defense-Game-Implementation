@@ -14,5 +14,7 @@ namespace Core
 
             return _camera.ScreenToWorldPoint(Input.mousePosition);
         }
+
+        public static float ScrollWheel => UnityEngine.Input.GetAxis("Mouse ScrollWheel");
     }
 }

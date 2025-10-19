@@ -2,7 +2,6 @@ using Enemies;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Paths;
 using System.Linq;
 using Utilities;
 

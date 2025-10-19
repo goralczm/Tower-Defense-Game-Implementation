@@ -25,8 +25,6 @@ namespace Towers
                 return;
             }
 
-            _timer = _tower.Attributes.GetAttribute(Attributes.TowerAttributes.RateOfFire);
-
             var enemies = Targeting.Targeting.GetNEnemiesInRangeByConditions(
                 _tower.transform.position,
                 _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Range),
@@ -38,6 +36,8 @@ namespace Towers
             {
                 foreach (var enemy in enemies)
                     Shoot(enemy.transform);
+
+                _timer = _tower.Attributes.GetAttribute(Attributes.TowerAttributes.RateOfFire);
             }
         }
 

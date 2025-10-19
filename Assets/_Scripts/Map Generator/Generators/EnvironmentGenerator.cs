@@ -2,12 +2,22 @@ using MapGenerator.Core;
 using MapGenerator.Settings;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Utilities;
 
 namespace MapGenerator.Generators
 {
+    public enum EnvironmentDebugView
+    {
+        None,
+        Heatmap,
+        Noise,
+        Obstacles
+    }
+
     public enum TileState
     {
         Free,
@@ -18,10 +28,14 @@ namespace MapGenerator.Generators
     [System.Serializable]
     public class EnvironmentGenerator : IGenerator
     {
+        [Header("Debug")]
+        [SerializeField] private bool _debug = true;
+        [SerializeField] private EnvironmentDebugView _environmentDebugView;
+        [SerializeField] private int _delayInMiliseconds = 0;
+
         private PathSettings _pathSettings;
         private NoiseSettings _noiseSettings;
         private EnvironmentSettings _environmentSettings;
-        private List<GameObject> _obstaclePrefabs;
         private Dictionary<Vector2, TileState> _heatmap = new();
         private List<Vector2> _obstaclePositions = new();
         private List<GameObject> _createdObstacles = new();
@@ -29,8 +43,13 @@ namespace MapGenerator.Generators
         private GenerationConfig _generationConfig;
         private Transform _environmentParent;
         private Bounds _bounds;
+        private CancellationTokenSource _cts;
 
-        public EnvironmentGenerator(EnvironmentSettings environmentSettings, PathSettings pathSettings, GenerationConfig generationData, Tilemap tilemap, List<GameObject> obstaclePrefabs)
+        public event System.Action<string> OnStatusChanged;
+
+        public bool ShowDebug => _debug;
+
+        public EnvironmentGenerator(EnvironmentSettings environmentSettings, PathSettings pathSettings, GenerationConfig generationData, Tilemap tilemap)
         {
             UnityEngine.Random.InitState(generationData.Seed);
             _environmentSettings = environmentSettings;
@@ -38,7 +57,6 @@ namespace MapGenerator.Generators
             _pathSettings = pathSettings;
             _tilemap = tilemap;
             _generationConfig = generationData;
-            _obstaclePrefabs = obstaclePrefabs;
             _bounds = GetPathBounds();
         }
 
@@ -53,10 +71,15 @@ namespace MapGenerator.Generators
                     _generationConfig.MazeGenerationSettings.Height + 1, 0));
         }
 
-        public MapLayout Generate(MapLayout layout)
+        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
         {
+            _cts = cts;
+
+            OnStatusChanged?.Invoke("Creating environment heatmap...");
             CreateHeatmap(_environmentSettings.ObstacleNearPathProbability);
-            CreateAllObstacles(_environmentSettings.NoiseThreshold);
+
+            OnStatusChanged?.Invoke("Creating obstacles...");
+            await CreateAllObstacles(_environmentSettings.NoiseThreshold);
 
             return layout;
         }
@@ -81,7 +104,7 @@ namespace MapGenerator.Generators
             }
         }
 
-        private void CreateAllObstacles(float noiseThreshold)
+        private async Task CreateAllObstacles(float noiseThreshold)
         {
             float[,] noise = NoiseGenerator.GenerateNoise(_noiseSettings, _generationConfig.Seed);
 
@@ -89,6 +112,8 @@ namespace MapGenerator.Generators
             {
                 for (int x = 0; x < noise.GetLength(0); x++)
                 {
+                    _cts.Token.ThrowIfCancellationRequested();
+
                     float noiseValue = noise[x, y];
                     if (noiseValue >= noiseThreshold)
                         continue;
@@ -96,7 +121,10 @@ namespace MapGenerator.Generators
                     Vector2 cellCenterPos = _tilemap.GetCellCenterWorld(_tilemap.WorldToCell(new Vector3(_bounds.min.x + x, _bounds.min.y + y, 0)));
 
                     if (_heatmap.TryGetValue(cellCenterPos, out TileState state) && state == TileState.Free)
+                    {
                         CreateObstacle(cellCenterPos);
+                        await Task.Delay(_delayInMiliseconds);
+                    }
                 }
             }
         }
@@ -107,7 +135,7 @@ namespace MapGenerator.Generators
                 _environmentParent = new GameObject("Obstacles").transform;
 
             GameObject obstacle = UnityEngine.Object.Instantiate(
-                _obstaclePrefabs[UnityEngine.Random.Range(0, _obstaclePrefabs.Count)],
+                _environmentSettings.ObstaclePrefabs[UnityEngine.Random.Range(0, _environmentSettings.ObstaclePrefabs.Count)],
                 position,
                 Quaternion.identity,
                 _environmentParent);
@@ -159,7 +187,7 @@ namespace MapGenerator.Generators
 
             float[,] noise;
 
-            switch (debugConfig.EnvironmentDebugView)
+            switch (_environmentDebugView)
             {
                 case EnvironmentDebugView.Heatmap:
                     foreach (var occupancy in _heatmap)
@@ -210,7 +238,8 @@ namespace MapGenerator.Generators
 
         public void Cleanup()
         {
-            Object.Destroy(_environmentParent.gameObject);
+            if (_environmentParent != null)
+                Object.Destroy(_environmentParent.gameObject);
         }
     }
 }

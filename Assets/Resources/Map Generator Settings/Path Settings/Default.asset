@@ -22,7 +22,7 @@ MonoBehaviour:
   RandomizeRoundaboutSize: 1
   RoundaboutProbability: 0.3
   MinimalTilesDistanceBetweenRoundabouts: 6
-  MinimalRounabouts: 0
-  Steps: 11869
+  MinimalRounabouts: 1
+  Steps: 43205
   MaximumGenerationDepth: 500
-  ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 1
+  ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 0

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eca005144104e01beb4375adab2bb8a, type: 3}
+  m_Name: Huge RTS Path
+  m_EditorClassIdentifier: 
+  EnforceMinimalPathLength: 0
+  MinimalPathLength: 3
+  EnforceMaximumStraightTilesInRow: 1
+  MaximumStraightTilesInRow: 100
+  EnforceRoundabouts: 1
+  SmallestRoundaboutSize: 3
+  BiggestRoundaboutSize: 7
+  RandomizeRoundaboutSize: 1
+  RoundaboutProbability: 0.6
+  MinimalTilesDistanceBetweenRoundabouts: 6
+  MinimalRounabouts: 0
+  Steps: 43205
+  MaximumGenerationDepth: 1500
+  ExperimentalRandomizeSeedWhenGenerationDepthExceeded: 0

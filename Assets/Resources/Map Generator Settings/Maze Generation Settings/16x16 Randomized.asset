@@ -20,6 +20,8 @@ MonoBehaviour:
   MiddlePointsOmissionProbability: 0.2
   MinimalMiddlePointsCount: 1
   PointsStrategy: 4
+  StartSide: 4
+  EndSide: 4
   MinStartPoint: {x: 3, y: 1}
   MaxStartPoint: {x: 4, y: 4}
   MinEndPoint: {x: 4, y: 4}

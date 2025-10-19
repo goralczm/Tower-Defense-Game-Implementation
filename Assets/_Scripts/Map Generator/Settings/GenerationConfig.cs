@@ -69,16 +69,21 @@ namespace MapGenerator.Settings
                    position.y == MazeGenerationSettings.Height - 1;
         }
 
-        public Vector2Int GetAccessPointDir(Vector2Int accessPoint)
+        public Vector2Int GetAccessPointDir(Side side)
         {
-            Vector2Int accessDir = accessPoint.x == 0 ? Vector2Int.right : Vector2Int.left;
+            switch (side)
+            {
+                case Side.Left:
+                    return Vector2Int.right;
+                case Side.Right:
+                    return Vector2Int.left;
+                case Side.Top:
+                    return Vector2Int.down;
+                case Side.Bottom:
+                    return Vector2Int.up;
+            }
 
-            if (accessPoint.y == 0)
-                accessDir = Vector2Int.up;
-            else if (accessPoint.y == MazeGenerationSettings.Height - 1)
-                accessDir = Vector2Int.down;
-
-            return accessDir;
+            return new();
         }
     }
 }

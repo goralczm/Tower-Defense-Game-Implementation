@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Width: 17
   Height: 10
-  PointsStrategy: 2
-  MinStartPoint: {x: 0, y: 9}
-  MaxStartPoint: {x: 16, y: 9}
-  MinEndPoint: {x: 0, y: 0}
-  MaxEndPoint: {x: 16, y: 0}
   MiddlePoints:
   - {x: 8, y: 4}
   RandomlyOmitSomeMiddlePoints: 0
   MiddlePointsOmissionProbability: 0.2
   MinimalMiddlePointsCount: 1
+  PointsStrategy: 2
+  StartSide: 2
+  EndSide: 3
+  MinStartPoint: {x: 0, y: 9}
+  MaxStartPoint: {x: 16, y: 9}
+  MinEndPoint: {x: 0, y: 0}
+  MaxEndPoint: {x: 16, y: 0}

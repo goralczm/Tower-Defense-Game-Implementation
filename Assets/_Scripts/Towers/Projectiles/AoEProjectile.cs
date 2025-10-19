@@ -1,7 +1,6 @@
-using Towers.Projectiles;
 using UnityEngine;
 
-namespace Towers
+namespace Towers.Projectiles
 {
     public class AoEProjectile : ProjectileBase
     {
