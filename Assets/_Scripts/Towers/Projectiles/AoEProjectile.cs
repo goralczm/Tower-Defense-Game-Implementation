@@ -25,7 +25,7 @@ namespace Towers.Projectiles
         {
             if (IsNearTarget(_targetPosition))
             {
-                var hits = Physics2D.OverlapCircleAll(transform.position, _attributes.GetAttribute(Attributes.ProjectileAttributes.Range));
+                var hits = Physics2D.OverlapCircleAll(transform.position, _attributes.GetAttribute(Attributes.ProjectileAttributes.Range) / 2f);
                 foreach (var hit in hits)
                     TryDamageTarget(hit.transform, _canDamageAlignments);
 

@@ -79,7 +79,7 @@ namespace GameFlow
         private void CancelBuilding()
         {
             _lineOfSight.gameObject.SetActive(false);
-            Destroy(_buildingGhost);
+            Destroy(_buildingGhost.gameObject);
         }
     }
 }

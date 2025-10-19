@@ -29,11 +29,12 @@ MonoBehaviour:
       - Type: 4
         Value: 2
   AttackStrategies:
-  - rid: 3343487648579977470
+  - rid: 3343487759044051170
   references:
     version: 2
     RefIds:
-    - rid: 3343487648579977470
+    - rid: 3343487759044051170
       type: {class: ShootStrategy, ns: Towers, asm: Towers}
       data:
         Projectile: {fileID: 8947499434511237714, guid: fccf606852fc96d45b5da865a90843d2, type: 3}
+        TargetAlignments: 0000000002000000

@@ -8,25 +8,26 @@ namespace Towers.Projectiles
 {
     public abstract class ProjectileBase : MonoBehaviour
     {
-        [SerializeField, SerializeReference, ForceArtifice] protected List<Alignment> _canDamageAlignments = new();
         [SerializeField] protected BaseAttributes<ProjectileAttributes> _baseAttributes;
 
         protected Transform _target;
         protected Vector2 _targetPosition;
         protected Attributes<ProjectileAttributes> _attributes;
+        protected List<Alignment> _canDamageAlignments = new();
 
         private const float STOPPING_DISTANCE = 0.05f;
 
-        public void Setup(Transform target, BaseAttributes<ProjectileAttributes> baseAttributes)
+        public void Setup(Transform target, BaseAttributes<ProjectileAttributes> baseAttributes, List<Alignment> canDamageAlignments)
         {
             _target = target;
-            Setup(_target.position, baseAttributes);
+            Setup(_target.position, baseAttributes, canDamageAlignments);
         }
 
-        public void Setup(Vector2 targetPosition, BaseAttributes<ProjectileAttributes> baseAttributes)
+        public void Setup(Vector2 targetPosition, BaseAttributes<ProjectileAttributes> baseAttributes, List<Alignment> canDamageAlignments)
         {
             _attributes = new(new(), _baseAttributes + baseAttributes);
             _targetPosition = targetPosition;
+            _canDamageAlignments = canDamageAlignments;
             Init();
         }
 

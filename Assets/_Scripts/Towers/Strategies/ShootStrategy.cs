@@ -1,4 +1,6 @@
 using Attributes;
+using Core;
+using System.Collections.Generic;
 using Towers.Projectiles;
 using UnityEngine;
 
@@ -7,6 +9,7 @@ namespace Towers
     public class ShootStrategy : IAttackStrategy
     {
         public ProjectileBase Projectile;
+        public List<Alignment> TargetAlignments = new();
 
         private TowerBehaviour _tower;
 
@@ -25,17 +28,19 @@ namespace Towers
                 return;
             }
 
-            var enemies = Targeting.Targeting.GetNEnemiesInRangeByConditions(
+            var targets = Targeting.Targeting.GetNTargetsInRangeByConditions(
                 _tower.transform.position,
                 _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Range),
                 (int)_tower.Attributes.GetAttribute(Attributes.TowerAttributes.ProjectilesCount),
                 _tower.TargetingOption,
-                true);
+                TargetAlignments,
+                true,
+                _tower.transform);
 
-            if (enemies.Count > 0)
+            if (targets.Count > 0)
             {
-                foreach (var enemy in enemies)
-                    Shoot(enemy.transform);
+                foreach (var target in targets)
+                    Shoot(target.Transform);
 
                 _timer = _tower.Attributes.GetAttribute(Attributes.TowerAttributes.RateOfFire);
             }
@@ -50,7 +55,16 @@ namespace Towers
                 .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(target, baseAttributes);
+            projectile.Setup(target, baseAttributes, TargetAlignments);
+        }
+
+        public IAttackStrategy Clone()
+        {
+            return new ShootStrategy()
+            {
+                Projectile = Projectile,
+                TargetAlignments = TargetAlignments,
+            };
         }
     }
 }

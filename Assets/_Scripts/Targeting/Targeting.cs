@@ -1,9 +1,10 @@
-using Enemies;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Utilities;
+using Core;
+using Core.Cache;
 
 namespace Targeting
 {
@@ -13,195 +14,118 @@ namespace Targeting
         First,
         Last,
         Strongest,
-        Fastest,
     }
 
     public static class Targeting
     {
-        public static LayerMask TowersLayer = 1 << 7;
-        public static LayerMask EnemiesLayer = 1 << 8;
         public static LayerMask ObstaclesLayer = 1 << 9;
 
-        public delegate float SortingCondition(EnemyBehaviour enemy);
+        public delegate float SortingCondition(ITargetable target);
 
-        public static List<EnemyBehaviour> GetNEnemiesInRangeByConditions(Vector2 origin, float range, int enemiesCount, TargetingOptions targetingOption, bool needClearVision = false)
+        public static List<ITargetable> GetNTargetsInRangeByConditions(Vector2 origin, float range, int targetsCount, TargetingOptions targetingOption, List<Alignment> targetAlignments = null, bool needClearVision = false, Transform originTransform = null)
         {
-            List<EnemyBehaviour> enemiesInRange = GetEnemiesInRange(origin, range);
+            List<ITargetable> targetsInRange = GetTargetsInRange(origin, range, targetAlignments, originTransform);
 
-            return GetNEnemiesByCondition(origin, enemiesInRange, enemiesCount, targetingOption, needClearVision);
+            return GetNTargetsByCondition(origin, targetsInRange, targetsCount, targetingOption, needClearVision);
         }
 
-        private static List<EnemyBehaviour> GetNEnemiesByCondition(Vector2 origin, List<EnemyBehaviour> enemies, int enemiesCount, TargetingOptions targetingOption, bool needClearVision = false)
+        private static List<ITargetable> GetNTargetsByCondition(Vector2 origin, List<ITargetable> targets, int targetsCount, TargetingOptions targetingOption, bool needClearVision = false)
         {
-            List<EnemyBehaviour> enemiesCopy = new List<EnemyBehaviour>(enemies);
-            List<EnemyBehaviour> selectedEnemies = new List<EnemyBehaviour>();
+            List<ITargetable> targetsCopy = new List<ITargetable>(targets);
+            List<ITargetable> selectedTargets = new List<ITargetable>();
 
-            for (int i = 0; i < enemiesCount; i++)
+            for (int i = 0; i < targetsCount; i++)
             {
-                EnemyBehaviour bestEnemy = GetEnemyByCondition(origin, enemiesCopy, GetSortingCondition(targetingOption), needClearVision);
+                ITargetable bestEnemy = GetEnemyByCondition(origin, targetsCopy, GetSortingCondition(origin, targetingOption), needClearVision);
                 if (bestEnemy == null)
                     break;
 
-                selectedEnemies.Add(bestEnemy);
-                enemiesCopy.Remove(bestEnemy);
+                selectedTargets.Add(bestEnemy);
+                targetsCopy.Remove(bestEnemy);
             }
 
-            return selectedEnemies;
+            return selectedTargets;
         }
 
-        private static EnemyBehaviour GetEnemyByCondition(Vector2 origin, List<EnemyBehaviour> enemies, SortingCondition sortingCondition, bool needClearVision = false)
+        private static ITargetable GetEnemyByCondition(Vector2 origin, List<ITargetable> targets, SortingCondition sortingCondition, bool needClearVision = false)
         {
-            if (enemies.Count == 0)
+            if (targets.Count == 0)
                 return null;
 
-            EnemyBehaviour bestCandidate = enemies[0];
-            float highestCondition = sortingCondition(bestCandidate);
+            ITargetable bestCandidate = null;
+            float bestCondition = float.MinValue;
+            int bestPriority = int.MinValue;
 
-            for (int i = 1; i < enemies.Count; i++)
+            foreach (var target in targets)
             {
-                if (needClearVision && !HasClearVision(origin, enemies[i].transform.position))
+                if (needClearVision && !HasClearVision(origin, target.Transform.position, target.Transform))
                     continue;
 
-                float currentCondition = sortingCondition(enemies[i]);
-                if (currentCondition > highestCondition)
+                int priority = target.Priority;
+                float condition = sortingCondition(target);
+
+                if (bestCandidate == null || priority > bestPriority || (priority == bestPriority && condition > bestCondition))
                 {
-                    bestCandidate = enemies[i];
-                    highestCondition = currentCondition;
+                    bestCandidate = target;
+                    bestPriority = priority;
+                    bestCondition = condition;
                 }
             }
 
-            if (needClearVision && !HasClearVision(origin, bestCandidate.transform.position))
+            if (needClearVision && !HasClearVision(origin, bestCandidate.Transform.position, bestCandidate.Transform))
                 return null;
 
             return bestCandidate;
         }
 
-        private static bool HasClearVision(Vector2 origin, Vector2 target)
+        private static bool HasClearVision(Vector2 origin, Vector2 target, Transform self)
         {
-            return !Physics2D.LinecastAll(origin, target).Any(h => Helpers.IsInLayerMask(h.collider.gameObject.layer, ObstaclesLayer));
+            return !Physics2D.LinecastAll(origin, target)
+                .Any(h =>
+                    h.transform != self &&
+                    Helpers.IsInLayerMask(h.collider.gameObject.layer, ObstaclesLayer)
+                );
         }
 
-        [Obsolete]
-        public static List<EnemyBehaviour> GetSortedEnemiesInRange(Vector2 origin, float range, TargetingOptions targetingOption)
-        {
-            SortingCondition sortingCodition = enemy => enemy.PathTraveled;
-            switch (targetingOption)
-            {
-                case TargetingOptions.Strongest:
-                    sortingCodition = enemy => enemy.DangerLevel;
-                    break;
-                case TargetingOptions.Fastest:
-                    sortingCodition = enemy => enemy.Attributes.GetAttribute(Attributes.EnemyAttributes.Speed);
-                    break;
-                case TargetingOptions.First:
-                case TargetingOptions.Last:
-                    sortingCodition = enemy => enemy.PathTraveled;
-                    break;
-            }
-
-            List<EnemyBehaviour> enemiesInRange = GetEnemiesInRange(origin, range);
-            List<EnemyBehaviour> sortedEnemies = SortEnemiesByCondition(enemiesInRange, sortingCodition);
-
-            if (targetingOption != TargetingOptions.Last)
-                sortedEnemies.Reverse();
-
-            return sortedEnemies;
-        }
-
-        private static SortingCondition GetSortingCondition(TargetingOptions targetingOption)
+        private static SortingCondition GetSortingCondition(Vector2 origin, TargetingOptions targetingOption)
         {
             switch (targetingOption)
             {
                 case TargetingOptions.Strongest:
-                    return enemy => enemy.DangerLevel;
+                    return target => target.Strength;
                 case TargetingOptions.First:
-                    return enemy => enemy.PathTraveled;
+                    return target => target.GetDistance(origin);
                 case TargetingOptions.Last:
-                    return enemy => -enemy.PathTraveled;
+                    return target => -target.GetDistance(origin);
             }
 
-            return enemy => enemy.PathTraveled;
+            return target => target.GetDistance(origin);
         }
 
-        private static List<EnemyBehaviour> SortEnemiesByCondition(List<EnemyBehaviour> enemiesToSort, SortingCondition sortingCondition)
+        public static List<ITargetable> GetTargetsInRange(Vector2 origin, float range, List<Alignment> targetAlignments = null, Transform originTransform = null)
         {
-            List<EnemyBehaviour> sortedEnemies = new List<EnemyBehaviour>(enemiesToSort);
-            QuickSortEnemies(sortedEnemies, sortingCondition, 0, enemiesToSort.Count - 1);
+            List<ITargetable> targetsInRange = new List<ITargetable>();
+            List<ITargetable> standByTargets = new List<ITargetable>();
 
-            return sortedEnemies;
-        }
-
-        public static List<EnemyBehaviour> GetEnemiesInRange(Vector2 origin, float range)
-        {
-            List<EnemyBehaviour> enemiesInRange = new List<EnemyBehaviour>();
-            List<EnemyBehaviour> standByEnemies = new List<EnemyBehaviour>();
-
-            Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range, EnemiesLayer);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range);
             foreach (Collider2D hit in hits)
             {
-                if (!hit.gameObject.activeSelf)
+                if (hit.transform == originTransform || !hit.gameObject.activeSelf)
                     continue;
 
-                EnemyBehaviour enemy = EnemiesCache.GetEnemyByCollider(hit);
-                enemiesInRange.Add(enemy);
-            }
-
-            if (enemiesInRange.Count == 0 && hits.Length > 0)
-                enemiesInRange.AddRange(standByEnemies);
-
-            return enemiesInRange;
-        }
-
-        private static void QuickSortEnemies(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right)
-        {
-            if (left >= right)
-                return;
-
-            float pivot = MedianOfThree(enemies, sortingCondition, left, right);
-            int index = Partition(enemies, sortingCondition, left, right, pivot);
-            QuickSortEnemies(enemies, sortingCondition, left, index - 1);
-            QuickSortEnemies(enemies, sortingCondition, index, right);
-        }
-
-        private static int Partition(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right, float pivot)
-        {
-            while (left <= right)
-            {
-                while (sortingCondition(enemies[left]) < pivot)
-                    left++;
-                while (sortingCondition(enemies[right]) > pivot)
-                    right--;
-
-                if (left <= right)
+                if (TargetsCache.TryGetTarget(hit, out ITargetable target))
                 {
-                    SwapElements(enemies, left, right);
-                    left++;
-                    right--;
+                    if (targetAlignments != null && !targetAlignments.Contains(target.Alignment))
+                        continue;
+
+                    targetsInRange.Add(target);
                 }
             }
 
-            return left;
-        }
+            if (targetsInRange.Count == 0 && hits.Length > 0)
+                targetsInRange.AddRange(standByTargets);
 
-        private static float MedianOfThree(List<EnemyBehaviour> enemies, SortingCondition sortingCondition, int left, int right)
-        {
-            int mid = left + (right - left) / 2;
-
-            if (sortingCondition(enemies[left]) > sortingCondition(enemies[mid]))
-                SwapElements(enemies, left, mid);
-            if (sortingCondition(enemies[left]) > sortingCondition(enemies[right]))
-                SwapElements(enemies, left, right);
-            if (sortingCondition(enemies[mid]) > sortingCondition(enemies[right]))
-                SwapElements(enemies, mid, right);
-
-            return sortingCondition(enemies[mid]);
-        }
-
-        private static void SwapElements(List<EnemyBehaviour> enemies, int firstIndex, int secondIndex)
-        {
-            EnemyBehaviour enemyCopy = enemies[firstIndex];
-            enemies[firstIndex] = enemies[secondIndex];
-            enemies[secondIndex] = enemyCopy;
+            return targetsInRange;
         }
 
         public static List<Vector2> GetPathPointsInRange(Vector2 position, float range, int points, Grid grid = null)

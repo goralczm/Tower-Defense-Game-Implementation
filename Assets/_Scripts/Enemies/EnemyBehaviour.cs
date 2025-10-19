@@ -6,23 +6,28 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class EnemyBehaviour : MonoBehaviour, IDamageable
+    public class EnemyBehaviour : MonoBehaviour, ITargetable, IDamageable
     {
         private Path _path;
         private Attributes<EnemyAttributes> _attributes;
+        private EnemyData _enemyData;
         private int _currentWaypointIndex;
         private bool _isStopped;
 
         public static event Action<EnemyBehaviour> OnEnemyDied;
 
         public Attributes<EnemyAttributes> Attributes => _attributes;
-        public float PathTraveled => GetDistanceOnPath() / _path.Length;
         public Alignment Alignment => Alignment.Hostile;
-        public int DangerLevel => 1;
+        public Transform Transform => transform;
+        public int Strength => _enemyData.DangerLevel;
+        public int Priority => 1;
+
+        public float GetDistance(Vector2 position) => GetDistanceOnPath() / _path.Length;
 
         public void Setup(EnemyData enemyData, Path path, int nextWaypointIndex)
         {
             _path = path;
+            _enemyData = enemyData;
             _currentWaypointIndex = nextWaypointIndex;
             _attributes = new(new(), enemyData.BaseAttributes);
         }

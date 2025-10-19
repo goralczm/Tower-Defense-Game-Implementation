@@ -9,9 +9,7 @@ namespace Towers.Projectiles
         {
             base.Tick();
 
-            if (!_target) return;
-
-            if (!_target.gameObject.activeSelf)
+            if (!_target || !_target.gameObject.activeSelf)
             {
                 DestroyProjectile();
                 return;
