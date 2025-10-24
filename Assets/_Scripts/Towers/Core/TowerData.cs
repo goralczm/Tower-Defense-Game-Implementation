@@ -12,6 +12,7 @@ namespace Towers
         public BaseAttributes<TowerAttributes> BaseAttributes;
     }
 
+    [CreateAssetMenu(menuName = "Towers/New Tower Data", fileName = "New Tower Data")]
     public class TowerData : ScriptableObject
     {
         public string Description;

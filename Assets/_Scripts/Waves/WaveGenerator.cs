@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 using Waves;
 
@@ -74,6 +77,11 @@ namespace Enemies
             for (int i = 0; i < enemiesCount; i++)
             {
                 if (IsStopped) return;
+
+#if UNITY_EDITOR
+                if (EditorApplication.isPaused)
+                    await Task.Delay(10);
+#endif
 
                 SpawnEnemy(entry.Enemy, 0);
                 await Task.Delay(TimeSpan.FromSeconds(entry.GetIntervalByWave(wave)));

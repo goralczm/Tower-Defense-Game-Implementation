@@ -10,7 +10,7 @@ namespace Core
 
         public int Strength { get; }
 
-        public int Priority { get; }
+        public int TargetingPriority { get; }
 
         public float GetDistance(Vector2 position);
     }

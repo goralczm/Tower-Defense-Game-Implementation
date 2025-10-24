@@ -61,7 +61,7 @@ namespace Targeting
                 if (needClearVision && !HasClearVision(origin, target.Transform.position, target.Transform))
                     continue;
 
-                int priority = target.Priority;
+                int priority = target.TargetingPriority;
                 float condition = sortingCondition(target);
 
                 if (bestCandidate == null || priority > bestPriority || (priority == bestPriority && condition > bestCondition))

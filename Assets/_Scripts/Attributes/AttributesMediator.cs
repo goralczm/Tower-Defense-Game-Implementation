@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Attributes
 {
@@ -8,6 +9,8 @@ namespace Attributes
         private readonly LinkedList<AttributeModifier<TEnum>> _modifiers = new();
 
         public event EventHandler<AttributeQuery<TEnum>> Queries;
+
+        public event Action OnAttributesChanged;
 
         public void PerformQuery(object sender, AttributeQuery<TEnum> query) => Queries?.Invoke(sender, query);
 
@@ -20,7 +23,10 @@ namespace Attributes
             {
                 _modifiers.Remove(modifier);
                 Queries -= modifier.Handle;
+                OnAttributesChanged?.Invoke();
             };
+
+            OnAttributesChanged?.Invoke();
         }
 
         public void Update(float deltaTime)

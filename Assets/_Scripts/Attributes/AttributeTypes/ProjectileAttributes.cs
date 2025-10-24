@@ -5,5 +5,8 @@ namespace Attributes
         Speed,
         Range,
         Damage,
+        Size,
+        Bounces,
+        AreaOfEffectRange,
     }
 }

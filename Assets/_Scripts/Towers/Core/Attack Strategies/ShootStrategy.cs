@@ -1,3 +1,4 @@
+using ArtificeToolkit.Attributes;
 using Attributes;
 using Core;
 using System.Collections.Generic;
@@ -8,11 +9,12 @@ namespace Towers
 {
     public class ShootStrategy : IAttackStrategy
     {
-        public ProjectileBase Projectile;
+        public ProjectileBehaviour ProjectilePrefab;
+        public ProjectileData ProjectileData;
+        [SerializeReference, ForceArtifice] public IProjectileMoveStrategy MoveStrategy;
         public List<Alignment> TargetAlignments = new();
 
         private TowerBehaviour _tower;
-
         private float _timer;
 
         public void Setup(TowerBehaviour tower)
@@ -30,8 +32,8 @@ namespace Towers
 
             var targets = Targeting.Targeting.GetNTargetsInRangeByConditions(
                 _tower.transform.position,
-                _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Range),
-                (int)_tower.Attributes.GetAttribute(Attributes.TowerAttributes.ProjectilesCount),
+                _tower.Attributes.GetAttribute(TowerAttributes.Range),
+                (int)_tower.Attributes.GetAttribute(TowerAttributes.ProjectilesCount),
                 _tower.TargetingOption,
                 TargetAlignments,
                 true,
@@ -42,27 +44,29 @@ namespace Towers
                 foreach (var target in targets)
                     Shoot(target.Transform);
 
-                _timer = _tower.Attributes.GetAttribute(Attributes.TowerAttributes.RateOfFire);
+                _timer = _tower.Attributes.GetAttribute(TowerAttributes.RateOfFire);
             }
         }
 
         private void Shoot(Transform target)
         {
-            ProjectileBase projectile = Object.Instantiate(Projectile, _tower.transform.position, Quaternion.identity);
+            ProjectileBehaviour projectile = Object.Instantiate(ProjectilePrefab, _tower.transform.position, Quaternion.identity);
 
             var baseAttributes = new BaseAttributesBuilder<ProjectileAttributes>()
-                .Add(ProjectileAttributes.Damage, _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Damage))
-                .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(Attributes.TowerAttributes.Range))
+                .Add(ProjectileAttributes.Damage, _tower.Attributes.GetAttribute(TowerAttributes.Damage))
+                .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(target, baseAttributes, TargetAlignments);
+            projectile.Setup(target, baseAttributes, TargetAlignments, ProjectileData, MoveStrategy);
         }
 
         public IAttackStrategy Clone()
         {
             return new ShootStrategy()
             {
-                Projectile = Projectile,
+                ProjectilePrefab = ProjectilePrefab,
+                ProjectileData = ProjectileData,
+                MoveStrategy = MoveStrategy,
                 TargetAlignments = TargetAlignments,
             };
         }

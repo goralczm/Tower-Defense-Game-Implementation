@@ -10,7 +10,7 @@ namespace Core
         public Alignment Alignment => _alignment;
         public Transform Transform => transform;
         public int Strength => 1;
-        public int Priority => -1;
+        public int TargetingPriority => -1;
 
         public float GetDistance(Vector2 position) => Vector2.Distance(position, transform.position);
 

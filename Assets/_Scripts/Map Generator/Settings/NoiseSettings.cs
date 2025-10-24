@@ -3,7 +3,7 @@ using UnityEngine;
 namespace MapGenerator.Settings
 {
     [System.Serializable]
-    [CreateAssetMenu(menuName = "Perlin Noise/Noise Settings", fileName = "New Noise Settings")]
+    [CreateAssetMenu(menuName = "Path Generation/Noise Settings", fileName = "New Noise Settings")]
     public class NoiseSettings : ScriptableObject
     {
         [Header("Noise Settings")]

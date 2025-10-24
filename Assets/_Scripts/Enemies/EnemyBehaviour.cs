@@ -2,12 +2,16 @@ using Attributes;
 using Core;
 using Paths;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Enemies
 {
     public class EnemyBehaviour : MonoBehaviour, ITargetable, IDamageable
     {
+        [Header("References")]
+        [SerializeField] private SpriteRenderer _rend;
+
         private Path _path;
         private Attributes<EnemyAttributes> _attributes;
         private EnemyData _enemyData;
@@ -20,7 +24,7 @@ namespace Enemies
         public Alignment Alignment => Alignment.Hostile;
         public Transform Transform => transform;
         public int Strength => _enemyData.DangerLevel;
-        public int Priority => 1;
+        public int TargetingPriority => 1;
 
         public float GetDistance(Vector2 position) => GetDistanceOnPath() / _path.Length;
 
@@ -80,19 +84,22 @@ namespace Enemies
 
             if (_attributes.GetAttribute(EnemyAttributes.Health) <= 0f)
                 Die();
+            else
+                StartCoroutine(HitEffect());
         }
 
         public void Die()
         {
+            StopAllCoroutines();
             gameObject.SetActive(false);
             OnEnemyDied?.Invoke(this);
         }
 
-        private void OnMouseDown()
+        IEnumerator HitEffect()
         {
-            var modifier = new BasicAttributeModifier<EnemyAttributes>(EnemyAttributes.Speed, 2f, v => v + 2);
-
-            _attributes.Mediator.AddModifier(modifier);
+            _rend.color = Color.red;
+            yield return new WaitForSeconds(.1f);
+            _rend.color = Color.white;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Attributes
 {
@@ -9,17 +10,20 @@ namespace Attributes
 
         private BaseAttributes<TEnum> _baseAttributes;
 
+        public event Action OnAttributesChanged;
+
         public AttributesMediator<TEnum> Mediator => _mediator;
 
         public Attributes(AttributesMediator<TEnum> mediator, BaseAttributes<TEnum> baseAttributes)
         {
             _mediator = mediator;
             _baseAttributes = baseAttributes;
+            _mediator.OnAttributesChanged += () => OnAttributesChanged?.Invoke();
         }
 
-        public float GetAttribute(TEnum type)
+        public float GetAttribute(TEnum type, float defaultValue = 0f)
         {
-            var q = new AttributeQuery<TEnum>(type, _baseAttributes.GetBaseAttribute(type));
+            var q = new AttributeQuery<TEnum>(type, _baseAttributes.GetBaseAttribute(type, defaultValue));
             _mediator.PerformQuery(this, q);
 
             return q.Value;

@@ -26,7 +26,7 @@ namespace Towers
         public Alignment Alignment => Alignment.Friendly;
         public Transform Transform => transform;
         public int Strength => Mathf.CeilToInt(_attributes.GetAttribute(TowerAttributes.Damage));
-        public int Priority => 0;
+        public int TargetingPriority => 0;
 
         public float GetDistance(Vector2 position) => Vector2.Distance(position, transform.position);
 

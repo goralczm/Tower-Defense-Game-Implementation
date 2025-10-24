@@ -15,7 +15,7 @@ namespace Waves
         public int GetCountByWave(int wave) => Mathf.RoundToInt(Count.Evaluate(wave));
     }
 
-    [CreateAssetMenu(menuName = "Waves/Waves Data", fileName = "New Waves Data")]
+    [CreateAssetMenu(menuName = "Waves/New Waves Data", fileName = "New Waves Data")]
     public class WavesData : ScriptableObject
     {
         public List<WaveEntry> Entries = new();

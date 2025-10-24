@@ -7,6 +7,14 @@ namespace Attributes
     public class BaseAttributesBuilder<TEnum> where TEnum : Enum
     {
         private readonly List<AttributeQuery<TEnum>> _queries = new();
+        private readonly BaseAttributes<TEnum> _baseAttributes;
+
+        public BaseAttributesBuilder() { }
+
+        public BaseAttributesBuilder(BaseAttributes<TEnum> baseAttributes)
+        {
+            _baseAttributes = baseAttributes;
+        }
 
         public BaseAttributesBuilder<TEnum> Add(TEnum type, float value)
         {
@@ -37,6 +45,9 @@ namespace Attributes
             {
                 Queries = _queries
             };
+
+            if (_baseAttributes != null)
+                result += _baseAttributes;
 
             return result;
         }
