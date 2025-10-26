@@ -11,7 +11,6 @@ namespace Towers
     {
         public ProjectileBehaviour ProjectilePrefab;
         public ProjectileData ProjectileData;
-        [SerializeReference, ForceArtifice] public IProjectileMoveStrategy MoveStrategy;
         public List<Alignment> TargetAlignments = new();
 
         private TowerBehaviour _tower;
@@ -55,7 +54,7 @@ namespace Towers
                 .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(_tower.transform.position, baseAttributes, TargetAlignments, ProjectileData, MoveStrategy);
+            projectile.Setup(_tower.transform.position, baseAttributes, TargetAlignments, ProjectileData, new PermanentContactProjectile());
             _projectiles.Add(projectile);
         }
 
@@ -65,7 +64,6 @@ namespace Towers
             {
                 ProjectilePrefab = ProjectilePrefab,
                 ProjectileData = ProjectileData,
-                MoveStrategy = MoveStrategy,
                 TargetAlignments = TargetAlignments,
             };
         }

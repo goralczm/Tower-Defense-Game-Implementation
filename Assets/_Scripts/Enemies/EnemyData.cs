@@ -1,4 +1,5 @@
 using Attributes;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Enemies
@@ -7,7 +8,9 @@ namespace Enemies
     public class EnemyData : ScriptableObject
     {
         public BaseAttributes<EnemyAttributes> BaseAttributes;
+        public int Reward;
         public int DangerLevel = 1;
         public Sprite Sprite;
+        public List<EnemyData> Children;
     }
 }

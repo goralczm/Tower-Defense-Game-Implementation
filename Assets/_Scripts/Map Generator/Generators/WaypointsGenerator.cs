@@ -1,6 +1,7 @@
 using MapGenerator.Core;
 using MapGenerator.Settings;
 using Paths;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,9 +22,13 @@ namespace MapGenerator.Generators
         private Tilemap _tilemap;
         private List<Vector2> _waypoints = new();
 
-        public event System.Action<string> OnStatusChanged;
+        public event Action<string> OnStatusChanged;
 
         public bool ShowDebug => _debug;
+        public List<Type> RequiredGenerators => new()
+        {
+            typeof(TilemapGenerator),
+        };
 
         public WaypointsGenerator(TilemapSettings tilemapSettings, Tilemap pathTilemap)
         {
@@ -38,7 +43,7 @@ namespace MapGenerator.Generators
 
             OnStatusChanged?.Invoke("Extracting waypoints...");
             List<Vector2> waypoints = ExtractWaypoints(startPoint);
-            Object.FindFirstObjectByType<Path>().SetWaypoints(waypoints);
+            UnityEngine.Object.FindFirstObjectByType<Path>().SetWaypoints(waypoints);
 
             return layout;
         }

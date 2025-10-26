@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -26,6 +27,8 @@ namespace MapGenerator.Core
 
     public interface IGenerator
     {
+        public List<Type> RequiredGenerators { get; }
+        
         public Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts);
 
         public void Cleanup();

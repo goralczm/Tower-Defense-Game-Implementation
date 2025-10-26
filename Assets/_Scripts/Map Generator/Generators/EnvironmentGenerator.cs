@@ -1,7 +1,7 @@
 using MapGenerator.Core;
 using MapGenerator.Settings;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -48,6 +48,7 @@ namespace MapGenerator.Generators
         public event System.Action<string> OnStatusChanged;
 
         public bool ShowDebug => _debug;
+        public List<Type> RequiredGenerators => new();
 
         public EnvironmentGenerator(EnvironmentSettings environmentSettings, PathSettings pathSettings, GenerationConfig generationData, Tilemap tilemap)
         {
@@ -239,7 +240,7 @@ namespace MapGenerator.Generators
         public void Cleanup()
         {
             if (_environmentParent != null)
-                Object.Destroy(_environmentParent.gameObject);
+                UnityEngine.Object.Destroy(_environmentParent.gameObject);
         }
     }
 }

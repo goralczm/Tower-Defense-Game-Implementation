@@ -1,3 +1,4 @@
+using Core;
 using ObjectPooling;
 using Paths;
 using System;
@@ -39,7 +40,7 @@ namespace Enemies
         {
             var enemiesCopy = _enemiesAlive.ToList();
             foreach (var enemy in enemiesCopy)
-                enemy.Die();
+                enemy.Die(DeathReason.Self);
 
             _enemiesAlive.Clear();
             _isStopped = true;
@@ -48,14 +49,16 @@ namespace Enemies
         public void OnEnable()
         {
             EnemyBehaviour.OnEnemyDied += RemoveAliveEnemy;
+            EnemyBehaviour.SpawnEnemyRequest += SpawnEnemy;
         }
 
         public void OnDisable()
         {
             EnemyBehaviour.OnEnemyDied -= RemoveAliveEnemy;
+            EnemyBehaviour.SpawnEnemyRequest -= SpawnEnemy;
         }
 
-        private void RemoveAliveEnemy(EnemyBehaviour enemy)
+        private void RemoveAliveEnemy(EnemyBehaviour enemy, DeathReason reason)
         {
             _enemiesAlive.Remove(enemy);
         }
@@ -83,14 +86,14 @@ namespace Enemies
                     await Task.Delay(10);
 #endif
 
-                SpawnEnemy(entry.Enemy, 0);
+                SpawnEnemy(entry.Enemy, 0, _origin.position);
                 await Task.Delay(TimeSpan.FromSeconds(entry.GetIntervalByWave(wave)));
             }
         }
 
-        private void SpawnEnemy(EnemyData enemyData, int nextWaypointIndex)
+        public void SpawnEnemy(EnemyData enemyData, int nextWaypointIndex, Vector2 position)
         {
-            GameObject enemyObject = PoolManager.Instance.SpawnFromPool("Enemy", _origin.position, Quaternion.identity);
+            GameObject enemyObject = PoolManager.Instance.SpawnFromPool("Enemy", position, Quaternion.identity);
             EnemyBehaviour enemy = EnemiesCache.GetEnemyByGameObject(enemyObject);
 
             enemy.Setup(enemyData, _path, nextWaypointIndex);

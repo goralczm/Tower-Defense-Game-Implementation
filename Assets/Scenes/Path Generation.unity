@@ -69418,7 +69418,7 @@ MonoBehaviour:
   _strength: 10
   _smootheness: 0.1
   _minZoom: 2
-  _maxZoom: 10
+  _maxZoom: 25
   _reverseScroll: 0
 --- !u!1 &1337035413
 GameObject:
@@ -69455,8 +69455,54 @@ Transform:
   - {fileID: 304970770}
   - {fileID: 331017055}
   - {fileID: 1042966175}
+  - {fileID: 1392401794}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1392401793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1392401794}
+  - component: {fileID: 1392401795}
+  m_Layer: 0
+  m_Name: Bank
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1392401794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392401793}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1337035414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1392401795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392401793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667cd747c5ae6214abb4cc042d99f603, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Currency::Currency.Bank
+  _currency: 0
 --- !u!1 &1449249691
 GameObject:
   m_ObjectHideFlags: 0
@@ -76675,11 +76721,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 256e930fb2571c3478083cc3bfb423f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pathPreset: {fileID: 11400000, guid: 81eec7458eaf12240b46d5435f33fd07, type: 2}
+  _pathPreset: {fileID: 11400000, guid: 1b7ce760feea30a4ba50aa439ce73bda, type: 2}
   _generationConfig:
     Seed: 64060
     GridStartPoint: {x: 0, y: 4}
-    GridEndPoint: {x: 15, y: 6}
+    GridEndPoint: {x: 16, y: 6}
     EnforceRules: 1
     RenderOverflowTiles: 1
   _tilemapSettings: {fileID: 11400000, guid: 01b7b45121bb40249a32e7f9e7816814, type: 2}

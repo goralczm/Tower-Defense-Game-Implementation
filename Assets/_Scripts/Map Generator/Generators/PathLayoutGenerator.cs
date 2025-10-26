@@ -27,6 +27,7 @@ namespace MapGenerator.Generators
         public event Action<string> OnStatusChanged;
 
         public bool ShowDebug => _debug;
+        public List<Type> RequiredGenerators => new();
 
         public PathLayoutGenerator(PathSettings pathSettings, GenerationConfig generationData, bool enfroceRules)
         {

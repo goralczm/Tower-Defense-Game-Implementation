@@ -71,10 +71,10 @@ namespace Towers
             _attributes.Mediator.AddModifier(modifier);
 
             if (_attributes.GetAttribute(TowerAttributes.Health) <= 0f)
-                Die();
+                Die(DeathReason.External);
         }
 
-        public void Die()
+        public void Die(DeathReason reaseon)
         {
             Destroy(gameObject);
         }

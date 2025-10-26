@@ -1,6 +1,7 @@
 using MapGenerator.Core;
 using MapGenerator.Settings;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace MapGenerator.Generators
         public event Action<string> OnStatusChanged;
 
         public bool ShowDebug => _debug;
+        public List<Type> RequiredGenerators => new();
 
         public TilemapGenerator(TilemapSettings tilemapSettings, Tilemap tilemap)
         {

@@ -25,6 +25,7 @@ namespace MapGenerator.Generators
         public event Action<string> OnStatusChanged;
 
         public bool ShowDebug => _debug;
+        public List<Type> RequiredGenerators => new();
 
         public RoundaboutsGenerator(PathSettings pathSettings, GenerationConfig generationData)
         {

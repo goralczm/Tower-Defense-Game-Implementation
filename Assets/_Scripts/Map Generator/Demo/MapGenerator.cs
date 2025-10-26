@@ -5,6 +5,7 @@ using MapGenerator.Settings;
 using MapGenerator.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEditor;
@@ -45,6 +46,16 @@ namespace MapGenerator.Demo
 
         public MapBuilder WithGenerator(IGenerator generator)
         {
+            var generatorTypes = _generators.Select(g => g.GetType()).ToList();
+            foreach (var requiredGenerator in generator.RequiredGenerators)
+            {
+                if (!generatorTypes.Contains(requiredGenerator))
+                {
+                    Debug.LogError($"{requiredGenerator} must be added before {generator.GetType()}");
+                    return this;
+                }
+            }
+
             generator.OnStatusChanged += OnStatusChanged;
             _generators.Add(generator);
 
@@ -56,6 +67,8 @@ namespace MapGenerator.Demo
             _layout = new();
 
             _cts = new();
+
+            OnStatusChanged?.Invoke("Generating path...");
 
             foreach (var generator in _generators)
             {

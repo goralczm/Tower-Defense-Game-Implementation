@@ -3,6 +3,7 @@ using Paths;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using Utilities;
 
 namespace Waves
 {

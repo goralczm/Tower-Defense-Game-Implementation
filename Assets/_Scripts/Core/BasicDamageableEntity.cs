@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Codice.Client.Common.Connection.AskCredentialsToUser;
 
 namespace Core
 {
@@ -19,10 +20,10 @@ namespace Core
             _health -= damage;
 
             if (_health <= 0f)
-                Die();
+                Die(DeathReason.External);
         }
 
-        public void Die()
+        public void Die(DeathReason reason)
         {
             Destroy(gameObject);
         }

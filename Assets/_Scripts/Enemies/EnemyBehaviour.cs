@@ -18,8 +18,10 @@ namespace Enemies
         private int _currentWaypointIndex;
         private bool _isStopped;
 
-        public static event Action<EnemyBehaviour> OnEnemyDied;
+        public static event Action<EnemyBehaviour, DeathReason> OnEnemyDied;
+        public static event Action<EnemyData, int, Vector2> SpawnEnemyRequest;
 
+        public EnemyData EnemyData => _enemyData;
         public Attributes<EnemyAttributes> Attributes => _attributes;
         public Alignment Alignment => Alignment.Hostile;
         public Transform Transform => transform;
@@ -34,6 +36,7 @@ namespace Enemies
             _enemyData = enemyData;
             _currentWaypointIndex = nextWaypointIndex;
             _attributes = new(new(), enemyData.BaseAttributes);
+            _rend.sprite = _enemyData.Sprite;
         }
 
         public float GetDistanceOnPath()
@@ -54,7 +57,7 @@ namespace Enemies
 
             if (_path.Waypoints.Count == 0)
             {
-                Die();
+                Die(DeathReason.Self);
                 return;
             }
 
@@ -68,7 +71,7 @@ namespace Enemies
             {
                 if (_currentWaypointIndex >= _path.Waypoints.Count - 1)
                 {
-                    Die();
+                    Die(DeathReason.Self);
                     return;
                 }
 
@@ -83,16 +86,37 @@ namespace Enemies
             _attributes.Mediator.AddModifier(modifier);
 
             if (_attributes.GetAttribute(EnemyAttributes.Health) <= 0f)
-                Die();
+            {
+                SpawnChildren(transform.position, _currentWaypointIndex - 1, .2f, _enemyData.Children.Count);
+                Die(DeathReason.External);
+            }
             else
                 StartCoroutine(HitEffect());
         }
 
-        public void Die()
+        public void Die(DeathReason reason)
         {
+            OnEnemyDied?.Invoke(this, reason);
             StopAllCoroutines();
+            _rend.color = Color.white;
             gameObject.SetActive(false);
-            OnEnemyDied?.Invoke(this);
+        }
+
+        private void SpawnChildren(Vector2 pointA, int lastPointIndex, float spacing, int points)
+        {
+            if (points <= 0 || lastPointIndex < 0)
+                return;
+
+            float distance = Vector2.Distance(pointA, _path.Waypoints[lastPointIndex]);
+            int pointsCapacity = (int)(distance / spacing);
+            int range = Mathf.Min(pointsCapacity, points);
+            for (int i = 0; i < range; i++)
+            {
+                Vector2 newChildPos = Vector2.Lerp(_path.Waypoints[lastPointIndex], pointA, (distance - spacing * (i + 1)) / distance);
+                SpawnEnemyRequest?.Invoke(_enemyData.Children[i], lastPointIndex + 1, newChildPos);
+            }
+
+            SpawnChildren(_path.Waypoints[lastPointIndex], lastPointIndex - 1, spacing, points - range);
         }
 
         IEnumerator HitEffect()
