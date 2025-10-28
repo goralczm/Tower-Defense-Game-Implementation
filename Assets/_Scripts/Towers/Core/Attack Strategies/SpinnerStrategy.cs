@@ -1,4 +1,3 @@
-using ArtificeToolkit.Attributes;
 using Attributes;
 using Core;
 using System.Collections.Generic;
@@ -17,6 +16,11 @@ namespace Towers
         private Spinner _spinner;
         private List<ProjectileBehaviour> _projectiles = new();
 
+        public void Validate()
+        {
+            //noop
+        }
+
         public void Setup(TowerBehaviour tower)
         {
             _tower = tower;
@@ -31,7 +35,7 @@ namespace Towers
         private void OnAttributesChanged()
         {
             _spinner.SetPointsCount((int)_tower.Attributes.GetAttribute(TowerAttributes.ProjectilesCount));
-            _spinner.SetSpeed(ProjectileData.BaseAttributes.GetBaseAttribute(ProjectileAttributes.Speed));
+            _spinner.SetSpeed(ProjectileData.BaseAttributes.GetAttribute(ProjectileAttributes.Speed));
             _spinner.SetRadius(_tower.Attributes.GetAttribute(TowerAttributes.Range));
         }
 

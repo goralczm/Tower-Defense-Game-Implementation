@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Rebound
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
   Sprite: {fileID: 8891180011573125036, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
-  Color: {r: 1, g: 0, b: 0, a: 1}
+  SpriteColor: {r: 0.672129, g: 0.19450872, b: 0.8773585, a: 1}
   BaseAttributes:
     Queries:
     - Type: 0
       Value: 15
-    - Type: 5
-      Value: 2
     - Type: 4
       Value: 5
+  MoveStrategy:
+    rid: 3343487951226798157
   DamageStrategies:
   - rid: 3343487900777971713
   - rid: 3343487900777971714
@@ -33,4 +33,7 @@ MonoBehaviour:
       data: 
     - rid: 3343487900777971714
       type: {class: SimpleProjectileDamage, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 3343487951226798157
+      type: {class: BouncingProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 

@@ -19,5 +19,11 @@ namespace Towers
         public TowerLevel[] Levels;
 
         [SerializeReference, ForceArtifice] public IAttackStrategy[] AttackStrategies;
+
+        private void OnValidate()
+        {
+            foreach (var attack in AttackStrategies)
+                attack.Validate();
+        }
     }
 }

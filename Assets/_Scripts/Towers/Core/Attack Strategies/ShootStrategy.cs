@@ -1,6 +1,6 @@
-using ArtificeToolkit.Attributes;
 using Attributes;
 using Core;
+using Inventory;
 using System.Collections.Generic;
 using Towers.Projectiles;
 using UnityEngine;
@@ -10,16 +10,34 @@ namespace Towers
     public class ShootStrategy : IAttackStrategy
     {
         public ProjectileBehaviour ProjectilePrefab;
-        public ProjectileData ProjectileData;
-        [SerializeReference, ForceArtifice] public IProjectileMoveStrategy MoveStrategy;
+        public ProjectileData DefaultProjectile;
         public List<Alignment> TargetAlignments = new();
 
         private TowerBehaviour _tower;
         private float _timer;
+        private ProjectileData _projectile;
+
+        public void Validate()
+        {
+            if (DefaultProjectile.MoveStrategy.GetType().Equals(typeof(PermanentContactProjectile)))
+            {
+                Debug.LogError($"{typeof(PermanentContactProjectile).Name} is not compatible with {typeof(ShootStrategy).Name}");
+                DefaultProjectile = null;
+            }
+        }
 
         public void Setup(TowerBehaviour tower)
         {
             _tower = tower;
+            _tower.Inventory.OnSlotChanged += UpdateProjectile;
+
+            UpdateProjectile(_tower.Inventory.Get(0), 0);
+        }
+
+        private void UpdateProjectile(IItem projectile, int _)
+        {
+            projectile ??= DefaultProjectile;
+            _projectile = (ProjectileData)projectile;
         }
 
         public void Tick(float deltaTime)
@@ -57,7 +75,7 @@ namespace Towers
                 .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(target, baseAttributes, TargetAlignments, ProjectileData, MoveStrategy);
+            projectile.Setup(target, baseAttributes, TargetAlignments, _projectile, _projectile.MoveStrategy);
         }
 
         public IAttackStrategy Clone()
@@ -65,8 +83,7 @@ namespace Towers
             return new ShootStrategy()
             {
                 ProjectilePrefab = ProjectilePrefab,
-                ProjectileData = ProjectileData,
-                MoveStrategy = MoveStrategy,
+                DefaultProjectile = DefaultProjectile,
                 TargetAlignments = TargetAlignments,
             };
         }

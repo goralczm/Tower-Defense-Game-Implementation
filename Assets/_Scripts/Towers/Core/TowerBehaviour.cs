@@ -1,5 +1,6 @@
 using Attributes;
 using Core;
+using System;
 using System.Linq;
 using Targeting;
 using UnityEngine;
@@ -13,13 +14,15 @@ namespace Towers
 
         [Header("References")]
         [SerializeField] private SpriteRenderer _rend;
-
-        [Header("Debug")]
-        [SerializeField] private TowerData _startTowerData;
+        [SerializeField] private Inventory.Inventory _inventory;
+        [SerializeField] private LineOfSight _lineOfSight;
 
         private TowerData _towerData;
         private Attributes<TowerAttributes> _attributes;
         private IAttackStrategy[] _attackStrategies;
+        private int _level;
+
+        public Action<int> OnTowerLevelChanged;
 
         public Attributes<TowerAttributes> Attributes => _attributes;
         public TargetingOptions TargetingOption => _targetingOption;
@@ -27,13 +30,30 @@ namespace Towers
         public Transform Transform => transform;
         public int Strength => Mathf.CeilToInt(_attributes.GetAttribute(TowerAttributes.Damage));
         public int TargetingPriority => 0;
+        public Inventory.Inventory Inventory => _inventory;
+        public TowerData TowerData => _towerData;
+        public int Level => _level + 1;
 
         public float GetDistance(Vector2 position) => Vector2.Distance(position, transform.position);
 
-        private void Awake()
+        private void OnEnable()
         {
-            if (_startTowerData)
-                Setup(_startTowerData, 0);
+            TowerSelectionController.OnTowerSelected += OnTowerSelected;
+        }
+
+        private void OnDisable()
+        {
+            TowerSelectionController.OnTowerSelected -= OnTowerSelected;
+        }
+
+        private void OnTowerSelected(TowerBehaviour tower)
+        {
+            ToggleLineOfSight(tower == this);
+        }
+
+        private void ToggleLineOfSight(bool state)
+        {
+            _lineOfSight.gameObject.SetActive(state);
         }
 
         public void Setup(TowerData towerData, int level = 0)
@@ -41,6 +61,7 @@ namespace Towers
             _towerData = towerData;
 
             _attributes = new(new(), _towerData.Levels[level].BaseAttributes);
+            _attributes.OnAttributesChanged += OnAttributesChanged;
 
             _attackStrategies = _towerData.AttackStrategies
                 .Select(strategy => strategy.Clone())
@@ -52,10 +73,26 @@ namespace Towers
             SetLevel(level);
         }
 
+        private void OnAttributesChanged()
+        {
+            _lineOfSight.SetRadius(_attributes.GetAttribute(TowerAttributes.Range));
+        }
+
+        public void Upgrade()
+        {
+            SetLevel(_level + 1);
+        }
+
         public void SetLevel(int level)
         {
+            if (level >= _towerData.Levels.Length)
+                return;
+
+            _level = level;
             _rend.sprite = _towerData.Levels[level].Icon;
             _attributes.SetBaseAttributes(_towerData.Levels[level].BaseAttributes);
+
+            OnTowerLevelChanged?.Invoke(_level);
         }
 
         private void Update()

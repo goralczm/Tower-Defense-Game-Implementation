@@ -11,7 +11,7 @@ namespace GameFlow
         public GameObject BuildingPrefab => Prefab;
         public Sprite Sprite => Tower.Levels[0].Icon;
         public bool ShowLineOfSight => true;
-        public float LineOfSightRadius => Tower.Levels[0].BaseAttributes.GetBaseAttribute(Attributes.TowerAttributes.Range);
+        public float LineOfSightRadius => Tower.Levels[0].BaseAttributes.GetAttribute(Attributes.TowerAttributes.Range);
 
         public void Build(GameObject newBuilding)
         {

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
+  m_Name: Sawblade
+  m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
+  Sprite: {fileID: 8891180011573125036, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
+  SpriteColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  BaseAttributes:
+    Queries:
+    - Type: 0
+      Value: 15
+  MoveStrategy:
+    rid: 3343487951226798158
+  DamageStrategies:
+  - rid: 3343487964692086862
+  - rid: 3343487900777971712
+  references:
+    version: 2
+    RefIds:
+    - rid: 3343487900777971712
+      type: {class: SimpleProjectileDamage, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 3343487951226798158
+      type: {class: PermanentContactProjectile, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 3343487964692086862
+      type: {class: BiggoProjectileStrategy, ns: Towers.Projectiles, asm: Towers}
+      data: 

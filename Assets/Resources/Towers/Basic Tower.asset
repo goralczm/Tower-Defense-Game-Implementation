@@ -25,7 +25,21 @@ MonoBehaviour:
       - Type: 2
         Value: 2
       - Type: 3
+        Value: 1
+      - Type: 4
+        Value: 2
+  - Icon: {fileID: -1894586206897897056, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
+    Cost: 100
+    BaseAttributes:
+      Queries:
+      - Type: 0
         Value: 5
+      - Type: 1
+        Value: 1
+      - Type: 2
+        Value: 2
+      - Type: 3
+        Value: 1
       - Type: 4
         Value: 2
   AttackStrategies:
@@ -37,10 +51,5 @@ MonoBehaviour:
       type: {class: ShootStrategy, ns: Towers, asm: Towers}
       data:
         ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
-        ProjectileData: {fileID: 11400000, guid: d81ea1dd761d36b4aa0c02a4a5922064, type: 2}
-        MoveStrategy:
-          rid: 3343487900777971719
+        DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
         TargetAlignments: 00000000
-    - rid: 3343487900777971719
-      type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}
-      data: 

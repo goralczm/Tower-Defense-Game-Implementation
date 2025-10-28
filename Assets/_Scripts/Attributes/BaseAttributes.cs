@@ -11,9 +11,9 @@ namespace Attributes
 
         private Dictionary<TEnum, AttributeQuery<TEnum>> _queryByType = new();
 
-        public float GetBaseAttribute(TEnum type, float defaultValue = 0f)
+        public float GetAttribute(TEnum type, float defaultValue = 0f)
         {
-            if (!_queryByType.TryGetValue(type, out AttributeQuery<TEnum> query))
+            if (!_queryByType.TryGetValue(type, out var query))
             {
                 query = Queries.FirstOrDefault(q => EqualityComparer<TEnum>.Default.Equals(q.Type, type));
                 if (query == null)
@@ -23,6 +23,14 @@ namespace Attributes
             }
 
             return query.Value;
+        }
+
+        public void AddAttribute(TEnum type, float value)
+        {
+            if (!_queryByType.TryGetValue(type, out var query))
+            {
+
+            }
         }
 
         public static BaseAttributes<TEnum> operator +(BaseAttributes<TEnum> a, BaseAttributes<TEnum> b)

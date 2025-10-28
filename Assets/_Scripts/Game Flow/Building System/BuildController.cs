@@ -10,13 +10,14 @@ namespace GameFlow
     {
         [Header("Settings")]
         [SerializeField, SerializeReference, ForceArtifice] private IBuilding _building;
-        [SerializeField] private LineOfSight _lineOfSight;
         [SerializeField] private Color _noCollisionColor;
         [SerializeField] private Color _collisionColor;
         [SerializeField] private LayerMask _obstacleLayer;
+        [SerializeField] private int _ghostSortingOrder = 10;
 
         [Header("References")]
         [SerializeField] private Grid _grid;
+        [SerializeField] private LineOfSight _lineOfSight;
 
         private SpriteRenderer _buildingGhost;
 
@@ -65,6 +66,9 @@ namespace GameFlow
             _buildingGhost = new GameObject("Building Ghost").AddComponent<SpriteRenderer>();
             _buildingGhost.sprite = _building.Sprite;
             _buildingGhost.transform.position = new(50f, 50f);
+            _buildingGhost.sortingOrder = _ghostSortingOrder;
+            _lineOfSight.transform.SetParent(_buildingGhost.transform);
+            _lineOfSight.transform.localPosition = Vector2.zero;
             _lineOfSight.SetRadius(_building.LineOfSightRadius);
             _lineOfSight.gameObject.SetActive(true);
         }
@@ -78,6 +82,7 @@ namespace GameFlow
 
         private void CancelBuilding()
         {
+            _lineOfSight.transform.SetParent(null);
             _lineOfSight.gameObject.SetActive(false);
             Destroy(_buildingGhost.gameObject);
         }

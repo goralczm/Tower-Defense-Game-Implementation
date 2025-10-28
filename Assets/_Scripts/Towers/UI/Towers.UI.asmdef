@@ -1,0 +1,20 @@
+{
+    "name": "Towers.UI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8cddf09bf00aad148bbb0855fb7e7fb1",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad",
+        "GUID:f7605dcf85277b840bcbb39e1575f564",
+        "GUID:a0a6965dc082d8c41970f50d4aa08d33"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
