@@ -23,7 +23,7 @@ namespace Attributes
 
         public float GetAttribute(TEnum type, float defaultValue = 0f)
         {
-            var q = new AttributeQuery<TEnum>(type, _baseAttributes.GetBaseAttribute(type, defaultValue));
+            var q = new AttributeQuery<TEnum>(type, _baseAttributes.GetAttribute(type, defaultValue));
             _mediator.PerformQuery(this, q);
 
             return q.Value;

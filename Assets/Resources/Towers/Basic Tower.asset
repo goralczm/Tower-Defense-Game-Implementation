@@ -25,22 +25,22 @@ MonoBehaviour:
       - Type: 2
         Value: 2
       - Type: 3
-        Value: 5
+        Value: 1
       - Type: 4
-        Value: 2
+        Value: 1
   AttackStrategies:
-  - rid: 3343487900777971718
+  - rid: 8160280151016865793
   references:
     version: 2
     RefIds:
-    - rid: 3343487900777971718
+    - rid: 8160280151016865793
       type: {class: ShootStrategy, ns: Towers, asm: Towers}
       data:
         ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
-        ProjectileData: {fileID: 11400000, guid: d81ea1dd761d36b4aa0c02a4a5922064, type: 2}
+        ProjectileData: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
         MoveStrategy:
-          rid: 3343487900777971719
+          rid: 8160280151016865878
         TargetAlignments: 00000000
-    - rid: 3343487900777971719
+    - rid: 8160280151016865878
       type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 

@@ -22,7 +22,7 @@ namespace Towers.Projectiles
         {
             if (_projectile.TryDamageTarget(target, out var damageable) && Time.time >= _cooldownTimer)
             {
-                _projectile.Attributes.Mediator.AddModifier(new BasicAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Size, 1f, v => v += .2f));
+                _projectile.Attributes.Mediator.AddModifier(new BasicAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Size, 1f, v => v += 1f));
                 _projectile.Attributes.Mediator.AddModifier(new BasicAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Speed, 1f, v => v += .5f));
                 _cooldownTimer = Time.time + EFFECT_COOLDOWN;
             }

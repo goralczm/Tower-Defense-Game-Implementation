@@ -11,7 +11,7 @@ namespace Attributes
 
         private Dictionary<TEnum, AttributeQuery<TEnum>> _queryByType = new();
 
-        public float GetBaseAttribute(TEnum type, float defaultValue = 0f)
+        public float GetAttribute(TEnum type, float defaultValue = 0f)
         {
             if (!_queryByType.TryGetValue(type, out AttributeQuery<TEnum> query))
             {

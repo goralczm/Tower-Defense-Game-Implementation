@@ -31,7 +31,7 @@ namespace Towers
         private void OnAttributesChanged()
         {
             _spinner.SetPointsCount((int)_tower.Attributes.GetAttribute(TowerAttributes.ProjectilesCount));
-            _spinner.SetSpeed(ProjectileData.BaseAttributes.GetBaseAttribute(ProjectileAttributes.Speed));
+            _spinner.SetSpeed(_tower.Attributes.GetAttribute(TowerAttributes.RateOfFire));
             _spinner.SetRadius(_tower.Attributes.GetAttribute(TowerAttributes.Range));
         }
 
