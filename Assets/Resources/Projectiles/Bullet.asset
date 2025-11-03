@@ -13,15 +13,13 @@ MonoBehaviour:
   m_Name: Bullet
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
   Sprite: {fileID: 8891180011573125036, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
-  Color: {r: 1, g: 0, b: 0, a: 1}
+  SpriteColor: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
   BaseAttributes:
     Queries:
     - Type: 0
       Value: 15
-    - Type: 5
-      Value: 2
-    - Type: 4
-      Value: 2
+  MoveStrategy:
+    rid: 3343487951226798156
   DamageStrategies:
   - rid: 3343487900777971712
   references:
@@ -29,4 +27,7 @@ MonoBehaviour:
     RefIds:
     - rid: 3343487900777971712
       type: {class: SimpleProjectileDamage, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 3343487951226798156
+      type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 

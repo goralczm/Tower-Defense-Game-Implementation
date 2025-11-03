@@ -1,5 +1,8 @@
 using System;
-using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Attributes
 {
@@ -32,6 +35,31 @@ namespace Attributes
         public void SetBaseAttributes(BaseAttributes<TEnum> baseAttributes)
         {
             _baseAttributes = baseAttributes;
+        }
+
+        public IEnumerable<KeyValuePair<TEnum, float>> GetAllAttributes()
+        {
+            foreach (TEnum type in Enum.GetValues(typeof(TEnum)))
+            {
+                float value = GetAttribute(type);
+                if (value != 0)
+                    yield return new KeyValuePair<TEnum, float>(type, value);
+            }
+        }
+
+        public string GetAttributesDescription()
+        {
+            var attributes = GetAllAttributes();
+            StringBuilder description = new();
+            foreach (var attribute in attributes)
+            {
+                description.Append(attribute.Key);
+                description.Append(" ");
+                description.Append(attribute.Value);
+                description.Append("\n");
+            }
+
+            return description.ToString();
         }
     }
 }

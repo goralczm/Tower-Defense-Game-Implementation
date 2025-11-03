@@ -10,9 +10,6 @@ public class LineOfSight : MonoBehaviour
     [SerializeField] private int _rayCount = 360;
     [SerializeField] private LayerMask _obstaclesMask;
 
-    [Header("Grid Settings")]
-    [SerializeField] private Grid _grid;
-
     private Mesh _mesh;
     private Vector3[] _vertices;
     private int[] _triangles;
@@ -23,13 +20,6 @@ public class LineOfSight : MonoBehaviour
     {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
-    }
-
-    private void Update()
-    {
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPos.z = -1;
-        transform.position = _grid.GetCellCenterLocal(_grid.WorldToCell(mouseWorldPos)) + _grid.transform.position;
     }
 
     private void LateUpdate()

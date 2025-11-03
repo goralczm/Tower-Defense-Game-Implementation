@@ -17,6 +17,11 @@ namespace Towers
         private Spinner _spinner;
         private List<ProjectileBehaviour> _projectiles = new();
 
+        public void Validate()
+        {
+            //noop
+        }
+
         public void Setup(TowerBehaviour tower)
         {
             _tower = tower;
