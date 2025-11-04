@@ -16,8 +16,8 @@ namespace Inventory
         private Transform _draggedItemParent;
         private int _index;
 
-        public override string Header => _item.Name;
-        public override string Content=> _item.Description;
+        public override string Header => _item?.Name ?? "";
+        public override string Content => _item?.Description ?? "";
 
         public void Init(Inventory inventory, Transform draggedItemParent)
         {

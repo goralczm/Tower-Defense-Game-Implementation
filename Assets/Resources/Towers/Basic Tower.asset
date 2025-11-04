@@ -28,6 +28,10 @@ MonoBehaviour:
         Value: 1
       - Type: 4
         Value: 2
+      - Type: 5
+        Value: 1
+    AttackStrategies:
+    - rid: 2482468667394097267
   - Icon: {fileID: -1894586206897897056, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
     Cost: 100
     BaseAttributes:
@@ -42,14 +46,53 @@ MonoBehaviour:
         Value: 1
       - Type: 4
         Value: 2
-  AttackStrategies:
-  - rid: 3343487900777971718
+      - Type: 5
+        Value: 2
+    AttackStrategies:
+    - rid: 2482468667394097268
+    - rid: 2482468667394097270
+  - Icon: {fileID: -1894586206897897056, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
+    Cost: 100
+    BaseAttributes:
+      Queries:
+      - Type: 0
+        Value: 5
+      - Type: 1
+        Value: 1
+      - Type: 2
+        Value: 2
+      - Type: 3
+        Value: 1
+      - Type: 4
+        Value: 2
+      - Type: 5
+        Value: 1
+    AttackStrategies:
+    - rid: 2482468667394097269
   references:
     version: 2
     RefIds:
-    - rid: 3343487900777971718
+    - rid: 2482468667394097267
       type: {class: ShootStrategy, ns: Towers, asm: Towers}
       data:
         ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
         DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
+        TargetAlignments: 00000000
+    - rid: 2482468667394097268
+      type: {class: ShootStrategy, ns: Towers, asm: Towers}
+      data:
+        ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
+        DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
+        TargetAlignments: 00000000
+    - rid: 2482468667394097269
+      type: {class: ShootStrategy, ns: Towers, asm: Towers}
+      data:
+        ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
+        DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
+        TargetAlignments: 00000000
+    - rid: 2482468667394097270
+      type: {class: SpinnerStrategy, ns: Towers, asm: Towers}
+      data:
+        ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
+        DefaultProjectile: {fileID: 11400000, guid: ab1ca0a6c45dffd438ebe2728d17153d, type: 2}
         TargetAlignments: 00000000

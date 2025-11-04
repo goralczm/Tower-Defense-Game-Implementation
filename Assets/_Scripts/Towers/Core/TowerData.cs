@@ -10,20 +10,20 @@ namespace Towers
         public Sprite Icon;
         public int Cost;
         public BaseAttributes<TowerAttributes> BaseAttributes;
+        [SerializeReference, ForceArtifice] public IAttackStrategy[] AttackStrategies;
     }
 
     [CreateAssetMenu(menuName = "Towers/New Tower Data", fileName = "New Tower Data")]
     public class TowerData : ScriptableObject
     {
         public string Description;
-        public TowerLevel[] Levels;
-
-        [SerializeReference, ForceArtifice] public IAttackStrategy[] AttackStrategies;
+        [ForceArtifice] public TowerLevel[] Levels;
 
         private void OnValidate()
         {
-            foreach (var attack in AttackStrategies)
-                attack.Validate();
+            foreach (var level in Levels)
+                foreach (var attack in level.AttackStrategies)
+                    attack.Validate();
         }
     }
 }

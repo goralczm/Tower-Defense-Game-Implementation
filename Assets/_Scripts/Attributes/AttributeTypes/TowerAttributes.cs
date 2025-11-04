@@ -7,5 +7,6 @@ namespace Attributes
         Range,
         ProjectilesCount,
         RateOfFire,
+        InventoryCapacity,
     }
 }

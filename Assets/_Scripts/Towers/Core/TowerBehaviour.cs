@@ -1,6 +1,7 @@
 using Attributes;
 using Core;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Targeting;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace Towers
 
         private TowerData _towerData;
         private Attributes<TowerAttributes> _attributes;
-        private IAttackStrategy[] _attackStrategies;
+        private List<IAttackStrategy> _attackStrategies = new();
         private int _level;
 
         public Action<int> OnTowerLevelChanged;
@@ -62,13 +63,7 @@ namespace Towers
 
             _attributes = new(new(), _towerData.Levels[level].BaseAttributes);
             _attributes.OnAttributesChanged += OnAttributesChanged;
-
-            _attackStrategies = _towerData.AttackStrategies
-                .Select(strategy => strategy.Clone())
-                .ToArray();
-
-            foreach (var strategy in _attackStrategies)
-                strategy.Setup(this);
+            OnAttributesChanged();
 
             SetLevel(level);
         }
@@ -76,6 +71,7 @@ namespace Towers
         private void OnAttributesChanged()
         {
             _lineOfSight.SetRadius(_attributes.GetAttribute(TowerAttributes.Range));
+            _inventory.SetCapacity((int)_attributes.GetAttribute(TowerAttributes.InventoryCapacity));
         }
 
         public void Upgrade()
@@ -91,6 +87,16 @@ namespace Towers
             _level = level;
             _rend.sprite = _towerData.Levels[level].Icon;
             _attributes.SetBaseAttributes(_towerData.Levels[level].BaseAttributes);
+
+            foreach (var attackStrategy in _attackStrategies)
+                attackStrategy.Dispose();
+
+            _attackStrategies = _towerData.Levels[level].AttackStrategies
+                .Select(strategy => strategy.Clone())
+                .ToList();
+
+            for (int i = 0; i < _attackStrategies.Count; i++)
+                _attackStrategies[i].Setup(this, i);
 
             OnTowerLevelChanged?.Invoke(_level);
         }

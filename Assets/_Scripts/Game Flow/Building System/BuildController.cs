@@ -10,8 +10,8 @@ namespace GameFlow
     {
         [Header("Settings")]
         [SerializeField, SerializeReference, ForceArtifice] private IBuilding _building;
-        [SerializeField] private Color _noCollisionColor;
-        [SerializeField] private Color _collisionColor;
+        [SerializeField] private Color _validColor;
+        [SerializeField] private Color _invalidColor;
         [SerializeField] private LayerMask _obstacleLayer;
         [SerializeField] private int _ghostSortingOrder = 10;
 
@@ -27,11 +27,20 @@ namespace GameFlow
             {
                 MoveBuildingGhost();
 
-                if (IsBuildingGhostColliding())
-                    _buildingGhost.color = _collisionColor;
+                bool buildingRequirementsMet = _building.CanBuild(out var cannotBuildReason);
+                if (IsBuildingGhostColliding() || !buildingRequirementsMet)
+                {
+                    if (buildingRequirementsMet)
+                        cannotBuildReason = "Building must not collide";
+
+                    _buildingGhost.color = _invalidColor;
+
+                    if (Input.GetMouseButtonDown(0))
+                        Debug.Log(cannotBuildReason);
+                }
                 else
                 {
-                    _buildingGhost.color = _noCollisionColor;
+                    _buildingGhost.color = _validColor;
 
                     if (Input.GetMouseButtonDown(0))
                         AcceptBuilding();

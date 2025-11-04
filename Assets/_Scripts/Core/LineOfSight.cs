@@ -13,6 +13,7 @@ public class LineOfSight : MonoBehaviour
     private Mesh _mesh;
     private Vector3[] _vertices;
     private int[] _triangles;
+    private Vector3 _lastPosition;
 
     public void SetRadius(float radius) => _viewRadius = radius;
 
@@ -24,7 +25,11 @@ public class LineOfSight : MonoBehaviour
 
     private void LateUpdate()
     {
-        GenerateViewMesh();
+        if (transform.position != _lastPosition)
+        {
+            GenerateViewMesh();
+            _lastPosition = transform.position;
+        }
     }
 
     private void GenerateViewMesh()

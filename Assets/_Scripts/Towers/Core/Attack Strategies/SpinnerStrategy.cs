@@ -1,5 +1,6 @@
 using Attributes;
 using Core;
+using Inventory;
 using System.Collections.Generic;
 using Towers.Projectiles;
 using UnityEngine;
@@ -9,24 +10,43 @@ namespace Towers
     public class SpinnerStrategy : IAttackStrategy
     {
         public ProjectileBehaviour ProjectilePrefab;
-        public ProjectileData ProjectileData;
+        public ProjectileData DefaultProjectile;
         public List<Alignment> TargetAlignments = new();
 
         private TowerBehaviour _tower;
         private Spinner _spinner;
         private List<ProjectileBehaviour> _projectiles = new();
+        private ProjectileData _projectile;
+        private int _index;
 
         public void Validate()
         {
             //noop
         }
 
-        public void Setup(TowerBehaviour tower)
+        public void Setup(TowerBehaviour tower, int index)
         {
             _tower = tower;
+            _index = index % _tower.Inventory.Capacity;
             _spinner = new Spinner();
             _tower.Attributes.OnAttributesChanged += OnAttributesChanged;
             OnAttributesChanged();
+
+            _tower.Inventory.OnSlotChanged += UpdateProjectile;
+            UpdateProjectile(_tower.Inventory.Get(_index), _index);
+        }
+
+        private void UpdateProjectile(IItem projectile, int index)
+        {
+            if (index != _index) return;
+
+            for (int i = _projectiles.Count - 1; i >= 0; i--)
+                Object.Destroy(_projectiles[i].gameObject);
+
+            _projectiles.Clear();
+
+            projectile ??= DefaultProjectile;
+            _projectile = (ProjectileData)projectile;
 
             for (int i = 0; i < _spinner.GetPointsCount(); i++)
                 CreateProjectile();
@@ -35,7 +55,7 @@ namespace Towers
         private void OnAttributesChanged()
         {
             _spinner.SetPointsCount((int)_tower.Attributes.GetAttribute(TowerAttributes.ProjectilesCount));
-            _spinner.SetSpeed(ProjectileData.BaseAttributes.GetAttribute(ProjectileAttributes.Speed));
+            _spinner.SetSpeed(DefaultProjectile.BaseAttributes.GetAttribute(ProjectileAttributes.Speed));
             _spinner.SetRadius(_tower.Attributes.GetAttribute(TowerAttributes.Range));
         }
 
@@ -58,8 +78,17 @@ namespace Towers
                 .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(_tower.transform.position, baseAttributes, TargetAlignments, ProjectileData, new PermanentContactProjectile());
+            projectile.Setup(_tower.transform.position, baseAttributes, TargetAlignments, _projectile, new PermanentContactProjectile());
             _projectiles.Add(projectile);
+        }
+
+        public void Dispose()
+        {
+            _tower.Attributes.OnAttributesChanged -= OnAttributesChanged;
+            _tower.Inventory.OnSlotChanged -= UpdateProjectile;
+
+            for (int i = _projectiles.Count - 1; i >= 0; i--)
+                Object.Destroy(_projectiles[i].gameObject);
         }
 
         public IAttackStrategy Clone()
@@ -67,7 +96,7 @@ namespace Towers
             return new SpinnerStrategy()
             {
                 ProjectilePrefab = ProjectilePrefab,
-                ProjectileData = ProjectileData,
+                DefaultProjectile = DefaultProjectile,
                 TargetAlignments = TargetAlignments,
             };
         }

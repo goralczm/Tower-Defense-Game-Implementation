@@ -19,12 +19,16 @@ namespace Inventory
         public void SetInventory(Inventory inventory)
         {
             if (_inventory != null)
+            {
                 _inventory.OnSlotChanged -= UpdateSlot;
+                _inventory.OnCapacityChanged -= UpdateDisplay;
+            }
 
             _inventory = inventory;
             if (_inventory != null)
             {
                 _inventory.OnSlotChanged += UpdateSlot;
+                _inventory.OnCapacityChanged += UpdateDisplay;
                 UpdateDisplay();
             }
             else
@@ -37,10 +41,12 @@ namespace Inventory
             {
                 _slots[i].Init(_inventory, _draggedItemParent);
 
-                if (_inventory.Items != null)
+                if (i < _inventory.Capacity)
                     UpdateSlot(_inventory.Items[i], i);
                 else
                     UpdateSlot(null, i);
+
+                _slots[i].gameObject.SetActive(i < _inventory.Capacity);
             }
         }
 

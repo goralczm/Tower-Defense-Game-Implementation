@@ -35,6 +35,7 @@ namespace Attributes
         public void SetBaseAttributes(BaseAttributes<TEnum> baseAttributes)
         {
             _baseAttributes = baseAttributes;
+            OnAttributesChanged?.Invoke();
         }
 
         public IEnumerable<KeyValuePair<TEnum, float>> GetAllAttributes()

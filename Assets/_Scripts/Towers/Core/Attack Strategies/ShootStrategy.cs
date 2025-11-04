@@ -16,6 +16,7 @@ namespace Towers
         private TowerBehaviour _tower;
         private float _timer;
         private ProjectileData _projectile;
+        private int _index;
 
         public void Validate()
         {
@@ -26,16 +27,19 @@ namespace Towers
             }
         }
 
-        public void Setup(TowerBehaviour tower)
+        public void Setup(TowerBehaviour tower, int index)
         {
             _tower = tower;
+            _index = index % _tower.Inventory.Capacity;
             _tower.Inventory.OnSlotChanged += UpdateProjectile;
 
-            UpdateProjectile(_tower.Inventory.Get(0), 0);
+            UpdateProjectile(_tower.Inventory.Get(_index), _index);
         }
 
-        private void UpdateProjectile(IItem projectile, int _)
+        private void UpdateProjectile(IItem projectile, int index)
         {
+            if (index != _index) return;
+
             projectile ??= DefaultProjectile;
             _projectile = (ProjectileData)projectile;
         }
@@ -76,6 +80,11 @@ namespace Towers
                 .Build();
 
             projectile.Setup(target, baseAttributes, TargetAlignments, _projectile, _projectile.MoveStrategy);
+        }
+
+        public void Dispose()
+        {
+            _tower.Inventory.OnSlotChanged -= UpdateProjectile;
         }
 
         public IAttackStrategy Clone()

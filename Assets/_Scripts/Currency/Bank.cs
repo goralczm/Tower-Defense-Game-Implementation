@@ -9,6 +9,8 @@ namespace Currency
     {
         [SerializeField] private int _currency;
 
+        public int Currency => _currency;
+
         private void OnEnable()
         {
             EnemyBehaviour.OnEnemyDied += this.OnEnemyDied;

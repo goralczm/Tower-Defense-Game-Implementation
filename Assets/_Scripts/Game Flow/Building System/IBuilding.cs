@@ -9,6 +9,7 @@ namespace GameFlow
         public bool ShowLineOfSight { get; }
         public float LineOfSightRadius { get; }
 
+        public bool CanBuild(out string reason);
         public void Build(GameObject newBuilding);
     }
 }
