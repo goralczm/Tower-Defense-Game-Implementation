@@ -17,7 +17,7 @@ MonoBehaviour:
   BaseAttributes:
     Queries:
     - Type: 0
-      Value: 10
+      Value: 2
     - Type: 5
       Value: 2
   MoveStrategy:

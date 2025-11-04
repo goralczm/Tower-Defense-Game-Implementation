@@ -1,3 +1,4 @@
+using ArtificeToolkit.Attributes;
 using Attributes;
 using Core;
 using Inventory;
@@ -55,7 +56,7 @@ namespace Towers
         private void OnAttributesChanged()
         {
             _spinner.SetPointsCount((int)_tower.Attributes.GetAttribute(TowerAttributes.ProjectilesCount));
-            _spinner.SetSpeed(DefaultProjectile.BaseAttributes.GetAttribute(ProjectileAttributes.Speed));
+            _spinner.SetSpeed(_tower.Attributes.GetAttribute(TowerAttributes.RateOfFire));
             _spinner.SetRadius(_tower.Attributes.GetAttribute(TowerAttributes.Range));
         }
 

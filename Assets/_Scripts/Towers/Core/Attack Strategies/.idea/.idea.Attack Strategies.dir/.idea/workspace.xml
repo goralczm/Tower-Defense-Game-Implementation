@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="299eef46-6dc0-44a4-8607-ed01442e49d2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/DOTween.XML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/DOTween.XML.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/DOTween.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/DOTween.dll.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/DOTweenEditor.XML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/DOTweenEditor.XML.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs/DOTweenIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs/DOTweenIcon.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs/DOTweenMiniIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs/DOTweenMiniIcon.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs/Footer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs/Footer.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs/Footer_dark.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs/Footer_dark.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs/Header.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Editor/Imgs/Header.jpg.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTween.Modules.asmdef" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTween.Modules.asmdef.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleAudio.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleAudio.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleEPOOutline.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleEPOOutline.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModulePhysics.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModulePhysics.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModulePhysics2D.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModulePhysics2D.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleSprite.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleSprite.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleUI.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleUI.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleUnityVersion.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleUnityVersion.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleUtils.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/Modules/DOTweenModuleUtils.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/readme.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Plugins/Demigiant/DOTween/readme.txt.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Prefabs/UI.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Prefabs/UI/Inventory Slot.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Prefabs/UI/Inventory Slot.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Resources/DOTweenSettings.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Resources/DOTweenSettings.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Resources/Projectiles/Sawblade.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Resources/Projectiles/Sawblade.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Core/Cache/GenericCache.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Core/Cache/GenericCache.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Core/Rarity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Core/Rarity.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Game Flow/Building System/Buildings.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory/IItem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory/IItem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory/Inventory.asmdef" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory/Inventory.asmdef.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory/Inventory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory/Inventory.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory/InventoryDisplay.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory/InventoryDisplay.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory/ItemSlot.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Inventory/ItemSlot.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Tooltip System.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Tooltip System/Tooltip.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Tooltip System/Tooltip.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Tooltip System/TooltipSystem.asmdef" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Tooltip System/TooltipSystem.asmdef.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Tooltip System/TooltipSystem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Tooltip System/TooltipSystem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Tooltip System/TooltipTrigger.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Tooltip System/TooltipTrigger.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TowerSelectionController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TowerSelectionController.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../StartInventory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../StartInventory.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../UI.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../UI/TowerPopup.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../UI/TowerPopup.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../UI/Towers.UI.asmdef" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../UI/Towers.UI.asmdef.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Utilities/UI.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Utilities/UI/UITweener.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Utilities/UI/UITweener.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Prefabs/Tower.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Prefabs/Tower.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Resources/Projectiles/Bullet.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Resources/Projectiles/Bullet.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Resources/Projectiles/Fireball.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Resources/Projectiles/Fireball.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Resources/Projectiles/Rebound.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Resources/Projectiles/Rebound.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Scenes/Path Generation.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Scenes/Path Generation.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Attributes/Attributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Attributes/Attributes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Attributes/AttributesMediator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Attributes/AttributesMediator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Attributes/BaseAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Attributes/BaseAttributes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Core/Cache/DamageableCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Core/Cache/DamageableCache.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Game Flow/Building System/BuildController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Game Flow/Building System/BuildController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Game Flow/Building System/LineOfSight.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Core/LineOfSight.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Game Flow/Building System/LineOfSight.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Core/LineOfSight.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Game Flow/Building System/TowerBuilding.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Game Flow/Building System/Buildings/TowerBuilding.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Game Flow/Building System/TowerBuilding.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Game Flow/Building System/Buildings/TowerBuilding.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IAttackStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IAttackStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ShootStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ShootStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TowerBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../TowerBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TowerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../TowerData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Projectiles/Core/ProjectileBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Projectiles/Core/ProjectileBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Projectiles/Core/ProjectileData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Projectiles/Core/ProjectileData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Towers.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/../../Towers.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Utilities/Utilities.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Utilities/Utilities.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../ProjectSettings/ProjectSettings.asset" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Users/goral/Documents/Unity Projects/Tower-Defense-Game-Implementation/Assets/_Scripts/Towers/Core/Attack Strategies/SpinnerStrategy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/goral/Documents/Unity Projects/Tower-Defense-Game-Implementation/Assets/_Scripts/Towers/Core/Attack Strategies/SpinnerStrategy.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": -1
+}]]></component>
+  <component name="ProjectId" id="34xf6MQpDrrZNhdPOVyAhqGIHdu" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\goral\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\goral\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
+      "C:\\Users\\goral\\AppData\\Local\\Symbols\\src"
+    ]
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="299eef46-6dc0-44a4-8607-ed01442e49d2" name="Changes" comment="" />
+      <created>1762159969870</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762159969870</updated>
+      <workItem from="1762159978706" duration="225000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
