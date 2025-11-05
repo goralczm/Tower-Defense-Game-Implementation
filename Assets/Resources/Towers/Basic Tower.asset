@@ -69,6 +69,7 @@ MonoBehaviour:
         Value: 1
     AttackStrategies:
     - rid: 2482468667394097269
+    - rid: 2482468667394097273
   references:
     version: 2
     RefIds:
@@ -91,6 +92,12 @@ MonoBehaviour:
         DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
         TargetAlignments: 00000000
     - rid: 2482468667394097270
+      type: {class: SpinnerStrategy, ns: Towers, asm: Towers}
+      data:
+        ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
+        DefaultProjectile: {fileID: 11400000, guid: ab1ca0a6c45dffd438ebe2728d17153d, type: 2}
+        TargetAlignments: 00000000
+    - rid: 2482468667394097273
       type: {class: SpinnerStrategy, ns: Towers, asm: Towers}
       data:
         ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}

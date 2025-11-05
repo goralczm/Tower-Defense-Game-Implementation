@@ -12,6 +12,7 @@ namespace Towers.Projectiles
         private Vector2? _targetPosition = null;
 
         public event Action<Transform> OnTransformCollision;
+
         public bool DestroyIfInvalidTarget => false;
 
         public void Init(ProjectileBehaviour projectile)

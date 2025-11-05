@@ -11,6 +11,7 @@ namespace Towers.Projectiles
         private int _bounces;
 
         public event Action<Transform> OnTransformCollision;
+
         public bool DestroyIfInvalidTarget => false;
 
         public void Init(ProjectileBehaviour projectile)

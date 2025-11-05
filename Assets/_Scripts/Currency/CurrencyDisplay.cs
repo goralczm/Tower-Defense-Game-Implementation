@@ -1,19 +1,25 @@
+using TMPro;
 using UnityEngine;
 
 namespace Currency
 {
     public class CurrencyDisplay : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        [SerializeField] private TextMeshProUGUI _currencyText;
+
+        private void OnEnable()
         {
-        
+            Bank.OnCurrencyChanged += UpdateCurrencyText;
         }
 
-        // Update is called once per frame
-        void Update()
+        private void OnDisable()
         {
-        
+            Bank.OnCurrencyChanged -= UpdateCurrencyText;
+        }
+
+        private void UpdateCurrencyText(int currency)
+        {
+            _currencyText.SetText($"Currency: {currency}");
         }
     }
 }

@@ -49,8 +49,9 @@ namespace Towers
             projectile ??= DefaultProjectile;
             _projectile = (ProjectileData)projectile;
 
-            for (int i = 0; i < _spinner.GetPointsCount(); i++)
-                CreateProjectile();
+            var points = _spinner.GetAllPointsPositions(_tower.transform.position);
+            for (int i = 0; i < points.Length; i++)
+                CreateProjectile(points[i]);
         }
 
         private void OnAttributesChanged()
@@ -70,9 +71,9 @@ namespace Towers
                 _projectiles[i].SetTargetPosition(positions[i]);
         }
 
-        private void CreateProjectile()
+        private void CreateProjectile(Vector2 position)
         {
-            ProjectileBehaviour projectile = Object.Instantiate(ProjectilePrefab, _tower.transform.position, Quaternion.identity);
+            ProjectileBehaviour projectile = Object.Instantiate(ProjectilePrefab, position, Quaternion.identity);
 
             var baseAttributes = new BaseAttributesBuilder<ProjectileAttributes>()
                 .Add(ProjectileAttributes.Damage, _tower.Attributes.GetAttribute(TowerAttributes.Damage))

@@ -6,6 +6,7 @@ namespace Towers.Projectiles
     public class PointProjectile : IProjectileMoveStrategy
     {
         private ProjectileBehaviour _projectile;
+        private Vector2? _target;
 
         public event Action<Transform> OnTransformCollision;
 
@@ -18,9 +19,12 @@ namespace Towers.Projectiles
 
         public void Move(Vector2 target)
         {
-            _projectile.transform.position = Vector2.MoveTowards(_projectile.transform.position, target, Time.deltaTime * _projectile.Attributes.GetAttribute(Attributes.ProjectileAttributes.Speed));
+            if (_target == null)
+                _target = target;
 
-            if (_projectile.IsNearTarget(target))
+            _projectile.transform.position = Vector2.MoveTowards(_projectile.transform.position, _target.Value, Time.deltaTime * _projectile.Attributes.GetAttribute(Attributes.ProjectileAttributes.Speed));
+
+            if (_projectile.IsNearTarget(_target.Value))
             {
                 var targets = Targeting.Targeting.GetTargetsInRange(_projectile.transform.position, .2f, _projectile.CanDamageAlignments);
                 if (targets.Count > 0)

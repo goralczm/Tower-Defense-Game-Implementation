@@ -20,7 +20,7 @@ namespace Towers.Projectiles
             foreach (var hit in hits)
             {
                 if (_projectile.TryDamageTarget(hit.transform, out var damageable))
-                    damageable.TakeDamage(_projectile.Attributes.GetAttribute(Attributes.ProjectileAttributes.Damage));
+                    damageable.TakeDamage(_projectile.Attributes.GetAttribute(ProjectileAttributes.Damage));
             }
         }
 

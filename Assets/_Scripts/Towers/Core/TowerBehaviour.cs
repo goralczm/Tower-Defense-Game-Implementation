@@ -55,6 +55,7 @@ namespace Towers
         private void ToggleLineOfSight(bool state)
         {
             _lineOfSight.gameObject.SetActive(state);
+            _lineOfSight.GenerateViewMesh();
         }
 
         public void Setup(TowerData towerData, int level = 0)

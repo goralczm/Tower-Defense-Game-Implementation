@@ -1,15 +1,13 @@
-using ArtificeToolkit.Attributes;
 using Core;
 using System.Linq;
 using UnityEngine;
 using Utilities;
 
-namespace GameFlow
+namespace BuildingSystem.Core
 {
     public class BuildController : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField, SerializeReference, ForceArtifice] private IBuilding _building;
         [SerializeField] private Color _validColor;
         [SerializeField] private Color _invalidColor;
         [SerializeField] private LayerMask _obstacleLayer;
@@ -19,6 +17,7 @@ namespace GameFlow
         [SerializeField] private Grid _grid;
         [SerializeField] private LineOfSight _lineOfSight;
 
+        private IBuilding _building;
         private SpriteRenderer _buildingGhost;
 
         private void Update()
@@ -27,13 +26,15 @@ namespace GameFlow
             {
                 MoveBuildingGhost();
 
-                bool buildingRequirementsMet = _building.CanBuild(out var cannotBuildReason);
+                string cannotBuildReason = "";
+                bool buildingRequirementsMet = _building.CanBuild(ref cannotBuildReason);
                 if (IsBuildingGhostColliding() || !buildingRequirementsMet)
                 {
                     if (buildingRequirementsMet)
                         cannotBuildReason = "Building must not collide";
 
                     _buildingGhost.color = _invalidColor;
+                    _lineOfSight.SetColor(_invalidColor);
 
                     if (Input.GetMouseButtonDown(0))
                         Debug.Log(cannotBuildReason);
@@ -41,6 +42,7 @@ namespace GameFlow
                 else
                 {
                     _buildingGhost.color = _validColor;
+                    _lineOfSight.SetColor(_validColor);
 
                     if (Input.GetMouseButtonDown(0))
                         AcceptBuilding();
@@ -48,11 +50,6 @@ namespace GameFlow
 
                 if (Input.GetMouseButtonDown(1))
                     CancelBuilding();
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.B))
-                    BeginBuilding();
             }
         }
 
@@ -70,8 +67,10 @@ namespace GameFlow
             return hits.Any(h => Helpers.IsInLayerMask(h.gameObject.layer, _obstacleLayer));
         }
 
-        private void BeginBuilding()
+        public void BeginBuilding(IBuilding building)
         {
+            _building = building;
+
             _buildingGhost = new GameObject("Building Ghost").AddComponent<SpriteRenderer>();
             _buildingGhost.sprite = _building.Sprite;
             _buildingGhost.transform.position = new(50f, 50f);
@@ -85,7 +84,7 @@ namespace GameFlow
         private void AcceptBuilding()
         {
             GameObject newBuilding = Instantiate(_building.BuildingPrefab, _buildingGhost.transform.position, _buildingGhost.transform.rotation);
-            _building.Build(newBuilding);
+            _building.OnBuild(newBuilding);
             CancelBuilding();
         }
 

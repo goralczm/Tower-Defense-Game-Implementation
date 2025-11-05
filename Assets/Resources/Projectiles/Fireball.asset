@@ -17,19 +17,19 @@ MonoBehaviour:
   BaseAttributes:
     Queries:
     - Type: 0
-      Value: 2
+      Value: 5
     - Type: 5
       Value: 2
   MoveStrategy:
-    rid: 3343487951226798155
+    rid: 2482468667394097274
   DamageStrategies:
   - rid: 3343487874376138877
   references:
     version: 2
     RefIds:
+    - rid: 2482468667394097274
+      type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}
+      data: 
     - rid: 3343487874376138877
       type: {class: AoeProjectileDamage, ns: Towers.Projectiles, asm: Towers}
-      data: 
-    - rid: 3343487951226798155
-      type: {class: PointProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 

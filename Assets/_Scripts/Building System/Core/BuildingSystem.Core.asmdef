@@ -1,0 +1,17 @@
+{
+    "name": "BuildingSystem.Core",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9ba9f47b380bfd245a7c648c893dab84",
+        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

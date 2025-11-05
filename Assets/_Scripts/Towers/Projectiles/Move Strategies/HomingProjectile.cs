@@ -9,6 +9,7 @@ namespace Towers.Projectiles
         private ProjectileBehaviour _projectile;
 
         public event Action<Transform> OnTransformCollision;
+
         public bool DestroyIfInvalidTarget => true;
 
         public void Init(ProjectileBehaviour projectile)

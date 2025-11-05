@@ -14,11 +14,21 @@ public class LineOfSight : MonoBehaviour
     private Vector3[] _vertices;
     private int[] _triangles;
     private Vector3 _lastPosition;
+    private Material _material;
 
     public void SetRadius(float radius) => _viewRadius = radius;
+    public void SetColor(Color color) => _material.color = color;
 
-    private void Start()
+    private void Awake()
     {
+        _material = GetComponent<MeshRenderer>().material;
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        if (_mesh) return;
+
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
     }
@@ -32,8 +42,10 @@ public class LineOfSight : MonoBehaviour
         }
     }
 
-    private void GenerateViewMesh()
+    public void GenerateViewMesh()
     {
+        Initialize();
+
         float angleIncrement = 360f / _rayCount;
         List<Vector3> viewPoints = new List<Vector3>();
 

@@ -23,7 +23,7 @@ namespace Towers
         {
             foreach (var level in Levels)
                 foreach (var attack in level.AttackStrategies)
-                    attack.Validate();
+                    attack?.Validate();
         }
     }
 }

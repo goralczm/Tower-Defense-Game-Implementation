@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameFlow
+namespace BuildingSystem.Core
 {
     public interface IBuilding
     {
@@ -9,7 +9,7 @@ namespace GameFlow
         public bool ShowLineOfSight { get; }
         public float LineOfSightRadius { get; }
 
-        public bool CanBuild(out string reason);
-        public void Build(GameObject newBuilding);
+        public bool CanBuild(ref string reason);
+        public void OnBuild(GameObject newBuilding);
     }
 }

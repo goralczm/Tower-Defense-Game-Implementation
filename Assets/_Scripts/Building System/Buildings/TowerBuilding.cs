@@ -1,7 +1,9 @@
+using BuildingSystem.Core;
+using Currency;
 using Towers;
 using UnityEngine;
 
-namespace GameFlow
+namespace BuildingSystem.Buildings
 {
     public class TowerBuilding : IBuilding
     {
@@ -13,13 +15,19 @@ namespace GameFlow
         public bool ShowLineOfSight => true;
         public float LineOfSightRadius => Tower.Levels[0].BaseAttributes.GetAttribute(Attributes.TowerAttributes.Range);
 
-        public bool CanBuild(out string reason)
+        public bool CanBuild(ref string reason)
         {
-            if (Bank)
+            if (Bank.Instance.CanAfford(Tower.Levels[0].Cost))
+                return true;
+
+            reason = "Not enough currency";
+            return false;
         }
 
-        public void Build(GameObject newBuilding)
+        public void OnBuild(GameObject newBuilding)
         {
+            Bank.Instance.RemoveCurrency(Tower.Levels[0].Cost);
+
             newBuilding.GetComponent<TowerBehaviour>().Setup(Tower);
         }
     }

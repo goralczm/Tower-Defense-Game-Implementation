@@ -37,8 +37,7 @@ namespace Targeting
             for (int i = 0; i < targetsCount; i++)
             {
                 ITargetable bestEnemy = GetEnemyByCondition(origin, targetsCopy, GetSortingCondition(origin, targetingOption), needClearVision);
-                if (bestEnemy == null)
-                    break;
+                if (bestEnemy == null) break;
 
                 selectedTargets.Add(bestEnemy);
                 targetsCopy.Remove(bestEnemy);
@@ -72,7 +71,7 @@ namespace Targeting
                 }
             }
 
-            if (needClearVision && !HasClearVision(origin, bestCandidate.Transform.position, bestCandidate.Transform))
+            if (needClearVision && bestCandidate != null && !HasClearVision(origin, bestCandidate.Transform.position, bestCandidate.Transform))
                 return null;
 
             return bestCandidate;

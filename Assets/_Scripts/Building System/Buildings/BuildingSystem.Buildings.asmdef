@@ -1,0 +1,20 @@
+{
+    "name": "BuildingSystem.Buildings",
+    "rootNamespace": "BuildingSystem.Buildings",
+    "references": [
+        "GUID:cd915b5ab5452194cb557cd96f6aef14",
+        "GUID:84edda9323966714bba0b13cd9025a5f",
+        "GUID:8cddf09bf00aad148bbb0855fb7e7fb1",
+        "GUID:a0a6965dc082d8c41970f50d4aa08d33",
+        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
