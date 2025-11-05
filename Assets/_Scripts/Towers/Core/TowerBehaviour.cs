@@ -34,6 +34,10 @@ namespace Towers
         public Inventory.Inventory Inventory => _inventory;
         public TowerData TowerData => _towerData;
         public int Level => _level + 1;
+        public bool IsMaxLevel => _level == _towerData.Levels.Length - 1;
+        public int UpgradeCost => !IsMaxLevel ? _towerData.Levels[_level].Cost : int.MaxValue;
+        public TowerLevel LevelData => _towerData.Levels[_level];
+        public TowerLevel NextLevelData => !IsMaxLevel ? _towerData.Levels[_level + 1] : LevelData;
 
         public float GetDistance(Vector2 position) => Vector2.Distance(position, transform.position);
 
@@ -82,8 +86,7 @@ namespace Towers
 
         public void SetLevel(int level)
         {
-            if (level >= _towerData.Levels.Length)
-                return;
+            if (IsMaxLevel) return;
 
             _level = level;
             _rend.sprite = _towerData.Levels[level].Icon;

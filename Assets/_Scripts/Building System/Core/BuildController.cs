@@ -2,6 +2,7 @@ using Core;
 using System.Linq;
 using UnityEngine;
 using Utilities;
+using Utilities.Text;
 
 namespace BuildingSystem.Core
 {
@@ -37,7 +38,7 @@ namespace BuildingSystem.Core
                     _lineOfSight.SetColor(_invalidColor);
 
                     if (Input.GetMouseButtonDown(0))
-                        Debug.Log(cannotBuildReason);
+                        new TextBubble(cannotBuildReason, _buildingGhost.transform.position, Color.red);
                 }
                 else
                 {

@@ -43,11 +43,11 @@ namespace GameFlow.Setup
                 _waveController.StartGenerator();
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            /*if (Input.GetKeyDown(KeyCode.Alpha1))
                 Save();
 
             if (Input.GetKeyDown(KeyCode.Alpha2))
-                Load();
+                Load();*/
         }
 
         public void Load()

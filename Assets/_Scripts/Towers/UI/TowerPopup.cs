@@ -1,6 +1,8 @@
+using Currency;
 using Inventory;
 using TMPro;
 using UnityEngine;
+using Utilities.Text;
 using Utilities.UI;
 
 namespace Towers
@@ -27,8 +29,16 @@ namespace Towers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.E))
-                _tower?.Upgrade();
+            if (Input.GetKeyDown(KeyCode.E) && _tower && !_tower.IsMaxLevel)
+            {
+                if (Bank.Instance.CanAfford(_tower.UpgradeCost))
+                {
+                    Bank.Instance.RemoveCurrency(_tower.UpgradeCost);
+                    _tower.Upgrade();
+                }
+                else
+                    new TextBubble("Cannot affort upgrade", _tower.transform.position, Color.red);
+            }
         }
 
         private void SetupPopup(TowerBehaviour tower)
@@ -60,7 +70,10 @@ namespace Towers
         {
             _inventoryDisplay.SetInventory(_tower.Inventory);
             _towerHeader.SetText($"{_tower.TowerData.name} Level {_tower.Level}");
-            _attributesText.SetText(_tower.Attributes.GetAttributesDescription());
+            if (_tower.IsMaxLevel)
+                _attributesText.SetText(_tower.Attributes.GetAttributesDescription());
+            else
+                _attributesText.SetText(_tower.Attributes.GetComparedAttributesDescription(_tower.NextLevelData.BaseAttributes));
         }
     }
 }

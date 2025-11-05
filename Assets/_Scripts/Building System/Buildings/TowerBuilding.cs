@@ -14,6 +14,8 @@ namespace BuildingSystem.Buildings
         public Sprite Sprite => Tower.Levels[0].Icon;
         public bool ShowLineOfSight => true;
         public float LineOfSightRadius => Tower.Levels[0].BaseAttributes.GetAttribute(Attributes.TowerAttributes.Range);
+        public string Name => Tower.name;
+        public string Description => Tower.Description;
 
         public bool CanBuild(ref string reason)
         {

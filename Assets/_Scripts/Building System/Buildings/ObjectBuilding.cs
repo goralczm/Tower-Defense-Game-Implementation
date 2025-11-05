@@ -12,6 +12,8 @@ namespace BuildingSystem.Buildings
         public Sprite Sprite => Icon;
         public bool ShowLineOfSight => false;
         public float LineOfSightRadius => 0;
+        public string Name => Prefab.name;
+        public string Description => "?";
 
         public bool CanBuild(ref string reason)
         {

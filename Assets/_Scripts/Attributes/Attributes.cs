@@ -1,8 +1,12 @@
+using Codice.CM.Common.Tree.Partial;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using Utilities;
 
 namespace Attributes
 {
@@ -38,29 +42,69 @@ namespace Attributes
             OnAttributesChanged?.Invoke();
         }
 
-        public IEnumerable<KeyValuePair<TEnum, float>> GetAllAttributes()
+        public Dictionary<TEnum, float> GetAllAttributes()
         {
+            Dictionary<TEnum, float> result = new();
+
             foreach (TEnum type in Enum.GetValues(typeof(TEnum)))
             {
                 float value = GetAttribute(type);
                 if (value != 0)
-                    yield return new KeyValuePair<TEnum, float>(type, value);
+                    result.Add(type, value);
             }
+
+            return result;
         }
 
         public string GetAttributesDescription()
         {
             var attributes = GetAllAttributes();
+
             StringBuilder description = new();
             foreach (var attribute in attributes)
             {
-                description.Append(attribute.Key);
-                description.Append(" ");
-                description.Append(attribute.Value);
+                description.Append(FormatKey(attribute.Key));
+                description.Append(": ");
+                description.Append(FormatValue(attribute.Value));
                 description.Append("\n");
             }
 
             return description.ToString();
+        }
+
+        public string GetComparedAttributesDescription(BaseAttributes<TEnum> secondBaseAttributes)
+        {
+            var attributes = new Attributes<TEnum>(_mediator, secondBaseAttributes);
+
+            var beforeAttributes = GetAllAttributes();
+            var afterAttributes = attributes.GetAllAttributes();
+
+            StringBuilder description = new();
+
+            var allKeys = new HashSet<TEnum>(beforeAttributes.Keys);
+            allKeys.UnionWith(afterAttributes.Keys);
+
+            foreach (var key in allKeys)
+            {
+                var before = GetAttribute(key, 0);
+                var after = attributes.GetAttribute(key, 0);
+
+                string changeColor = after >= before ? "#6ffc03" : "#fc0303";
+
+                description.AppendLine($"{FormatKey(key)}: {FormatValue(before)} <color={changeColor}>></color> {FormatValue(after)}");
+            }
+
+            return description.ToString();
+        }
+
+        private string FormatKey(TEnum key)
+        {
+            return Regex.Replace(key.ToString(), "([A-Z0-9]+)", " $1").Trim();
+        }
+
+        private string FormatValue(float value)
+        {
+            return value.LimitDecimalPoints(2);
         }
     }
 }
