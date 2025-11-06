@@ -18,7 +18,7 @@ namespace ObjectPooling
         [SerializeField] private Pool[] _pools;
 
         [SerializeField] private Dictionary<string, ObjectPool<GameObject>> _cachedPools = new();
-
+        
         protected override void Awake()
         {
             base.Awake();

@@ -848,6 +848,9 @@ MonoBehaviour:
   - tag: Text Bubble
     prefab: {fileID: 4271789057323870490, guid: 5efb432f1d8e43a4c963bfb7f27e8f58, type: 3}
     size: 3
+  - tag: Pickup
+    prefab: {fileID: 3537928290118480086, guid: 9d88563322671634c95ed89a14cdb386, type: 3}
+    size: 5
 --- !u!4 &304970770
 Transform:
   m_ObjectHideFlags: 0
@@ -67498,6 +67501,7 @@ GameObject:
   - component: {fileID: 728750955}
   - component: {fileID: 728750957}
   - component: {fileID: 728750956}
+  - component: {fileID: 728750958}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -67549,6 +67553,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Inventory::Inventory.Inventory
   _capacity: 9
+--- !u!114 &728750958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728750954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 258388a2f2e470246845dc63033ed72c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Inventory.Demo::Inventory.Demo.PickupController
+  _pickupsLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  _inventory: {fileID: 728750957}
 --- !u!1 &835643745
 GameObject:
   m_ObjectHideFlags: 0
@@ -71233,8 +71253,53 @@ Transform:
   - {fileID: 1392401794}
   - {fileID: 728750955}
   - {fileID: 447165300}
+  - {fileID: 1353109730}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1353109729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1353109730}
+  - component: {fileID: 1353109731}
+  m_Layer: 0
+  m_Name: Enemy Pickup Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1353109730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353109729}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1337035414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1353109731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353109729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51256bf5a6426c34d841946c3925a2d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Inventory.Demo::Inventory.Demo.EnemyPickupSpawner
 --- !u!1001 &1358904121
 PrefabInstance:
   m_ObjectHideFlags: 0

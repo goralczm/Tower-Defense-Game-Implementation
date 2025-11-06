@@ -41,13 +41,11 @@ namespace Inventory
 
         public virtual void OnDrop(PointerEventData eventData)
         {
-            if (eventData.pointerDrag == null)
-                return;
+            if (eventData.pointerDrag == null) return;
 
             ItemSlot draggedSlot = eventData.pointerDrag.GetComponentInParent<ItemSlot>();
 
-            if (draggedSlot == this)
-                return;
+            if (draggedSlot == this || draggedSlot._item == null) return;
 
             int oldIndex = _index;
             IItem newItem = draggedSlot._inventory.Swap(_item, draggedSlot._index);
