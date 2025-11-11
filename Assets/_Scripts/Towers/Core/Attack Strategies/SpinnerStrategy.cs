@@ -1,4 +1,3 @@
-using ArtificeToolkit.Attributes;
 using Attributes;
 using Core;
 using Inventory;
@@ -8,46 +7,28 @@ using UnityEngine;
 
 namespace Towers
 {
-    public class SpinnerStrategy : IAttackStrategy
+    public class SpinnerStrategy : ProjectileBasedAttack
     {
-        public ProjectileBehaviour ProjectilePrefab;
-        public ProjectileData DefaultProjectile;
-        public List<Alignment> TargetAlignments = new();
-
-        private TowerBehaviour _tower;
         private Spinner _spinner;
         private List<ProjectileBehaviour> _projectiles = new();
-        private ProjectileData _projectile;
-        private int _index;
 
-        public void Validate()
-        {
-            //noop
-        }
+        public override string Name => "Spinjutsu";
+        public override string Description => "Go cirice";
 
-        public void Setup(TowerBehaviour tower, int index)
+        public override void Setup(TowerBehaviour tower, int index)
         {
-            _tower = tower;
-            _index = index % _tower.Inventory.Capacity;
-            _spinner = new Spinner();
+            base.Setup(tower, index);
+
             _tower.Attributes.OnAttributesChanged += OnAttributesChanged;
             OnAttributesChanged();
-
-            _tower.Inventory.OnSlotChanged += UpdateProjectile;
-            UpdateProjectile(_tower.Inventory.Get(_index), _index);
         }
 
-        private void UpdateProjectile(IItem projectile, int index)
+        protected override void OnProjectileUpdated()
         {
-            if (index != _index) return;
-
             for (int i = _projectiles.Count - 1; i >= 0; i--)
                 Object.Destroy(_projectiles[i].gameObject);
 
             _projectiles.Clear();
-
-            projectile ??= DefaultProjectile;
-            _projectile = (ProjectileData)projectile;
 
             var points = _spinner.GetAllPointsPositions(_tower.transform.position);
             for (int i = 0; i < points.Length; i++)
@@ -61,7 +42,7 @@ namespace Towers
             _spinner.SetRadius(_tower.Attributes.GetAttribute(TowerAttributes.Range));
         }
 
-        public void Tick(float deltaTime)
+        public override void Tick(float deltaTime)
         {
             _spinner.Update(deltaTime);
 
@@ -84,16 +65,17 @@ namespace Towers
             _projectiles.Add(projectile);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
+            base.Dispose();
+
             _tower.Attributes.OnAttributesChanged -= OnAttributesChanged;
-            _tower.Inventory.OnSlotChanged -= UpdateProjectile;
 
             for (int i = _projectiles.Count - 1; i >= 0; i--)
                 Object.Destroy(_projectiles[i].gameObject);
         }
 
-        public IAttackStrategy Clone()
+        public override IAttackStrategy Clone()
         {
             return new SpinnerStrategy()
             {

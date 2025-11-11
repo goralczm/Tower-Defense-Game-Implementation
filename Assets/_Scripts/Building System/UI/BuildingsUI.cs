@@ -31,7 +31,10 @@ namespace BuildingSystem.UI
             for (int i = 0; i < _buildings.Length; i++)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+                {
+                    _buildController.CancelBuilding();
                     _buildController.BeginBuilding(_buildings[i]);
+                }
             }
         }
     }

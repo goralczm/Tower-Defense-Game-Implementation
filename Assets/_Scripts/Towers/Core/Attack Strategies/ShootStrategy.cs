@@ -1,24 +1,17 @@
 using Attributes;
-using Core;
-using Inventory;
-using System.Collections.Generic;
 using Towers.Projectiles;
 using UnityEngine;
 
 namespace Towers
 {
-    public class ShootStrategy : IAttackStrategy
+    public class ShootStrategy : ProjectileBasedAttack
     {
-        public ProjectileBehaviour ProjectilePrefab;
-        public ProjectileData DefaultProjectile;
-        public List<Alignment> TargetAlignments = new();
+        private float _shootTimer;
 
-        private TowerBehaviour _tower;
-        private float _timer;
-        private ProjectileData _projectile;
-        private int _index;
+        public override string Name => "Opps Stoppa";
+        public override string Description => "Pew Pew";
 
-        public void Validate()
+        public override void Validate()
         {
             if (DefaultProjectile.MoveStrategy.GetType().Equals(typeof(PermanentContactProjectile)))
             {
@@ -27,28 +20,16 @@ namespace Towers
             }
         }
 
-        public void Setup(TowerBehaviour tower, int index)
+        public override void Setup(TowerBehaviour tower, int index)
         {
-            _tower = tower;
-            _index = index % _tower.Inventory.Capacity;
-            _tower.Inventory.OnSlotChanged += UpdateProjectile;
-
-            UpdateProjectile(_tower.Inventory.Get(_index), _index);
+            base.Setup(tower, index);
         }
 
-        private void UpdateProjectile(IItem projectile, int index)
+        public override void Tick(float deltaTime)
         {
-            if (index != _index) return;
-
-            projectile ??= DefaultProjectile;
-            _projectile = (ProjectileData)projectile;
-        }
-
-        public void Tick(float deltaTime)
-        {
-            if (_timer > 0f)
+            if (_shootTimer > 0f)
             {
-                _timer -= deltaTime;
+                _shootTimer -= deltaTime;
                 return;
             }
 
@@ -66,7 +47,7 @@ namespace Towers
                 foreach (var target in targets)
                     Shoot(target.Transform);
 
-                _timer = _tower.Attributes.GetAttribute(TowerAttributes.RateOfFire);
+                _shootTimer = _tower.Attributes.GetAttribute(TowerAttributes.RateOfFire);
             }
         }
 
@@ -82,12 +63,7 @@ namespace Towers
             projectile.Setup(target, baseAttributes, TargetAlignments, _projectile, _projectile.MoveStrategy);
         }
 
-        public void Dispose()
-        {
-            _tower.Inventory.OnSlotChanged -= UpdateProjectile;
-        }
-
-        public IAttackStrategy Clone()
+        public override IAttackStrategy Clone()
         {
             return new ShootStrategy()
             {

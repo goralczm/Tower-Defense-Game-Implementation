@@ -9,6 +9,11 @@ namespace Utilities.Extensions
             return new Vector2(v1.x + x, v1.y + y);
         }
 
+        public static Vector3 Add(this Vector3 v1, float x = 0, float y = 0, float z = 0)
+        {
+            return new Vector3(v1.x + x, v1.y + y, v1.z + z);
+        }
+
         public static Vector2 Add(this Vector2 v1, Vector3 v2)
         {
             return new Vector2(v1.x + v2.x, v1.y + v2.y);

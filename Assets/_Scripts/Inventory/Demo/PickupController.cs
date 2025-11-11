@@ -6,6 +6,7 @@ namespace Inventory.Demo
     public class PickupController : MonoBehaviour
     {
         [Header("Settings")]
+        [SerializeField] private float _pickupRange = .2f;
         [SerializeField] private LayerMask _pickupsLayer;
 
         [Header("References")]
@@ -13,7 +14,7 @@ namespace Inventory.Demo
 
         private void Update()
         {
-            var hits = Physics2D.OverlapCircleAll(MouseInput.GetMouseWorldPosition(), .2f, _pickupsLayer);
+            var hits = Physics2D.OverlapCircleAll(MouseInput.GetMouseWorldPosition(), _pickupRange, _pickupsLayer);
 
             foreach (var hit in hits)
             {

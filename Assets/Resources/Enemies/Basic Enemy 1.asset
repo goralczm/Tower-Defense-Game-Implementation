@@ -22,7 +22,7 @@ MonoBehaviour:
       Value: 1
     - Type: 3
       Value: 0
-  Reward: 1
+  Reward: 5
   DangerLevel: 1
   Sprite: {fileID: 4586509288191203383, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
   Children: []

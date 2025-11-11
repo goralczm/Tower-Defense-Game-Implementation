@@ -1,5 +1,3 @@
-using Core;
-using Enemies;
 using System;
 using UnityEngine;
 using Utilities;
@@ -13,16 +11,6 @@ namespace Currency
         public static event Action<int> OnCurrencyChanged;
 
         public int Currency => _currency;
-
-        private void OnEnable()
-        {
-            EnemyBehaviour.OnEnemyDied += this.OnEnemyDied;
-        }
-
-        private void OnDisable()
-        {
-            EnemyBehaviour.OnEnemyDied -= this.OnEnemyDied;
-        }
 
         private void Start()
         {
@@ -44,13 +32,6 @@ namespace Currency
         public void RemoveCurrency(int amount)
         {
             AddCurrency(-amount);
-        }
-
-        private void OnEnemyDied(EnemyBehaviour enemy, DeathReason reason)
-        {
-            if (reason != DeathReason.External) return;
-
-            AddCurrency(enemy.EnemyData.Reward);
         }
     }
 }

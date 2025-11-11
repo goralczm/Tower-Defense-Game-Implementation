@@ -1,13 +1,8 @@
 {
-    "name": "Currency",
-    "rootNamespace": "Currency",
+    "name": "UI",
+    "rootNamespace": "UI",
     "references": [
-        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad",
-        "GUID:aeeb5f74e409eaa44ae2137384aed055",
-        "GUID:9ba9f47b380bfd245a7c648c893dab84",
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:70074737be8cf6340afb2f543ea85781",
-        "GUID:7a05223296373c549a14b55ea48080ec",
         "GUID:ca5c6a327f3cd3e4b9041f017ce291ef"
     ],
     "includePlatforms": [],

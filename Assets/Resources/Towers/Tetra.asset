@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1dfde4b277edb4386cfeb8189684bb, type: 3}
+  m_Name: Tetra
+  m_EditorClassIdentifier: Towers::Towers.BasicTower
+  Description: 
+  Levels:
+  - Icon: {fileID: 4586509288191203383, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
+    Cost: 100
+    BaseAttributes:
+      Queries:
+      - Type: 0
+        Value: 5
+      - Type: 1
+        Value: 1
+      - Type: 2
+        Value: 2
+      - Type: 3
+        Value: 8
+      - Type: 4
+        Value: 1
+      - Type: 5
+        Value: 1
+    AttackStrategies:
+    - rid: 1026232650341285965
+  references:
+    version: 2
+    RefIds:
+    - rid: 1026232650341285965
+      type: {class: TetraStrategy, ns: Towers, asm: Towers}
+      data:
+        ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
+        DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
+        TargetAlignments: 00000000
+        MoveStrategy:
+          rid: 1026232739033776204
+    - rid: 1026232739033776204
+      type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}
+      data: 

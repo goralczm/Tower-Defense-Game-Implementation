@@ -68,7 +68,6 @@ namespace Towers
 
             _attributes = new(new(), _towerData.Levels[level].BaseAttributes);
             _attributes.OnAttributesChanged += OnAttributesChanged;
-            OnAttributesChanged();
 
             SetLevel(level);
         }
@@ -81,12 +80,14 @@ namespace Towers
 
         public void Upgrade()
         {
+            if (IsMaxLevel) return;
+
             SetLevel(_level + 1);
         }
 
         public void SetLevel(int level)
         {
-            if (IsMaxLevel) return;
+            if (level > _towerData.Levels.Length - 1) return;
 
             _level = level;
             _rend.sprite = _towerData.Levels[level].Icon;

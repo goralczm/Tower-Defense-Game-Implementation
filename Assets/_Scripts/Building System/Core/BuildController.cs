@@ -89,11 +89,12 @@ namespace BuildingSystem.Core
             CancelBuilding();
         }
 
-        private void CancelBuilding()
+        public void CancelBuilding()
         {
             _lineOfSight.transform.SetParent(null);
             _lineOfSight.gameObject.SetActive(false);
-            Destroy(_buildingGhost.gameObject);
+            if (_buildingGhost)
+                Destroy(_buildingGhost.gameObject);
         }
     }
 }

@@ -10,6 +10,12 @@ namespace Inventory.Demo
 {
     public class EnemyPickupSpawner : MonoBehaviour
     {
+        [Header("Settings")]
+        [SerializeField] private float _spawnPossibility = .1f;
+        [SerializeField] private float _spawnCooldown = 1f;
+
+        private float _nextSpawnTime;
+
         private void OnEnable()
         {
             EnemyBehaviour.OnEnemyDied += OnEnemyDied;
@@ -22,12 +28,15 @@ namespace Inventory.Demo
 
         private void OnEnemyDied(EnemyBehaviour enemy, DeathReason reason)
         {
-            if (!Randomizer.GetRandomBool(.5f)) return;
+            if (_nextSpawnTime > Time.time) return;
+
+            if (!Randomizer.GetRandomBool(_spawnPossibility)) return;
 
             var pickupObject = PoolManager.Instance.SpawnFromPool("Pickup", enemy.transform.position, Quaternion.identity);
             var pickup = pickupObject.GetComponent<Pickup>();
 
             pickup.Setup(GetRandomProjectile());
+            _nextSpawnTime = Time.time + _spawnCooldown;
         }
 
         private IItem GetRandomProjectile()

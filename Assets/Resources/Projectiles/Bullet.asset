@@ -19,15 +19,15 @@ MonoBehaviour:
     - Type: 0
       Value: 15
   MoveStrategy:
-    rid: 3343487951226798156
+    rid: 1026232739033776205
   DamageStrategies:
   - rid: 3343487900777971712
   references:
     version: 2
     RefIds:
+    - rid: 1026232739033776205
+      type: {class: PiercingProjectile, ns: Towers.Projectiles, asm: Towers}
+      data: 
     - rid: 3343487900777971712
       type: {class: SimpleProjectileDamage, ns: Towers.Projectiles, asm: Towers}
-      data: 
-    - rid: 3343487951226798156
-      type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 
