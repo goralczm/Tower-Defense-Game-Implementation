@@ -427,6 +427,8 @@ GameObject:
   - component: {fileID: 7956708016484587888}
   - component: {fileID: 8352295411553686882}
   - component: {fileID: -6577529209404911475}
+  - component: {fileID: 3358203460767472028}
+  - component: {fileID: -3496115874659717558}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -521,6 +523,32 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &3358203460767472028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819296699177588145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3f8e11222ad4f4780174f66f27823f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Core::Core.PunchOnEnable
+  _slightlyRandomize: 0
+--- !u!114 &-3496115874659717558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819296699177588145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ff9c710de5598d41ad882b4fc3d7c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VisualEffects::VisualEffects.ParticlesOnDisable
+  _particlesTag: Blood
 --- !u!1 &3320369574297615269
 GameObject:
   m_ObjectHideFlags: 0

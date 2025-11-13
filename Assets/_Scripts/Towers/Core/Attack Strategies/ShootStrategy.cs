@@ -1,4 +1,6 @@
+using ArtificeToolkit.Attributes;
 using Attributes;
+using System.Collections.Generic;
 using Towers.Projectiles;
 using UnityEngine;
 
@@ -6,6 +8,8 @@ namespace Towers
 {
     public class ShootStrategy : ProjectileBasedAttack
     {
+        [SerializeReference, ForceArtifice] public List<IProjectileEffect> ProjectileEffects;
+
         private float _shootTimer;
 
         public override string Name => "Opps Stoppa";
@@ -45,13 +49,13 @@ namespace Towers
             if (targets.Count > 0)
             {
                 foreach (var target in targets)
-                    Shoot(target.Transform);
+                    CreateProjectile(target.Transform);
 
                 _shootTimer = _tower.Attributes.GetAttribute(TowerAttributes.RateOfFire);
             }
         }
 
-        private void Shoot(Transform target)
+        private void CreateProjectile(Transform target)
         {
             ProjectileBehaviour projectile = Object.Instantiate(ProjectilePrefab, _tower.transform.position, Quaternion.identity);
 
@@ -60,7 +64,7 @@ namespace Towers
                 .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(target, baseAttributes, TargetAlignments, _projectile, _projectile.MoveStrategy);
+            projectile.Setup(target, baseAttributes, TargetAlignments, _projectile, _projectile.MoveStrategy, ProjectileEffects);
         }
 
         public override IAttackStrategy Clone()
@@ -70,6 +74,7 @@ namespace Towers
                 ProjectilePrefab = ProjectilePrefab,
                 DefaultProjectile = DefaultProjectile,
                 TargetAlignments = TargetAlignments,
+                ProjectileEffects = ProjectileEffects,
             };
         }
     }

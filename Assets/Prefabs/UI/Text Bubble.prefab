@@ -192,4 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559d4deb05725ea48be3abddeae6d7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Utilities.Text::Utilities.Text.TextFadeOut
+  _swirlFreq: 0
+  _swirlAmpl: 0
+  _moveSpeed: 1
+  _opacitySpeed: 1
   _text: {fileID: 1023794020403238882}

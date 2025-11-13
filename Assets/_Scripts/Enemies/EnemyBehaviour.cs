@@ -18,6 +18,8 @@ namespace Enemies
         private int _currentWaypointIndex;
         private bool _isStopped;
 
+        public event Action<DamageData> OnDamaged;
+
         public static event Action<EnemyBehaviour, DeathReason> OnEnemyDied;
         public static event Action<EnemyData, int, Vector2> SpawnEnemyRequest;
 
@@ -29,6 +31,11 @@ namespace Enemies
         public int TargetingPriority => 1;
 
         public float GetDistance(Vector2 position) => GetDistanceOnPath() / _path.Length;
+
+        private void Start()
+        {
+            IDamageable.RecordDamageRequest?.Invoke(this);
+        }
 
         public void Setup(EnemyData enemyData, Path path, int nextWaypointIndex)
         {
@@ -79,10 +86,20 @@ namespace Enemies
             }
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, DamageType[] types, string source)
         {
-            var modifier = new BasicAttributeModifier<EnemyAttributes>(EnemyAttributes.Health, 0f, v => v - damage);
+            damage = CalculateDamage(damage, types);
 
+            if (damage == 0) return;
+
+            OnDamaged?.Invoke(new(
+                Mathf.Min(_attributes.GetAttribute(EnemyAttributes.Health), damage),
+                source,
+                _enemyData.name,
+                types,
+                transform.position));
+
+            var modifier = new BasicAttributeModifier<EnemyAttributes>(EnemyAttributes.Health, 0f, v => v - damage);
             _attributes.Mediator.AddModifier(modifier);
 
             if (_attributes.GetAttribute(EnemyAttributes.Health) <= 0f)
@@ -92,6 +109,35 @@ namespace Enemies
             }
             else
                 StartCoroutine(HitEffect());
+        }
+
+        private float CalculateDamage(float damage, DamageType[] types)
+        {
+            if (types.Length != 0)
+            {
+                int validResistancesCount = 0;
+                int validVulnerabilitiesCount = 0;
+
+                foreach (var damageType in types)
+                {
+                    foreach (var resistance in _enemyData.Resistances)
+                    {
+                        if (damageType == resistance)
+                            validResistancesCount++;
+                    }
+
+                    foreach (var vulnerability in _enemyData.Vulnerabilities)
+                    {
+                        if (damageType == vulnerability)
+                            validVulnerabilitiesCount++;
+                    }
+                }
+
+                damage *= 1 - validResistancesCount / types.Length;
+                damage *= 1 + validVulnerabilitiesCount / types.Length;
+            }
+
+            return damage;
         }
 
         public void Die(DeathReason reason)

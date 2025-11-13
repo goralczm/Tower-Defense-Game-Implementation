@@ -43,6 +43,8 @@ namespace ObjectPooling
                     },
                     pooledObject =>
                     {
+                        if (AppLifecycle.IsQuitting) return;
+
                         Destroy(pooledObject.gameObject);
                     },
                     false,

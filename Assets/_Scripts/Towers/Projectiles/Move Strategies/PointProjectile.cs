@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Towers.Projectiles
 {
-    public class PointProjectile : IProjectileMoveStrategy
+    public class PointProjectile : IProjectileMovement
     {
         private ProjectileBehaviour _projectile;
         private Vector2? _target;
@@ -34,6 +34,6 @@ namespace Towers.Projectiles
             }
         }
 
-        public IProjectileMoveStrategy Clone() => new PointProjectile();
+        public IProjectileMovement Clone() => new PointProjectile();
     }
 }

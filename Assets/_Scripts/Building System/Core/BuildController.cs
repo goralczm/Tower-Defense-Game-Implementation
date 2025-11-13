@@ -38,7 +38,7 @@ namespace BuildingSystem.Core
                     _lineOfSight.SetColor(_invalidColor);
 
                     if (Input.GetMouseButtonDown(0))
-                        new TextBubble(cannotBuildReason, _buildingGhost.transform.position, Color.red);
+                        TextBubble.CreateTextBubble(cannotBuildReason, _buildingGhost.transform.position, Color.red);
                 }
                 else
                 {

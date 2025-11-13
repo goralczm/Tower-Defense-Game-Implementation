@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 4283354531934963801}
   - component: {fileID: 6069168257510984962}
   - component: {fileID: -4734940696917323239}
+  - component: {fileID: -4083482471048990739}
+  - component: {fileID: 2919122949469499487}
+  - component: {fileID: 4063481205725447029}
   m_Layer: 11
   m_Name: Pickup
   m_TagString: Untagged
@@ -179,3 +182,51 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-4083482471048990739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3537928290118480086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3f8e11222ad4f4780174f66f27823f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Core::Core.PunchOnEnable
+  _slightlyRandomize: 0
+--- !u!95 &2919122949469499487
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3537928290118480086}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 87729aef1eccefd4d89c39d3d0f1c4d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4063481205725447029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3537928290118480086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ff9c710de5598d41ad882b4fc3d7c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VisualEffects::VisualEffects.ParticlesOnDisable
+  _particlesTag: Spark

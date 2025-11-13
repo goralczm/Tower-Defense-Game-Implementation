@@ -1,3 +1,4 @@
+using Core;
 using Currency;
 using Inventory;
 using TMPro;
@@ -37,7 +38,14 @@ namespace Towers
                     _tower.Upgrade();
                 }
                 else
-                    new TextBubble("Cannot affort upgrade", _tower.transform.position, Color.red);
+                    TextBubble.CreateTextBubble("Cannot affort upgrade", _tower.transform.position, Color.red);
+            }
+
+            if (Input.GetKeyDown(KeyCode.S) && _tower)
+            {
+                Bank.Instance.AddCurrency(_tower.SellRefund);
+                _tower.Die(DeathReason.Self);
+                TowerSelectionController.OnTowerSelected?.Invoke(null);
             }
         }
 

@@ -1,4 +1,5 @@
 using Attributes;
+using Core;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,5 +13,7 @@ namespace Enemies
         public int DangerLevel = 1;
         public Sprite Sprite;
         public List<EnemyData> Children;
+        public DamageType[] Resistances = new DamageType[0];
+        public DamageType[] Vulnerabilities = new DamageType[0];
     }
 }

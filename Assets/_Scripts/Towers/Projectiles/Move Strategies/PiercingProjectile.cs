@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Towers.Projectiles
 {
-    public class PiercingProjectile : IProjectileMoveStrategy
+    public class PiercingProjectile : IProjectileMovement
     {
         private ProjectileBehaviour _projectile;
         private HashSet<Collider2D> _damagedTargets = new();
@@ -41,6 +41,6 @@ namespace Towers.Projectiles
                 _projectile.DestroyProjectile();
         }
 
-        public IProjectileMoveStrategy Clone() => new PiercingProjectile();
+        public IProjectileMovement Clone() => new PiercingProjectile();
     }
 }

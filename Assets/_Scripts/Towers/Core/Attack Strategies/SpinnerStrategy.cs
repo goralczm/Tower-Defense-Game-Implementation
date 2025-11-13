@@ -1,7 +1,9 @@
+using ArtificeToolkit.Attributes;
 using Attributes;
 using Core;
 using Inventory;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Towers.Projectiles;
 using UnityEngine;
 
@@ -9,7 +11,9 @@ namespace Towers
 {
     public class SpinnerStrategy : ProjectileBasedAttack
     {
-        private Spinner _spinner;
+        [SerializeReference, ForceArtifice] public List<IProjectileEffect> ProjectileEffects;
+
+        private Spinner _spinner = new();
         private List<ProjectileBehaviour> _projectiles = new();
 
         public override string Name => "Spinjutsu";
@@ -26,20 +30,35 @@ namespace Towers
         protected override void OnProjectileUpdated()
         {
             for (int i = _projectiles.Count - 1; i >= 0; i--)
-                Object.Destroy(_projectiles[i].gameObject);
+                DestroyProjectileAt(i);
 
-            _projectiles.Clear();
-
-            var points = _spinner.GetAllPointsPositions(_tower.transform.position);
-            for (int i = 0; i < points.Length; i++)
-                CreateProjectile(points[i]);
+            OnAttributesChanged();
         }
 
         private void OnAttributesChanged()
         {
-            _spinner.SetPointsCount((int)_tower.Attributes.GetAttribute(TowerAttributes.ProjectilesCount));
+            int pointsCount = (int)_tower.Attributes.GetAttribute(TowerAttributes.ProjectilesCount);
+
+            _spinner.SetPointsCount(pointsCount);
             _spinner.SetSpeed(_tower.Attributes.GetAttribute(TowerAttributes.RateOfFire));
             _spinner.SetRadius(_tower.Attributes.GetAttribute(TowerAttributes.Range));
+
+            if (_projectiles.Count > pointsCount)
+            {
+                for (int i = _projectiles.Count - 1; i >= pointsCount; i--)
+                    DestroyProjectileAt(i);
+            }
+            else if (_projectiles.Count < pointsCount)
+            {
+                for (int i = _projectiles.Count; i < pointsCount; i++)
+                    CreateProjectile(_tower.transform.position);
+            }
+        }
+
+        private void DestroyProjectileAt(int index)
+        {
+            Object.Destroy(_projectiles[index].gameObject);
+            _projectiles.RemoveAt(index);
         }
 
         public override void Tick(float deltaTime)
@@ -57,11 +76,11 @@ namespace Towers
             ProjectileBehaviour projectile = Object.Instantiate(ProjectilePrefab, position, Quaternion.identity);
 
             var baseAttributes = new BaseAttributesBuilder<ProjectileAttributes>()
-                .Add(ProjectileAttributes.Damage, _tower.Attributes.GetAttribute(TowerAttributes.Damage))
+                .Add(ProjectileAttributes.Damage, _tower.Attributes.GetAttribute(TowerAttributes.Damage) * Time.deltaTime)
                 .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(_tower.transform.position, baseAttributes, TargetAlignments, _projectile, new PermanentContactProjectile());
+            projectile.Setup(_tower.transform.position, baseAttributes, TargetAlignments, _projectile, new PermanentContactProjectile(), ProjectileEffects);
             _projectiles.Add(projectile);
         }
 
@@ -82,6 +101,7 @@ namespace Towers
                 ProjectilePrefab = ProjectilePrefab,
                 DefaultProjectile = DefaultProjectile,
                 TargetAlignments = TargetAlignments,
+                ProjectileEffects = ProjectileEffects,
             };
         }
     }

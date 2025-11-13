@@ -12,7 +12,7 @@ namespace Towers
 
         private GenericCache<TowerBehaviour> _towersCache = new();
 
-        public static event Action<TowerBehaviour> OnTowerSelected;
+        public static Action<TowerBehaviour> OnTowerSelected;
 
         private void Update()
         {

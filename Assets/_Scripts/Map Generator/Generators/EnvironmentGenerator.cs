@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Utilities;
+using Utilities.Extensions;
 
 namespace MapGenerator.Generators
 {
@@ -31,6 +32,7 @@ namespace MapGenerator.Generators
         [Header("Debug")]
         [SerializeField] private bool _debug = true;
         [SerializeField] private EnvironmentDebugView _environmentDebugView;
+        [SerializeField] private bool _randomizeInstantiate = false;
         [SerializeField] private int _delayInMiliseconds = 0;
 
         private PathSettings _pathSettings;
@@ -80,7 +82,10 @@ namespace MapGenerator.Generators
             CreateHeatmap(_environmentSettings.ObstacleNearPathProbability);
 
             OnStatusChanged?.Invoke("Creating obstacles...");
-            await CreateAllObstacles(_environmentSettings.NoiseThreshold);
+            if (_randomizeInstantiate)
+                await RandomlyCreateAllObstacles(_environmentSettings.NoiseThreshold);
+            else
+                await CreateAllObstacles(_environmentSettings.NoiseThreshold);
 
             return layout;
         }
@@ -127,6 +132,37 @@ namespace MapGenerator.Generators
                         await Task.Delay(_delayInMiliseconds);
                     }
                 }
+            }
+        }
+
+        private async Task RandomlyCreateAllObstacles(float noiseThreshold)
+        {
+            float[,] noise = NoiseGenerator.GenerateNoise(_noiseSettings, _generationConfig.Seed);
+
+            var obstaclePositions = new List<Vector2>();
+
+            for (int y = 0; y < noise.GetLength(1); y++)
+            {
+                for (int x = 0; x < noise.GetLength(0); x++)
+                {
+                    _cts.Token.ThrowIfCancellationRequested();
+
+                    float noiseValue = noise[x, y];
+                    if (noiseValue >= noiseThreshold)
+                        continue;
+
+                    Vector2 cellCenterPos = _tilemap.GetCellCenterWorld(_tilemap.WorldToCell(new Vector3(_bounds.min.x + x, _bounds.min.y + y, 0)));
+
+                    if (_heatmap.TryGetValue(cellCenterPos, out TileState state) && state == TileState.Free)
+                        obstaclePositions.Add(cellCenterPos);
+                }
+            }
+
+            obstaclePositions.Shuffle();
+            foreach (var position in obstaclePositions)
+            {
+                CreateObstacle(position);
+                await Task.Delay(_delayInMiliseconds);
             }
         }
 

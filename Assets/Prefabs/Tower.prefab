@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2062395067528668359}
   - component: {fileID: 966843603187325662}
   - component: {fileID: 6064828177734389000}
+  - component: {fileID: -2051705755127476605}
   m_Layer: 7
   m_Name: Tower
   m_TagString: Untagged
@@ -169,6 +170,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Inventory::Inventory.Inventory
   _capacity: 1
+--- !u!114 &-2051705755127476605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251023497250277589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3f8e11222ad4f4780174f66f27823f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Core::Core.PunchOnEnable
 --- !u!1001 &8028875047392715376
 PrefabInstance:
   m_ObjectHideFlags: 0

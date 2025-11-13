@@ -17,20 +17,22 @@ namespace Towers.Projectiles
         private Vector2 _targetPosition;
         private Attributes<ProjectileAttributes> _attributes;
         private List<Alignment> _canDamageAlignments = new();
-        private IProjectileMoveStrategy _moveStrategy;
-        private List<IProjectileDamageStrategy> _damageStrategies;
+        private IProjectileMovement _moveStrategy;
+        private List<IProjectileEffect> _damageStrategies;
 
         public Attributes<ProjectileAttributes> Attributes => _attributes;
         public Transform Target => _target;
         public List<Alignment> CanDamageAlignments => _canDamageAlignments;
+        public DamageType[] DamageTypes => _projectileData.DamageTypes;
+        public string Name => _projectileData.Name;
 
-        public void Setup(Transform target, BaseAttributes<ProjectileAttributes> baseAttributes, List<Alignment> canDamageAlignments, ProjectileData projectileData, IProjectileMoveStrategy moveStrategy)
+        public void Setup(Transform target, BaseAttributes<ProjectileAttributes> baseAttributes, List<Alignment> canDamageAlignments, ProjectileData projectileData, IProjectileMovement moveStrategy, List<IProjectileEffect> projectileEffects)
         {
             _target = target;
-            Setup(_target.position, baseAttributes, canDamageAlignments, projectileData, moveStrategy);
+            Setup(_target.position, baseAttributes, canDamageAlignments, projectileData, moveStrategy, projectileEffects);
         }
 
-        public void Setup(Vector2 targetPosition, BaseAttributes<ProjectileAttributes> baseAttributes, List<Alignment> canDamageAlignments, ProjectileData projectileData, IProjectileMoveStrategy moveStrategy)
+        public void Setup(Vector2 targetPosition, BaseAttributes<ProjectileAttributes> baseAttributes, List<Alignment> canDamageAlignments, ProjectileData projectileData, IProjectileMovement moveStrategy, List<IProjectileEffect> projectileEffects)
         {
             _projectileData = projectileData;
             _attributes = new(new(), _projectileData.BaseAttributes + baseAttributes);
@@ -38,13 +40,14 @@ namespace Towers.Projectiles
             _canDamageAlignments = canDamageAlignments;
             _moveStrategy = moveStrategy.Clone();
             _damageStrategies = _projectileData.DamageStrategies.Select(d => d.Clone()).ToList();
+            _damageStrategies.AddRange(projectileEffects.Select(d => d.Clone()).ToList());
             _moveStrategy.Init(this);
             _damageStrategies
                 .Sort((a, b) => a.Priority.CompareTo(b.Priority));
             foreach (var damageStrategy in _damageStrategies)
             {
                 damageStrategy.Init(this);
-                _moveStrategy.OnTransformCollision += damageStrategy.DamageTarget;
+                _moveStrategy.OnTransformCollision += damageStrategy.Execute;
             }
             _rend.sprite = _projectileData.Sprite;
             _rend.color = _projectileData.Color;
@@ -55,6 +58,11 @@ namespace Towers.Projectiles
         public void SetTargetPosition(Vector2 target)
         {
             _targetPosition = target;
+        }
+
+        public void SetTarget(Transform target)
+        {
+            _target = target;
         }
 
         private void OnAttributesChanged()

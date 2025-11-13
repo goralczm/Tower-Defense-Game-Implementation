@@ -24,6 +24,7 @@ namespace Towers
         private int _level;
 
         public Action<int> OnTowerLevelChanged;
+        public event Action<DamageData> OnDamaged;
 
         public Attributes<TowerAttributes> Attributes => _attributes;
         public TargetingOptions TargetingOption => _targetingOption;
@@ -36,10 +37,16 @@ namespace Towers
         public int Level => _level + 1;
         public bool IsMaxLevel => _level == _towerData.Levels.Length - 1;
         public int UpgradeCost => !IsMaxLevel ? _towerData.Levels[_level].Cost : int.MaxValue;
+        public int SellRefund => Mathf.FloorToInt(_towerData.Levels.Take(Level).Sum(l => l.Cost) / 12f);
         public TowerLevel LevelData => _towerData.Levels[_level];
         public TowerLevel NextLevelData => !IsMaxLevel ? _towerData.Levels[_level + 1] : LevelData;
 
         public float GetDistance(Vector2 position) => Vector2.Distance(position, transform.position);
+
+        private void Start()
+        {
+            IDamageable.RecordDamageRequest?.Invoke(this);
+        }
 
         private void OnEnable()
         {
@@ -112,10 +119,16 @@ namespace Towers
                 strategy.Tick(Time.deltaTime);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, DamageType[] types, string source)
         {
-            var modifier = new BasicAttributeModifier<TowerAttributes>(TowerAttributes.Health, 0f, v => v - damage);
+            OnDamaged?.Invoke(new(
+                Mathf.Min(_attributes.GetAttribute(TowerAttributes.Health), damage),
+                source,
+                _towerData.name,
+                types,
+                transform.position));
 
+            var modifier = new BasicAttributeModifier<TowerAttributes>(TowerAttributes.Health, 0f, v => v - damage);
             _attributes.Mediator.AddModifier(modifier);
 
             if (_attributes.GetAttribute(TowerAttributes.Health) <= 0f)
@@ -124,6 +137,9 @@ namespace Towers
 
         public void Die(DeathReason reaseon)
         {
+            foreach (var attack in _attackStrategies)
+                attack.Dispose();
+
             Destroy(gameObject);
         }
     }

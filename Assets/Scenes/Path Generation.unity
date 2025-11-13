@@ -847,13 +847,22 @@ MonoBehaviour:
     size: 50
   - tag: Text Bubble
     prefab: {fileID: 4271789057323870490, guid: 5efb432f1d8e43a4c963bfb7f27e8f58, type: 3}
-    size: 3
+    size: 5
   - tag: Pickup
     prefab: {fileID: 3537928290118480086, guid: 9d88563322671634c95ed89a14cdb386, type: 3}
     size: 5
   - tag: Coin
     prefab: {fileID: 640421164310265584, guid: 81133bd7efb7def4a86227e024fc2cdc, type: 3}
     size: 100
+  - tag: Blood
+    prefab: {fileID: 2532081418975744552, guid: 6df594dbe1cfc4d42bdaf11dc997c058, type: 3}
+    size: 10
+  - tag: Swirly Text Bubble
+    prefab: {fileID: 4271789057323870490, guid: 5219c9f12f0707c41ac98e3f37f5665e, type: 3}
+    size: 30
+  - tag: Spark
+    prefab: {fileID: 2532081418975744552, guid: 349388427b4fc7141b8c55402010d231, type: 3}
+    size: 5
 --- !u!4 &304970770
 Transform:
   m_ObjectHideFlags: 0
@@ -70607,6 +70616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1163099445}
   - component: {fileID: 1163099446}
+  - component: {fileID: 1163099447}
   m_Layer: 0
   m_Name: Game Setup
   m_TagString: Untagged
@@ -70643,6 +70653,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapGenerator: {fileID: 1824830798}
   _waveController: {fileID: 873995095}
+--- !u!114 &1163099447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163099444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed3fd3fcccbfac409e41b6024a2f196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Utilities::Utilities.ApplicationUtils
 --- !u!1001 &1198157936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71258,6 +71280,8 @@ Transform:
   - {fileID: 728750955}
   - {fileID: 447165300}
   - {fileID: 1353109730}
+  - {fileID: 1619707696}
+  - {fileID: 1401672320}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1353109729
@@ -71305,7 +71329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Inventory.Demo::Inventory.Demo.EnemyPickupSpawner
   _spawnPossibility: 0.1
-  _spawnCooldown: 1
+  _spawnCooldown: 10
 --- !u!1001 &1358904121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71478,6 +71502,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Currency::Currency.EnemyCurrencySpawner
   _currencyText: {fileID: 124110050}
+--- !u!1 &1401672319
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1401672320}
+  - component: {fileID: 1401672321}
+  m_Layer: 0
+  m_Name: Visual Effects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1401672320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401672319}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1337035414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1401672321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401672319}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c165c9a63b2916f4abdf13b0cb8b81e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VisualEffects::VisualEffects.DamageNumbers
 --- !u!1 &1449249691
 GameObject:
   m_ObjectHideFlags: 0
@@ -71877,6 +71945,8 @@ MonoBehaviour:
   _buildings:
   - rid: 1026232650341285967
   - rid: 2482468667394097271
+  - rid: 2482468840093515921
+  - rid: 2482468840093515926
   - rid: 2482468667394097272
   _buildController: {fileID: 1042966176}
   _slots:
@@ -71899,6 +71969,16 @@ MonoBehaviour:
       data:
         Prefab: {fileID: 4931296659836417704, guid: 3b701f549c6c96d44996fff0499463dd, type: 3}
         Icon: {fileID: -1366677981984774684, guid: 3814df16bf1a7dc4f903fcde24f7fecd, type: 3}
+    - rid: 2482468840093515921
+      type: {class: TowerBuilding, ns: BuildingSystem.Buildings, asm: BuildingSystem.Buildings}
+      data:
+        Tower: {fileID: 11400000, guid: cc03fe04ef9e78143b87616fa3b09b3d, type: 2}
+        Prefab: {fileID: 1251023497250277589, guid: b208e996f0740ea4ebe9aed9a0f50b07, type: 3}
+    - rid: 2482468840093515926
+      type: {class: TowerBuilding, ns: BuildingSystem.Buildings, asm: BuildingSystem.Buildings}
+      data:
+        Tower: {fileID: 11400000, guid: 134e57aec099c3243aa556f7ab0e398e, type: 2}
+        Prefab: {fileID: 1251023497250277589, guid: b208e996f0740ea4ebe9aed9a0f50b07, type: 3}
 --- !u!1 &1538284715
 GameObject:
   m_ObjectHideFlags: 0
@@ -72016,6 +72096,51 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1619707695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1619707696}
+  - component: {fileID: 1619707697}
+  m_Layer: 0
+  m_Name: Damage Recorder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1619707696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619707695}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1337035414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1619707697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619707695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b801facd412ae947b91b1416ae2f08e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Core::Core.DamageRecorder
+  _damageRecords: []
 --- !u!1 &1699123216
 GameObject:
   m_ObjectHideFlags: 0

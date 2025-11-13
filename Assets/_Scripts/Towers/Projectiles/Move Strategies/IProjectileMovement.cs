@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Towers.Projectiles
 {
-    public interface IProjectileMoveStrategy
+    public interface IProjectileMovement
     {
         public bool DestroyIfInvalidTarget { get; }
 
@@ -11,6 +11,6 @@ namespace Towers.Projectiles
 
         public void Init(ProjectileBehaviour projectile);
         public void Move(Vector2 target);
-        public IProjectileMoveStrategy Clone();
+        public IProjectileMovement Clone();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Towers.Projectiles
 {
-    public class BouncingProjectile : IProjectileMoveStrategy
+    public class BouncingProjectile : IProjectileMovement
     {
         private ProjectileBehaviour _projectile;
         private Transform _target;
@@ -48,6 +48,6 @@ namespace Towers.Projectiles
                 _projectile.DestroyProjectile();
         }
 
-        public IProjectileMoveStrategy Clone() => new BouncingProjectile();
+        public IProjectileMovement Clone() => new BouncingProjectile();
     }
 }

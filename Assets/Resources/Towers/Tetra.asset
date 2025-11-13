@@ -39,10 +39,10 @@ MonoBehaviour:
       type: {class: TetraStrategy, ns: Towers, asm: Towers}
       data:
         ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
-        DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
+        DefaultProjectile: {fileID: 11400000, guid: 0bd75a3ee8a1e2d4b9220d81f624d620, type: 2}
         TargetAlignments: 00000000
         MoveStrategy:
-          rid: 1026232739033776204
-    - rid: 1026232739033776204
-      type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}
+          rid: 2482468826409599081
+    - rid: 2482468826409599081
+      type: {class: StraightProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 

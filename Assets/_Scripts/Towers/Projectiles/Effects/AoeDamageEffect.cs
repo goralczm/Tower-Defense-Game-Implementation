@@ -3,27 +3,27 @@ using UnityEngine;
 
 namespace Towers.Projectiles
 {
-    public class AoeProjectileDamage : IProjectileDamageStrategy
+    public class AoeDamageEffect : IProjectileEffect
     {
         private ProjectileBehaviour _projectile;
 
-        public DamageStrategyPriority Priority => DamageStrategyPriority.Damage;
+        public EffectPriority Priority => EffectPriority.Damage;
 
         public void Init(ProjectileBehaviour projectile)
         {
             _projectile = projectile;
         }
 
-        public void DamageTarget(Transform target)
+        public void Execute(Transform target)
         {
             var hits = Physics2D.OverlapCircleAll(target.position, _projectile.Attributes.GetAttribute(ProjectileAttributes.AreaOfEffectRange));
             foreach (var hit in hits)
             {
                 if (_projectile.TryDamageTarget(hit.transform, out var damageable))
-                    damageable.TakeDamage(_projectile.Attributes.GetAttribute(ProjectileAttributes.Damage));
+                    damageable.TakeDamage(_projectile.Attributes.GetAttribute(ProjectileAttributes.Damage), _projectile.DamageTypes, _projectile.Name);
             }
         }
 
-        public IProjectileDamageStrategy Clone() => new AoeProjectileDamage();
+        public IProjectileEffect Clone() => new AoeDamageEffect();
     }
 }

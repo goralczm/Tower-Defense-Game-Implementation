@@ -103,5 +103,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10ac0e25cf4ded7498584397c5dae47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileBehaviour
-  _projectileData: {fileID: 11400000, guid: d81ea1dd761d36b4aa0c02a4a5922064, type: 2}
   _rend: {fileID: 1743100892989050173}

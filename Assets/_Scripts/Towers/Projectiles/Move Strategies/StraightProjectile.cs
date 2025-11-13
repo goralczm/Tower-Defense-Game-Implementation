@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Towers.Projectiles
 {
-    public class StraightProjectile : IProjectileMoveStrategy
+    public class StraightProjectile : IProjectileMovement
     {
         private ProjectileBehaviour _projectile;
         private Vector2? _targetPosition = null;
@@ -25,17 +25,19 @@ namespace Towers.Projectiles
 
             _projectile.transform.position = Vector2.MoveTowards(_projectile.transform.position, _targetPosition.Value, Time.deltaTime * _projectile.Attributes.GetAttribute(Attributes.ProjectileAttributes.Speed));
 
-            Collider2D[] hits = Physics2D.OverlapCircleAll(_projectile.transform.position, .05f);
-            foreach (var hit in hits)
+            var targets = Targeting.Targeting.GetTargetsInRange(_projectile.transform.position, .05f, _projectile.CanDamageAlignments);
+            foreach (var t in targets)
             {
-                OnTransformCollision?.Invoke(hit.transform);
+                OnTransformCollision?.Invoke(t.Transform);
                 _projectile.DestroyProjectile();
             }
+
+            if (targets.Count > 0) return;
 
             if (_projectile.IsNearTarget(_targetPosition.Value))
                 _projectile.DestroyProjectile();
         }
 
-        public IProjectileMoveStrategy Clone() => new StraightProjectile();
+        public IProjectileMovement Clone() => new StraightProjectile();
     }
 }

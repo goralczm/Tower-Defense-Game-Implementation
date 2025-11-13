@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Towers.Projectiles
 {
-    public class HomingProjectile : IProjectileMoveStrategy
+    public class HomingProjectile : IProjectileMovement
     {
         private ProjectileBehaviour _projectile;
 
@@ -28,6 +28,6 @@ namespace Towers.Projectiles
             }
         }
 
-        public IProjectileMoveStrategy Clone() => new HomingProjectile();
+        public IProjectileMovement Clone() => new HomingProjectile();
     }
 }

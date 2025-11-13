@@ -1,14 +1,13 @@
 using ArtificeToolkit.Attributes;
 using Attributes;
 using Towers.Projectiles;
-using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace Towers
 {
     public class TetraStrategy : ProjectileBasedAttack
     {
-        [SerializeReference, ForceArtifice] public IProjectileMoveStrategy MoveStrategy;
+        [SerializeReference, ForceArtifice] public IProjectileMovement MoveStrategy;
 
         private float _shootTimer;
         private Spinner _spinner;
@@ -60,7 +59,7 @@ namespace Towers
                 .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(position, baseAttributes, TargetAlignments, _projectile, MoveStrategy);
+            projectile.Setup(position, baseAttributes, TargetAlignments, _projectile, MoveStrategy, _projectile.DamageStrategies);
         }
 
         public override void Dispose()

@@ -1,0 +1,20 @@
+{
+    "name": "VisualEffects",
+    "rootNamespace": "VisualEffects",
+    "references": [
+        "GUID:ca5c6a327f3cd3e4b9041f017ce291ef",
+        "GUID:70074737be8cf6340afb2f543ea85781",
+        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad",
+        "GUID:9ba9f47b380bfd245a7c648c893dab84",
+        "GUID:7832bf0e4dd941b499656e8b1bb633ca"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -23,16 +23,17 @@ MonoBehaviour:
   MoveStrategy:
     rid: 3343487951226798157
   DamageStrategies:
-  - rid: 3343487900777971713
-  - rid: 3343487900777971714
+  - rid: 2482468840093515881
+  - rid: 2482468840093515883
+  DamageTypes: 02000000
   references:
     version: 2
     RefIds:
-    - rid: 3343487900777971713
-      type: {class: BiggoProjectileStrategy, ns: Towers.Projectiles, asm: Towers}
+    - rid: 2482468840093515881
+      type: {class: SizeSpeedScalingEffect, ns: Towers.Projectiles, asm: Towers}
       data: 
-    - rid: 3343487900777971714
-      type: {class: SimpleProjectileDamage, ns: Towers.Projectiles, asm: Towers}
+    - rid: 2482468840093515883
+      type: {class: SizeBasedDamageEffect, ns: Towers.Projectiles, asm: Towers}
       data: 
     - rid: 3343487951226798157
       type: {class: BouncingProjectile, ns: Towers.Projectiles, asm: Towers}

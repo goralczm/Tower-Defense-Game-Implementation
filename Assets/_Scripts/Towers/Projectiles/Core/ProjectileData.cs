@@ -1,5 +1,6 @@
 using ArtificeToolkit.Attributes;
 using Attributes;
+using Core;
 using Inventory;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,9 @@ namespace Towers.Projectiles
         public Sprite Sprite;
         public Color SpriteColor;
         public BaseAttributes<ProjectileAttributes> BaseAttributes;
-        [SerializeReference, ForceArtifice] public IProjectileMoveStrategy MoveStrategy;
-        [SerializeReference, ForceArtifice] public List<IProjectileDamageStrategy> DamageStrategies;
+        [SerializeReference, ForceArtifice] public IProjectileMovement MoveStrategy;
+        [SerializeReference, ForceArtifice] public List<IProjectileEffect> DamageStrategies;
+        public DamageType[] DamageTypes;
 
         public string Name => name;
         public string Description => "Not set yet.";

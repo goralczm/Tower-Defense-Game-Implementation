@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using static Codice.Client.Common.Connection.AskCredentialsToUser;
 
 namespace Core
 {
@@ -8,6 +8,8 @@ namespace Core
         [SerializeField] private float _health;
         [SerializeField] private Alignment _alignment;
 
+        public event Action<DamageData> OnDamaged;
+
         public Alignment Alignment => _alignment;
         public Transform Transform => transform;
         public int Strength => 1;
@@ -15,8 +17,19 @@ namespace Core
 
         public float GetDistance(Vector2 position) => Vector2.Distance(position, transform.position);
 
-        public void TakeDamage(float damage)
+        private void Start()
         {
+            IDamageable.RecordDamageRequest?.Invoke(this);
+        }
+
+        public void TakeDamage(float damage, DamageType[] types, string source)
+        {
+            OnDamaged?.Invoke(new(
+                Mathf.Min(_health, damage),
+                source, transform.name,
+                types,
+                transform.position));
+
             _health -= damage;
 
             if (_health <= 0f)

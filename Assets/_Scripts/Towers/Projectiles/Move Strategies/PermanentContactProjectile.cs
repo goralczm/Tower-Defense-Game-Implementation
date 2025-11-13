@@ -4,12 +4,9 @@ using UnityEngine;
 
 namespace Towers.Projectiles
 {
-    public class PermanentContactProjectile : IProjectileMoveStrategy
+    public class PermanentContactProjectile : IProjectileMovement
     {
         private ProjectileBehaviour _projectile;
-        private Dictionary<Transform, float> _targetCooldowns = new();
-
-        private const float DAMAGE_COOLDOWN = .25f;
 
         public event Action<Transform> OnTransformCollision;
 
@@ -27,14 +24,10 @@ namespace Towers.Projectiles
             var targets = Targeting.Targeting.GetTargetsInRange(_projectile.transform.position, _projectile.transform.localScale.x, _projectile.CanDamageAlignments);
             foreach (var t in targets)
             {
-                if (_targetCooldowns.TryGetValue(t.Transform, out var cooldown) && Time.time < cooldown)
-                    continue;
-
                 OnTransformCollision?.Invoke(t.Transform);
-                _targetCooldowns[t.Transform] = Time.time + DAMAGE_COOLDOWN;
             }
         }
 
-        public IProjectileMoveStrategy Clone() => new PermanentContactProjectile();
+        public IProjectileMovement Clone() => new PermanentContactProjectile();
     }
 }
