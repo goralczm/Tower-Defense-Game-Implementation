@@ -107,7 +107,7 @@ namespace Enemies
                 SpawnChildren(transform.position, _currentWaypointIndex - 1, .2f, _enemyData.Children.Count);
                 Die(DeathReason.External);
             }
-            else
+            else if (_rend.color != Color.red)
                 StartCoroutine(HitEffect());
         }
 

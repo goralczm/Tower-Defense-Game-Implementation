@@ -1,6 +1,7 @@
 using ArtificeToolkit.Attributes;
 using Attributes;
 using System.Collections.Generic;
+using System.Linq;
 using Towers.Projectiles;
 using UnityEngine;
 
@@ -64,7 +65,7 @@ namespace Towers
                 .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(target, baseAttributes, TargetAlignments, _projectile, _projectile.MoveStrategy, ProjectileEffects);
+            projectile.Setup(target, _projectile.BaseAttributes + baseAttributes, TargetAlignments, _projectile, _projectile.MoveStrategy, _projectile.DamageStrategies.Concat(ProjectileEffects).ToList());
         }
 
         public override IAttackStrategy Clone()

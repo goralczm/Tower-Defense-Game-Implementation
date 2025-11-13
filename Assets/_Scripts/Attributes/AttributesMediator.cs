@@ -1,17 +1,17 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Attributes
 {
-    public class AttributesMediator<TEnum> where TEnum : Enum
+    public class AttributesMediator<TEnum> : ICloneable where TEnum : Enum
     {
         private readonly LinkedList<AttributeModifier<TEnum>> _modifiers = new();
 
         public event EventHandler<AttributeQuery<TEnum>> Queries;
 
         public event Action OnAttributesChanged;
+
+        public LinkedList<AttributeModifier<TEnum>> Modifiers => _modifiers;
 
         public void PerformQuery(object sender, AttributeQuery<TEnum> query) => Queries?.Invoke(sender, query);
 
@@ -51,10 +51,33 @@ namespace Attributes
                 node = nextNode;
             }
         }
+
+        public AttributesMediator<TEnum> Clone()
+        {
+            var clone = new AttributesMediator<TEnum>();
+
+            foreach (var modifier in _modifiers)
+            {
+                var clonedModifier = modifier.Clone();
+                clone._modifiers.AddLast(clonedModifier);
+                clone.Queries += clonedModifier.Handle;
+
+                clonedModifier.OnDispose += _ =>
+                {
+                    clone._modifiers.Remove(clonedModifier);
+                    clone.Queries -= clonedModifier.Handle;
+                    clone.OnAttributesChanged?.Invoke();
+                };
+            }
+
+            return clone;
+        }
+
+        object ICloneable.Clone() => Clone();
     }
 
     [System.Serializable]
-    public class AttributeQuery<TEnum> where TEnum : Enum
+    public class AttributeQuery<TEnum> : ICloneable where TEnum : Enum
     {
         public TEnum Type;
         public float Value;
@@ -80,5 +103,12 @@ namespace Attributes
 
             return new AttributeQuery<TEnum>(a.Type, a.Value - b.Value);
         }
+
+        public AttributeQuery<TEnum> Clone()
+        {
+            return new AttributeQuery<TEnum>(Type, Value);
+        }
+
+        object ICloneable.Clone() => Clone();
     }
 }

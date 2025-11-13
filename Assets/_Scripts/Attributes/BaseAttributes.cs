@@ -5,7 +5,7 @@ using System.Linq;
 namespace Attributes
 {
     [System.Serializable]
-    public class BaseAttributes<TEnum> where TEnum : Enum
+    public class BaseAttributes<TEnum> : ICloneable where TEnum : Enum
     {
         public List<AttributeQuery<TEnum>> Queries = new();
 
@@ -23,14 +23,6 @@ namespace Attributes
             }
 
             return query.Value;
-        }
-
-        public void AddAttribute(TEnum type, float value)
-        {
-            if (!_queryByType.TryGetValue(type, out var query))
-            {
-
-            }
         }
 
         public static BaseAttributes<TEnum> operator +(BaseAttributes<TEnum> a, BaseAttributes<TEnum> b)
@@ -59,5 +51,20 @@ namespace Attributes
 
             return result;
         }
+
+        public BaseAttributes<TEnum> Clone()
+        {
+            var clone = new BaseAttributes<TEnum>();
+
+            clone.Queries = Queries
+                .Select(q => q.Clone())
+                .ToList();
+
+            clone._queryByType = clone.Queries.ToDictionary(q => q.Type, q => q);
+
+            return clone;
+        }
+
+        object ICloneable.Clone() => Clone();
     }
 }

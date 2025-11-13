@@ -13,28 +13,32 @@ MonoBehaviour:
   m_Name: Rebound
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
   Sprite: {fileID: 8891180011573125036, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
-  SpriteColor: {r: 0.672129, g: 0.19450872, b: 0.8773585, a: 1}
+  SpriteColor: {r: 0.6981132, g: 0.18309002, b: 0.43590117, a: 1}
   BaseAttributes:
     Queries:
     - Type: 0
-      Value: 15
+      Value: 10
     - Type: 4
       Value: 5
   MoveStrategy:
-    rid: 3343487951226798157
+    rid: 2482468826409599082
   DamageStrategies:
-  - rid: 2482468840093515881
-  - rid: 2482468840093515883
-  DamageTypes: 02000000
+  - rid: 1026232782207582314
+  - rid: 1026232782207582309
+  - rid: 1026232782207582313
+  DamageTypes: 00000000
   references:
     version: 2
     RefIds:
-    - rid: 2482468840093515881
+    - rid: 1026232782207582309
+      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 1026232782207582313
+      type: {class: BouncingProjectileEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 1026232782207582314
       type: {class: SizeSpeedScalingEffect, ns: Towers.Projectiles, asm: Towers}
       data: 
-    - rid: 2482468840093515883
-      type: {class: SizeBasedDamageEffect, ns: Towers.Projectiles, asm: Towers}
-      data: 
-    - rid: 3343487951226798157
-      type: {class: BouncingProjectile, ns: Towers.Projectiles, asm: Towers}
+    - rid: 2482468826409599082
+      type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 

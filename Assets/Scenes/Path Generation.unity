@@ -67550,7 +67550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Towers::Towers.StartInventory
   StartItems:
   - {fileID: 11400000, guid: d81ea1dd761d36b4aa0c02a4a5922064, type: 2}
-  - {fileID: 11400000, guid: 1d9526e35a82ecc40903cdbf7de22d3f, type: 2}
+  - {fileID: 11400000, guid: b392f964088d2bf4cb0124fa668dc034, type: 2}
   Inventory: {fileID: 728750957}
 --- !u!114 &728750957
 MonoBehaviour:

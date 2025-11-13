@@ -3,13 +3,13 @@ using Utilities;
 
 namespace Attributes
 {
-    public abstract class AttributeModifier<TEnum> : IDisposable where TEnum : Enum
+    public abstract class AttributeModifier<TEnum> : ICloneable, IDisposable where TEnum : Enum
     {
         public bool MarkedForRemoval { get; private set; }
 
         public event Action<AttributeModifier<TEnum>> OnDispose = delegate { };
 
-        private readonly CountdownTimer _timer;
+        protected readonly CountdownTimer _timer;
 
         protected AttributeModifier(float duration)
         {
@@ -28,6 +28,21 @@ namespace Attributes
         {
             MarkedForRemoval = true;
             OnDispose?.Invoke(this);
+        }
+
+        public abstract AttributeModifier<TEnum> Clone();
+
+        object ICloneable.Clone() => Clone();
+
+        protected CountdownTimer CloneTimer()
+        {
+            if (_timer == null)
+                return null;
+
+            var newTimer = new CountdownTimer(_timer.Time);
+            newTimer.OnTimerStop += Dispose;
+            newTimer.Start();
+            return newTimer;
         }
     }
 }

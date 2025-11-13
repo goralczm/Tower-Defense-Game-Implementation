@@ -18,6 +18,8 @@ MonoBehaviour:
     Queries:
     - Type: 0
       Value: 15
+    - Type: 4
+      Value: 2
   MoveStrategy:
     rid: 2482468826409599082
   DamageStrategies:

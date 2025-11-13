@@ -3,6 +3,7 @@ using Attributes;
 using Core;
 using Inventory;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Towers.Projectiles;
 using UnityEngine;
@@ -80,7 +81,7 @@ namespace Towers
                 .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(_tower.transform.position, baseAttributes, TargetAlignments, _projectile, new PermanentContactProjectile(), ProjectileEffects);
+            projectile.Setup(_tower.transform.position, _projectile.BaseAttributes + baseAttributes, TargetAlignments, _projectile, new PermanentContactProjectile(), _projectile.DamageStrategies.Concat(ProjectileEffects).ToList());
             _projectiles.Add(projectile);
         }
 

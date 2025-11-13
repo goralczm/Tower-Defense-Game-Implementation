@@ -1,6 +1,7 @@
 using ArtificeToolkit.Attributes;
 using Attributes;
 using System.Collections.Generic;
+using System.Linq;
 using Towers.Projectiles;
 using UnityEngine;
 
@@ -95,7 +96,7 @@ namespace Towers
                 .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
                 .Build();
 
-            projectile.Setup(_tower.transform.position, baseAttributes, TargetAlignments, _projectile, new LaserProjectile(), ProjectileEffects);
+            projectile.Setup(_tower.transform.position, _projectile.BaseAttributes + baseAttributes, TargetAlignments, _projectile, new LaserProjectile(), _projectile.DamageStrategies.Concat(ProjectileEffects).ToList());
             _projectiles.Add(projectile);
         }
 

@@ -1,9 +1,5 @@
-using Codice.CM.Common.Tree.Partial;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Utilities;
@@ -11,7 +7,7 @@ using Utilities;
 namespace Attributes
 {
     [System.Serializable]
-    public class Attributes<TEnum> where TEnum : Enum
+    public class Attributes<TEnum> : ICloneable where TEnum : Enum
     {
         private readonly AttributesMediator<TEnum> _mediator;
 
@@ -20,6 +16,7 @@ namespace Attributes
         public event Action OnAttributesChanged;
 
         public AttributesMediator<TEnum> Mediator => _mediator;
+        public BaseAttributes<TEnum> BaseAttributes => _baseAttributes;
 
         public Attributes(AttributesMediator<TEnum> mediator, BaseAttributes<TEnum> baseAttributes)
         {
@@ -41,6 +38,17 @@ namespace Attributes
             _baseAttributes = baseAttributes;
             OnAttributesChanged?.Invoke();
         }
+
+        public Attributes<TEnum> Clone()
+        {
+            var clonedBase = _baseAttributes.Clone();
+            var clonedMediator = _mediator.Clone();
+            var clone = new Attributes<TEnum>(clonedMediator, clonedBase);
+
+            return clone;
+        }
+
+        object ICloneable.Clone() => Clone();
 
         public Dictionary<TEnum, float> GetAllAttributes()
         {
