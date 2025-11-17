@@ -3,6 +3,7 @@ using Currency;
 using Inventory;
 using TMPro;
 using UnityEngine;
+using Utilities.Extensions;
 using Utilities.Text;
 using Utilities.UI;
 

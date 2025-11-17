@@ -20,15 +20,13 @@ namespace Towers.Projectiles
             {
                 if (_projectile.Attributes.GetAttribute(ProjectileAttributes.Bounces, 0) > 0)
                 {
-                    _projectile.Attributes.Mediator.AddModifier(new BasicAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Bounces, 0f, v => v = v - 1));
-
                     var targets = Targeting.Targeting.GetTargetsInRange(_projectile.transform.position, 1f, _projectile.CanDamageAlignments, target);
 
                     if (targets.Count > 0)
                     {
                         var projectile = Object.Instantiate(
                             _projectile,
-                            _projectile.transform.position,
+                            target.transform.position,
                             _projectile.transform.rotation);
 
                         projectile.Setup(
@@ -40,6 +38,7 @@ namespace Towers.Projectiles
                             _projectile.Effects);
 
                         projectile.SetAttributes(_projectile.Attributes.Clone());
+                        projectile.Attributes.Mediator.AddModifier(new BasicAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Bounces, 0f, v => v = v - 1));
                     }
                 }
             }

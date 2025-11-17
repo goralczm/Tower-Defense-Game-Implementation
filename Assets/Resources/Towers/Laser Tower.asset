@@ -27,7 +27,7 @@ MonoBehaviour:
       - Type: 3
         Value: 1
       - Type: 4
-        Value: 1
+        Value: 0.2
       - Type: 5
         Value: 1
     AttackStrategies:
@@ -38,7 +38,7 @@ MonoBehaviour:
     - rid: 2482468840093515924
       type: {class: LaserStrategy, ns: Towers, asm: Towers}
       data:
-        ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
-        DefaultProjectile: {fileID: 11400000, guid: 1d9526e35a82ecc40903cdbf7de22d3f, type: 2}
+        ProjectilePrefab: {fileID: 3317496358686910656, guid: da025acff00a7da44beda92133b630c6, type: 3}
+        DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
         TargetAlignments: 00000000
         ProjectileEffects: []

@@ -8,5 +8,6 @@ namespace Attributes
         Size,
         Bounces,
         AreaOfEffectRange,
+        TickRate,
     }
 }

@@ -1,5 +1,7 @@
 using Attributes;
 using Core;
+using Inventory;
+using ObjectPooling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -139,6 +141,9 @@ namespace Towers
         {
             foreach (var attack in _attackStrategies)
                 attack.Dispose();
+
+            foreach (var item in Inventory.Items)
+                PickupFactory.CreatePickup(item, (Vector2)transform.position + UnityEngine.Random.insideUnitCircle);
 
             Destroy(gameObject);
         }

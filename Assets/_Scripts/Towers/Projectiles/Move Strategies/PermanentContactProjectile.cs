@@ -1,5 +1,5 @@
+using Attributes;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Towers.Projectiles
@@ -9,6 +9,8 @@ namespace Towers.Projectiles
         private ProjectileBehaviour _projectile;
 
         public event Action<Transform> OnTransformCollision;
+
+        private float _tickTimer;
 
         public bool DestroyIfInvalidTarget => false;
 
@@ -21,11 +23,13 @@ namespace Towers.Projectiles
         {
             _projectile.transform.position = target;
 
+            if (Time.time < _tickTimer) return;
+
             var targets = Targeting.Targeting.GetTargetsInRange(_projectile.transform.position, _projectile.transform.localScale.x, _projectile.CanDamageAlignments);
             foreach (var t in targets)
-            {
                 OnTransformCollision?.Invoke(t.Transform);
-            }
+
+            _tickTimer = Time.time + _projectile.Attributes.GetAttribute(ProjectileAttributes.TickRate, .1f);
         }
 
         public IProjectileMovement Clone() => new PermanentContactProjectile();
