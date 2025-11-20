@@ -11,7 +11,7 @@ namespace Towers
         public Sprite Icon;
         public int Cost;
         public BaseAttributes<TowerAttributes> BaseAttributes;
-        [SerializeReference, ForceArtifice] public IAttackStrategy[] AttackStrategies;
+        public AttackStrategy[] AttackStrategies;
     }
 
     [CreateAssetMenu(menuName = "Towers/New Tower Data", fileName = "New Tower Data")]

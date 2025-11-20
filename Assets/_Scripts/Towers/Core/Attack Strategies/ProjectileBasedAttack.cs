@@ -5,7 +5,7 @@ using Towers.Projectiles;
 
 namespace Towers
 {
-    public abstract class ProjectileBasedAttack : IAttackStrategy
+    public abstract class ProjectileBasedAttack : AttackStrategy
     {
         public ProjectileBehaviour ProjectilePrefab;
         public ProjectileData DefaultProjectile;
@@ -15,12 +15,9 @@ namespace Towers
         protected ProjectileData _projectile;
         protected int _index;
 
-        public abstract string Name { get; }
-        public abstract string Description { get; }
+        public override void Validate() { }
 
-        public virtual void Validate() { }
-
-        public virtual void Setup(TowerBehaviour tower, int index)
+        public override void Setup(TowerBehaviour tower, int index)
         {
             _index = index;
             _tower = tower;
@@ -42,13 +39,10 @@ namespace Towers
 
         protected virtual void OnProjectileUpdated() { }
 
-        public abstract void Tick(float deltaTime);
 
-        public virtual void Dispose()
+        public override void Dispose()
         {
             _tower.Inventory.OnSlotChanged -= UpdateProjectile;
         }
-
-        public abstract IAttackStrategy Clone();
     }
 }

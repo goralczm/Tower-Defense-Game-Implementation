@@ -1,8 +1,12 @@
+using Attributes;
 using Core;
 using Currency;
 using Inventory;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Utilities.Text;
 using Utilities.UI;
 
@@ -14,6 +18,7 @@ namespace Towers
         [SerializeField] private TextMeshProUGUI _towerHeader;
         [SerializeField] private TextMeshProUGUI _attributesText;
         [SerializeField] private InventoryDisplay _inventoryDisplay;
+        [SerializeField] private List<AttackSlot> _attackSlots = new();
         [SerializeField] private UITweener _tweener;
 
         private TowerBehaviour _tower;
@@ -82,6 +87,20 @@ namespace Towers
                 _attributesText.SetText(_tower.Attributes.GetAttributesDescription());
             else
                 _attributesText.SetText(_tower.Attributes.GetComparedAttributesDescription(_tower.NextLevelData.BaseAttributes));
+
+            int inventoryCapacity = (int)_tower.Attributes.GetAttribute(TowerAttributes.InventoryCapacity);
+            for (int i = 0; i < _attackSlots.Count; i++)
+            {
+                if (i < inventoryCapacity)
+                {
+                    var attack = _tower.LevelData.AttackStrategies[i];
+
+                    _attackSlots[i].Setup(attack.Icon, attack.Name, attack.Description);
+                    _attackSlots[i].transform.parent.gameObject.SetActive(true);
+                }
+                else
+                    _attackSlots[i].transform.parent.gameObject.SetActive(false);
+            }
         }
     }
 }

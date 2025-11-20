@@ -23,8 +23,11 @@ namespace TooltipSystem
                 _delayTimer -= Time.deltaTime;
                 if (_delayTimer <= 0)
                 {
-                    TooltipSystem.Show(Content, Header);
-                    _isWaiting = false;
+                    if (!string.IsNullOrEmpty(Content) || !string.IsNullOrEmpty(Header))
+                    {
+                        TooltipSystem.Show(Content, Header);
+                        _isWaiting = false;
+                    }
                 }
             }
         }

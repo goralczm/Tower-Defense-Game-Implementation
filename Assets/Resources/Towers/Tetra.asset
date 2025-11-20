@@ -31,18 +31,4 @@ MonoBehaviour:
       - Type: 5
         Value: 1
     AttackStrategies:
-    - rid: 1026232650341285965
-  references:
-    version: 2
-    RefIds:
-    - rid: 1026232650341285965
-      type: {class: TetraStrategy, ns: Towers, asm: Towers}
-      data:
-        ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
-        DefaultProjectile: {fileID: 11400000, guid: 0bd75a3ee8a1e2d4b9220d81f624d620, type: 2}
-        TargetAlignments: 00000000
-        MoveStrategy:
-          rid: 2482468826409599081
-    - rid: 2482468826409599081
-      type: {class: StraightProjectile, ns: Towers.Projectiles, asm: Towers}
-      data: 
+    - {fileID: 11400000, guid: 65435770737fda14b958f23c6e73654d, type: 2}

@@ -1,24 +1,19 @@
 using ArtificeToolkit.Attributes;
 using Attributes;
-using Core;
-using Inventory;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Towers.Projectiles;
 using UnityEngine;
 
 namespace Towers
 {
+    [CreateAssetMenu]
     public class SpinnerStrategy : ProjectileBasedAttack
     {
         [SerializeReference, ForceArtifice] public List<IProjectileEffect> ProjectileEffects;
 
         private Spinner _spinner = new();
         private List<ProjectileBehaviour> _projectiles = new();
-
-        public override string Name => "Spinjutsu";
-        public override string Description => "Go cirice";
 
         public override void Setup(TowerBehaviour tower, int index)
         {
@@ -58,7 +53,7 @@ namespace Towers
 
         private void DestroyProjectileAt(int index)
         {
-            Object.Destroy(_projectiles[index].gameObject);
+            Destroy(_projectiles[index].gameObject);
             _projectiles.RemoveAt(index);
         }
 
@@ -74,7 +69,7 @@ namespace Towers
 
         private void CreateProjectile(Vector2 position)
         {
-            ProjectileBehaviour projectile = Object.Instantiate(ProjectilePrefab, position, Quaternion.identity);
+            ProjectileBehaviour projectile = Instantiate(ProjectilePrefab, position, Quaternion.identity);
 
             var baseAttributes = new BaseAttributesBuilder<ProjectileAttributes>()
                 .Add(ProjectileAttributes.Damage, _tower.Attributes.GetAttribute(TowerAttributes.Damage) * Time.deltaTime)
@@ -92,7 +87,7 @@ namespace Towers
             _tower.Attributes.OnAttributesChanged -= OnAttributesChanged;
 
             for (int i = _projectiles.Count - 1; i >= 0; i--)
-                Object.Destroy(_projectiles[i].gameObject);
+                Destroy(_projectiles[i].gameObject);
         }
 
         public override IAttackStrategy Clone()

@@ -24,5 +24,7 @@ MonoBehaviour:
       Value: 0
   Reward: 5
   DangerLevel: 1
-  Sprite: {fileID: 4586509288191203383, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
+  Sprite: {fileID: 8791108887664584822, guid: a26005988d627b74ba0914e69b2d108f, type: 3}
   Children: []
+  Resistances: 
+  Vulnerabilities: 

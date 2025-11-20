@@ -7,14 +7,12 @@ using UnityEngine;
 
 namespace Towers
 {
+    [CreateAssetMenu]
     public class ShootStrategy : ProjectileBasedAttack
     {
         [SerializeReference, ForceArtifice] public List<IProjectileEffect> ProjectileEffects;
 
         private float _shootTimer;
-
-        public override string Name => "Opps Stoppa";
-        public override string Description => "Pew Pew";
 
         public override void Validate()
         {

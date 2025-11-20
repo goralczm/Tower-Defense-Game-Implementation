@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f7849e3dd578c4b8ed924a4455e308, type: 3}
+  m_Name: Shoota Flow
+  m_EditorClassIdentifier: Towers::Towers.ShootStrategy
+  AttackDescription: PEw pEW
+  AttackIcon: {fileID: 4612997755423256214, guid: 15423c3e49cc1ba4bab6e87d81793847, type: 3}
+  ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
+  DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
+  TargetAlignments: 00000000
+  ProjectileEffects: []
+  references:
+    version: 2
+    RefIds: []

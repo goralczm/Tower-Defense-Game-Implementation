@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Towers
 {
+    [CreateAssetMenu]
     public class TetraStrategy : ProjectileBasedAttack
     {
         [SerializeReference, ForceArtifice] public IProjectileMovement MoveStrategy;
@@ -14,9 +15,6 @@ namespace Towers
 
         private float _shootTimer;
         private Spinner _spinner;
-
-        public override string Name => "Tetra Cannon";
-        public override string Description => "KMWTW";
 
         public override void Setup(TowerBehaviour tower, int index)
         {

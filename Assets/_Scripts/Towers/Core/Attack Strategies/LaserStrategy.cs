@@ -7,14 +7,12 @@ using UnityEngine;
 
 namespace Towers
 {
+    [CreateAssetMenu]
     public class LaserStrategy : ProjectileBasedAttack
     {
         [SerializeReference, ForceArtifice] public List<IProjectileEffect> ProjectileEffects;
 
         private List<ProjectileBehaviour> _projectiles = new();
-
-        public override string Name => "Laseru dase";
-        public override string Description => "Bzzzz";
 
         public override void Setup(TowerBehaviour tower, int index)
         {
@@ -50,7 +48,7 @@ namespace Towers
 
         private void DestroyProjectileAt(int index)
         {
-            Object.Destroy(_projectiles[index].gameObject);
+            Destroy(_projectiles[index].gameObject);
             _projectiles.RemoveAt(index);
         }
 
