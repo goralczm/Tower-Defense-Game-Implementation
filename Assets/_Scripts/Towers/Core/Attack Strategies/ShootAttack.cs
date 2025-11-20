@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace Towers
 {
-    [CreateAssetMenu]
-    public class ShootStrategy : ProjectileBasedAttack
+    [CreateAssetMenu(menuName = "Towers/Attacks/Shoot Attack")]
+    public class ShootAttack : ProjectileBasedAttack
     {
         [SerializeReference, ForceArtifice] public List<IProjectileEffect> ProjectileEffects;
 
@@ -18,7 +18,7 @@ namespace Towers
         {
             if (DefaultProjectile.MoveStrategy.GetType().Equals(typeof(PermanentContactProjectile)))
             {
-                Debug.LogError($"{typeof(PermanentContactProjectile).Name} is not compatible with {typeof(ShootStrategy).Name}");
+                Debug.LogError($"{typeof(PermanentContactProjectile).Name} is not compatible with {typeof(ShootAttack).Name}");
                 DefaultProjectile = null;
             }
         }
@@ -65,7 +65,7 @@ namespace Towers
 
         public override IAttackStrategy Clone()
         {
-            return new ShootStrategy()
+            return new ShootAttack()
             {
                 ProjectilePrefab = ProjectilePrefab,
                 DefaultProjectile = DefaultProjectile,

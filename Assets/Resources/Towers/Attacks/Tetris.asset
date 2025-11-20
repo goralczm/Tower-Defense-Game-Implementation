@@ -18,11 +18,11 @@ MonoBehaviour:
   DefaultProjectile: {fileID: 11400000, guid: 0bd75a3ee8a1e2d4b9220d81f624d620, type: 2}
   TargetAlignments: 00000000
   MoveStrategy:
-    rid: 1026232940723437646
+    rid: 1026232940723437649
   ProjectileEffects: []
   references:
     version: 2
     RefIds:
-    - rid: 1026232940723437646
+    - rid: 1026232940723437649
       type: {class: StraightProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 

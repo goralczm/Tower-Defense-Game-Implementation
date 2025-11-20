@@ -27,7 +27,7 @@ MonoBehaviour:
       - Type: 3
         Value: 1
       - Type: 4
-        Value: 1
+        Value: 0.2
       - Type: 5
         Value: 1
     AttackStrategies:

@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace Towers
 {
-    [CreateAssetMenu]
-    public class LaserStrategy : ProjectileBasedAttack
+    [CreateAssetMenu(menuName = "Towers/Attacks/Laser Attack")]
+    public class LaserAttack : ProjectileBasedAttack
     {
         [SerializeReference, ForceArtifice] public List<IProjectileEffect> ProjectileEffects;
 
@@ -109,7 +109,7 @@ namespace Towers
 
         public override IAttackStrategy Clone()
         {
-            return new LaserStrategy()
+            return new LaserAttack()
             {
                 ProjectilePrefab = ProjectilePrefab,
                 DefaultProjectile = DefaultProjectile,

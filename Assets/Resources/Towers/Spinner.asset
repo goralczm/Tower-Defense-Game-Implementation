@@ -27,7 +27,7 @@ MonoBehaviour:
       - Type: 3
         Value: 3
       - Type: 4
-        Value: 0.2
+        Value: 0.21
       - Type: 5
         Value: 1
     AttackStrategies:
@@ -45,7 +45,7 @@ MonoBehaviour:
       - Type: 3
         Value: 5
       - Type: 4
-        Value: 1
+        Value: 0.19
       - Type: 5
         Value: 2
     AttackStrategies:
@@ -64,7 +64,7 @@ MonoBehaviour:
       - Type: 3
         Value: 4
       - Type: 4
-        Value: 1
+        Value: 0.17
       - Type: 5
         Value: 3
     AttackStrategies:
@@ -84,10 +84,9 @@ MonoBehaviour:
       - Type: 3
         Value: 4
       - Type: 4
-        Value: 1
+        Value: 0.15
       - Type: 5
         Value: 2
     AttackStrategies:
     - {fileID: 11400000, guid: 1f7dfe24e4aa6f34fa207fa2ca6bdc05, type: 2}
     - {fileID: 11400000, guid: b8a6768e485cd704393c38f9d99ab9c6, type: 2}
-    - {fileID: 11400000, guid: 6d1c1d2523f18de4bad6340451e92973, type: 2}

@@ -47,7 +47,7 @@ MonoBehaviour:
       - Type: 4
         Value: 2
       - Type: 5
-        Value: 2
+        Value: 1
     AttackStrategies:
     - {fileID: 11400000, guid: 6d1c1d2523f18de4bad6340451e92973, type: 2}
   - Icon: {fileID: -1894586206897897056, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}

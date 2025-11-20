@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5a06f36b-729f-4d9c-8ada-e8e98c6c833a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../Prefabs/Projectiles/Line Renderer Projectile.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Prefabs/Projectiles/Line Renderer Projectile.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Object Pooling/PickupFactory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Object Pooling/PickupFactory.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Projectiles/Core/TowerToProjectileAttributes.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Projectiles/Core/TowerToProjectileAttributes.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Resources/Towers/Laser Tower.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Resources/Towers/Laser Tower.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Resources/Towers/Spinner.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Resources/Towers/Spinner.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Attributes/AttributeTypes/ProjectileAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Attributes/AttributeTypes/ProjectileAttributes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Inventory/Demo/EnemyPickupSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Inventory/Demo/EnemyPickupSpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Inventory/Inventory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Inventory/Inventory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Object Pooling/ObjectPooling.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/../../Object Pooling/ObjectPooling.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Core/Attack Strategies/LaserStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Core/Attack Strategies/LaserStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Core/Attack Strategies/ShootStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Core/Attack Strategies/ShootStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Core/Attack Strategies/SpinnerStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Core/Attack Strategies/SpinnerStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Core/Attack Strategies/TetraStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Core/Attack Strategies/TetraStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Core/TowerBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Core/TowerBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Projectiles/Core/ProjectileBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Projectiles/Core/ProjectileBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Projectiles/Effects/BouncingProjectileEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Projectiles/Effects/BouncingProjectileEffect.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Projectiles/Move Strategies/BouncingProjectile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Projectiles/Move Strategies/BouncingProjectile.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Projectiles/Move Strategies/LaserProjectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Projectiles/Move Strategies/LaserProjectile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Projectiles/Move Strategies/PermanentContactProjectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Projectiles/Move Strategies/PermanentContactProjectile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Towers.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/../Towers.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TowerPopup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TowerPopup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Utilities/Extensions/VectorExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Utilities/Extensions/VectorExtensions.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": -1
+}]]></component>
+  <component name="ProjectId" id="35k7CurTYfgrmL6zorQ7Y7yvJjC" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "Merging main",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\goral\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\goral\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
+      "C:\\Users\\goral\\AppData\\Local\\Symbols\\src"
+    ]
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5a06f36b-729f-4d9c-8ada-e8e98c6c833a" name="Changes" comment="" />
+      <created>1763642093513</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763642093513</updated>
+      <workItem from="1763642097757" duration="30000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

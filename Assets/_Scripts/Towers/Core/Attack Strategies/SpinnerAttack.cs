@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace Towers
 {
-    [CreateAssetMenu]
-    public class SpinnerStrategy : ProjectileBasedAttack
+    [CreateAssetMenu(menuName = "Towers/Attacks/Spinner Attack")]
+    public class SpinnerAttack : ProjectileBasedAttack
     {
         [SerializeReference, ForceArtifice] public List<IProjectileEffect> ProjectileEffects;
 
@@ -36,7 +36,7 @@ namespace Towers
             int pointsCount = (int)_tower.Attributes.GetAttribute(TowerAttributes.ProjectilesCount);
 
             _spinner.SetPointsCount(pointsCount);
-            _spinner.SetSpeed(_tower.Attributes.GetAttribute(TowerAttributes.RateOfFire));
+            _spinner.SetSpeed(.3f / _tower.Attributes.GetAttribute(TowerAttributes.RateOfFire));
             _spinner.SetRadius(_tower.Attributes.GetAttribute(TowerAttributes.Range));
 
             if (_projectiles.Count > pointsCount)
@@ -103,7 +103,7 @@ namespace Towers
 
         public override IAttackStrategy Clone()
         {
-            return new SpinnerStrategy()
+            return new SpinnerAttack()
             {
                 ProjectilePrefab = ProjectilePrefab,
                 DefaultProjectile = DefaultProjectile,

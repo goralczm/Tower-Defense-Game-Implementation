@@ -4,6 +4,7 @@ using Paths;
 using System;
 using System.Collections;
 using UnityEngine;
+using Utilities;
 
 namespace Enemies
 {
@@ -70,6 +71,9 @@ namespace Enemies
 
             var position = (Vector2)transform.position;
             var target = _path.Waypoints[_currentWaypointIndex];
+
+            Quaternion targetRotation = Helpers.RotateTowards(position, target, -90f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 15f);
 
             position = Vector2.MoveTowards(position, target, _attributes.GetAttribute(EnemyAttributes.Speed) * Time.deltaTime);
             transform.position = position;
@@ -150,7 +154,7 @@ namespace Enemies
 
         private void SpawnChildren(Vector2 pointA, int lastPointIndex, float spacing, int points)
         {
-            if (points <= 0 || lastPointIndex < 0)
+            if (points <= 0 || lastPointIndex < 0 || _enemyData.Children.Count == 0)
                 return;
 
             float distance = Vector2.Distance(pointA, _path.Waypoints[lastPointIndex]);

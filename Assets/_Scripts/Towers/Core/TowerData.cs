@@ -20,11 +20,27 @@ namespace Towers
         public string Description;
         [ForceArtifice] public TowerLevel[] Levels;
 
+        public int BuildCost => Levels[0].Cost;
+
         private void OnValidate()
         {
+            int l = 0;
             foreach (var level in Levels)
+            {
                 foreach (var attack in level.AttackStrategies)
                     attack?.Validate();
+
+                if (level.BaseAttributes.GetAttribute(TowerAttributes.InventoryCapacity) > level.AttackStrategies.Length)
+                {
+                    Debug.LogError($"[{name}:{l}] has Inventory Capacity greater than number of Attack Strategies.");
+                }
+                l++;
+            }
+        }
+
+        public string GetBaseLevelAttributesDescription()
+        {
+            return new Attributes<TowerAttributes>(new(), Levels[0].BaseAttributes).GetAttributesDescription();
         }
     }
 }

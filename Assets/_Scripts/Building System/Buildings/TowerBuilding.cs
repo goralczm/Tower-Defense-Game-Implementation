@@ -1,3 +1,4 @@
+using Attributes;
 using BuildingSystem.Core;
 using Currency;
 using Towers;
@@ -15,7 +16,7 @@ namespace BuildingSystem.Buildings
         public bool ShowLineOfSight => true;
         public float LineOfSightRadius => Tower.Levels[0].BaseAttributes.GetAttribute(Attributes.TowerAttributes.Range);
         public string Name => Tower.name;
-        public string Description => Tower.Description;
+        public string Description => $"Cost: {Tower.BuildCost}\n{Tower.GetBaseLevelAttributesDescription()}";
 
         public bool CanBuild(ref string reason)
         {

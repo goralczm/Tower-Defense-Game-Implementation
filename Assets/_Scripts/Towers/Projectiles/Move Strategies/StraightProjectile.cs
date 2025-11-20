@@ -30,9 +30,8 @@ namespace Towers.Projectiles
             {
                 OnTransformCollision?.Invoke(t.Transform);
                 _projectile.DestroyProjectile();
+                return;
             }
-
-            if (targets.Count > 0) return;
 
             if (_projectile.IsNearTarget(_targetPosition.Value))
                 _projectile.DestroyProjectile();

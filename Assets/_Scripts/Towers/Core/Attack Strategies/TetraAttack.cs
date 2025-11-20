@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace Towers
 {
-    [CreateAssetMenu]
-    public class TetraStrategy : ProjectileBasedAttack
+    [CreateAssetMenu(menuName = "Towers/Attacks/Tetra Attack")]
+    public class TetraAttack : ProjectileBasedAttack
     {
         [SerializeReference, ForceArtifice] public IProjectileMovement MoveStrategy;
         [SerializeReference, ForceArtifice] public List<IProjectileEffect> ProjectileEffects = new();
@@ -53,7 +53,7 @@ namespace Towers
 
         private void Shoot(Vector2 position)
         {
-            ProjectileBehaviour projectile = Object.Instantiate(ProjectilePrefab, _tower.transform.position, Quaternion.identity);
+            ProjectileBehaviour projectile = Instantiate(ProjectilePrefab, _tower.transform.position, Quaternion.identity);
 
             var baseAttributes = TowerToProjectileAttributes.GetProjectileBaseAttributes(_tower);
 
@@ -69,7 +69,7 @@ namespace Towers
 
         public override IAttackStrategy Clone()
         {
-            return new TetraStrategy()
+            return new TetraAttack()
             {
                 ProjectilePrefab = ProjectilePrefab,
                 DefaultProjectile = DefaultProjectile,

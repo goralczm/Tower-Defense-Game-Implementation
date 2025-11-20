@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Towers::Towers.LaserStrategy
   AttackDescription: 
   AttackIcon: {fileID: 2349202919161859538, guid: d5c782fe54f7cdd4485b3c383206e03d, type: 3}
-  ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
+  ProjectilePrefab: {fileID: 3317496358686910656, guid: da025acff00a7da44beda92133b630c6, type: 3}
   DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
   TargetAlignments: 00000000
   ProjectileEffects: []
