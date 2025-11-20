@@ -32,10 +32,8 @@ namespace Inventory.Demo
 
             if (!Randomizer.GetRandomBool(_spawnPossibility)) return;
 
-            var pickupObject = PoolManager.Instance.SpawnFromPool("Pickup", enemy.transform.position, Quaternion.identity);
-            var pickup = pickupObject.GetComponent<Pickup>();
+            PickupFactory.CreatePickup(GetRandomProjectile(), enemy.transform.position);
 
-            pickup.Setup(GetRandomProjectile());
             _nextSpawnTime = Time.time + _spawnCooldown;
         }
 

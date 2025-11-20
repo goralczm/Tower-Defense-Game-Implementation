@@ -41,8 +41,20 @@ namespace Towers
             }
             else if (_projectiles.Count < projectilesCount)
             {
-                for (int i = _projectiles.Count; i < projectilesCount; i++)
-                    CreateProjectile();
+                var baseAttributes = TowerToProjectileAttributes.GetProjectileBaseAttributes(_tower);
+
+                for (int i = 0; i < projectilesCount; i++)
+                {
+                    if (i >= _projectiles.Count)
+                        CreateProjectile();
+                    else
+                        _projectiles[i].SetBaseAttributes(baseAttributes);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < _projectiles.Count; i++)
+                    _projectiles[i].SetBaseAttributes(TowerToProjectileAttributes.GetProjectileBaseAttributes(_tower));
             }
         }
 
@@ -89,10 +101,7 @@ namespace Towers
         {
             ProjectileBehaviour projectile = Object.Instantiate(ProjectilePrefab, _tower.transform.position, Quaternion.identity);
 
-            var baseAttributes = new BaseAttributesBuilder<ProjectileAttributes>()
-                .Add(ProjectileAttributes.Damage, _tower.Attributes.GetAttribute(TowerAttributes.Damage) * Time.deltaTime)
-                .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
-                .Build();
+            var baseAttributes = TowerToProjectileAttributes.GetProjectileBaseAttributes(_tower);
 
             projectile.Setup(_tower.transform.position, _projectile.BaseAttributes + baseAttributes, TargetAlignments, _projectile, new LaserProjectile(), _projectile.DamageStrategies.Concat(ProjectileEffects).ToList());
             _projectiles.Add(projectile);

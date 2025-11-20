@@ -58,10 +58,7 @@ namespace Towers
         {
             ProjectileBehaviour projectile = Object.Instantiate(ProjectilePrefab, _tower.transform.position, Quaternion.identity);
 
-            var baseAttributes = new BaseAttributesBuilder<ProjectileAttributes>()
-                .Add(ProjectileAttributes.Damage, _tower.Attributes.GetAttribute(TowerAttributes.Damage))
-                .Add(ProjectileAttributes.Range, _tower.Attributes.GetAttribute(TowerAttributes.Range))
-                .Build();
+            var baseAttributes = TowerToProjectileAttributes.GetProjectileBaseAttributes(_tower);
 
             projectile.Setup(target, _projectile.BaseAttributes + baseAttributes, TargetAlignments, _projectile, _projectile.MoveStrategy, _projectile.DamageStrategies.Concat(ProjectileEffects).ToList());
         }

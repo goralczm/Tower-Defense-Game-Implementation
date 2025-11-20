@@ -7,6 +7,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities.Extensions;
 using Utilities.Text;
 using Utilities.UI;
 

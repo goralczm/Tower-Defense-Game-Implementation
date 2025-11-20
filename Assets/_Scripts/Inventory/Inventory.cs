@@ -14,7 +14,7 @@ namespace Inventory
         public Action<IItem, int> OnSlotChanged;
         public Action OnCapacityChanged;
 
-        public List<IItem> Items => _items;
+        public List<IItem> Items => new(_items);
 
         public int Capacity => _capacity;
 

@@ -52,7 +52,7 @@ namespace Towers.Projectiles
             }
             _rend.sprite = _projectileData.Sprite;
             _rend.color = _projectileData.Color;
-            SetAttributes(new(new(), baseAttributes));
+            SetAttributes(new(new(), baseAttributes.Clone()));
         }
 
         public void SetAttributes(Attributes<ProjectileAttributes> attributes)
@@ -60,10 +60,14 @@ namespace Towers.Projectiles
             if (_attributes != null)
                 _attributes.OnAttributesChanged -= OnAttributesChanged;
 
-            //TODO: clone attributes
             _attributes = attributes;
             _attributes.OnAttributesChanged += OnAttributesChanged;
             OnAttributesChanged();
+        }
+
+        public void SetBaseAttributes(BaseAttributes<ProjectileAttributes> baseAttributes)
+        {
+            _attributes.SetBaseAttributes(baseAttributes);
         }
 
         public void SetTargetPosition(Vector2 target)
