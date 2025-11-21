@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1dfde4b277edb4386cfeb8189684bb, type: 3}
+  m_Name: Snipipek
+  m_EditorClassIdentifier: Towers::Towers.BasicTower
+  Description: 
+  Levels:
+  - Icon: {fileID: -1894586206897897056, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
+    Cost: 100
+    BaseAttributes:
+      Queries:
+      - Type: 0
+        Value: 5
+      - Type: 1
+        Value: 0.5
+      - Type: 2
+        Value: 10
+      - Type: 3
+        Value: 1
+      - Type: 4
+        Value: 1
+      - Type: 5
+        Value: 1
+    AttackStrategies:
+    - {fileID: 11400000, guid: 6d1c1d2523f18de4bad6340451e92973, type: 2}
+  - Icon: {fileID: -1894586206897897056, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
+    Cost: 100
+    BaseAttributes:
+      Queries:
+      - Type: 0
+        Value: 5
+      - Type: 1
+        Value: 1
+      - Type: 2
+        Value: 11
+      - Type: 3
+        Value: 1
+      - Type: 4
+        Value: 0.7
+      - Type: 5
+        Value: 1
+    AttackStrategies:
+    - {fileID: 11400000, guid: 6d1c1d2523f18de4bad6340451e92973, type: 2}
+  - Icon: {fileID: -1894586206897897056, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
+    Cost: 100
+    BaseAttributes:
+      Queries:
+      - Type: 0
+        Value: 5
+      - Type: 1
+        Value: 0.4
+      - Type: 2
+        Value: 12
+      - Type: 3
+        Value: 1
+      - Type: 4
+        Value: 0.5
+      - Type: 5
+        Value: 1
+    AttackStrategies:
+    - {fileID: 11400000, guid: 6d1c1d2523f18de4bad6340451e92973, type: 2}

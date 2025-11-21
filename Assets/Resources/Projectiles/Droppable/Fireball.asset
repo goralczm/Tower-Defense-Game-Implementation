@@ -22,10 +22,13 @@ MonoBehaviour:
       Value: 1
     - Type: 4
       Value: 1
+    - Type: 3
+      Value: 1.2
   MoveStrategy:
     rid: 2482468826409599077
   DamageStrategies:
   - rid: 2482468840093515880
+  - rid: 2482469025390002252
   DamageTypes: 01000000
   references:
     version: 2
@@ -35,4 +38,7 @@ MonoBehaviour:
       data: 
     - rid: 2482468840093515880
       type: {class: AoeDamageEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 2482469025390002252
+      type: {class: BouncingProjectileEffect, ns: Towers.Projectiles, asm: Towers}
       data: 

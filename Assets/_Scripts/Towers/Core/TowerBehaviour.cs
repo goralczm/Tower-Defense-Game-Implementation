@@ -68,7 +68,8 @@ namespace Towers
         private void ToggleLineOfSight(bool state)
         {
             _lineOfSight.gameObject.SetActive(state);
-            _lineOfSight.GenerateViewMesh();
+            if (state)
+                _lineOfSight.GenerateViewMesh();
         }
 
         public void Setup(TowerData towerData, int level = 0)
@@ -84,6 +85,8 @@ namespace Towers
         private void OnAttributesChanged()
         {
             _lineOfSight.SetRadius(_attributes.GetAttribute(TowerAttributes.Range));
+            if (_lineOfSight.gameObject.activeSelf)
+                _lineOfSight.GenerateViewMesh();
             _inventory.SetCapacity((int)_attributes.GetAttribute(TowerAttributes.InventoryCapacity));
         }
 

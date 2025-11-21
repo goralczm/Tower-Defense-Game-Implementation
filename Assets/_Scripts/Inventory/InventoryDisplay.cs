@@ -11,6 +11,8 @@ namespace Inventory
         [SerializeField] private List<ItemSlot> _slots;
         [SerializeField] private Transform _draggedItemParent;
 
+        public List<ItemSlot> Slots => new(_slots);
+
         private void Start()
         {
             SetInventory(_inventory);

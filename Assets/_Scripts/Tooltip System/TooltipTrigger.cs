@@ -5,6 +5,7 @@ namespace TooltipSystem
 {
     public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [Header("Settings")]
         [SerializeField] private string _header;
         [SerializeField, TextArea(7, 7)] private string _content;
 
@@ -15,6 +16,9 @@ namespace TooltipSystem
 
         public virtual string Header => _header;
         public virtual string Content => _content;
+
+        public void SetHeader(string header) => _header = header;
+        public void SetContent(string content) => _content = content;
 
         public virtual void Update()
         {

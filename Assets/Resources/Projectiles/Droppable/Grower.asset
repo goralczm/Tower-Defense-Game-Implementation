@@ -10,24 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
-  m_Name: Bullet
+  m_Name: Grower
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
   Sprite: {fileID: 8891180011573125036, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
-  SpriteColor: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
+  SpriteColor: {r: 0.246707, g: 0.45750406, b: 0.8301887, a: 1}
   BaseAttributes:
     Queries:
     - Type: 0
-      Value: 15
+      Value: 1
     - Type: 4
-      Value: 2
+      Value: 0
     - Type: 3
-      Value: 0.7
+      Value: 0.2
     - Type: 5
-      Value: 0.7
+      Value: 1
   MoveStrategy:
     rid: 2482468826409599082
   DamageStrategies:
-  - rid: 2482468840093515878
+  - rid: 2482469025390002260
+  - rid: 2482469025390002255
+  - rid: 2482469025390002258
   DamageTypes: 00000000
   references:
     version: 2
@@ -35,6 +37,12 @@ MonoBehaviour:
     - rid: 2482468826409599082
       type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 
-    - rid: 2482468840093515878
-      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
+    - rid: 2482469025390002255
+      type: {class: SizeBasedSpeedEffect, ns: Towers, asm: Towers}
+      data: 
+    - rid: 2482469025390002258
+      type: {class: SizeBasedDamageEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 2482469025390002260
+      type: {class: GrowingEffect, ns: Towers, asm: Towers}
       data: 

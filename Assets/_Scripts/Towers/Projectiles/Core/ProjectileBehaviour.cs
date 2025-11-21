@@ -41,18 +41,19 @@ namespace Towers.Projectiles
             _targetPosition = targetPosition;
             _canDamageAlignments = canDamageAlignments;
             _moveStrategy = moveStrategy.Clone();
-            _effects = projectileEffects.Select(d => d.Clone()).ToList();
             _moveStrategy.Init(this);
-            _effects
-                .Sort((a, b) => a.Priority.CompareTo(b.Priority));
-            foreach (var damageStrategy in _effects)
-            {
-                damageStrategy.Init(this);
-                _moveStrategy.OnTransformCollision += damageStrategy.Execute;
-            }
             _rend.sprite = _projectileData.Sprite;
             _rend.color = _projectileData.Color;
             SetAttributes(new(new(), baseAttributes.Clone()));
+
+            _effects = projectileEffects.Select(d => d.Clone()).ToList();
+            _effects
+                .Sort((a, b) => a.Priority.CompareTo(b.Priority));
+            foreach (var effect in _effects)
+            {
+                effect.Init(this);
+                _moveStrategy.OnTransformCollision += effect.Execute;
+            }
         }
 
         public void SetAttributes(Attributes<ProjectileAttributes> attributes)
@@ -82,7 +83,7 @@ namespace Towers.Projectiles
 
         private void OnAttributesChanged()
         {
-            transform.localScale = Vector3.one * _attributes.GetAttribute(ProjectileAttributes.Size, 1f);
+
         }
 
         private void Update()
@@ -109,6 +110,8 @@ namespace Towers.Projectiles
 
                 _moveStrategy.Move(_targetPosition);
             }
+
+            transform.localScale = Vector3.one * _attributes.GetAttribute(ProjectileAttributes.Size, 1f);
         }
 
         public bool IsNearTarget(Vector2 target)

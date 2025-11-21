@@ -19,13 +19,17 @@ namespace Towers
         [SerializeField] private TextMeshProUGUI _towerHeader;
         [SerializeField] private TextMeshProUGUI _attributesText;
         [SerializeField] private InventoryDisplay _inventoryDisplay;
-        [SerializeField] private List<AttackSlot> _attackSlots = new();
         [SerializeField] private UITweener _tweener;
 
         private TowerBehaviour _tower;
+        private List<AttackSlot> _attackSlots = new();
 
         private void OnEnable()
         {
+            _attackSlots = _inventoryDisplay.Slots
+                .Select(s => s.GetComponent<AttackSlot>())
+                .ToList();
+
             TowerSelectionController.OnTowerSelected += SetupPopup;
         }
 
@@ -89,18 +93,16 @@ namespace Towers
             else
                 _attributesText.SetText(_tower.Attributes.GetComparedAttributesDescription(_tower.NextLevelData.BaseAttributes));
 
-            int inventoryCapacity = (int)_tower.Attributes.GetAttribute(TowerAttributes.InventoryCapacity);
             for (int i = 0; i < _attackSlots.Count; i++)
-            {
-                if (i < inventoryCapacity)
-                {
-                    var attack = _tower.LevelData.AttackStrategies[i];
+                _attackSlots[i].Clear();
 
-                    _attackSlots[i].Setup(attack.Icon, attack.Name, attack.Description);
-                    _attackSlots[i].transform.parent.gameObject.SetActive(true);
-                }
-                else
-                    _attackSlots[i].transform.parent.gameObject.SetActive(false);
+            int inventoryCapacity = (int)_tower.Attributes.GetAttribute(TowerAttributes.InventoryCapacity);
+
+            for (int i = 0; i < _tower.LevelData.AttackStrategies.Length; i++)
+            {
+                var attack = _tower.LevelData.AttackStrategies[i];
+
+                _attackSlots[i % inventoryCapacity].Setup(i / inventoryCapacity, attack.Icon, attack.Name, attack.Description);
             }
         }
     }

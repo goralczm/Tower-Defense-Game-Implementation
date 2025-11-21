@@ -22,6 +22,8 @@ MonoBehaviour:
       Value: 0.2
     - Type: 4
       Value: 2
+    - Type: 5
+      Value: 1
   MoveStrategy:
     rid: 1026232739033776205
   DamageStrategies:

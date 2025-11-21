@@ -1,22 +1,33 @@
+using System.Collections.Generic;
 using TooltipSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AttackSlot : TooltipTrigger
+public class AttackSlot : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Image _icon;
+    [SerializeField] private Image[] _icons;
 
-    private string _attackName;
-    private string _attackDescription;
+    private Dictionary<Image, TooltipTrigger> _tooltips = new();
 
-    public override string Header => _attackName;
-    public override string Content => _attackDescription;
-
-    public void Setup(Sprite icon, string attackName, string attackDescription)
+    public void Setup(int index, Sprite icon, string attackName, string attackDescription)
     {
-        _icon.sprite = icon;
-        _attackName = attackName;
-        _attackDescription = attackDescription;
+        _icons[index].sprite = icon;
+        if (!_tooltips.TryGetValue(_icons[index], out var tooltip))
+        {
+            tooltip = _icons[index].GetComponent<TooltipTrigger>();
+            _tooltips[_icons[index]] = tooltip;
+        }
+
+        tooltip.SetHeader(attackName);
+        tooltip.SetContent(attackDescription);
+
+        _icons[index].gameObject.SetActive(true);
+    }
+
+    public void Clear()
+    {
+        foreach (var icon in _icons)
+            icon.gameObject.SetActive(false);
     }
 }

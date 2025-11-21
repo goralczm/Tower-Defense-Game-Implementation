@@ -19,6 +19,7 @@ namespace Targeting
     public static class Targeting
     {
         public static LayerMask ObstaclesLayer = 1 << 9;
+        public static LayerMask PathLayer = 1 << 10;
 
         public delegate float SortingCondition(ITargetable target);
 
