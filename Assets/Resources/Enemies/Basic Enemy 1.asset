@@ -15,16 +15,18 @@ MonoBehaviour:
   BaseAttributes:
     Queries:
     - Type: 0
-      Value: 2
+      Value: 1
     - Type: 1
       Value: 3
     - Type: 2
       Value: 1
     - Type: 3
       Value: 0
+    - Type: 4
+      Value: 0.9
   Reward: 5
   DangerLevel: 1
-  Sprite: {fileID: 8791108887664584822, guid: a26005988d627b74ba0914e69b2d108f, type: 3}
+  Color: {r: 0.57254905, g: 0.83222795, b: 0.94509804, a: 1}
   Children: []
   Resistances: 
   Vulnerabilities: 

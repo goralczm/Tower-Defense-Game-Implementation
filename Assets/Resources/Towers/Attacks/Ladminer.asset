@@ -15,13 +15,9 @@ MonoBehaviour:
   AttackDescription: 
   AttackIcon: {fileID: 8891180011573125036, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
   ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
-  DefaultProjectile: {fileID: 11400000, guid: 650e34fa103eb5d4b9cf0cdc1b52b0b5, type: 2}
+  DefaultProjectile: {fileID: 11400000, guid: a69a8560c72b6e14aa80801dd87d4867, type: 2}
   TargetAlignments: 00000000
-  ProjectileEffects:
-  - rid: 2482469025390002262
+  ProjectileEffects: []
   references:
     version: 2
-    RefIds:
-    - rid: 2482469025390002262
-      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
-      data: 
+    RefIds: []

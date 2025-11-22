@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Towers.Projectiles;
 using UnityEngine;
+using Utilities;
 
 namespace Towers
 {
@@ -14,6 +15,7 @@ namespace Towers
         [SerializeReference, ForceArtifice] public List<IProjectileEffect> ProjectileEffects = new();
 
         private float _shootTimer;
+        private int _rotationIndex = -1;
         private Spinner _spinner;
 
         public override void Setup(TowerBehaviour tower, int index)
@@ -46,6 +48,9 @@ namespace Towers
         private void Shoot()
         {
             var points = _spinner.GetAllPointsPositions(_tower.transform.position);
+
+            _rotationIndex = (_rotationIndex + 1) % points.Length;
+            _tower.transform.rotation = Helpers.RotateTowards(_tower.transform.position, points[_rotationIndex], -90f);
 
             foreach (var point in points)
                 Shoot(point);

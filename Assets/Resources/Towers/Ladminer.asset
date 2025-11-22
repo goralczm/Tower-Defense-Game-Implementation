@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Towers::Towers.BasicTower
   Description: 
   Levels:
-  - Icon: {fileID: -2749400686785193575, guid: 8824ff2ceb3f3ac4ab4957eea9705afe, type: 3}
+  - Icon: {fileID: 21300000, guid: 015970b4759444248a5c5831fb1d2759, type: 3}
+    Color: {r: 0.764151, g: 0.5964455, b: 0.2270826, a: 1}
     Cost: 100
     BaseAttributes:
       Queries:

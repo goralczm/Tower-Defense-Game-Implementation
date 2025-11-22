@@ -25,7 +25,7 @@ namespace Towers.Projectiles
 
             if (Time.time < _tickTimer) return;
 
-            var targets = Targeting.Targeting.GetTargetsInRange(_projectile.transform.position, _projectile.transform.localScale.x * .8f, _projectile.CanDamageAlignments);
+            var targets = Targeting.Targeting.GetTargetsInRange(_projectile.transform.position, _projectile.ContactRadius, _projectile.CanDamageAlignments);
             foreach (var t in targets)
                 OnTransformCollision?.Invoke(t.Transform);
 

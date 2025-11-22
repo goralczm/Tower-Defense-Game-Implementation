@@ -9,6 +9,7 @@ namespace Towers
     public class TowerLevel
     {
         public Sprite Icon;
+        public Color Color;
         public int Cost;
         public BaseAttributes<TowerAttributes> BaseAttributes;
         public AttackStrategy[] AttackStrategies;

@@ -9,7 +9,7 @@ namespace Inventory
         [Header("Settings")]
         [SerializeField] private int _capacity = 9;
 
-        private List<IItem> _items;
+        private List<IItem> _items = new();
 
         public Action<IItem, int> OnSlotChanged;
         public Action OnCapacityChanged;
@@ -43,7 +43,7 @@ namespace Inventory
 
         private void Awake()
         {
-            _items = new();
+            _items.Clear();
             for (int i = 0; i < _capacity; i++)
                 _items.Add(null);
         }

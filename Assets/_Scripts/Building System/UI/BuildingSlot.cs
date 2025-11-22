@@ -21,6 +21,7 @@ namespace BuildingSystem.UI
         {
             _building = building;
             _icon.sprite = _building.Sprite;
+            _icon.color = _building.Color;
             _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(() => buttonAction());
         }

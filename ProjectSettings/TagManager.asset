@@ -41,5 +41,26 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Environment
+    uniqueID: 2023131747
+    locked: 0
+  - name: Particles
+    uniqueID: 3310423661
+    locked: 0
+  - name: Enemies
+    uniqueID: 496974563
+    locked: 0
+  - name: Towers
+    uniqueID: 2768602205
+    locked: 0
+  - name: Projectiles
+    uniqueID: 4123310139
+    locked: 0
+  - name: Interactables
+    uniqueID: 1583424617
+    locked: 0
+  - name: World UI
+    uniqueID: 3891013477
+    locked: 0
   m_RenderingLayers:
   - Default

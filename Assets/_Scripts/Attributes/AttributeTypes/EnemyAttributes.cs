@@ -6,5 +6,6 @@ namespace Attributes
         Speed,
         Damage,
         Armor,
+        Size,
     }
 }

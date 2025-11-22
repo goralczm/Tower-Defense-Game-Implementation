@@ -102,13 +102,14 @@ namespace Towers
             if (level > _towerData.Levels.Length - 1) return;
 
             _level = level;
-            _rend.sprite = _towerData.Levels[level].Icon;
-            _attributes.SetBaseAttributes(_towerData.Levels[level].BaseAttributes);
+            _rend.sprite = LevelData.Icon;
+            _rend.color = LevelData.Color;
+            _attributes.SetBaseAttributes(LevelData.BaseAttributes);
 
             foreach (var attackStrategy in _attackStrategies)
                 attackStrategy.Dispose();
 
-            _attackStrategies = _towerData.Levels[level].AttackStrategies
+            _attackStrategies = LevelData.AttackStrategies
                 .Select(strategy => strategy.Clone())
                 .ToList();
 
@@ -146,7 +147,8 @@ namespace Towers
                 attack.Dispose();
 
             foreach (var item in Inventory.Items)
-                PickupFactory.CreatePickup(item, (Vector2)transform.position + UnityEngine.Random.insideUnitCircle);
+                if (item != null)
+                    PickupFactory.CreatePickup(item, (Vector2)transform.position + UnityEngine.Random.insideUnitCircle);
 
             Destroy(gameObject);
         }

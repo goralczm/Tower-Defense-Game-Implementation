@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Towers.Projectiles;
 using UnityEngine;
+using Utilities;
 
 namespace Towers
 {
@@ -55,20 +56,18 @@ namespace Towers
             }
 
             int missingProjectiles = (int)_tower.Attributes.GetAttribute(TowerAttributes.ProjectilesCount) - _projectiles.Count;
-
             if (missingProjectiles <= 0) return;
 
             var positions = Targeting.Targeting.GetPathPointsInRange(_tower.transform.position, _tower.Attributes.GetAttribute(TowerAttributes.Range), 16);
-            var usedIndexes = new HashSet<int>();
-
-            for (int i = 0; i < missingProjectiles; i++)
+            if (positions.Count > 0)
             {
-                var randomIndex = Random.Range(0, positions.Count - 1);
+                for (int i = 0; i < missingProjectiles; i++)
+                {
+                    var randomIndex = Random.Range(0, positions.Count - 1);
+                    CreateProjectile(positions[randomIndex]);
+                }
 
-                while (usedIndexes.Count < positions.Count && usedIndexes.Contains(randomIndex))
-                    randomIndex = Random.Range(0, positions.Count - 1);
-
-                CreateProjectile(positions[randomIndex]);
+                _tower.transform.rotation = Helpers.RotateTowards(_tower.transform.position, _projectiles[_projectiles.Count - 1].transform.position, -90f);
             }
 
             _spawnTimer = Time.time + _tower.Attributes.GetAttribute(TowerAttributes.RateOfFire);

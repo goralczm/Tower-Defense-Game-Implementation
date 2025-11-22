@@ -22,6 +22,7 @@ namespace Towers
             _line = _projectile.gameObject.GetComponent<LineRenderer>() ?? _projectile.gameObject.AddComponent<LineRenderer>();
             _line.positionCount = 2;
             _line.SetPosition(0, _projectile.transform.position);
+            _line.SetPosition(1, _projectile.transform.position);
             _line.startColor = _projectile.ProjectileData.Color;
             _line.endColor = _projectile.ProjectileData.Color;
         }

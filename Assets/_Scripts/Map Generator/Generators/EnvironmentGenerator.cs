@@ -171,10 +171,12 @@ namespace MapGenerator.Generators
             if (!_environmentParent)
                 _environmentParent = new GameObject("Obstacles").transform;
 
+            var obstaclePrefab = _environmentSettings.ObstaclePrefabs[UnityEngine.Random.Range(0, _environmentSettings.ObstaclePrefabs.Count)];
+
             GameObject obstacle = UnityEngine.Object.Instantiate(
-                _environmentSettings.ObstaclePrefabs[UnityEngine.Random.Range(0, _environmentSettings.ObstaclePrefabs.Count)],
+                obstaclePrefab,
                 position,
-                Quaternion.identity,
+                obstaclePrefab.transform.rotation,
                 _environmentParent);
 
             _obstaclePositions.Add(position);

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2046414734690763188}
   - component: {fileID: 1023794020403238882}
   - component: {fileID: 150138207339563443}
+  - component: {fileID: 4964654972764963687}
   m_Layer: 0
   m_Name: Swirly Text Bubble
   m_TagString: Untagged
@@ -82,9 +83,9 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 420
+  m_SortingLayerID: -403953819
+  m_SortingLayer: 6
+  m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1023794020403238882
 MonoBehaviour:
@@ -108,7 +109,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Text Bubble
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 757ad9966d17c4a409830a69ffe999a9, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -177,7 +178,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_renderer: {fileID: 2046414734690763188}
   m_maskType: 0
 --- !u!114 &150138207339563443
@@ -197,3 +198,16 @@ MonoBehaviour:
   _moveSpeed: 1
   _opacitySpeed: 1
   _text: {fileID: 1023794020403238882}
+--- !u!114 &4964654972764963687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4271789057323870490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3f8e11222ad4f4780174f66f27823f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VisualEffects::Core.PunchOnEnable
+  _slightlyRandomize: 0

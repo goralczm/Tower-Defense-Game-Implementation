@@ -8,6 +8,7 @@ namespace BuildingSystem.Core
         public string Description { get; }
         public GameObject BuildingPrefab { get; }
         public Sprite Sprite { get; }
+        public Color Color { get; }
         public bool ShowLineOfSight { get; }
         public float LineOfSightRadius { get; }
 

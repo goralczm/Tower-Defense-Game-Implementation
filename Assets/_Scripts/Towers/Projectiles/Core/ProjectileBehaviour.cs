@@ -4,6 +4,7 @@ using Core.Cache;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utilities;
 
 namespace Towers.Projectiles
 {
@@ -28,6 +29,8 @@ namespace Towers.Projectiles
         public IProjectileMovement MoveStrategy => _moveStrategy;
         public List<IProjectileEffect> Effects => _effects;
         public string Name => _projectileData.Name;
+        public float ContactRadius => transform.localScale.x * .8f / 2f;
+        public SpriteRenderer SpriteRenderer => _rend;
 
         public void Setup(Transform target, BaseAttributes<ProjectileAttributes> baseAttributes, List<Alignment> canDamageAlignments, ProjectileData projectileData, IProjectileMovement moveStrategy, List<IProjectileEffect> projectileEffects)
         {
@@ -98,6 +101,8 @@ namespace Towers.Projectiles
                     return;
                 }
 
+                transform.rotation = Helpers.RotateTowards(transform.position, _target.position, -90f);
+
                 _moveStrategy.Move(_target.position);
             }
             else
@@ -107,6 +112,8 @@ namespace Towers.Projectiles
                     DestroyProjectile();
                     return;
                 }
+
+                transform.rotation = Helpers.RotateTowards(transform.position, _targetPosition, -90f);
 
                 _moveStrategy.Move(_targetPosition);
             }

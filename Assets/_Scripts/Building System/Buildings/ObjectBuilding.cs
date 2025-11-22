@@ -10,6 +10,7 @@ namespace BuildingSystem.Buildings
 
         public GameObject BuildingPrefab => Prefab;
         public Sprite Sprite => Icon;
+        public Color Color => Color.white;
         public bool ShowLineOfSight => false;
         public float LineOfSightRadius => 0;
         public string Name => Prefab.name;

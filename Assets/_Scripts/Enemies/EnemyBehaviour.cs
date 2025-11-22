@@ -11,7 +11,7 @@ namespace Enemies
     public class EnemyBehaviour : MonoBehaviour, ITargetable, IDamageable
     {
         [Header("References")]
-        [SerializeField] private SpriteRenderer _rend;
+        [SerializeField] private SpriteRenderer[] _rends;
 
         private Path _path;
         private Attributes<EnemyAttributes> _attributes;
@@ -23,6 +23,7 @@ namespace Enemies
 
         public static event Action<EnemyBehaviour, DeathReason> OnEnemyDied;
         public static event Action<EnemyData, int, Vector2> SpawnEnemyRequest;
+        public static event Action<EnemyData> OnEnemyReachedPathEnd;
 
         public EnemyData EnemyData => _enemyData;
         public Attributes<EnemyAttributes> Attributes => _attributes;
@@ -44,7 +45,8 @@ namespace Enemies
             _enemyData = enemyData;
             _currentWaypointIndex = nextWaypointIndex;
             _attributes = new(new(), enemyData.BaseAttributes);
-            _rend.sprite = _enemyData.Sprite;
+            foreach (var rend in _rends)
+                rend.color = _enemyData.Color;
         }
 
         public float GetDistanceOnPath()
@@ -55,6 +57,8 @@ namespace Enemies
         private void Update()
         {
             _attributes.Mediator.Update(Time.deltaTime);
+
+            transform.localScale = Vector3.one * _attributes.GetAttribute(EnemyAttributes.Size, 1f);
 
             MoveTowardsWaypoint();
         }
@@ -82,6 +86,7 @@ namespace Enemies
             {
                 if (_currentWaypointIndex >= _path.Waypoints.Count - 1)
                 {
+                    OnEnemyReachedPathEnd?.Invoke(_enemyData);
                     Die(DeathReason.Self);
                     return;
                 }
@@ -111,8 +116,8 @@ namespace Enemies
                 SpawnChildren(transform.position, _currentWaypointIndex - 1, .2f, _enemyData.Children.Count);
                 Die(DeathReason.External);
             }
-            else if (_rend.color != Color.red)
-                StartCoroutine(HitEffect());
+            /*else if (_rends.color != Color.red)
+                StartCoroutine(HitEffect());*/
         }
 
         private float CalculateDamage(float damage, DamageType[] types)
@@ -148,7 +153,7 @@ namespace Enemies
         {
             OnEnemyDied?.Invoke(this, reason);
             StopAllCoroutines();
-            _rend.color = Color.white;
+            //_rends.color = Color.white;
             gameObject.SetActive(false);
         }
 
@@ -171,9 +176,9 @@ namespace Enemies
 
         IEnumerator HitEffect()
         {
-            _rend.color = Color.red;
+            //_rends.color = Color.red;
             yield return new WaitForSeconds(.1f);
-            _rend.color = Color.white;
+            //_rends.color = Color.white;
         }
     }
 }

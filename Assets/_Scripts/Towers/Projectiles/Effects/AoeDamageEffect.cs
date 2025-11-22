@@ -1,4 +1,5 @@
-using Attributes;
+    using Attributes;
+using ObjectPooling;
 using UnityEngine;
 
 namespace Towers.Projectiles
@@ -16,6 +17,7 @@ namespace Towers.Projectiles
 
         public void Execute(Transform target)
         {
+            PoolManager.Instance.SpawnFromPool("Explosion", target.transform.position, Quaternion.identity);
             var hits = Physics2D.OverlapCircleAll(target.position, _projectile.Attributes.GetAttribute(ProjectileAttributes.AreaOfEffectRange));
             foreach (var hit in hits)
             {

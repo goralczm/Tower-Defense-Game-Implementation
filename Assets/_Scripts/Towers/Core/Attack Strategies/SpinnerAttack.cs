@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Towers.Projectiles;
 using UnityEngine;
+using Utilities;
 
 namespace Towers
 {
@@ -79,6 +80,8 @@ namespace Towers
 
             for (int i = 0; i < _projectiles.Count; i++)
                 _projectiles[i].SetTargetPosition(positions[i]);
+
+            _tower.transform.rotation = Helpers.RotateTowards(_tower.transform.position, positions[0], -90f);
         }
 
         private void CreateProjectile(Vector2 position)

@@ -99,9 +99,9 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8160707763346283685}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingLayerID: -1526365091
+  m_SortingLayer: 4
+  m_SortingOrder: -1
   m_SortAtRoot: 0
 --- !u!114 &6661267246859579836
 MonoBehaviour:
@@ -120,4 +120,3 @@ MonoBehaviour:
   _obstaclesMask:
     serializedVersion: 2
     m_Bits: 512
-  _tilemap: {fileID: 0}
