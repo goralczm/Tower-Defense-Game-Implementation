@@ -67838,7 +67838,7 @@ MonoBehaviour:
     - Type: 0
       Value: 10
     - Type: 1
-      Value: 2
+      Value: 0
 --- !u!114 &654717355
 MonoBehaviour:
   m_ObjectHideFlags: 0
