@@ -8,6 +8,7 @@ namespace TooltipSystem
     {
         [Header("Settings")]
         [SerializeField] private int _characterWrapLimit;
+        [SerializeField] private Vector2 _padding;
 
         [Header("Instances")]
         [SerializeField] private RectTransform _canvasRect;
@@ -26,7 +27,7 @@ namespace TooltipSystem
         {
             Vector2 newAnchorPos = Input.mousePosition / _canvasRect.localScale.x;
 
-            newAnchorPos = new Vector2(Mathf.Clamp(newAnchorPos.x, 0, _canvasRect.rect.width - _rect.rect.width), Mathf.Clamp(newAnchorPos.y, 0, _canvasRect.rect.height - _rect.rect.height));
+            newAnchorPos = new Vector2(Mathf.Clamp(newAnchorPos.x, _padding.x, _canvasRect.rect.width - _rect.rect.width - _padding.x), Mathf.Clamp(newAnchorPos.y, _padding.y, _canvasRect.rect.height - _rect.rect.height - _padding.y));
             newAnchorPos.y += _rect.rect.height;
 
             _rect.anchoredPosition = newAnchorPos;

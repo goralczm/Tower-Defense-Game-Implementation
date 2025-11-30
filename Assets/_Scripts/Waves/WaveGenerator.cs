@@ -20,9 +20,11 @@ namespace Enemies
         private WavesData _waves;
         private Path _path;
         private bool _isStopped;
+        private bool _isRunning;
 
         public bool IsStopped => _isStopped;
         public int EnemiesAliveCount => _enemiesAlive.Count;
+        public bool IsRunning => _isRunning || EnemiesAliveCount > 0;
 
         public WaveGenerator(WavesData waves, Path path, Transform origin)
         {
@@ -65,13 +67,16 @@ namespace Enemies
 
         public async Task StartGenerator(int wave)
         {
-            if (IsStopped) return;
+            if (IsStopped)
+                return;
 
+            _isRunning = true;
             _enemiesAlive.Clear();
             foreach (var entry in _waves.Entries)
             {
                 await SpawnEnemiesByEntry(entry, wave);
             }
+            _isRunning = false;
         }
 
         private async Task SpawnEnemiesByEntry(WaveEntry entry, int wave)

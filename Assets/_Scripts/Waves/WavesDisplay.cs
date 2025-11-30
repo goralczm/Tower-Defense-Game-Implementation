@@ -17,7 +17,7 @@ namespace Waves
             WavesController.OnWaveEnded -= UpdateWavesText;
         }
 
-        private void UpdateWavesText(int currentWave, int wavesCount)
+        private void UpdateWavesText(int currentWave, int wavesCount, WavesData wavesData)
         {
             _wavesText.SetText($"Wave: {currentWave}/{wavesCount}");
         }

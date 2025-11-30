@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Utilities;
 
 namespace Currency
 {
@@ -20,6 +21,7 @@ namespace Currency
         private void UpdateCurrencyText(int currency)
         {
             _currencyText.SetText($"Currency: {currency}");
+            _currencyText.transform.SimplePunch();
         }
     }
 }

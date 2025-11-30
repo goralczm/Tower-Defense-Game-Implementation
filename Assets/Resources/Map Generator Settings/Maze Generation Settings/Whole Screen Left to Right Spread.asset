@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd74fe0932a10c24baaf4bc726b75087, type: 3}
   m_Name: Whole Screen Left to Right Spread
   m_EditorClassIdentifier: 
-  Width: 17
+  Width: 18
   Height: 10
   MiddlePoints:
   - {x: 2, y: 17}

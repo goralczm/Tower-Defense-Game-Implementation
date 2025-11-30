@@ -9,6 +9,7 @@ namespace Inventory
     {
         [Header("References")]
         [SerializeField] private Image _icon;
+        [SerializeField] private Image _emptyIcon;
 
         private IItem _item;
         private Inventory _inventory;
@@ -31,9 +32,9 @@ namespace Inventory
             _index = index;
 
             _icon.enabled = _item != null;
+            _emptyIcon.enabled = _item == null;
             if (_item != null)
             {
-                _icon.enabled = true;
                 _icon.sprite = _item.Icon;
                 _icon.color = _item.Color;
             }

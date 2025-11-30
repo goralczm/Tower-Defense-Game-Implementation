@@ -68,7 +68,7 @@ namespace Towers
 
         private void DestroyProjectileAt(int index)
         {
-            Destroy(_projectiles[index].gameObject);
+            _projectiles[index].DestroyProjectile();
             _projectiles.RemoveAt(index);
         }
 
@@ -101,7 +101,7 @@ namespace Towers
             _tower.Attributes.OnAttributesChanged -= OnAttributesChanged;
 
             for (int i = _projectiles.Count - 1; i >= 0; i--)
-                Destroy(_projectiles[i].gameObject);
+                _projectiles[i].DestroyProjectile();
         }
 
         public override IAttackStrategy Clone()

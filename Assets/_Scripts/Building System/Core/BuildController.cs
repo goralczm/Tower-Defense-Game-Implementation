@@ -45,7 +45,7 @@ namespace BuildingSystem.Core
                     _buildingGhost.color = _validColor;
                     _lineOfSight.SetColor(_validColor);
 
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0) && !Helpers.IsMouseOverUI())
                         AcceptBuilding();
                 }
 

@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -32,6 +34,12 @@ namespace Utilities
             float rotZ = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
             return Quaternion.Euler(0, 0, rotZ + offset);
+        }
+
+        public static async Task WaitUntilAsync(Func<bool> condition, int checkIntervalMs = 100)
+        {
+            while (!condition())
+                await Task.Delay(checkIntervalMs);
         }
     }
 }

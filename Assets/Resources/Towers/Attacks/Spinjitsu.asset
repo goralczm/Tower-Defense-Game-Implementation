@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Spinjitsu
   m_EditorClassIdentifier: Towers::Towers.SpinnerStrategy
   AttackDescription: zoomies
-  AttackIcon: {fileID: 8588172530711677458, guid: 5bd87ff0c09b7bd469a8c2a310974e5c, type: 3}
+  AttackIcon: {fileID: 21300000, guid: 7ac9d50d6a590c941906f9b5947b1ca4, type: 3}
   ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
   DefaultProjectile: {fileID: 11400000, guid: ab1ca0a6c45dffd438ebe2728d17153d, type: 2}
   TargetAlignments: 00000000

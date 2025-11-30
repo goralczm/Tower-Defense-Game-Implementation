@@ -1,6 +1,6 @@
 using UnityEngine;
 using Utilities;
-using Utilities.UI;
+using UI;
 
 namespace TooltipSystem
 {

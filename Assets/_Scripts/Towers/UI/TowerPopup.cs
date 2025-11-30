@@ -5,11 +5,9 @@ using Inventory;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UI;
 using UnityEngine;
-using UnityEngine.UI;
-using Utilities.Extensions;
 using Utilities.Text;
-using Utilities.UI;
 
 namespace Towers
 {

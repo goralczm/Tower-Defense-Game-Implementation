@@ -1,0 +1,27 @@
+{
+    "name": "Core.Systems",
+    "rootNamespace": "Core.Systems",
+    "references": [
+        "GUID:675a5ac2960cf9f49bbf8cbf71b4021d",
+        "GUID:fef83fbb0a614ef49855a4e904e71ec3",
+        "GUID:aeeb5f74e409eaa44ae2137384aed055",
+        "GUID:156e2aa2cdb528947a790c1f14da0987",
+        "GUID:9ba9f47b380bfd245a7c648c893dab84",
+        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad",
+        "GUID:8cddf09bf00aad148bbb0855fb7e7fb1",
+        "GUID:a0a6965dc082d8c41970f50d4aa08d33",
+        "GUID:f7605dcf85277b840bcbb39e1575f564",
+        "GUID:6d57ab46be973314d9ef9ff0a3e68ce4",
+        "GUID:8cc223704f42e694e86e13601c16acdd",
+        "GUID:7a05223296373c549a14b55ea48080ec"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -20,6 +20,8 @@ MonoBehaviour:
     list:
     - Key: Path Generation
       Value: 1
+    - Key: level1
+      Value: 1
   validatorTypesMap:
     list:
     - Key: Artifice_ValidatorModule_ScriptableObject_NullReferenceChecker

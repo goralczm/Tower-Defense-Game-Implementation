@@ -98,8 +98,8 @@ namespace Enemies
         public void TakeDamage(float damage, DamageType[] types, string source)
         {
             damage = CalculateDamage(damage, types);
-
-            if (damage == 0) return;
+            if (damage == 0)
+                return;
 
             OnDamaged?.Invoke(new(
                 Mathf.Min(_attributes.GetAttribute(EnemyAttributes.Health), damage),
@@ -112,10 +112,7 @@ namespace Enemies
             _attributes.Mediator.AddModifier(modifier);
 
             if (_attributes.GetAttribute(EnemyAttributes.Health) <= 0f)
-            {
-                SpawnChildren(transform.position, _currentWaypointIndex - 1, .2f, _enemyData.Children.Count);
                 Die(DeathReason.External);
-            }
             /*else if (_rends.color != Color.red)
                 StartCoroutine(HitEffect());*/
         }
@@ -152,8 +149,11 @@ namespace Enemies
         public void Die(DeathReason reason)
         {
             OnEnemyDied?.Invoke(this, reason);
-            StopAllCoroutines();
+            //StopAllCoroutines();
             //_rends.color = Color.white;
+            if (reason == DeathReason.External)
+                SpawnChildren(transform.position, _currentWaypointIndex - 1, .2f, _enemyData.Children.Count);
+
             gameObject.SetActive(false);
         }
 

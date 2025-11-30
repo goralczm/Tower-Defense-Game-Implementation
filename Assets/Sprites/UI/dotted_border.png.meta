@@ -1,0 +1,1222 @@
+fileFormatVersion: 2
+guid: 10c6cd91fdb7eb14ea9b83eeb50fb9ca
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9029140786390767741
+    second: dotted_border_0
+  - first:
+      213: 7250566313019628631
+    second: dotted_border_1
+  - first:
+      213: 896667458476526472
+    second: dotted_border_2
+  - first:
+      213: 8173561175919547004
+    second: dotted_border_3
+  - first:
+      213: 5928139294501117491
+    second: dotted_border_4
+  - first:
+      213: -2704182234080866902
+    second: dotted_border_5
+  - first:
+      213: 5742449060630600045
+    second: dotted_border_6
+  - first:
+      213: 5429179702433919334
+    second: dotted_border_7
+  - first:
+      213: 1843916334507890456
+    second: dotted_border_8
+  - first:
+      213: 2472514301949217041
+    second: dotted_border_9
+  - first:
+      213: -6954857982932493356
+    second: dotted_border_10
+  - first:
+      213: -2303255066971552385
+    second: dotted_border_11
+  - first:
+      213: -2453145628691133015
+    second: dotted_border_12
+  - first:
+      213: -4087443906094962350
+    second: dotted_border_13
+  - first:
+      213: -218694040940228224
+    second: dotted_border_14
+  - first:
+      213: -6219554594518530804
+    second: dotted_border_15
+  - first:
+      213: 7417121613961458285
+    second: dotted_border_16
+  - first:
+      213: 3146211073878900006
+    second: dotted_border_17
+  - first:
+      213: -411838728356258294
+    second: dotted_border_18
+  - first:
+      213: -138279608112322920
+    second: dotted_border_19
+  - first:
+      213: -861498352030483728
+    second: dotted_border_20
+  - first:
+      213: 7103364318863226165
+    second: dotted_border_21
+  - first:
+      213: 5096514074429554005
+    second: dotted_border_22
+  - first:
+      213: 7068314870624959289
+    second: dotted_border_23
+  - first:
+      213: 8500829629343680240
+    second: dotted_border_24
+  - first:
+      213: 5437538786018122230
+    second: dotted_border_25
+  - first:
+      213: 5040951818366974437
+    second: dotted_border_26
+  - first:
+      213: 7396887511464970779
+    second: dotted_border_27
+  - first:
+      213: 3019670427062884726
+    second: dotted_border_28
+  - first:
+      213: 7877001088659266310
+    second: dotted_border_29
+  - first:
+      213: 7926633398435503495
+    second: dotted_border_30
+  - first:
+      213: -2272114495622458858
+    second: dotted_border_31
+  - first:
+      213: 1543113320426022809
+    second: dotted_border_32
+  - first:
+      213: 1989623277090565663
+    second: dotted_border_33
+  - first:
+      213: 5883121869271475415
+    second: dotted_border_34
+  - first:
+      213: -7748817705151164264
+    second: dotted_border_35
+  - first:
+      213: -112161266689315239
+    second: dotted_border_36
+  - first:
+      213: -2669359678627900952
+    second: dotted_border_37
+  - first:
+      213: 5843128755444015214
+    second: dotted_border_38
+  - first:
+      213: 3515148502747884130
+    second: dotted_border_39
+  - first:
+      213: -6157746978293083672
+    second: dotted_border_40
+  - first:
+      213: 2310357383363339718
+    second: dotted_border_41
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 30, y: 30, z: 30, w: 30}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: dotted_border_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 455
+        width: 42
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7810dfe4b3fd4d70800000000000000
+      internalID: 9029140786390767741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_1
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 476
+        width: 29
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75cd2f385af2f9460800000000000000
+      internalID: 7250566313019628631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_2
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 477
+        width: 32
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88b45208d4a917c00800000000000000
+      internalID: 896667458476526472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_3
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 478
+        width: 29
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c72db9885925e6170800000000000000
+      internalID: 8173561175919547004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_4
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 479
+        width: 28
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33e16cb974bf44250800000000000000
+      internalID: 5928139294501117491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_5
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 476
+        width: 33
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aad00b1e590d87ad0800000000000000
+      internalID: -2704182234080866902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_6
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 477
+        width: 34
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6999afeef641bf40800000000000000
+      internalID: 5742449060630600045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_7
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 478
+        width: 29
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 661b551ac22585b40800000000000000
+      internalID: 5429179702433919334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_8
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 478
+        width: 39
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81712e10328e69910800000000000000
+      internalID: 1843916334507890456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_9
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 478
+        width: 39
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11981cd58a2205220800000000000000
+      internalID: 2472514301949217041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_10
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 478
+        width: 36
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dbd40053816b7f90800000000000000
+      internalID: -6954857982932493356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_11
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 453
+        width: 34
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f75ca0248b13900e0800000000000000
+      internalID: -2303255066971552385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_12
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 421
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ad009b4c0da4fdd0800000000000000
+      internalID: -2453145628691133015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_13
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 414
+        width: 19
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 259efd17c6b7647c0800000000000000
+      internalID: -4087443906094962350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_14
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 375
+        width: 19
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 081534fadea07fcf0800000000000000
+      internalID: -218694040940228224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_15
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 385
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0503948c04bfa9a0800000000000000
+      internalID: -6219554594518530804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_16
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 330
+        width: 18
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d627b007fc8eee660800000000000000
+      internalID: 7417121613961458285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_17
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 347
+        width: 18
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62db3f66d4699ab20800000000000000
+      internalID: 3146211073878900006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_18
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 288
+        width: 18
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0e939bcbdad84af0800000000000000
+      internalID: -411838728356258294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_19
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 305
+        width: 18
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 896e8c6dd6bb41ef0800000000000000
+      internalID: -138279608112322920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_20
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 234
+        width: 19
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fa73a030d75b04f0800000000000000
+      internalID: -861498352030483728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_21
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 268
+        width: 19
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 535f6087638349260800000000000000
+      internalID: 7103364318863226165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_22
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 224
+        width: 18
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55df6275c847ab640800000000000000
+      internalID: 5096514074429554005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_23
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 183
+        width: 19
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93b3630ece2b71260800000000000000
+      internalID: 7068314870624959289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_24
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 184
+        width: 19
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f64521328309f570800000000000000
+      internalID: 8500829629343680240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_25
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 138
+        width: 20
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f9d40177b4067b40800000000000000
+      internalID: 5437538786018122230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_26
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 140
+        width: 18
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e97f9f78fe05f540800000000000000
+      internalID: 5040951818366974437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_27
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 94
+        width: 19
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1a8464500607a660800000000000000
+      internalID: 7396887511464970779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_28
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 100
+        width: 19
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 679d5d7214608e920800000000000000
+      internalID: 3019670427062884726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_29
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 49
+        width: 20
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60b96e881cab05d60800000000000000
+      internalID: 7877001088659266310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_30
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 49
+        width: 19
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78dde7a241f010e60800000000000000
+      internalID: 7926633398435503495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_31
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 4
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 612586787e3d770e0800000000000000
+      internalID: -2272114495622458858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_32
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 7
+        width: 35
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 997aa20a36d3a6510800000000000000
+      internalID: 1543113320426022809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_33
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 7
+        width: 34
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1ee4db34df8c9b10800000000000000
+      internalID: 1989623277090565663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_34
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 6
+        width: 29
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d422448b2c05a150800000000000000
+      internalID: 5883121869271475415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_35
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 4
+        width: 33
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89015372a5ba67490800000000000000
+      internalID: -7748817705151164264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_36
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 4
+        width: 33
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95eec651ce5817ef0800000000000000
+      internalID: -112161266689315239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_37
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 5
+        width: 32
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e112a1e38784fad0800000000000000
+      internalID: -2669359678627900952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_38
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 5
+        width: 37
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e606c1515a6f61150800000000000000
+      internalID: 5843128755444015214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_39
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 4
+        width: 36
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26aa80f60f058c030800000000000000
+      internalID: 3515148502747884130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_40
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 4
+        width: 29
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e11b169fb94b8aa0800000000000000
+      internalID: -6157746978293083672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dotted_border_41
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 7
+        width: 38
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c5a293acc9001020800000000000000
+      internalID: 2310357383363339718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 1537655665
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      dotted_border_0: 9029140786390767741
+      dotted_border_1: 7250566313019628631
+      dotted_border_10: -6954857982932493356
+      dotted_border_11: -2303255066971552385
+      dotted_border_12: -2453145628691133015
+      dotted_border_13: -4087443906094962350
+      dotted_border_14: -218694040940228224
+      dotted_border_15: -6219554594518530804
+      dotted_border_16: 7417121613961458285
+      dotted_border_17: 3146211073878900006
+      dotted_border_18: -411838728356258294
+      dotted_border_19: -138279608112322920
+      dotted_border_2: 896667458476526472
+      dotted_border_20: -861498352030483728
+      dotted_border_21: 7103364318863226165
+      dotted_border_22: 5096514074429554005
+      dotted_border_23: 7068314870624959289
+      dotted_border_24: 8500829629343680240
+      dotted_border_25: 5437538786018122230
+      dotted_border_26: 5040951818366974437
+      dotted_border_27: 7396887511464970779
+      dotted_border_28: 3019670427062884726
+      dotted_border_29: 7877001088659266310
+      dotted_border_3: 8173561175919547004
+      dotted_border_30: 7926633398435503495
+      dotted_border_31: -2272114495622458858
+      dotted_border_32: 1543113320426022809
+      dotted_border_33: 1989623277090565663
+      dotted_border_34: 5883121869271475415
+      dotted_border_35: -7748817705151164264
+      dotted_border_36: -112161266689315239
+      dotted_border_37: -2669359678627900952
+      dotted_border_38: 5843128755444015214
+      dotted_border_39: 3515148502747884130
+      dotted_border_4: 5928139294501117491
+      dotted_border_40: -6157746978293083672
+      dotted_border_41: 2310357383363339718
+      dotted_border_5: -2704182234080866902
+      dotted_border_6: 5742449060630600045
+      dotted_border_7: 5429179702433919334
+      dotted_border_8: 1843916334507890456
+      dotted_border_9: 2472514301949217041
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

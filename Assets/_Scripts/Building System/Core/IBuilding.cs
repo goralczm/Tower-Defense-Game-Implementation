@@ -9,6 +9,7 @@ namespace BuildingSystem.Core
         public GameObject BuildingPrefab { get; }
         public Sprite Sprite { get; }
         public Color Color { get; }
+        public int Cost { get; }
         public bool ShowLineOfSight { get; }
         public float LineOfSightRadius { get; }
 

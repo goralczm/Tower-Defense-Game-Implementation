@@ -94,9 +94,7 @@ namespace Towers
             else
             {
                 for (int i = 0; i < _projectiles.Count; i++)
-                {
                     _projectiles[i].gameObject.SetActive(false);
-                }
             }
         }
 
@@ -108,6 +106,14 @@ namespace Towers
 
             projectile.Setup(_tower.transform.position, _projectile.BaseAttributes + baseAttributes, TargetAlignments, _projectile, new LaserProjectile(), _projectile.DamageStrategies.Concat(ProjectileEffects).ToList());
             _projectiles.Add(projectile);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            for (int i = _projectiles.Count - 1; i >= 0; i--)
+                _projectiles[i].DestroyProjectile();
         }
 
         public override IAttackStrategy Clone()

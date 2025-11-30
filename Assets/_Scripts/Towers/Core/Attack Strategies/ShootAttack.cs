@@ -48,7 +48,8 @@ namespace Towers
 
             if (targets.Count > 0)
             {
-                _tower.transform.rotation = Helpers.RotateTowards(_tower.transform.position, targets[0].Transform.position, -90f);
+                var targetRotation = Helpers.RotateTowards(_tower.transform.position, targets[0].Transform.position, -90f);
+                _tower.transform.rotation = targetRotation;
 
                 foreach (var target in targets)
                     CreateProjectile(target.Transform);

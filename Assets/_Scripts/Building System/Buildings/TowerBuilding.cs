@@ -13,6 +13,7 @@ namespace BuildingSystem.Buildings
         public GameObject BuildingPrefab => Prefab;
         public Sprite Sprite => Tower.Levels[0].Icon;
         public Color Color => Tower.Levels[0].Color;
+        public int Cost => Tower.BuildCost;
         public bool ShowLineOfSight => true;
         public float LineOfSightRadius => Tower.Levels[0].BaseAttributes.GetAttribute(Attributes.TowerAttributes.Range);
         public string Name => Tower.name;

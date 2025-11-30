@@ -13,21 +13,6 @@ namespace MapGenerator.Settings
         public bool EnforceRules;
         public bool RenderOverflowTiles;
 
-        public GenerationConfig(MazeGenerationSettings mazeSettings, int seed)
-        {
-            MazeGenerationSettings = mazeSettings;
-            SetSeed(seed);
-        }
-
-        public GenerationConfig(MazeGenerationSettings mazeSettings, int seed, Vector2Int gridStartPoint,
-            Vector2Int gridEndPoint)
-        {
-            MazeGenerationSettings = mazeSettings;
-            SetSeed(seed);
-            SetGridStartPoint(gridStartPoint);
-            SetGridEndPoint(gridEndPoint);
-        }
-
         public void OnValidate()
         {
             GridStartPoint = new Vector2Int(

@@ -1,9 +1,7 @@
 {
     "name": "AudioSystem",
     "rootNamespace": "",
-    "references": [
-        "GUID:d326825bc4df8b74197416230785c48f"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

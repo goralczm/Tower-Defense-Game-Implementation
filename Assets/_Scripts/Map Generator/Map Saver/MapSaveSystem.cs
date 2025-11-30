@@ -1,4 +1,5 @@
 using MapGenerator.Settings;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace MapGenerator.Saver
@@ -7,12 +8,12 @@ namespace MapGenerator.Saver
     {
         public static void Save(MapGenerator.Demo.MapGenerator mapGenerator)
         {
-            SaveSystem.SaveData(mapGenerator.GetGenerationConfig(), "MapData");
+            SaveSystem.SaveSystem.SaveData(mapGenerator.GetGenerationConfig(), "MapData");
         }
 
-        public static void Load(MapGenerator.Demo.MapGenerator mapGenerator)
+        public static async Task Load(MapGenerator.Demo.MapGenerator mapGenerator)
         {
-            GenerationConfig config = SaveSystem.LoadData<GenerationConfig>("MapData") as GenerationConfig;
+            GenerationConfig config = SaveSystem.SaveSystem.LoadData<GenerationConfig>("MapData") as GenerationConfig;
             if (config == null)
             {
                 Debug.LogWarning("No map saved");
@@ -20,7 +21,7 @@ namespace MapGenerator.Saver
             }
 
             mapGenerator.SetGenerationConfig(config);
-            mapGenerator.GenerateMapAsync();
+            await mapGenerator.GenerateMapAsync();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace AudioSystem
     /// <summary>
     /// Manages the playing of sounds and music in the game.
     /// </summary>
-    public class AudioSystem : MonoBehaviour //Singleton<AudioSystem>
+    public class AudioSystem : MonoBehaviour
     {
         [Header("Sound Groups")]
         [SerializeField] private SoundGroup[] _soundGroups;
