@@ -3,24 +3,36 @@ using Utilities;
 
 namespace Attributes
 {
+    [System.Serializable]
     public abstract class AttributeModifier<TEnum> : ICloneable, IDisposable where TEnum : Enum
     {
-        public bool MarkedForRemoval { get; private set; }
+        public bool MarkedForRemoval;
 
         public event Action<AttributeModifier<TEnum>> OnDispose = delegate { };
 
-        protected readonly CountdownTimer _timer;
+        public CountdownTimer Timer;
 
         protected AttributeModifier(float duration)
         {
-            if (duration <= 0) return;
+            if (duration <= 0)
+                return;
 
-            _timer = new CountdownTimer(duration);
-            _timer.OnTimerStop += Dispose;
-            _timer.Start();
+            Timer = new CountdownTimer(duration);
+            Timer.OnTimerStop += Dispose;
+            Timer.Start();
         }
 
-        public void Update(float deltaTime) => _timer?.Tick(deltaTime);
+        public void ForceTimerSetup()
+        {
+            if (Timer == null)
+                return;
+
+            Timer = new CountdownTimer(Timer.Time);
+            Timer.OnTimerStop += Dispose;
+            Timer.Start();
+        }
+
+        public void Update(float deltaTime) => Timer?.Tick(deltaTime);
 
         public abstract void Handle(object sender, AttributeQuery<TEnum> query);
 
@@ -36,10 +48,10 @@ namespace Attributes
 
         protected CountdownTimer CloneTimer()
         {
-            if (_timer == null)
+            if (Timer == null)
                 return null;
 
-            var newTimer = new CountdownTimer(_timer.Time);
+            var newTimer = new CountdownTimer(Timer.Time);
             newTimer.OnTimerStop += Dispose;
             newTimer.Start();
             return newTimer;

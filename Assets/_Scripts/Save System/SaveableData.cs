@@ -22,12 +22,6 @@ namespace SaveSystem
         /// <param name="obj">The object to be saved.</param>
         public void SaveObject(string key, object obj)
         {
-            if (!SavedDatas.ContainsKey(key))
-            {
-                SavedDatas.Add(key, obj);
-                return;
-            }
-
             SavedDatas[key] = obj;
         }
 

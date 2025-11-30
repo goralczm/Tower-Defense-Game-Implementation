@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1dfde4b277edb4386cfeb8189684bb, type: 3}
   m_Name: Spinner
   m_EditorClassIdentifier: Towers::Towers.BasicTower
+  Id: 2
   Description: 
   Levels:
   - Icon: {fileID: 21300000, guid: 17bbbdb0f08eb814f80d5f5529fd5a3a, type: 3}

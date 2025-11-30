@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
   m_Name: Rebound
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
+  UniqueId: 6
   Sprite: {fileID: 21300000, guid: 7c87ea9001805174cb02826518b48895, type: 3}
   SpriteColor: {r: 0.6981132, g: 0.18309002, b: 0.43590117, a: 1}
   BaseAttributes:

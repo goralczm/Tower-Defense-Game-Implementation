@@ -6,27 +6,29 @@ namespace Currency
 {
     public class Bank : Singleton<Bank>
     {
-        [SerializeField] private int _currency;
+        [Header("Settings")]
+        public int StartCurrency = 4200;
+
+        private int _currency;
 
         public static event Action<int> OnCurrencyChanged;
 
         public int Currency => _currency;
 
-        private void Start()
-        {
-            OnCurrencyChanged?.Invoke(_currency);
-        }
-
         public bool CanAfford(int amount)
         {
             return _currency >= amount;
         }
+        
+        public void SetCurrency(int currency)
+        {
+            _currency = currency;
+            OnCurrencyChanged?.Invoke(_currency);
+        }
 
         public void AddCurrency(int amount)
         {
-            _currency += amount;
-
-            OnCurrencyChanged?.Invoke(_currency);
+            SetCurrency(_currency + amount);
         }
 
         public void RemoveCurrency(int amount)

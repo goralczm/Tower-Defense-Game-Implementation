@@ -9,15 +9,15 @@ namespace Waves
 
         private void OnEnable()
         {
-            WavesController.OnWaveEnded += UpdateWavesText;
+            WavesController.OnWaveChanged += OnWaveChanged;
         }
 
         private void OnDisable()
         {
-            WavesController.OnWaveEnded -= UpdateWavesText;
+            WavesController.OnWaveChanged -= OnWaveChanged;
         }
 
-        private void UpdateWavesText(int currentWave, int wavesCount, WavesData wavesData)
+        private void OnWaveChanged(int currentWave, int wavesCount)
         {
             _wavesText.SetText($"Wave: {currentWave}/{wavesCount}");
         }

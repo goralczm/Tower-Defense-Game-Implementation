@@ -1,5 +1,8 @@
-using MapGenerator.Saver;
+using Core.GameSave;
+using Core.GameSetup;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using Waves;
@@ -8,9 +11,13 @@ namespace Core.Systems
 {
     public class GameSetup : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField] private MapGenerator.Demo.MapGenerator _mapGenerator;
         [SerializeField] private WavesController _waveController;
+        [SerializeField] private GameObject _setupNewGameObject;
 
+        private List<SaveLoadHandler> _saveLoadHandlers;
+        private List<SetupHandler> _setupHandlers;
         private bool _setupDone;
 
         public event Action OnGameSetupDone;
@@ -30,14 +37,21 @@ namespace Core.Systems
         private async void Start()
         {
             if (GlobalSystems.Instance.LevelSettings.LoadGame)
+            {
+                _saveLoadHandlers = GetComponentsInChildren<SaveLoadHandler>(true).ToList();
+                _saveLoadHandlers.Sort((h1, h2) => h2.Priority.CompareTo(h1.Priority));
+
                 await Load();
+            }
             else
             {
-                _mapGenerator.RandomizeConfig();
-                await _mapGenerator.GenerateMapAsync();
+                _setupHandlers = GetComponentsInChildren<SetupHandler>(true).ToList();
+
+                foreach (var handler in _setupHandlers)
+                    await handler.Setup();
             }
 
-            _setupDone = true;
+                _setupDone = true;
             OnGameSetupDone?.Invoke();
         }
 
@@ -48,36 +62,21 @@ namespace Core.Systems
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                if (Input.GetKey(KeyCode.LeftShift))
-                    _mapGenerator.RandomizeConfig();
-
-                _mapGenerator.GenerateMapAsync();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Escape))
-                _mapGenerator.CancelBuild();
-
             if (Input.GetKeyDown(KeyCode.Space))
                 _waveController.StartGenerator();
-
-            /*if (Input.GetKeyDown(KeyCode.Alpha1))
-                Save();
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-                Load();*/
         }
 
         public async Task Load()
         {
-            await MapSaveSystem.Load(_mapGenerator);
+            for (int i = 0; i < _saveLoadHandlers.Count; i++)
+                await _saveLoadHandlers[i].Load();
         }
 
         [ContextMenu("Force Save")]
         public void Save()
         {
-            MapSaveSystem.Save(_mapGenerator);
+            for (int i = 0; i < _saveLoadHandlers.Count; i++)
+                _saveLoadHandlers[i].Save();
         }
     }
 }

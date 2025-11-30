@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1dfde4b277edb4386cfeb8189684bb, type: 3}
   m_Name: Snipipek
   m_EditorClassIdentifier: Towers::Towers.BasicTower
+  Id: 3
   Description: 
   Levels:
   - Icon: {fileID: 21300000, guid: 643cd5c5e6aae0e4994ff5c533597de4, type: 3}

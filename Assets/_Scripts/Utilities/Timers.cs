@@ -2,16 +2,17 @@ namespace Utilities
 {
     using System;
 
+    [System.Serializable]
     public abstract class Timer
     {
-        protected float _initialTime;
+        public float _initialTime;
 
-        public float Time { get; set; }
-        public bool IsRunning { get; protected set; }
+        public float Time;
+        public bool IsRunning;
         public float Progress => Time / _initialTime;
 
-        public Action OnTimerStart = delegate { };
-        public Action OnTimerStop = delegate { };
+        public event Action OnTimerStart = delegate { };
+        public event Action OnTimerStop = delegate { };
 
         protected Timer(float value)
         {
@@ -44,6 +45,7 @@ namespace Utilities
         public abstract void Tick(float deltaTime);
     }
 
+    [System.Serializable]
     public class CountdownTimer : Timer
     {
         public CountdownTimer(float value) : base(value) { }
@@ -68,6 +70,7 @@ namespace Utilities
         }
     }
 
+    [System.Serializable]
     public class StopwatchTimer : Timer
     {
         public StopwatchTimer() : base(0) { }

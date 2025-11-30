@@ -13,7 +13,7 @@ namespace Towers
         {
             Func<float> sizeProvider = () => projectile.transform.localScale.x * 2f;
 
-            projectile.Attributes.Mediator.AddModifier(new BasicAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Speed, 0f, v => v += sizeProvider()));
+            projectile.Attributes.Mediator.AddModifier(new FunctionAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Speed, 0f, v => v += sizeProvider()));
         }
 
         public void Execute(Transform target)

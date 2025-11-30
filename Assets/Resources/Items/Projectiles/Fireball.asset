@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
+  UniqueId: 3
   Sprite: {fileID: 21300000, guid: cbc01f355872b694da6c4f5e51252f86, type: 3}
   SpriteColor: {r: 0.8207547, g: 0.21293166, b: 0.21293166, a: 1}
   BaseAttributes:

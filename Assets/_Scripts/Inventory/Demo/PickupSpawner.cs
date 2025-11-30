@@ -13,6 +13,7 @@ namespace Inventory.Demo
         [Header("Settings")]
         [SerializeField] private float _spawnPossibility = .1f;
         [SerializeField] private float _spawnCooldown = 1f;
+        [SerializeField] private ProjectileData[] _pool;
 
         private float _nextSpawnTime;
 
@@ -44,9 +45,7 @@ namespace Inventory.Demo
 
         private IItem GetRandomProjectile()
         {
-            var projectiles = Resources.LoadAll<ProjectileData>("Projectiles/Droppable");
-
-            return projectiles.GetRandom(1)[0];
+            return _pool.GetRandom(1)[0];
         }
     }
 }

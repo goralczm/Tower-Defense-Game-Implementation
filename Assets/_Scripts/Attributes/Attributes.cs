@@ -9,7 +9,7 @@ namespace Attributes
     [System.Serializable]
     public class Attributes<TEnum> : ICloneable where TEnum : Enum
     {
-        private readonly AttributesMediator<TEnum> _mediator;
+        public AttributesMediator<TEnum> _mediator;
 
         private BaseAttributes<TEnum> _baseAttributes;
 

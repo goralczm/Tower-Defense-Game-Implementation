@@ -63,4 +63,4 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   Reward: 1000
-  WavesCount: 2
+  WavesCount: 40

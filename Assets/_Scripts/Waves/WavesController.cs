@@ -11,6 +11,7 @@ namespace Waves
     public class WavesController : MonoBehaviour
     {
         [Header("Settings")]
+        public int StartWave = 1;
         [SerializeField] private WavesData _waves;
         [SerializeField] private int _currentWave = 1;
 
@@ -21,9 +22,16 @@ namespace Waves
         private bool _hasGameEnded;
 
         public static event Action<int, int, WavesData> OnWaveEnded;
+        public static event Action<int, int> OnWaveChanged;
 
         public int CurrentWave => _currentWave;
         public int WavesCount => _waves.WavesCount;
+
+        public void SetCurrentWave(int currentWave)
+        {
+            _currentWave = currentWave;
+            OnWaveChanged?.Invoke(CurrentWave, WavesCount);
+        }
 
         private void OnEnable()
         {
@@ -36,11 +44,6 @@ namespace Waves
         {
             _generator.OnDisable();
             GlobalGameEvents.OnGameEnded -= OnGameEnded;
-        }
-
-        private void Start()
-        {
-            OnWaveEnded?.Invoke(CurrentWave, WavesCount, _waves);
         }
 
         public async Task StartGenerator()
@@ -61,7 +64,10 @@ namespace Waves
 
         private void FinishWave()
         {
-            OnWaveEnded?.Invoke(++_currentWave, WavesCount, _waves);
+            int nextWave = _currentWave + 1;
+            SetCurrentWave(nextWave);
+
+            OnWaveEnded?.Invoke(CurrentWave - 1, WavesCount, _waves);
         }
 
         private void OnGameEnded(bool result)

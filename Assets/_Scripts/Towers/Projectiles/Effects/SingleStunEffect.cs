@@ -19,7 +19,7 @@ namespace Towers
         public void Execute(Transform target)
         {
             if (EnemiesCache.TryGetEnemy(target, out EnemyBehaviour enemy))
-                enemy.Attributes.Mediator.AddModifier(new BasicAttributeModifier<EnemyAttributes>(EnemyAttributes.Speed, _projectile.Attributes.GetAttribute(ProjectileAttributes.Damage), v => 0));
+                enemy.Attributes.Mediator.AddModifier(new MathAttributeModifier<EnemyAttributes>(EnemyAttributes.Speed, _projectile.Attributes.GetAttribute(ProjectileAttributes.Damage), MathOperation.Override, 0));
         }
 
         public IProjectileEffect Clone() => new SingleStunEffect();

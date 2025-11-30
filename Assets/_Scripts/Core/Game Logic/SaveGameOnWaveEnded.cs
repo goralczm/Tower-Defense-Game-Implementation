@@ -1,4 +1,5 @@
 using Core.Systems;
+using System.Collections;
 using UnityEngine;
 using Waves;
 
@@ -24,8 +25,16 @@ namespace GameLogic
             if (!_gameSetup.SetupDone)
                 return;
 
-            if (currentWave <= wavesCount)
-                _gameSetup.Save();
+            if (currentWave < wavesCount)
+                StartCoroutine(SaveGameAfterFrame());
+        }
+
+        IEnumerator SaveGameAfterFrame()
+        {
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+
+            _gameSetup.Save();
         }
     }
 }

@@ -1,6 +1,5 @@
 using Attributes;
 using Core;
-using Inventory;
 using ObjectPooling;
 using System;
 using System.Collections.Generic;
@@ -36,12 +35,13 @@ namespace Towers
         public int TargetingPriority => 0;
         public Inventory.Inventory Inventory => _inventory;
         public TowerData TowerData => _towerData;
-        public int Level => _level + 1;
+        public int DisplayLevel => _level + 1;
         public bool IsMaxLevel => _level == _towerData.Levels.Length - 1;
         public int UpgradeCost => !IsMaxLevel ? _towerData.Levels[_level].Cost : int.MaxValue;
-        public int SellRefund => Mathf.FloorToInt(_towerData.Levels.Take(Level).Sum(l => l.Cost) / 12f);
+        public int SellRefund => Mathf.FloorToInt(_towerData.Levels.Take(DisplayLevel).Sum(l => l.Cost) / 12f);
         public TowerLevel LevelData => _towerData.Levels[_level];
         public TowerLevel NextLevelData => !IsMaxLevel ? _towerData.Levels[_level + 1] : LevelData;
+        public LineOfSight LineOfSight => _lineOfSight;
 
         public float GetDistance(Vector2 position) => Vector2.Distance(position, transform.position);
 
@@ -134,7 +134,7 @@ namespace Towers
                 types,
                 transform.position));
 
-            var modifier = new BasicAttributeModifier<TowerAttributes>(TowerAttributes.Health, 0f, v => v - damage);
+            var modifier = new MathAttributeModifier<TowerAttributes>(TowerAttributes.Health, 0f, MathOperation.Subtract, damage);
             _attributes.Mediator.AddModifier(modifier);
 
             if (_attributes.GetAttribute(TowerAttributes.Health) <= 0f)

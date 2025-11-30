@@ -7,7 +7,7 @@ namespace Core.Player
     public class Player : MonoBehaviour, IDamageable
     {
         [Header("Settings")]
-        [SerializeField] private BaseAttributes<PlayerAttributes> _baseAttributes;
+        public BaseAttributes<PlayerAttributes> BaseAttributes;
 
         private Attributes<PlayerAttributes> _attributes;
 
@@ -16,9 +16,15 @@ namespace Core.Player
 
         public event Action<DamageData> OnDamaged;
 
-        private void Awake()
+        public void SetAttributes(Attributes<PlayerAttributes> attributes)
         {
-            _attributes = new(new(), _baseAttributes);
+            _attributes = attributes;
+        }
+
+        private void Update()
+        {
+            if (_attributes != null)
+                _attributes.Mediator.Update(Time.deltaTime);
         }
 
         public void TakeDamage(float damage, DamageType[] types, string source)
@@ -26,7 +32,7 @@ namespace Core.Player
             if (_attributes.GetAttribute(PlayerAttributes.Health) <= 0)
                 return;
 
-            var modifier = new BasicAttributeModifier<PlayerAttributes>(PlayerAttributes.Health, 0f, v => v -= damage);
+            var modifier = new MathAttributeModifier<PlayerAttributes>(PlayerAttributes.Health, 0f, MathOperation.Subtract, damage);
 
             _attributes.Mediator.AddModifier(modifier);
 

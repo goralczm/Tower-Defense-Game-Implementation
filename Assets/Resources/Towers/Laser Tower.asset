@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1dfde4b277edb4386cfeb8189684bb, type: 3}
   m_Name: Laser Tower
   m_EditorClassIdentifier: Towers::Towers.BasicTower
+  Id: 5
   Description: 
   Levels:
   - Icon: {fileID: 21300000, guid: 407af7bd0b83f7b43b5c9746eca54f22, type: 3}

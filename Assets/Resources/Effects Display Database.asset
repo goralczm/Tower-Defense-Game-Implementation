@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15323655b02e3084fa2e5dc4e297ffb4, type: 3}
+  m_Name: Effects Display Database
+  m_EditorClassIdentifier: Towers::Towers.EffectsDisplayDatabase
+  EffectDisplays:
+  - Effect:
+      rid: 2482469250560163916
+    Description: Deals damage to all enemies in range
+  - Effect:
+      rid: 2482469250560163917
+    Description: Stuns all enemies in range
+  - Effect:
+      rid: 2482469250560163918
+    Description: Bounces off enemies
+  - Effect:
+      rid: 2482469250560163919
+    Description: Changes size rapidly
+  - Effect:
+      rid: 2482469250560163920
+    Description: Grows in size over time
+  - Effect:
+      rid: 2482469250560163921
+    Description: Deals damage to single enemy
+  - Effect:
+      rid: 2482469250560163922
+    Description: Stuns single enemy
+  - Effect:
+      rid: 2482469250560163923
+    Description: Deals more damage the bigger projectile is
+  - Effect:
+      rid: 2482469250560163924
+    Description: Is faster the bigger the projectile is
+  - Effect:
+      rid: 2482469250560163925
+    Description: Grows bigger and becomes faster with every enemy hit
+  references:
+    version: 2
+    RefIds:
+    - rid: 2482469250560163916
+      type: {class: AoeDamageEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 2482469250560163917
+      type: {class: AoeStunEffect, ns: Towers, asm: Towers}
+      data: 
+    - rid: 2482469250560163918
+      type: {class: BouncingProjectileEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 2482469250560163919
+      type: {class: FluctuatingSizeEffect, ns: Towers, asm: Towers}
+      data:
+        FluctuationSpeed: 10
+    - rid: 2482469250560163920
+      type: {class: GrowingEffect, ns: Towers, asm: Towers}
+      data: 
+    - rid: 2482469250560163921
+      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 2482469250560163922
+      type: {class: SingleStunEffect, ns: Towers, asm: Towers}
+      data: 
+    - rid: 2482469250560163923
+      type: {class: SizeBasedDamageEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 2482469250560163924
+      type: {class: SizeBasedSpeedEffect, ns: Towers, asm: Towers}
+      data: 
+    - rid: 2482469250560163925
+      type: {class: SizeSpeedScalingEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 

@@ -3,26 +3,42 @@ using System.Collections.Generic;
 
 namespace Attributes
 {
+    [System.Serializable]
     public class AttributesMediator<TEnum> : ICloneable where TEnum : Enum
     {
-        private readonly LinkedList<AttributeModifier<TEnum>> _modifiers = new();
+        public LinkedList<AttributeModifier<TEnum>> Modifiers = new();
 
         public event EventHandler<AttributeQuery<TEnum>> Queries;
-
         public event Action OnAttributesChanged;
-
-        public LinkedList<AttributeModifier<TEnum>> Modifiers => _modifiers;
 
         public void PerformQuery(object sender, AttributeQuery<TEnum> query) => Queries?.Invoke(sender, query);
 
+        public void ForceReconnectModifiers()
+        {
+            Queries = null;
+
+            foreach (var modifier in Modifiers)
+            {
+                modifier.ForceTimerSetup();
+                Queries += modifier.Handle;
+
+                modifier.OnDispose += _ =>
+                {
+                    Modifiers.Remove(modifier);
+                    Queries -= modifier.Handle;
+                    OnAttributesChanged?.Invoke();
+                };
+            }
+        }
+
         public void AddModifier(AttributeModifier<TEnum> modifier)
         {
-            _modifiers.AddLast(modifier);
+            Modifiers.AddLast(modifier);
             Queries += modifier.Handle;
 
             modifier.OnDispose += _ =>
             {
-                _modifiers.Remove(modifier);
+                Modifiers.Remove(modifier);
                 Queries -= modifier.Handle;
                 OnAttributesChanged?.Invoke();
             };
@@ -32,7 +48,7 @@ namespace Attributes
 
         public void Update(float deltaTime)
         {
-            var node = _modifiers.First;
+            var node = Modifiers.First;
             while (node != null)
             {
                 var modifier = node.Value;
@@ -40,7 +56,7 @@ namespace Attributes
                 node = node.Next;
             }
 
-            node = _modifiers.First;
+            node = Modifiers.First;
             while (node != null)
             {
                 var nextNode = node.Next;
@@ -56,15 +72,15 @@ namespace Attributes
         {
             var clone = new AttributesMediator<TEnum>();
 
-            foreach (var modifier in _modifiers)
+            foreach (var modifier in Modifiers)
             {
                 var clonedModifier = modifier.Clone();
-                clone._modifiers.AddLast(clonedModifier);
+                clone.Modifiers.AddLast(clonedModifier);
                 clone.Queries += clonedModifier.Handle;
 
                 clonedModifier.OnDispose += _ =>
                 {
-                    clone._modifiers.Remove(clonedModifier);
+                    clone.Modifiers.Remove(clonedModifier);
                     clone.Queries -= clonedModifier.Handle;
                     clone.OnAttributesChanged?.Invoke();
                 };

@@ -18,6 +18,7 @@ namespace Towers
     [CreateAssetMenu(menuName = "Towers/New Tower Data", fileName = "New Tower Data")]
     public class TowerData : ScriptableObject
     {
+        public int Id;
         public string Description;
         [ForceArtifice] public TowerLevel[] Levels;
 

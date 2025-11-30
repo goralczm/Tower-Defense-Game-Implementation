@@ -85,7 +85,7 @@ namespace Towers
         private void UpdateDisplay()
         {
             _inventoryDisplay.SetInventory(_tower.Inventory);
-            _towerHeader.SetText($"{_tower.TowerData.name} Level {_tower.Level}");
+            _towerHeader.SetText($"{_tower.TowerData.name} Level {_tower.DisplayLevel}");
             if (_tower.IsMaxLevel)
                 _attributesText.SetText(_tower.Attributes.GetAttributesDescription());
             else

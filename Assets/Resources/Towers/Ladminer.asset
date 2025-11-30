@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1dfde4b277edb4386cfeb8189684bb, type: 3}
   m_Name: Ladminer
   m_EditorClassIdentifier: Towers::Towers.BasicTower
+  Id: 6
   Description: 
   Levels:
   - Icon: {fileID: 21300000, guid: 015970b4759444248a5c5831fb1d2759, type: 3}

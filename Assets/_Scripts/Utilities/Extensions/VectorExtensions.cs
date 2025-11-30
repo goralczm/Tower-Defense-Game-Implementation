@@ -24,6 +24,16 @@ namespace Utilities.Extensions
             return new Vector3(x.HasValue ? v.x + x.Value : v.x, y.HasValue ? v.y + y.Value : v.y, z.HasValue ? v.z + z.Value : v.z);
         }
 
+        public static float[] ToFloat3(this Vector3 v)
+        {
+            return new float[3] { v.x, v.y, v.z };
+        }
+
+        public static Vector3 ToVector3(this float[] fs)
+        {
+            return new Vector3(fs[0], fs[1], fs[2]);
+        }
+
         public static Vector3Int ToVector3Int(this Vector2Int v)
         {
             return new Vector3Int(v.x, v.y, 0);

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1dfde4b277edb4386cfeb8189684bb, type: 3}
   m_Name: Tetra
   m_EditorClassIdentifier: Towers::Towers.BasicTower
+  Id: 1
   Description: 
   Levels:
   - Icon: {fileID: 21300000, guid: 9260d41e3b58d3b4c8d80659d768c2e8, type: 3}

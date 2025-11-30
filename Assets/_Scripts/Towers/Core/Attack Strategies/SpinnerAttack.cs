@@ -82,6 +82,7 @@ namespace Towers
                 _projectiles[i].SetTargetPosition(positions[i]);
 
             _tower.transform.rotation = Helpers.RotateTowards(_tower.transform.position, positions[0], -90f);
+            _tower.LineOfSight.transform.rotation = Quaternion.identity;
         }
 
         private void CreateProjectile(Vector2 position)

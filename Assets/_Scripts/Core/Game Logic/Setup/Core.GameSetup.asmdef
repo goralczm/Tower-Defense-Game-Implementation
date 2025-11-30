@@ -1,0 +1,23 @@
+{
+    "name": "Core.GameSetup",
+    "rootNamespace": "Core.GameSetup",
+    "references": [
+        "GUID:f7605dcf85277b840bcbb39e1575f564",
+        "GUID:675a5ac2960cf9f49bbf8cbf71b4021d",
+        "GUID:8cddf09bf00aad148bbb0855fb7e7fb1",
+        "GUID:156e2aa2cdb528947a790c1f14da0987",
+        "GUID:84edda9323966714bba0b13cd9025a5f",
+        "GUID:5efcb4aefa19e1541950ce21fc8fd1ad",
+        "GUID:a0a6965dc082d8c41970f50d4aa08d33",
+        "GUID:8cd0be2ba01f8d54788c5bcaf9bd44b3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

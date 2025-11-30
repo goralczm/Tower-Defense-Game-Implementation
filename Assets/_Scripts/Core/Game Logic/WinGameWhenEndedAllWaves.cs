@@ -18,7 +18,7 @@ namespace GameLogic
 
         private void OnWaveEnded(int currentWave, int wavesCount, WavesData wavesData)
         {
-            if (currentWave > wavesCount)
+            if (currentWave >= wavesCount)
                 GlobalGameEvents.OnGameEnded?.Invoke(true);
         }
     }

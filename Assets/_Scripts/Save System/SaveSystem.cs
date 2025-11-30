@@ -18,10 +18,15 @@ namespace SaveSystem
             {
                 try
                 {
+                    var settings = new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.All
+                    };
+
                     string json = File.ReadAllText(path);
                     if (encrypt)
                         json = EncryptDecrypt(json);
-                    T data = JsonConvert.DeserializeObject<T>(json);
+                    T data = JsonConvert.DeserializeObject<T>(json, settings);
                     return data;
                 }
                 catch (Exception e)
@@ -43,7 +48,12 @@ namespace SaveSystem
 
             try
             {
-                string json = JsonConvert.SerializeObject(data);
+                var settings = new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                };
+
+                string json = JsonConvert.SerializeObject(data, settings);
                 if (encrypt)
                     json = EncryptDecrypt(json);
                 File.WriteAllText(path, json);

@@ -24,7 +24,7 @@ namespace Towers
             foreach (var hit in hits)
             {
                 if (EnemiesCache.TryGetEnemy(hit, out EnemyBehaviour enemy))
-                    enemy.Attributes.Mediator.AddModifier(new BasicAttributeModifier<EnemyAttributes>(EnemyAttributes.Speed, _projectile.Attributes.GetAttribute(ProjectileAttributes.Damage), v => 0));
+                    enemy.Attributes.Mediator.AddModifier(new MathAttributeModifier<EnemyAttributes>(EnemyAttributes.Speed, _projectile.Attributes.GetAttribute(ProjectileAttributes.Damage), MathOperation.Override, 0));
             }
         }
 

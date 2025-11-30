@@ -21,6 +21,9 @@ namespace Core
         Normal,
         Fire,
         Lighting,
+        Explosive,
+        Heavy,
+        Plasma,
     }
 
     [Serializable]

@@ -38,7 +38,7 @@ namespace Towers.Projectiles
                             _projectile.Effects);
 
                         projectile.SetAttributes(_projectile.Attributes.Clone());
-                        projectile.Attributes.Mediator.AddModifier(new BasicAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Bounces, 0f, v => v = v - 1));
+                        projectile.Attributes.Mediator.AddModifier(new MathAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Bounces, 0f, MathOperation.Subtract, 1));
                     }
                 }
             }

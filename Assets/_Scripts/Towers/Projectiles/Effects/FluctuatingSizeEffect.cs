@@ -17,7 +17,7 @@ namespace Towers
         {
             Func<float> deltaProvider = () => _runningSum += Time.deltaTime * FluctuationSpeed;
 
-            projectile.Attributes.Mediator.AddModifier(new BasicAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Size, 0f, v => v += Mathf.Abs(Mathf.Sin(deltaProvider()))));
+            projectile.Attributes.Mediator.AddModifier(new FunctionAttributeModifier<ProjectileAttributes>(ProjectileAttributes.Size, 0f, v => v += Mathf.Abs(Mathf.Sin(deltaProvider()))));
         }
 
         public void Execute(Transform target)

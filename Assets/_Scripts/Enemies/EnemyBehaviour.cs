@@ -108,7 +108,7 @@ namespace Enemies
                 types,
                 transform.position));
 
-            var modifier = new BasicAttributeModifier<EnemyAttributes>(EnemyAttributes.Health, 0f, v => v - damage);
+            var modifier = new MathAttributeModifier<EnemyAttributes>(EnemyAttributes.Health, 0f, MathOperation.Subtract, damage);
             _attributes.Mediator.AddModifier(modifier);
 
             if (_attributes.GetAttribute(EnemyAttributes.Health) <= 0f)
