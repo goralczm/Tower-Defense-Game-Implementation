@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1dfde4b277edb4386cfeb8189684bb, type: 3}
+  m_Name: Laser
+  m_EditorClassIdentifier: Towers::Towers.BasicTower
+  Id: 5
+  Description: 
+  Levels:
+  - Icon: {fileID: 21300000, guid: 407af7bd0b83f7b43b5c9746eca54f22, type: 3}
+    Color: {r: 0.66986006, g: 0.2240566, b: 0.8962264, a: 1}
+    Cost: 225
+    BaseAttributes:
+      Queries:
+      - Type: 0
+        Value: 5
+      - Type: 1
+        Value: 0.6
+      - Type: 2
+        Value: 2
+      - Type: 3
+        Value: 1
+      - Type: 4
+        Value: 0.2
+      - Type: 5
+        Value: 1
+    AttackStrategies:
+    - {fileID: 11400000, guid: b8a6768e485cd704393c38f9d99ab9c6, type: 2}
+  - Icon: {fileID: 21300000, guid: 407af7bd0b83f7b43b5c9746eca54f22, type: 3}
+    Color: {r: 0.66986006, g: 0.2240566, b: 0.8962264, a: 1}
+    Cost: 260
+    BaseAttributes:
+      Queries:
+      - Type: 0
+        Value: 5
+      - Type: 1
+        Value: 0.9
+      - Type: 2
+        Value: 2.2
+      - Type: 3
+        Value: 1
+      - Type: 4
+        Value: 0.2
+      - Type: 5
+        Value: 1
+    AttackStrategies:
+    - {fileID: 11400000, guid: b8a6768e485cd704393c38f9d99ab9c6, type: 2}
+  - Icon: {fileID: 21300000, guid: 407af7bd0b83f7b43b5c9746eca54f22, type: 3}
+    Color: {r: 0.66986006, g: 0.2240566, b: 0.8962264, a: 1}
+    Cost: 325
+    BaseAttributes:
+      Queries:
+      - Type: 0
+        Value: 5
+      - Type: 1
+        Value: 1.2
+      - Type: 2
+        Value: 2.4
+      - Type: 3
+        Value: 2
+      - Type: 4
+        Value: 0.2
+      - Type: 5
+        Value: 1
+    AttackStrategies:
+    - {fileID: 11400000, guid: b8a6768e485cd704393c38f9d99ab9c6, type: 2}
+  - Icon: {fileID: 21300000, guid: 407af7bd0b83f7b43b5c9746eca54f22, type: 3}
+    Color: {r: 0.66986006, g: 0.2240566, b: 0.8962264, a: 1}
+    Cost: 225
+    BaseAttributes:
+      Queries:
+      - Type: 0
+        Value: 5
+      - Type: 1
+        Value: 1.5
+      - Type: 2
+        Value: 2.6
+      - Type: 3
+        Value: 2
+      - Type: 4
+        Value: 0.2
+      - Type: 5
+        Value: 2
+    AttackStrategies:
+    - {fileID: 11400000, guid: b8a6768e485cd704393c38f9d99ab9c6, type: 2}
+    - {fileID: 11400000, guid: 1f7dfe24e4aa6f34fa207fa2ca6bdc05, type: 2}

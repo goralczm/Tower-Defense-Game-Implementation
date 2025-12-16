@@ -1,4 +1,5 @@
 using Core;
+using TMPro;
 using UI;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace GameLogic
     {
         [Header("References")]
         [SerializeField] private UITweener _panel;
+        [SerializeField] private TextMeshProUGUI _resultText;
 
         private void OnEnable()
         {
@@ -22,6 +24,11 @@ namespace GameLogic
         private void OnGameEnded(bool result)
         {
             _panel.Show();
+
+            if (result)
+                _resultText.SetText("Victory!");
+            else
+                _resultText.SetText("Lost!");
         }
     }
 }

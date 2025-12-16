@@ -15,6 +15,7 @@ MonoBehaviour:
   UniqueId: 3
   Sprite: {fileID: 21300000, guid: cbc01f355872b694da6c4f5e51252f86, type: 3}
   SpriteColor: {r: 0.8207547, g: 0.21293166, b: 0.21293166, a: 1}
+  Rarity: 1
   BaseAttributes:
     Queries:
     - Type: 0

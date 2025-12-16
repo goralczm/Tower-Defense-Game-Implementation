@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Utilities.Extensions;
@@ -38,11 +40,9 @@ namespace MapGenerator.Demo
             );
         }
 
-#if UNITY_EDITOR
         public MapLayout GetMapLayout() => _layout;
 
         public List<IGenerator> GetGenerators() => _generators;
-#endif
 
         public MapBuilder WithGenerator(IGenerator generator)
         {
@@ -113,9 +113,8 @@ namespace MapGenerator.Demo
         [Header("Debug")]
         [SerializeField] private bool _debug;
         [SerializeField] private DebugConfig _debugConfig;
-#if UNITY_EDITOR
+
         [SerializeField, SerializeReference, ForceArtifice] private List<IGenerator> _generators = new();
-#endif
 
         private MapBuilder _mapBuilder;
 
@@ -165,9 +164,7 @@ namespace MapGenerator.Demo
                 .WithGenerator(new EnvironmentGenerator(_pathPreset.EnvironmentSettings, _pathPreset.PathSettings, _generationConfig, _tilemap))
                 .WithGenerator(new WaypointsGenerator(_tilemapSettings, _tilemap));
 
-#if UNITY_EDITOR
             _generators = _mapBuilder.GetGenerators();
-#endif
         }
 
         public async Task ContinueBuilderAsync()
@@ -208,7 +205,6 @@ namespace MapGenerator.Demo
             return new Bounds(position, size);
         }
 
-#if UNITY_EDITOR
         private void OnApplicationQuit()
         {
             _mapBuilder?.CancelBuild();
@@ -262,8 +258,10 @@ namespace MapGenerator.Demo
             Vector3Int endCell = new(_generationConfig.GridEndPoint.x, _generationConfig.GridEndPoint.y, 0);
 
             Gizmos.color = Color.magenta;
+#if UNITY_EDITOR
             Handles.Label(_tilemap.GetCellCenterWorld(startCell) + Vector3.up * 0.5f, "Start Point");
             Handles.Label(_tilemap.GetCellCenterWorld(endCell) + Vector3.up * 0.5f, "End Point");
+#endif
             Gizmos.DrawWireSphere(_tilemap.GetCellCenterWorld(startCell), .2f);
             Gizmos.DrawWireSphere(_tilemap.GetCellCenterWorld(endCell), .2f);
         }
@@ -276,10 +274,11 @@ namespace MapGenerator.Demo
             {
                 Vector2 middlePointWorldPos = _tilemap.GetCellCenterWorld(middlePoint.ToVector3Int());
                 Gizmos.DrawWireSphere(middlePointWorldPos, .2f);
+#if UNITY_EDITOR
                 Handles.Label(middlePointWorldPos.Add(y: .5f), $"Middle Point {i}");
+#endif
                 i++;
             }
         }
-#endif
     }
 }

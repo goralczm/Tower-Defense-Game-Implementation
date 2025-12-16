@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
+using Utilities;
 using Waves;
 
 namespace Core.Systems
@@ -15,6 +17,7 @@ namespace Core.Systems
         [SerializeField] private MapGenerator.Demo.MapGenerator _mapGenerator;
         [SerializeField] private WavesController _waveController;
         [SerializeField] private GameObject _setupNewGameObject;
+        [SerializeField] private UnityEvent _onSetupDoneEvents;
 
         private List<SaveLoadHandler> _saveLoadHandlers;
         private List<SetupHandler> _setupHandlers;
@@ -36,13 +39,11 @@ namespace Core.Systems
 
         private async void Start()
         {
-            if (GlobalSystems.Instance.LevelSettings.LoadGame)
-            {
-                _saveLoadHandlers = GetComponentsInChildren<SaveLoadHandler>(true).ToList();
-                _saveLoadHandlers.Sort((h1, h2) => h2.Priority.CompareTo(h1.Priority));
+            _saveLoadHandlers = GetComponentsInChildren<SaveLoadHandler>(true).ToList();
+            _saveLoadHandlers.Sort((h1, h2) => h2.Priority.CompareTo(h1.Priority));
 
+            if (GlobalSystems.Instance.LevelSettings.LoadGame)
                 await Load();
-            }
             else
             {
                 _setupHandlers = GetComponentsInChildren<SetupHandler>(true).ToList();
@@ -51,8 +52,11 @@ namespace Core.Systems
                     await handler.Setup();
             }
 
-                _setupDone = true;
+            _setupDone = true;
             OnGameSetupDone?.Invoke();
+            _onSetupDoneEvents?.Invoke();
+
+            GlobalGameEvents.OnGameEnded += OnGameEnded;
         }
 
         private void OnMapGenerated(object sender, MapGenerator.Demo.MapGenerator.OnMapGeneratedEventArgs e)
@@ -62,8 +66,22 @@ namespace Core.Systems
 
         private void Update()
         {
+            if (!_setupDone)
+                return;
+
             if (Input.GetKeyDown(KeyCode.Space))
                 _waveController.StartGenerator();
+        }
+
+        private void OnGameEnded(bool state)
+        {
+            DeleteSaves();
+        }
+
+        private void DeleteSaves()
+        {
+            for (int i = 0; i < _saveLoadHandlers.Count; i++)
+                _saveLoadHandlers[i].Delete();
         }
 
         public async Task Load()
@@ -77,6 +95,8 @@ namespace Core.Systems
         {
             for (int i = 0; i < _saveLoadHandlers.Count; i++)
                 _saveLoadHandlers[i].Save();
+
+            Helpers.SaveScreenshot(Application.persistentDataPath, "save_screen");
         }
     }
 }

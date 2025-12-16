@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 634741876939673765}
   - component: {fileID: 1743100892989050173}
   - component: {fileID: 3317496358686910656}
+  - component: {fileID: 643353155123362935}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -104,3 +105,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileBehaviour
   _rend: {fileID: 1743100892989050173}
+--- !u!114 &643353155123362935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2285748134777105135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5a9f4b127af6347b20dc78c73b8bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Core.Systems::SoundPlayer
+  _soundName: pew
+  _playOnEnable: 1

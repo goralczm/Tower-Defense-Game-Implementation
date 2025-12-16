@@ -1,4 +1,3 @@
-using GameSettings;
 using Utilities;
 
 namespace Core.Systems
@@ -12,7 +11,7 @@ namespace Core.Systems
     public class GlobalSystems : Singleton<GlobalSystems>
     {
         public AudioSystem.AudioSystem AudioSystem;
-        public Settings Settings;
+        public GameSettings.Settings Settings;
         public TransitionController TransitionController;
         public SceneManager SceneManager;
         public LevelSettings LevelSettings;

@@ -69,7 +69,7 @@ SortingGroup:
   m_GameObject: {fileID: 554024332629707265}
   m_Enabled: 1
   m_SortingLayerID: 496974563
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!1 &1996878885103873108
@@ -182,7 +182,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 496974563
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: dcd04aaf4f195c84693c3b6403dbe92d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: -6577529209404911475}
   - component: {fileID: 3358203460767472028}
   - component: {fileID: -3496115874659717558}
+  - component: {fileID: -1933220377653797233}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -313,6 +314,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: VisualEffects::VisualEffects.ParticlesOnDisable
   _particlesTag: Blood
+--- !u!114 &-1933220377653797233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819296699177588145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5a9f4b127af6347b20dc78c73b8bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Core.Systems::PlaySoundOnEnable
+  _soundName: enemy_spawned
 --- !u!1 &3166428176278213110
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,7 +404,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 496974563
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0e4f2db2e38f7b44ab487b19d58b6e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -513,7 +527,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 496974563
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 18323969d8d9500479a41da5fbf1ff67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -603,7 +617,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 496974563
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 891718d3378653e40a8dc203e0b65138, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -693,7 +707,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 496974563
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 718b75c55eae0e04c945a78662a68b85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -783,7 +797,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 496974563
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 438c5b65e084b2144a9da261c1a08717, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -873,7 +887,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 496974563
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6c09523306fe95542ac9f29288b61b38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

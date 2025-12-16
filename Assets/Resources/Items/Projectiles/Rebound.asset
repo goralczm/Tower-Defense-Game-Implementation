@@ -15,6 +15,7 @@ MonoBehaviour:
   UniqueId: 6
   Sprite: {fileID: 21300000, guid: 7c87ea9001805174cb02826518b48895, type: 3}
   SpriteColor: {r: 0.6981132, g: 0.18309002, b: 0.43590117, a: 1}
+  Rarity: 1
   BaseAttributes:
     Queries:
     - Type: 0
@@ -28,7 +29,6 @@ MonoBehaviour:
   MoveStrategy:
     rid: 2482468826409599082
   DamageStrategies:
-  - rid: 1026232782207582314
   - rid: 1026232782207582309
   - rid: 1026232782207582313
   DamageTypes: 00000000
@@ -40,9 +40,6 @@ MonoBehaviour:
       data: 
     - rid: 1026232782207582313
       type: {class: BouncingProjectileEffect, ns: Towers.Projectiles, asm: Towers}
-      data: 
-    - rid: 1026232782207582314
-      type: {class: SizeSpeedScalingEffect, ns: Towers.Projectiles, asm: Towers}
       data: 
     - rid: 2482468826409599082
       type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}

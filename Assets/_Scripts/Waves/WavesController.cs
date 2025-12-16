@@ -4,6 +4,7 @@ using Paths;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using Utilities;
 
 namespace Waves
@@ -14,6 +15,7 @@ namespace Waves
         public int StartWave = 1;
         [SerializeField] private WavesData _waves;
         [SerializeField] private int _currentWave = 1;
+        [SerializeField] private UnityEvent _onWaveEndedEvents;
 
         [Header("References")]
         [SerializeField] private Path _path;
@@ -68,6 +70,7 @@ namespace Waves
             SetCurrentWave(nextWave);
 
             OnWaveEnded?.Invoke(CurrentWave - 1, WavesCount, _waves);
+            _onWaveEndedEvents?.Invoke();
         }
 
         private void OnGameEnded(bool result)

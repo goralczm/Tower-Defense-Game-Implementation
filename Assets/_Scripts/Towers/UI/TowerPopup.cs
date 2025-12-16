@@ -18,6 +18,8 @@ namespace Towers
         [SerializeField] private TextMeshProUGUI _attributesText;
         [SerializeField] private InventoryDisplay _inventoryDisplay;
         [SerializeField] private UITweener _tweener;
+        [SerializeField] private GameObject _upgradeButton;
+        [SerializeField] private TextMeshProUGUI _upgradeButtonText;
 
         private TowerBehaviour _tower;
         private List<AttackSlot> _attackSlots = new();
@@ -50,11 +52,7 @@ namespace Towers
             }
 
             if (Input.GetKeyDown(KeyCode.S) && _tower)
-            {
-                Bank.Instance.AddCurrency(_tower.SellRefund);
-                _tower.Die(DeathReason.Self);
-                TowerSelectionController.OnTowerSelected?.Invoke(null);
-            }
+                SellTower();
         }
 
         private void SetupPopup(TowerBehaviour tower)
@@ -84,6 +82,8 @@ namespace Towers
 
         private void UpdateDisplay()
         {
+            _upgradeButton.SetActive(!_tower.IsMaxLevel);
+            _upgradeButtonText.SetText($"Upgrade\nCost: {_tower.UpgradeCost}");
             _inventoryDisplay.SetInventory(_tower.Inventory);
             _towerHeader.SetText($"{_tower.TowerData.name} Level {_tower.DisplayLevel}");
             if (_tower.IsMaxLevel)
@@ -102,6 +102,25 @@ namespace Towers
 
                 _attackSlots[i % inventoryCapacity].Setup(i / inventoryCapacity, attack.Icon, attack.Name, attack.Description);
             }
+        }
+
+        public void UpgradeTower()
+        {
+            if (_tower != null)
+            {
+                if (Bank.Instance.CanAfford(_tower.UpgradeCost))
+                {
+                    Bank.Instance.RemoveCurrency(_tower.UpgradeCost);
+                    _tower.Upgrade();
+                }
+            }
+        }
+
+        public void SellTower()
+        {
+            Bank.Instance.AddCurrency(_tower.SellRefund);
+            _tower.Die(DeathReason.Self);
+            TowerSelectionController.OnTowerSelected?.Invoke(null);
         }
     }
 }

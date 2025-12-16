@@ -9,6 +9,7 @@ namespace Core.Systems
         public void ChangeScene(string sceneName)
         {
             _sceneToLoad = sceneName;
+            Time.timeScale = 1f;
             GlobalSystems.Instance.TransitionController.DoTransition(ChangeSceneInternal);
         }
 

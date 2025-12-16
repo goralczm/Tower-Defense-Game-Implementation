@@ -1,0 +1,19 @@
+{
+    "name": "UI.Menu",
+    "rootNamespace": "UI.Menu",
+    "references": [
+        "Settings",
+        "Core.Systems",
+        "Utilities",
+        "SaveSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

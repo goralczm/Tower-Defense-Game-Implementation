@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -46,6 +47,11 @@ namespace Utilities
         public static string GetLevelName()
         {
             return SceneManager.GetActiveScene().name;
+        }
+
+        public static void SaveScreenshot(string path, string screenshotName)
+        {
+            ScreenCapture.CaptureScreenshot($"{path}\\{screenshotName}.png");
         }
     }
 }

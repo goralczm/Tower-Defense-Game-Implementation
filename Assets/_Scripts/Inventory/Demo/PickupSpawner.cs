@@ -1,6 +1,7 @@
 using Core;
 using Enemies;
 using ObjectPooling;
+using System.Linq;
 using Towers.Projectiles;
 using UnityEngine;
 using Utilities;
@@ -45,7 +46,7 @@ namespace Inventory.Demo
 
         private IItem GetRandomProjectile()
         {
-            return _pool.GetRandom(1)[0];
+            return _pool.Where(p => p.Rarity > Rarity.Common).ToList().GetRandom(1)[0];
         }
     }
 }

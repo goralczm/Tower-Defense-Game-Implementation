@@ -1,7 +1,6 @@
 using ObjectPooling;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Android.Gradle;
 using UnityEngine;
 
 namespace Utilities.Text

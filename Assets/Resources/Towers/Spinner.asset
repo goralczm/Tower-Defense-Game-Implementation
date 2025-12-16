@@ -17,82 +17,77 @@ MonoBehaviour:
   Levels:
   - Icon: {fileID: 21300000, guid: 17bbbdb0f08eb814f80d5f5529fd5a3a, type: 3}
     Color: {r: 0.18422928, g: 0.4880904, b: 0.8679245, a: 1}
-    Cost: 100
+    Cost: 225
     BaseAttributes:
       Queries:
       - Type: 0
         Value: 5
       - Type: 1
-        Value: 0.1
+        Value: 0.4
       - Type: 2
-        Value: 2
+        Value: 1
       - Type: 3
         Value: 3
       - Type: 4
-        Value: 0.21
+        Value: 0.2
       - Type: 5
         Value: 1
     AttackStrategies:
     - {fileID: 11400000, guid: 1f7dfe24e4aa6f34fa207fa2ca6bdc05, type: 2}
   - Icon: {fileID: 21300000, guid: 17bbbdb0f08eb814f80d5f5529fd5a3a, type: 3}
-    Color: {r: 0.18431373, g: 0.4862745, b: 0.8666667, a: 1}
-    Cost: 100
+    Color: {r: 0.18422928, g: 0.4880904, b: 0.8679245, a: 1}
+    Cost: 250
     BaseAttributes:
       Queries:
       - Type: 0
         Value: 5
       - Type: 1
-        Value: 0.2
+        Value: 0.43
       - Type: 2
-        Value: 2
+        Value: 1
       - Type: 3
         Value: 5
       - Type: 4
-        Value: 0.19
+        Value: 0.2
       - Type: 5
-        Value: 2
+        Value: 1
     AttackStrategies:
     - {fileID: 11400000, guid: 1f7dfe24e4aa6f34fa207fa2ca6bdc05, type: 2}
-    - {fileID: 11400000, guid: b8a6768e485cd704393c38f9d99ab9c6, type: 2}
-    - {fileID: 11400000, guid: 65435770737fda14b958f23c6e73654d, type: 2}
   - Icon: {fileID: 21300000, guid: 17bbbdb0f08eb814f80d5f5529fd5a3a, type: 3}
-    Color: {r: 0.18431373, g: 0.4862745, b: 0.8666667, a: 1}
-    Cost: 100
+    Color: {r: 0.18422928, g: 0.4880904, b: 0.8679245, a: 1}
+    Cost: 300
     BaseAttributes:
       Queries:
       - Type: 0
         Value: 5
       - Type: 1
-        Value: 0.2
+        Value: 0.46
       - Type: 2
-        Value: 2
+        Value: 1
       - Type: 3
-        Value: 4
+        Value: 7
       - Type: 4
-        Value: 0.17
+        Value: 0.2
       - Type: 5
-        Value: 3
+        Value: 1
     AttackStrategies:
     - {fileID: 11400000, guid: 1f7dfe24e4aa6f34fa207fa2ca6bdc05, type: 2}
-    - {fileID: 11400000, guid: b8a6768e485cd704393c38f9d99ab9c6, type: 2}
-    - {fileID: 11400000, guid: 6d1c1d2523f18de4bad6340451e92973, type: 2}
   - Icon: {fileID: 21300000, guid: 17bbbdb0f08eb814f80d5f5529fd5a3a, type: 3}
-    Color: {r: 0.18431373, g: 0.4862745, b: 0.8666667, a: 1}
-    Cost: 100
+    Color: {r: 0.18422928, g: 0.4880904, b: 0.8679245, a: 1}
+    Cost: 325
     BaseAttributes:
       Queries:
       - Type: 0
         Value: 5
       - Type: 1
-        Value: 0.2
+        Value: 0.49
       - Type: 2
-        Value: 2
+        Value: 1
       - Type: 3
-        Value: 4
+        Value: 9
       - Type: 4
-        Value: 0.15
+        Value: 0.2
       - Type: 5
-        Value: 2
+        Value: 1
     AttackStrategies:
     - {fileID: 11400000, guid: 1f7dfe24e4aa6f34fa207fa2ca6bdc05, type: 2}
-    - {fileID: 11400000, guid: b8a6768e485cd704393c38f9d99ab9c6, type: 2}

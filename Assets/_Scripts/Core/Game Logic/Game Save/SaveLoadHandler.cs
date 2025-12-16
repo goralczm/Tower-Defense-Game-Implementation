@@ -8,6 +8,7 @@ namespace Core.GameSave
     public abstract class SaveLoadHandler : MonoBehaviour
     {
         public SetupHandler FallbackSetup;
+
         [SerializeField] private int _priority;
         [SerializeField] private string _saveKey;
 
@@ -16,5 +17,10 @@ namespace Core.GameSave
 
         public abstract void Save();
         public abstract Task Load();
+
+        public void Delete()
+        {
+            SaveSystem.SaveSystem.DeleteData(SaveKey);
+        }
     }
 }

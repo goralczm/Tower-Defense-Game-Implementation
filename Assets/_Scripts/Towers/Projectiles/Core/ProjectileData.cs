@@ -7,6 +7,15 @@ using System.Text;
 using UnityEngine;
 using Utilities;
 
+public enum Rarity
+{
+    Common,
+    Uncommon,
+    Rare,
+    Epic,
+    Legendary,
+}
+
 namespace Towers.Projectiles
 {
     [CreateAssetMenu(menuName = "Projectiles/New Projectile Data", fileName = "New Projectile Data")]
@@ -15,6 +24,7 @@ namespace Towers.Projectiles
         public int UniqueId;
         public Sprite Sprite;
         public Color SpriteColor;
+        public Rarity Rarity;
         public BaseAttributes<ProjectileAttributes> BaseAttributes;
         [SerializeReference, ForceArtifice] public IProjectileMovement MoveStrategy;
         [SerializeReference, ForceArtifice] public List<IProjectileEffect> DamageStrategies;

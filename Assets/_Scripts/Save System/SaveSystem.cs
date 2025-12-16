@@ -12,7 +12,7 @@ namespace SaveSystem
 
         public static object LoadData<T>(string fileName, bool encrypt = true)
         {
-            string path = Application.persistentDataPath + "/" + fileName + ".json";
+            string path = GetFilePath(fileName);
 
             if (File.Exists(path))
             {
@@ -44,7 +44,7 @@ namespace SaveSystem
 
         public static void SaveData(object data, string fileName, bool encrypt = true)
         {
-            string path = Application.persistentDataPath + "/" + fileName + ".json";
+            string path = GetFilePath(fileName);
 
             try
             {
@@ -78,12 +78,20 @@ namespace SaveSystem
 
         public static void DeleteData(string fileName)
         {
-            string path = Application.persistentDataPath + "/" + fileName + ".json";
+            string path = GetFilePath(fileName);
 
             if (File.Exists(path))
-            {
                 File.Delete(path);
-            }
+        }
+
+        private static string GetFilePath(string fileName)
+        {
+            return $"{Application.persistentDataPath}/{fileName}.json";
+        }
+
+        public static bool SaveDataExists(string fileName)
+        {
+            return File.Exists(GetFilePath(fileName));
         }
     }
 }

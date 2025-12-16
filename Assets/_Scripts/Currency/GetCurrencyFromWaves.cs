@@ -17,7 +17,7 @@ namespace Currency
 
         private void OnWaveEnded(int currentWave, int wavesCount, WavesData wavesData)
         {
-            if (currentWave <= 1)
+            if (currentWave < 1)
                 return;
 
             Bank.Instance.AddCurrency(wavesData.Reward);

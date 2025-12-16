@@ -8,11 +8,11 @@ namespace Waves
     public class WaveEntry
     {
         public EnemyData Enemy;
-        public AnimationCurve Interval;
-        public AnimationCurve Count;
+        public AnimationCurve SpawnRate;
+        public AnimationCurve SpawnInterval;
 
-        public float GetIntervalByWave(int wave) => Interval.Evaluate(wave);
-        public int GetCountByWave(int wave) => Mathf.RoundToInt(Count.Evaluate(wave));
+        public int GetCountByWave(int wave) => (int)(SpawnRate.Evaluate(wave * .1f) * 100f);
+        public float GetIntervalByWave(int wave) => SpawnInterval.Evaluate(wave * .1f);
     }
 
     [CreateAssetMenu(menuName = "Waves/New Waves Data", fileName = "New Waves Data")]

@@ -19,22 +19,29 @@ namespace UI
     /// </summary>
     public class UITweener : MonoBehaviour
     {
-        [SerializeField] private UIAnimationType animationType;
-        [SerializeField] private Ease easeType;
-        [SerializeField] private float duration;
-        [SerializeField] private float delay;
+        [Header("Settings")]
+        public UIAnimationType animationType;
+        public Ease easeType;
+        public float duration;
+        public float delay;
+        public int loopsCount;
+        public bool startReversed;
+        public bool canInterupt = false;
 
-        [SerializeField] private int loopsCount;
-        [SerializeField] private bool startReversed;
+        [Header("Start & Final")]
+        public bool setStartOnSetup;
+        public bool setFinalOnSetup;
+        public Vector3 startValue;
+        public Vector3 finalValue;
+        public bool useStartAsDifference;
+        public bool useFinalAsDifference;
 
-        [SerializeField] private Vector3 startValue;
-        [SerializeField] private Vector3 finalValue;
-
-        [SerializeField] private UnityEvent onShowCompleteCallback;
-        [SerializeField] private UnityEvent onHideCompleteCallback;
+        [Header("Events")]
+        public UnityEvent onShowCompleteCallback;
+        public UnityEvent onHideCompleteCallback;
 
         private bool _hasSetup;
-        [SerializeField] private bool _isReversed;
+        private bool _isReversed;
         private RectTransform _rect;
         private CanvasGroup _canvasGroup;
 
@@ -55,22 +62,34 @@ namespace UI
             switch (animationType)
             {
                 case UIAnimationType.Move:
-                    _rect.anchoredPosition = startValue;
+                    if (setStartOnSetup)
+                        startValue = _rect.anchoredPosition;
+                    if (setFinalOnSetup)
+                        finalValue = _rect.anchoredPosition;
+
                     if (startReversed)
                         _rect.anchoredPosition = finalValue;
+                    else
+                        _rect.anchoredPosition = startValue;
                     break;
                 case UIAnimationType.Scale:
-                    _rect.localScale = startValue;
+                    if (setStartOnSetup)
+                        startValue = _rect.localScale;
+                    if (setFinalOnSetup)
+                        finalValue = _rect.localScale;
+
                     if (startReversed)
                         _rect.localScale = finalValue;
+                    else
+                        _rect.localScale = startValue;
                     break;
                 case UIAnimationType.Fade:
-                    _canvasGroup = GetComponent<CanvasGroup>();
-                    if (_canvasGroup == null)
+                    if (!TryGetComponent(out _canvasGroup))
                         _canvasGroup = gameObject.AddComponent<CanvasGroup>();
-                    _canvasGroup.alpha = startValue.x;
                     if (startReversed)
                         _canvasGroup.alpha = finalValue.x;
+                    else
+                        _canvasGroup.alpha = startValue.x;
                     break;
             }
 
@@ -85,6 +104,14 @@ namespace UI
         /// </summary>
         public void Show()
         {
+            if (IsRunning)
+            {
+                if (!canInterupt)
+                    return;
+
+                Kill();
+            }
+
             _isReversed = false;
             HandleTween();
         }
@@ -94,6 +121,14 @@ namespace UI
         /// </summary>
         public void Hide()
         {
+            if (IsRunning)
+            {
+                if (!canInterupt)
+                    return;
+
+                Kill();
+            }
+
             _isReversed = true;
             HandleTween();
         }
@@ -103,6 +138,14 @@ namespace UI
         /// </summary>
         public void Toggle()
         {
+            if (IsRunning)
+            {
+                if (!canInterupt)
+                    return;
+
+                Kill();
+            }
+
             _isReversed = !_isReversed;
             HandleTween();
         }
@@ -150,7 +193,7 @@ namespace UI
             onHideCompleteCallback?.Invoke();
             _isRunning = false;
         }
-        
+
         /// <summary>
         /// Tweens the UI element with fade animation.
         /// </summary>
@@ -177,7 +220,17 @@ namespace UI
         /// </summary>
         private void Move()
         {
-            Vector2 targetPos = _isReversed ? startValue : finalValue;
+            Vector2 targetPos;
+
+            if (!useFinalAsDifference)
+            {
+                if (!useStartAsDifference)
+                    targetPos = _isReversed ? startValue : finalValue;
+                else
+                    targetPos = _isReversed ? startValue : finalValue + startValue;
+            }
+            else
+                targetPos = _isReversed ? startValue : startValue + finalValue;
 
             var tween = _rect.DOAnchorPos(targetPos, duration)
                              .SetDelay(delay)
@@ -198,7 +251,12 @@ namespace UI
         /// </summary>
         private void Scale()
         {
-            Vector2 targetScale = _isReversed ? startValue : finalValue;
+            Vector2 targetScale;
+
+            if (!useFinalAsDifference)
+                targetScale = _isReversed ? startValue : finalValue;
+            else
+                targetScale = _isReversed ? startValue : startValue + finalValue;
 
             var tween = transform.DOScale(targetScale, duration)
                                  .SetDelay(delay)

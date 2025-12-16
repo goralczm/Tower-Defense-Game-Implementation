@@ -1,10 +1,7 @@
 using Core;
 using DG.Tweening;
 using Enemies;
-using ObjectPooling;
 using UnityEngine;
-using Utilities;
-using Utilities.Extensions;
 
 namespace Currency
 {
