@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
   m_Name: Base Tetra
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
-  UniqueId: 1
+  UniqueId: 5
   Sprite: {fileID: 21300000, guid: 172fb3002851bfc459831c1a1fa8989b, type: 3}
-  SpriteColor: {r: 0.6415094, g: 0.29352084, b: 0.3532869, a: 1}
+  SpriteColor: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
+  Rarity: 0
   BaseAttributes:
     Queries:
     - Type: 0
@@ -28,7 +29,7 @@ MonoBehaviour:
   MoveStrategy:
     rid: 1026232739033776205
   DamageStrategies:
-  - rid: 2482468840093515879
+  - rid: 8686124673467416655
   DamageTypes: 00000000
   references:
     version: 2
@@ -36,6 +37,6 @@ MonoBehaviour:
     - rid: 1026232739033776205
       type: {class: PiercingProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 
-    - rid: 2482468840093515879
-      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
+    - rid: 8686124673467416655
+      type: {class: SingleDamageEffect, ns: Towers.Projectiles, asm: Towers}
       data: 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
   m_Name: Piercer
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
-  UniqueId: 3
+  UniqueId: 10
   Sprite: {fileID: 21300000, guid: 7c87ea9001805174cb02826518b48895, type: 3}
   SpriteColor: {r: 0.8584906, g: 0.14983091, b: 0.3686628, a: 1}
   Rarity: 1
@@ -29,7 +29,7 @@ MonoBehaviour:
   MoveStrategy:
     rid: 8686124649533145177
   DamageStrategies:
-  - rid: 8686124649533145178
+  - rid: 8686124673467416660
   DamageTypes: 00000000
   references:
     version: 2
@@ -37,6 +37,6 @@ MonoBehaviour:
     - rid: 8686124649533145177
       type: {class: PiercingProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 
-    - rid: 8686124649533145178
-      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
+    - rid: 8686124673467416660
+      type: {class: SingleDamageEffect, ns: Towers.Projectiles, asm: Towers}
       data: 

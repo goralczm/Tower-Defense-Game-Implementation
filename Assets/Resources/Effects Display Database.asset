@@ -29,7 +29,7 @@ MonoBehaviour:
       rid: 2482469250560163920
     Description: Grows in size over time
   - Effect:
-      rid: 2482469250560163921
+      rid: 8686124743888994380
     Description: Deals damage to single enemy
   - Effect:
       rid: 2482469250560163922
@@ -62,9 +62,6 @@ MonoBehaviour:
     - rid: 2482469250560163920
       type: {class: GrowingEffect, ns: Towers, asm: Towers}
       data: 
-    - rid: 2482469250560163921
-      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
-      data: 
     - rid: 2482469250560163922
       type: {class: SingleStunEffect, ns: Towers, asm: Towers}
       data: 
@@ -76,4 +73,7 @@ MonoBehaviour:
       data: 
     - rid: 2482469250560163925
       type: {class: SizeSpeedScalingEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 8686124743888994380
+      type: {class: SingleDamageEffect, ns: Towers.Projectiles, asm: Towers}
       data: 

@@ -1,3 +1,4 @@
+using Attributes;
 using Core;
 using ObjectPooling;
 using Paths;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 #endif
 using UnityEngine;
+using Utilities;
 using Waves;
 
 namespace Enemies
@@ -81,28 +83,39 @@ namespace Enemies
 
         private async Task SpawnEnemiesByEntry(WaveEntry entry, int wave)
         {
+            float additionalHealth = entry.HealthIncrement * (wave + 1) / 10;
+
             int enemiesCount = entry.GetCountByWave(wave);
             for (int i = 0; i < enemiesCount; i++)
             {
                 if (IsStopped) return;
 
-#if UNITY_EDITOR
-                if (EditorApplication.isPaused)
-                    await Task.Delay(10);
-#endif
+                if (Time.timeScale == 0)
+                    await Helpers.WaitUntilAsync(() => Time.timeScale != 0);
 
-                SpawnEnemy(entry.Enemy, 0, _origin.position);
+                var enemy = SpawnEnemyInternal(entry.Enemy, 0, _origin.position);
+
+                if (additionalHealth > 0)
+                    enemy.Attributes.Mediator.AddModifier(new MathAttributeModifier<EnemyAttributes>(EnemyAttributes.Health, 0f, MathOperation.Add, additionalHealth));
+
                 await Task.Delay(TimeSpan.FromSeconds(entry.GetIntervalByWave(wave)));
             }
         }
 
         public void SpawnEnemy(EnemyData enemyData, int nextWaypointIndex, Vector2 position)
         {
+            SpawnEnemyInternal(enemyData, nextWaypointIndex, position);
+        }
+
+        public EnemyBehaviour SpawnEnemyInternal(EnemyData enemyData, int nextWaypointIndex, Vector2 position)
+        {
             GameObject enemyObject = PoolManager.Instance.SpawnFromPool("Enemy", position, Quaternion.identity);
             EnemyBehaviour enemy = EnemiesCache.GetEnemyByGameObject(enemyObject);
 
             enemy.Setup(enemyData, _path, nextWaypointIndex);
             _enemiesAlive.Add(enemy);
+
+            return enemy;
         }
     }
 }

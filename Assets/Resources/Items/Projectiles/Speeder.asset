@@ -12,26 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
   m_Name: Speeder
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
-  UniqueId: 3
+  UniqueId: 12
   Sprite: {fileID: 21300000, guid: 172fb3002851bfc459831c1a1fa8989b, type: 3}
   SpriteColor: {r: 0.35933605, g: 0.63806885, b: 0.8962264, a: 1}
   Rarity: 1
   BaseAttributes:
     Queries:
     - Type: 0
-      Value: 20
+      Value: 10
     - Type: 5
       Value: 0.3
     - Type: 4
-      Value: 3
+      Value: 5
     - Type: 3
       Value: 0.6
   MoveStrategy:
     rid: 2482468826409599077
   DamageStrategies:
-  - rid: 8686124649533145173
+  - rid: 8686124673467416662
   - rid: 8686124649533145174
   - rid: 8686124649533145175
+  - rid: 8686124761779011838
   DamageTypes: 00000000
   references:
     version: 2
@@ -39,12 +40,15 @@ MonoBehaviour:
     - rid: 2482468826409599077
       type: {class: HomingProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 
-    - rid: 8686124649533145173
-      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
-      data: 
     - rid: 8686124649533145174
       type: {class: GrowingEffect, ns: Towers, asm: Towers}
       data: 
     - rid: 8686124649533145175
       type: {class: SizeSpeedScalingEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 8686124673467416662
+      type: {class: SingleDamageEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 8686124761779011838
+      type: {class: BouncingProjectileEffect, ns: Towers.Projectiles, asm: Towers}
       data: 

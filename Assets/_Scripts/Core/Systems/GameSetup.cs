@@ -70,7 +70,12 @@ namespace Core.Systems
                 return;
 
             if (Input.GetKeyDown(KeyCode.Space))
-                _waveController.StartGenerator();
+                StartWave();
+        }
+
+        public void StartWave()
+        {
+            _waveController.StartGenerator();
         }
 
         private void OnGameEnded(bool state)

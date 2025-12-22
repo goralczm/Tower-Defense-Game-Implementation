@@ -10,84 +10,84 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c1dfde4b277edb4386cfeb8189684bb, type: 3}
-  m_Name: Ladminer
+  m_Name: Spinner Tower
   m_EditorClassIdentifier: Towers::Towers.BasicTower
-  Id: 6
+  Id: 2
   Description: 
   Levels:
-  - Icon: {fileID: 21300000, guid: 015970b4759444248a5c5831fb1d2759, type: 3}
-    Color: {r: 0.764151, g: 0.5964455, b: 0.2270826, a: 1}
-    Cost: 200
-    BaseAttributes:
-      Queries:
-      - Type: 0
-        Value: 5
-      - Type: 1
-        Value: 0.5
-      - Type: 2
-        Value: 1.7
-      - Type: 3
-        Value: 3
-      - Type: 4
-        Value: 0.8
-      - Type: 5
-        Value: 1
-    AttackStrategies:
-    - {fileID: 11400000, guid: 1ffd79da78bee26479a4f974c6144cf2, type: 2}
-  - Icon: {fileID: 21300000, guid: 015970b4759444248a5c5831fb1d2759, type: 3}
-    Color: {r: 0.764151, g: 0.5964455, b: 0.2270826, a: 1}
+  - Icon: {fileID: 21300000, guid: 17bbbdb0f08eb814f80d5f5529fd5a3a, type: 3}
+    Color: {r: 0.18422928, g: 0.4880904, b: 0.8679245, a: 1}
     Cost: 225
     BaseAttributes:
       Queries:
       - Type: 0
         Value: 5
       - Type: 1
-        Value: 0.57
+        Value: 0.2
       - Type: 2
-        Value: 1.7
+        Value: 1
       - Type: 3
-        Value: 5
+        Value: 3
       - Type: 4
-        Value: 0.74
+        Value: 0.4
       - Type: 5
         Value: 1
     AttackStrategies:
-    - {fileID: 11400000, guid: 1ffd79da78bee26479a4f974c6144cf2, type: 2}
-  - Icon: {fileID: 21300000, guid: 015970b4759444248a5c5831fb1d2759, type: 3}
-    Color: {r: 0.764151, g: 0.5964455, b: 0.2270826, a: 1}
+    - {fileID: 11400000, guid: 1f7dfe24e4aa6f34fa207fa2ca6bdc05, type: 2}
+  - Icon: {fileID: 21300000, guid: 17bbbdb0f08eb814f80d5f5529fd5a3a, type: 3}
+    Color: {r: 0.18422928, g: 0.4880904, b: 0.8679245, a: 1}
     Cost: 250
     BaseAttributes:
       Queries:
       - Type: 0
         Value: 5
       - Type: 1
-        Value: 0.64
+        Value: 0.23
       - Type: 2
-        Value: 1.7
+        Value: 1
       - Type: 3
-        Value: 6
+        Value: 5
       - Type: 4
-        Value: 0.68
+        Value: 0.4
       - Type: 5
         Value: 1
     AttackStrategies:
-    - {fileID: 11400000, guid: 1ffd79da78bee26479a4f974c6144cf2, type: 2}
-  - Icon: {fileID: 21300000, guid: 015970b4759444248a5c5831fb1d2759, type: 3}
-    Color: {r: 0.764151, g: 0.5964455, b: 0.2270826, a: 1}
+    - {fileID: 11400000, guid: 1f7dfe24e4aa6f34fa207fa2ca6bdc05, type: 2}
+  - Icon: {fileID: 21300000, guid: 17bbbdb0f08eb814f80d5f5529fd5a3a, type: 3}
+    Color: {r: 0.18422928, g: 0.4880904, b: 0.8679245, a: 1}
     Cost: 300
     BaseAttributes:
       Queries:
       - Type: 0
         Value: 5
       - Type: 1
-        Value: 0.71
+        Value: 0.26
       - Type: 2
-        Value: 1.7
+        Value: 1
       - Type: 3
-        Value: 6
+        Value: 7
       - Type: 4
-        Value: 0.62
+        Value: 0.4
       - Type: 5
         Value: 1
     AttackStrategies:
-    - {fileID: 11400000, guid: 1ffd79da78bee26479a4f974c6144cf2, type: 2}
+    - {fileID: 11400000, guid: 1f7dfe24e4aa6f34fa207fa2ca6bdc05, type: 2}
+  - Icon: {fileID: 21300000, guid: 17bbbdb0f08eb814f80d5f5529fd5a3a, type: 3}
+    Color: {r: 0.18422928, g: 0.4880904, b: 0.8679245, a: 1}
+    Cost: 325
+    BaseAttributes:
+      Queries:
+      - Type: 0
+        Value: 5
+      - Type: 1
+        Value: 0.29
+      - Type: 2
+        Value: 1
+      - Type: 3
+        Value: 9
+      - Type: 4
+        Value: 0.4
+      - Type: 5
+        Value: 1
+    AttackStrategies:
+    - {fileID: 11400000, guid: 1f7dfe24e4aa6f34fa207fa2ca6bdc05, type: 2}

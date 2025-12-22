@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
   m_Name: Base Spinner
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
-  UniqueId: 7
+  UniqueId: 4
   Sprite: {fileID: 21300000, guid: eb93b5991fcf6fa48a339a1a898f44db, type: 3}
   SpriteColor: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
   Rarity: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
   MoveStrategy:
     rid: 3343487951226798158
   DamageStrategies:
-  - rid: 8686124649533145164
+  - rid: 8686124673467416665
   DamageTypes: 00000000
   references:
     version: 2
@@ -37,6 +37,6 @@ MonoBehaviour:
     - rid: 3343487951226798158
       type: {class: PermanentContactProjectile, ns: Towers.Projectiles, asm: Towers}
       data: 
-    - rid: 8686124649533145164
-      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
+    - rid: 8686124673467416665
+      type: {class: SingleDamageEffect, ns: Towers.Projectiles, asm: Towers}
       data: 

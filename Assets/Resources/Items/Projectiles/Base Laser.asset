@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
   m_Name: Base Laser
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
-  UniqueId: 2
+  UniqueId: 3
   Sprite: {fileID: 21300000, guid: 7c87ea9001805174cb02826518b48895, type: 3}
   SpriteColor: {r: 0.7577044, g: 0.28920433, b: 0.9150943, a: 1}
   Rarity: 0
@@ -29,14 +29,14 @@ MonoBehaviour:
   MoveStrategy:
     rid: 8686124649533145167
   DamageStrategies:
-  - rid: 2482468840093515878
+  - rid: 8686124673467416653
   DamageTypes: 05000000
   references:
     version: 2
     RefIds:
-    - rid: 2482468840093515878
-      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
-      data: 
     - rid: 8686124649533145167
       type: {class: LaserProjectile, ns: Towers, asm: Towers}
+      data: 
+    - rid: 8686124673467416653
+      type: {class: SingleDamageEffect, ns: Towers.Projectiles, asm: Towers}
       data: 

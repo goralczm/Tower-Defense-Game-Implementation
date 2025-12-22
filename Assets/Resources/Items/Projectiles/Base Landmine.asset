@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
   m_Name: Base Landmine
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
-  UniqueId: 1
-  Sprite: {fileID: 21300000, guid: 172fb3002851bfc459831c1a1fa8989b, type: 3}
-  SpriteColor: {r: 0.6415094, g: 0.29352084, b: 0.3532869, a: 1}
+  UniqueId: 2
+  Sprite: {fileID: 21300000, guid: cbc01f355872b694da6c4f5e51252f86, type: 3}
+  SpriteColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
   Rarity: 0
   BaseAttributes:
     Queries:

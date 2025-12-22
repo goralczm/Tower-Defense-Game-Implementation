@@ -14,6 +14,8 @@ namespace BuildingSystem.UI
         [SerializeField] private BuildController _buildController;
         [SerializeField] private List<BuildingSlot> _slots;
 
+        private bool _setupDone;
+
         private void Start()
         {
             for (int i = 0; i < _buildings.Length; i++)
@@ -28,6 +30,9 @@ namespace BuildingSystem.UI
 
         private void Update()
         {
+            if (!_setupDone)
+                return;
+
             for (int i = 0; i < _buildings.Length; i++)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1 + i))
@@ -36,6 +41,11 @@ namespace BuildingSystem.UI
                     _buildController.BeginBuilding(_buildings[i]);
                 }
             }
+        }
+
+        public void MarkSetupDone()
+        {
+            _setupDone = true;
         }
     }
 }

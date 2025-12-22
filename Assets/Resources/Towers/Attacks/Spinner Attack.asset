@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b7298b9c4dc8642a306deea8a4762d, type: 3}
   m_Name: Spinner Attack
   m_EditorClassIdentifier: Towers::Towers.SpinnerStrategy
-  AttackDescription: zoomies
+  AttackDescription: Projectiles rotate around the tower
   AttackIcon: {fileID: 21300000, guid: 7ac9d50d6a590c941906f9b5947b1ca4, type: 3}
   ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
   DefaultProjectile: {fileID: 11400000, guid: ab1ca0a6c45dffd438ebe2728d17153d, type: 2}

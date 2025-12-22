@@ -9,6 +9,11 @@ namespace Core.GameSetup
 
         public override async Task Setup()
         {
+            _mapGenerator.SetGenerationConfig(new()
+            {
+                RenderOverflowTiles = true,
+                EnforceRules = true,
+            });
             _mapGenerator.RandomizeConfig();
             await _mapGenerator.GenerateMapAsync();
         }

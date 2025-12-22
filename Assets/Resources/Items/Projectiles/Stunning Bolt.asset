@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
   m_Name: Stunning Bolt
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
-  UniqueId: 3
+  UniqueId: 13
   Sprite: {fileID: 21300000, guid: cbc01f355872b694da6c4f5e51252f86, type: 3}
   SpriteColor: {r: 0.81960785, g: 0.8039381, b: 0.21176471, a: 1}
   Rarity: 1
@@ -30,7 +30,7 @@ MonoBehaviour:
     rid: 2482468826409599077
   DamageStrategies:
   - rid: 8686124649533145169
-  - rid: 8686124649533145170
+  - rid: 8686124673467416664
   - rid: 8686124649533145171
   DamageTypes: 02000000
   references:
@@ -42,9 +42,9 @@ MonoBehaviour:
     - rid: 8686124649533145169
       type: {class: SingleStunEffect, ns: Towers, asm: Towers}
       data: 
-    - rid: 8686124649533145170
-      type: {class: SimpleDamageEffect, ns: Towers.Projectiles, asm: Towers}
-      data: 
     - rid: 8686124649533145171
       type: {class: BouncingProjectileEffect, ns: Towers.Projectiles, asm: Towers}
+      data: 
+    - rid: 8686124673467416664
+      type: {class: SingleDamageEffect, ns: Towers.Projectiles, asm: Towers}
       data: 

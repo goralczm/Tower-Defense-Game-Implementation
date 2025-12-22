@@ -7,10 +7,12 @@ namespace Core.Player
     public class Player : MonoBehaviour, IDamageable
     {
         [Header("Settings")]
-        public BaseAttributes<PlayerAttributes> BaseAttributes;
+        [SerializeField] private BaseAttributes<PlayerAttributes> _baseAttributes;
+        [SerializeField] private CameraShake _cameraShake;
 
         private Attributes<PlayerAttributes> _attributes;
 
+        public BaseAttributes<PlayerAttributes> BaseAttributes => _baseAttributes;
         public Attributes<PlayerAttributes> Attributes => _attributes;
         public Alignment Alignment => Alignment.Friendly;
 
@@ -38,6 +40,8 @@ namespace Core.Player
 
             if (_attributes.GetAttribute(PlayerAttributes.Health) <= 0)
                 Die(DeathReason.External);
+            else
+                _cameraShake.DefaultShake();
         }
 
         public void Die(DeathReason reason)

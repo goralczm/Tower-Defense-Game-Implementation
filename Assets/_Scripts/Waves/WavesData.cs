@@ -10,6 +10,7 @@ namespace Waves
         public EnemyData Enemy;
         public AnimationCurve SpawnRate;
         public AnimationCurve SpawnInterval;
+        public float HealthIncrement;
 
         public int GetCountByWave(int wave) => (int)(SpawnRate.Evaluate(wave * .1f) * 100f);
         public float GetIntervalByWave(int wave) => SpawnInterval.Evaluate(wave * .1f);

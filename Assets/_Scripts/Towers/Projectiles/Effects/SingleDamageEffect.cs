@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Towers.Projectiles
 {
-    public class SimpleDamageEffect : IProjectileEffect
+    public class SingleDamageEffect : IProjectileEffect
     {
         private ProjectileBehaviour _projectile;
 
@@ -23,6 +23,6 @@ namespace Towers.Projectiles
                     _projectile.Name);
         }
 
-        public IProjectileEffect Clone() => new SimpleDamageEffect();
+        public IProjectileEffect Clone() => new SingleDamageEffect();
     }
 }

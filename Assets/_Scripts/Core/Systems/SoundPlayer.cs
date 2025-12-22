@@ -5,6 +5,7 @@ public class SoundPlayer : MonoBehaviour
 {
     [SerializeField] private string _soundName;
     [SerializeField] private bool _playOnEnable = true;
+    [SerializeField] private bool _overrideIsMusic;
 
     private void OnEnable()
     {
@@ -14,6 +15,8 @@ public class SoundPlayer : MonoBehaviour
 
     public void Play()
     {
-        GlobalSystems.Instance.AudioSystem.PlaySoundFromGroup("Sounds", _soundName);
+        string groupName = !_overrideIsMusic ? "Sounds" : "Music";
+
+        GlobalSystems.Instance.AudioSystem.PlaySoundFromGroup(groupName, _soundName);
     }
 }

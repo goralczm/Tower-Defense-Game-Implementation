@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f30ed75454b2999408e19c72e1742507, type: 3}
   m_Name: Landmines Attack
   m_EditorClassIdentifier: Towers::Towers.LadminerAttack
-  AttackDescription: 
+  AttackDescription: Leaves exploding mines on the path
   AttackIcon: {fileID: 21300000, guid: 04bdc0f89c0d9bd4b9d9b6ef950fd69e, type: 3}
   ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
   DefaultProjectile: {fileID: 11400000, guid: 3fea384bc84bcce4fa3c6f3811115994, type: 2}

@@ -61,7 +61,6 @@ namespace Waves
                 return;
 
             FinishWave();
-            Debug.Log("Wave finished!");
         }
 
         private void FinishWave()

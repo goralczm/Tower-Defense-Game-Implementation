@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26c0d32fe1b523a4a853a873dcb4df54, type: 3}
   m_Name: Tetra Attack
   m_EditorClassIdentifier: Towers::Towers.TetraStrategy
-  AttackDescription: KMWTW
+  AttackDescription: Shoots multiple projectiles around itself
   AttackIcon: {fileID: 21300000, guid: 78f29974a2343534087f3eb377409beb, type: 3}
   ProjectilePrefab: {fileID: 3317496358686910656, guid: e1461621056f8154e9844ced5bf2b004, type: 3}
   DefaultProjectile: {fileID: 11400000, guid: 0bd75a3ee8a1e2d4b9220d81f624d620, type: 2}

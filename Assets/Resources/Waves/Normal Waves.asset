@@ -62,6 +62,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    HealthIncrement: 0.2
   - Enemy: {fileID: 11400000, guid: 1c657040e8d724c4cb744c6af41bec30, type: 2}
     SpawnRate:
       serializedVersion: 2
@@ -138,6 +139,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    HealthIncrement: 0.2
   - Enemy: {fileID: 11400000, guid: 75ae428b6006fa240b15984e10ecaa92, type: 2}
     SpawnRate:
       serializedVersion: 2
@@ -214,6 +216,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    HealthIncrement: 0.2
   - Enemy: {fileID: 11400000, guid: f22e8d98a53994c44bad04f62fa08061, type: 2}
     SpawnRate:
       serializedVersion: 2
@@ -281,6 +284,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    HealthIncrement: 0.2
   - Enemy: {fileID: 11400000, guid: bdbd82e4d477b9a48953dc6e326f4ca7, type: 2}
     SpawnRate:
       serializedVersion: 2
@@ -339,5 +343,6 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  Reward: 200
-  WavesCount: 25
+    HealthIncrement: 0.2
+  Reward: 80
+  WavesCount: 50

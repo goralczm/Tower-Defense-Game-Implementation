@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e00539386dc79643a5a94d534f82989, type: 3}
   m_Name: Grower
   m_EditorClassIdentifier: Towers::Towers.Projectiles.ProjectileData
-  UniqueId: 5
+  UniqueId: 8
   Sprite: {fileID: 21300000, guid: faa04e06d44dd354194098afc88df157, type: 3}
   SpriteColor: {r: 0.246707, g: 0.45750406, b: 0.8301887, a: 1}
   Rarity: 1
