@@ -11,7 +11,7 @@ using System.Threading;
 namespace MapGenerator.Generators
 {
     [System.Serializable]
-    public class PathLayoutGenerator : IGenerator
+    public class MazeGenerator : IGenerator
     {
         [Header("Debug")]
         [SerializeField] private bool _debug = true;
@@ -29,40 +29,38 @@ namespace MapGenerator.Generators
         public bool ShowDebug => _debug;
         public List<Type> RequiredGenerators => new();
 
-        public PathLayoutGenerator(PathSettings pathSettings, GenerationConfig generationData, bool enfroceRules)
+        public MazeGenerator(PathSettings pathSettings, GenerationConfig generationData, bool enfroceRules)
         {
             _pathSettings = pathSettings;
             _generationConfig = generationData;
             _enforceRules = enfroceRules;
         }
 
-        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
+        public async Task<MapLayout> GenerateAsync(MapLayout layout, CancellationTokenSource cts)
         {
             _cts = cts;
             OnStatusChanged?.Invoke("Generating path...");
-            return await GeneratePath(enforceRules: _enforceRules);
+            return await GenerateMaze(enforceRules: _enforceRules);
         }
 
-        public async Task<MapLayout> GeneratePath(int depth = 0, bool enforceRules = true)
+        public async Task<MapLayout> GenerateMaze(int depth = 0, bool enforceRules = true)
         {
             _cts.Token.ThrowIfCancellationRequested();
             UnityEngine.Random.InitState(_generationConfig.Seed + depth);
 
-            var middlePointsToOmit = GetMiddlePointsToOmit();
+            var middlePointsToOmit = GetMiddlePoints();
 
             if (depth > _pathSettings.MaximumGenerationDepth)
             {
                 if (_pathSettings.ExperimentalRandomizeSeedWhenGenerationDepthExceeded)
                 {
+                    Debug.Log("Exceeded generation depth");
                     _generationConfig.SetSeed(MapGenerator.Utilities.Randomizer.GetRandomSeed());
-                    return await GeneratePath(0, enforceRules);
+                    return await GenerateMaze(0, enforceRules);
                 }
-
-                Debug.Log("Exceeded generation depth");
-                return await Task.Run(() => GenerateBaseMaze(_generationConfig.Seed + depth, middlePointsToOmit));
             }
 
-            MapLayout layout = await Task.Run(() => GenerateBaseMaze(_generationConfig.Seed + depth, middlePointsToOmit));
+            MapLayout layout = await Task.Run(() => GenerateRandomMaze(_generationConfig.Seed + depth, middlePointsToOmit));
             List<Vector2> waypoints = await Task.Run(() => ExtractWaypoints(layout));
 
             if (enforceRules)
@@ -72,7 +70,7 @@ namespace MapGenerator.Generators
                     float distance = Paths.Utilities.Helpers.CalculatePathLength(waypoints);
 
                     if (distance < _pathSettings.MinimalPathLength)
-                        return await GeneratePath(depth + 1, enforceRules);
+                        return await GenerateMaze(depth + 1, enforceRules);
                 }
 
                 if (_pathSettings.EnforceMaximumStraightTilesInRow)
@@ -80,7 +78,7 @@ namespace MapGenerator.Generators
                     float longest = CalculateLongestStraightSection(waypoints);
 
                     if (longest > _pathSettings.MaximumStraightTilesInRow - 1)
-                        return await GeneratePath(depth + 1, enforceRules);
+                        return await GenerateMaze(depth + 1, enforceRules);
                 }
             }
 
@@ -90,27 +88,22 @@ namespace MapGenerator.Generators
             return layout;
         }
 
-        private MapLayout GenerateBaseMaze(int seed, List<Vector2Int> middlePointsToOmit)
+        private MapLayout GenerateRandomMaze(int seed, List<Vector2Int> middlePointsToOmit)
         {
             _cts.Token.ThrowIfCancellationRequested();
 
             MapLayout layout = new(_generationConfig.MazeGenerationSettings.Width, _generationConfig.MazeGenerationSettings.Height, seed);
-            layout.GenerateMaze(_pathSettings.Steps);
+            layout.GenerateRandomMaze(_pathSettings.Steps);
 
-            foreach (var middle in _generationConfig.MazeGenerationSettings.MiddlePoints)
-            {
-                if (middlePointsToOmit.Contains(middle))
-                    continue;
-
+            foreach (var middle in middlePointsToOmit)
                 layout.MoveRootToPosition(middle);
-            }
 
             layout.MoveRootToPosition(_generationConfig.GridEndPoint);
 
             return layout;
         }
 
-        private List<Vector2Int> GetMiddlePointsToOmit()
+        private List<Vector2Int> GetMiddlePoints()
         {
             if (!_generationConfig.MazeGenerationSettings.RandomlyOmitSomeMiddlePoints)
                 return new();

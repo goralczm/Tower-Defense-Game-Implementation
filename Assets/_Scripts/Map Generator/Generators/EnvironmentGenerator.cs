@@ -22,7 +22,7 @@ namespace MapGenerator.Generators
     public enum TileState
     {
         Free,
-        Neighbor,
+        Neighbour,
         Occupied
     }
 
@@ -74,7 +74,7 @@ namespace MapGenerator.Generators
                     _generationConfig.MazeGenerationSettings.Height + 1, 0));
         }
 
-        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
+        public async Task<MapLayout> GenerateAsync(MapLayout layout, CancellationTokenSource cts)
         {
             _cts = cts;
 
@@ -192,7 +192,7 @@ namespace MapGenerator.Generators
                 if (Randomizer.GetRandomBool(omitProbability)) continue;
 
                 if (!_heatmap.ContainsKey(neighbor) || _heatmap[neighbor] == TileState.Free)
-                    _heatmap[neighbor] = TileState.Neighbor;
+                    _heatmap[neighbor] = TileState.Neighbour;
             }
         }
 
@@ -236,7 +236,7 @@ namespace MapGenerator.Generators
                             case TileState.Free:
                                 Gizmos.color = Color.green;
                                 break;
-                            case TileState.Neighbor:
+                            case TileState.Neighbour:
                                 Gizmos.color = Color.yellow;
                                 break;
                             case TileState.Occupied:

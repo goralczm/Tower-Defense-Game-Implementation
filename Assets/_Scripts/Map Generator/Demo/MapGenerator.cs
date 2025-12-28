@@ -21,24 +21,12 @@ namespace MapGenerator.Demo
     {
         private List<IGenerator> _generators = new();
 
-        private PathPreset _pathPreset;
-        private GenerationConfig _generationConfig;
         private MapLayout _layout;
         private CancellationTokenSource _cts;
-        private bool _enforceRules;
 
         public event Action<string> OnStatusChanged;
 
-        public MapBuilder(PathPreset pathPreset, GenerationConfig generationConfig, bool enforceRules)
-        {
-            _pathPreset = pathPreset;
-            _generationConfig = generationConfig;
-            _enforceRules = enforceRules;
-
-            WithGenerator(
-                new PathLayoutGenerator(_pathPreset.PathSettings, _generationConfig, _enforceRules)
-            );
-        }
+        public MapBuilder() { }
 
         public MapLayout GetMapLayout() => _layout;
 
@@ -74,7 +62,7 @@ namespace MapGenerator.Demo
             {
                 _cts.Token.ThrowIfCancellationRequested();
 
-                _layout = await generator.Generate(_layout, _cts);
+                _layout = await generator.GenerateAsync(_layout, _cts);
                 await Task.Delay(100);
             }
         }
@@ -154,10 +142,11 @@ namespace MapGenerator.Demo
 
             OnMapGenerationStarted?.Invoke(this, EventArgs.Empty);
 
-            _mapBuilder = new MapBuilder(_pathPreset, _generationConfig, _generationConfig.EnforceRules);
+            _mapBuilder = new MapBuilder();
             _mapBuilder.OnStatusChanged += OnStatusChanged;
 
             _mapBuilder
+                .WithGenerator(new MazeGenerator(_pathPreset.PathSettings, _generationConfig, _generationConfig.EnforceRules))
                 .WithGenerator(new PathGenerator(_pathPreset.MazeGenerationSettings, _generationConfig, _generationConfig.RenderOverflowTiles))
                 .WithGenerator(new RoundaboutsGenerator(_pathPreset.PathSettings, _generationConfig))
                 .WithGenerator(new TilemapGenerator(_tilemapSettings, _tilemap))

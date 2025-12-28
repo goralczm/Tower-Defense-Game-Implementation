@@ -32,7 +32,7 @@ namespace MapGenerator.Generators
             _generationData = generationData;
         }
 
-        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
+        public async Task<MapLayout> GenerateAsync(MapLayout layout, CancellationTokenSource cts)
         {
             _cts = cts;
             _layout = layout;
@@ -40,13 +40,13 @@ namespace MapGenerator.Generators
             if (_pathSettings.EnforceRoundabouts)
             {
                 OnStatusChanged?.Invoke("Generating roundabouts...");
-                await DrawRoundabouts(_generationData.Seed);
+                await SetRoundabouts(_generationData.Seed);
             }
 
             return _layout;
         }
 
-        private async Task DrawRoundabouts(int seed, int roundaboutsGenerated = 0)
+        private async Task SetRoundabouts(int seed, int roundaboutsGenerated = 0)
         {
             _cts.Token.ThrowIfCancellationRequested();
 
@@ -83,7 +83,7 @@ namespace MapGenerator.Generators
             }
 
             if (roundaboutsGenerated < _pathSettings.MinimalRounabouts)
-                await DrawRoundabouts(seed + 1, roundaboutsGenerated);
+                await SetRoundabouts(seed + 1, roundaboutsGenerated);
         }
 
         private int GenerateRandomRoundabout(Vector2Int cornerPos, NodeType corner, int tilesAfterLastRoundabout)

@@ -24,15 +24,14 @@ namespace MapGenerator.Core
     public interface IGenerator
     {
         public List<Type> RequiredGenerators { get; }
+        public event Action<string> OnStatusChanged;
         
-        public Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts);
+        public Task<MapLayout> GenerateAsync(MapLayout layout, CancellationTokenSource cts);
 
         public void Cleanup();
 
         public void DrawGizmos(DebugConfig debugConfig);
 
         public bool ShowDebug { get; }
-
-        public event Action<string> OnStatusChanged;
     }
 }

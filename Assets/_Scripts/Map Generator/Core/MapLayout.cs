@@ -63,7 +63,7 @@ namespace MapGenerator.Core
         }
 
         public List<MapNode> GetNodes() => _mazeByCoords.Values.ToList();
-        public void GenerateMaze(int steps)
+        public void GenerateRandomMaze(int steps)
         {
             List<MapNode> maze = new();
             _mazeByCoords.Clear();
@@ -85,7 +85,6 @@ namespace MapGenerator.Core
                     _mazeByCoords.Add((x, y), node);
                 }
             }
-
 
             _root = maze[^1];
 
@@ -226,5 +225,4 @@ namespace MapGenerator.Core
             return NodeType.Empty;
         }
     }
-
 }

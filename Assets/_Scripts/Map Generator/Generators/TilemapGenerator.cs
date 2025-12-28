@@ -33,7 +33,7 @@ namespace MapGenerator.Generators
             _tilemap = tilemap;
         }
 
-        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
+        public async Task<MapLayout> GenerateAsync(MapLayout layout, CancellationTokenSource cts)
         {
             _cts = cts;
 

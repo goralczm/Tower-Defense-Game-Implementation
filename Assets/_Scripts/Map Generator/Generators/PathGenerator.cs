@@ -34,19 +34,19 @@ namespace MapGenerator.Generators
             _renderOverflowTiles = renderOverflowTiles;
         }
 
-        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
+        public async Task<MapLayout> GenerateAsync(MapLayout layout, CancellationTokenSource cts)
         {
             _layout = layout;
 
             OnStatusChanged?.Invoke("Setting path tiles...");
-            SetPathTiles();
+            SetStraightTiles();
             OnStatusChanged?.Invoke("Setting corner tiles...");
             SetCornerTiles();
 
             return _layout;
         }
 
-        private void SetPathTiles()
+        private void SetStraightTiles()
         {
             var currNode = _layout.GetByCoords(_generationConfig.GridStartPoint);
             Vector2Int? prevNodePosition = null;

@@ -36,7 +36,7 @@ namespace MapGenerator.Generators
             _tilemap = pathTilemap;
         }
 
-        public async Task<MapLayout> Generate(MapLayout layout, CancellationTokenSource cts)
+        public async Task<MapLayout> GenerateAsync(MapLayout layout, CancellationTokenSource cts)
         {
             Vector3Int cellPos = new(layout.StartPoint.x, layout.StartPoint.y, 0);
             Vector2 startPoint = _tilemap.GetCellCenterWorld(cellPos);
