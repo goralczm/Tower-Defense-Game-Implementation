@@ -63,6 +63,7 @@ namespace MapGenerator.Core
         }
 
         public List<MapNode> GetNodes() => _mazeByCoords.Values.ToList();
+
         public void GenerateRandomMaze(int steps)
         {
             List<MapNode> maze = new();

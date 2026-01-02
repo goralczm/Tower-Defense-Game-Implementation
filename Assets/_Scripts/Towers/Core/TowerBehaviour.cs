@@ -121,6 +121,8 @@ namespace Towers
 
         private void Update()
         {
+            _attributes.Mediator.Update(Time.deltaTime);
+
             foreach (var strategy in _attackStrategies)
                 strategy.Tick(Time.deltaTime);
         }
